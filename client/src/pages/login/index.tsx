@@ -16,12 +16,12 @@ const index = () => {
   };
 
   return (
-      <div className="flex flex-row items-center justify-around h-full">
+      <div className="flex flex-row items-center justify-around gap-0 h-full">
         <div className="hidden md:block " >
           <Image src={illustration} alt="illustration" className="" />
         </div>
-        <div className="w-full  xl:p-2">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div className="w-5/12 xl:p-2 ">
+          <div className="space-y-4 md:space-y-6 md:p-5 sm:w-full ">
           <Image src={Logo} alt='Logo'/>
             <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">
             Se connecter

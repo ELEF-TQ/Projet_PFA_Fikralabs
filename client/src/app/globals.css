@@ -97,12 +97,26 @@ img {
 }
 
 /*!!_______Confirmed Global style______!!*/
+.forms {
+  width: 100%;
+}
 .Confirm__Button {
     background-color: var(--primary-color);
     color: white;
+    border-radius:10px ;
+    height: 40px; 
+}
+.Confirm__Button2{
+  background-color: white;
+  color: black;
+  border-radius:10px ;
+  border: solid 1px black;
+  height: 40px;
+
 }
 .Input__Style {
     border-radius: 10px;
+    width: 100%;
     border: none;
     height: 45px;
     padding: 0 20px;
@@ -114,6 +128,22 @@ img {
     color: var(--text-color);
     margin-bottom: 3px;
     }
+
+  .progress {
+    height: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  /* Progress bar */
+  .progress-bar {
+    background-color: var(--primary-color); /* Progress bar color */
+    width: 0; /* Initial width */
+    height: 100%;
+  }
+    
 /*___just Extra css here unitil we remove it ___*/
 
   
