@@ -22,6 +22,10 @@ export class AdminService {
     return this.adminModel.findById(id).exec();
   }
 
+  async findOneByEmail(email: string): Promise<Admin> {
+    return this.adminModel.findOne({email: email}).exec();
+  }
+
   async update(id: string, updateAdminDto: UpdateAdminDto): Promise<Admin | null> {
     return this.adminModel.findByIdAndUpdate(id, updateAdminDto, { new: true }).exec();
   }

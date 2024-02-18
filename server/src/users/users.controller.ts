@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, HttpException, HttpStatus, Res } from '@nestjs/common'; // Import ParseIntPipe
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, HttpException, HttpStatus } from '@nestjs/common'; // Import ParseIntPipe
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Response } from 'express';
+
 
 @Controller('users')
 export class UsersController {
@@ -57,7 +57,7 @@ export class UsersController {
       return {
         message: "User Deleted Successfully",
         deletedUser: deletedUser
-      }
+      };
     }
   }
 }

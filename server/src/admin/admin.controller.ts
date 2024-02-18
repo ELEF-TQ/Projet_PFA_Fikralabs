@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Validation
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
-import mongoose from 'mongoose';
+
 
 @Controller('admins')
 export class AdminController {
@@ -57,7 +57,7 @@ export class AdminController {
       return {
         message: "Admin Deleted Successfully",
         deletedAdmin: deletedAdmin
-      }
+      };
     }
   }
 }
