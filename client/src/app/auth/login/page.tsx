@@ -1,8 +1,13 @@
 import React from 'react'
 import Login from '@/pages/login'
+import Header from '@/components/shared/Header'
 const page = () => {
   return (
-   <Login/>
+    <>
+     <Header/>
+     <Login/>
+
+    </>
   )
 }
 

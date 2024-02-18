@@ -144,6 +144,11 @@ img {
     height: 100%;
   }
     
+  .Dashboard__Container {
+    padding-left: 10%;
+    padding-right: 10%;
+  
+  }
 /*___just Extra css here unitil we remove it ___*/
 
   

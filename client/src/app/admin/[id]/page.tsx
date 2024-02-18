@@ -5,7 +5,7 @@ interface PageProps {params: any}
 const Page: React.FC<PageProps>  = ({params}) => {
   return (
     <div>
-      admin home : {params.id} 
+      admin home : {params.id}  
     </div>
   )
 }

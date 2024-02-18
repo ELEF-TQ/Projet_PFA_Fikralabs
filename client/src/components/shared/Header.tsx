@@ -6,7 +6,8 @@ import Image from 'next/image';
 
 const Header = () => {
   return (
-    <div className="header-container">
+    <div className='hidden md:block '>
+    <div className="header-container ">
       <style jsx>{`
         .header-container {
           background-color: var(--primary-color);
@@ -26,6 +27,7 @@ const Header = () => {
         {/* Logo displayed only on desktop */}
         <Image src={LogoWhite} alt="Logo" />
       </div>
+    </div>
     </div>
   );
 };

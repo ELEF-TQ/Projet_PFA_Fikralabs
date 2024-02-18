@@ -6,6 +6,7 @@ import { Formik, Form } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Image from 'next/image';
+import { axiosNoAuth } from '@/lib/Constants';
 const index = () => {
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
@@ -73,6 +74,9 @@ const index = () => {
       }
       try {
         console.log(formData);
+      const res =  await axiosNoAuth.post("/auth/signup", formData);
+       console.log(res);
+       
       } catch (error) {
         console.log('Error submitting form:', error);
       
@@ -232,12 +236,12 @@ const index = () => {
 
 
                 <div className={`Margin__Input__Buttom `}>
-                  <label htmlFor="address" className='Input_Label'>Numéro de CNI</label>
+                  <label htmlFor="CNI" className='Input_Label'>Numéro de CNI</label>
                   <input
                     type="text"
                     className={`form-control Input__Style`}
-                    id="address"
-                    name="address"
+                    id="CNI"
+                    name="CNI"
                     placeholder="Numéro de CNI"
                     value={formData.CNI}
                     onChange={handleInputChange}

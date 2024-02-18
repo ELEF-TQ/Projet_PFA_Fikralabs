@@ -7,8 +7,8 @@ export default function layout({
     children: React.ReactNode;
   }>) {
     return (
-        <div className="flex">
-        <main className="flex-1">
+        <div className="Dashboard__Container ">
+        <main className="flex ">
             {children}
         </main>
       </div>

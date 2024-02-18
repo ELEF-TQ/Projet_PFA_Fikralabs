@@ -34,14 +34,12 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null;
-
         try {
           const res = await axiosNoAuth.post("/auth/login", credentials);
           if (res.status === 401) {
             console.log(res.statusText);
             return null;
           }
-
           return res.data;
         } catch (error) {
           console.error("Error logging in:", error);

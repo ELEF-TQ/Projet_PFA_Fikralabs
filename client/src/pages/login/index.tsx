@@ -4,15 +4,31 @@ import illustration from '../../../public/images/illustration.png';
 import Logo from '../../../public/icons/LogoBlack.png'
 import Link from 'next/link';
 import Image from 'next/image';
+import { signIn } from 'next-auth/react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { handleLogin } from '@/context/features/AuthSlice';
+import { AppDispatch } from '@/context/store';
 
 const index = () => {
+
+  const dispatch = useDispatch<AppDispatch>();
+
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({
+     email: '',
+    password: '' });
 
   const handleChange = (e:any) => setFormData({ ...formData, [e.target.id]: e.target.value });
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
+    try {
+      dispatch(handleLogin(formData));
+    } catch (error) {
+      console.error('Login failed', error);
+      alert('Login failed. Please try again.');
+    }
   };
 
   return (
