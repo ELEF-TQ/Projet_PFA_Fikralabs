@@ -1,30 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/react';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { axiosNoAuth } from '@/lib/Constants';
 
-// const session = await getServerSession(authOptions);
-
-export const handleLogin = createAsyncThunk('auth/login', async (formData ) => {
+// Async thunk to handle login
+export const handleLogin = createAsyncThunk('auth/login', async (formData :any) => {
     try {
-      console.log(formData)
-      return formData;
+      const response = await axiosNoAuth.post('/auth/login',formData);
+      return response.data;
     } catch (error) {
-      console.error('Login failed', error);
-      alert('Login failed. Please try again.');
+      throw error;
     }
-  });
+});
 
-// Handle signup
-export const handleSignup = createAsyncThunk('auth/signup', async (formData) => {
+// Async thunk to handle signup
+export const handleSignup = createAsyncThunk('auth/signup', async (formData:any) => {
   try {
-    console.log(formData)
-    return formData;
+    const response = await axiosNoAuth.post('/auth/signup',formData);
+    return response.data;
   } catch (error) {
-    console.error('Login failed', error);
-    alert('Login failed. Please try again.');
+    throw error;
   }
 });
 
@@ -32,7 +27,7 @@ const initialState = {
   user: null,
   isAuthenticated: false,
   isLoading: false,
-  error: null,
+  error: 'null' ,
 };
 
 
@@ -44,11 +39,9 @@ const authSlice = createSlice({
     builder
       .addCase(handleSignup.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
       })
       .addCase(handleSignup.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
         const router = useRouter();
         router.push('/auth/login'); 
       })
@@ -57,6 +50,22 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload.message;
       })
+      .addCase(handleLogin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+        const router = useRouter();
+        if (action.payload.user.role === 'ADMIN') {
+          router.push('/admin'); 
+        } else {
+          router.push(`/user/${action.payload.user.id}`); 
+        }
+      })
+      .addCase(handleLogin.rejected, (state, action :any) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.error = action.payload.message;
+      });
   },
 });
 
