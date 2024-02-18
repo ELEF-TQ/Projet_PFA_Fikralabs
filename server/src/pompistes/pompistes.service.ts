@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Pompiste, PompisteDocument } from './schemas/pompiste.schema';
 import { CreatePompisteDto } from './dto/create-pompiste.dto';
 import { UpdatePompisteDto } from './dto/update-pompiste.dto';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PompisteService {
