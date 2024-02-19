@@ -2,12 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
 import { axiosNoAuth } from '@/lib/Constants';
+import Swal from 'sweetalert2';
+import { storeUserSession } from '@/lib/Encryption';
+
 
 // Async thunk to handle login
 export const handleLogin = createAsyncThunk('auth/login', async (formData :any) => {
     try {
       const response = await axiosNoAuth.post('/auth/login',formData);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       throw error;
     }
@@ -17,7 +20,7 @@ export const handleLogin = createAsyncThunk('auth/login', async (formData :any) 
 export const handleSignup = createAsyncThunk('auth/signup', async (formData:any) => {
   try {
     const response = await axiosNoAuth.post('/auth/signup',formData);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     throw error;
   }
@@ -42,23 +45,26 @@ const authSlice = createSlice({
       })
       .addCase(handleSignup.fulfilled, (state, action) => {
         state.isLoading = false;
-        const router = useRouter();
-        router.push('/auth/login'); 
+        Swal.fire({icon: 'success', title : "Votre compte a cree avec succes",text: action.payload.message,showConfirmButton: true}).then(()=> {
+          window.location.href ='/auth/login'
+        })
       })
       .addCase(handleSignup.rejected, (state, action :any) => {
         state.isAuthenticated = false;
         state.isLoading = false;
         state.error = action.payload.message;
+        Swal.fire({icon: 'error', title: 'Ooops!' , text:  state.error})
       })
       .addCase(handleLogin.fulfilled, (state, action) => {
+        console.log(action.payload)
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
-        const router = useRouter();
+        storeUserSession(action.payload)
         if (action.payload.user.role === 'ADMIN') {
-          router.push('/admin'); 
+          window.location.href =`/admin/${action.payload.user._id}`
         } else {
-          router.push(`/user/${action.payload.user.id}`); 
+          window.location.href =`/user/${action.payload.user._id}`
         }
       })
       .addCase(handleLogin.rejected, (state, action :any) => {

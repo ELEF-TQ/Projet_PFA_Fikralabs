@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import illustration from '../../../public/images/illustration.png'; 
 import Logo from '../../../public/icons/LogoBlack.png'
 import Link from 'next/link';
@@ -9,8 +9,10 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { handleLogin } from '@/context/features/AuthSlice';
 import { AppDispatch } from '@/context/store';
+import { retrieveUserSession } from '@/lib/Encryption';
 
 const index = () => {
+
 
   const dispatch = useDispatch<AppDispatch>();
 

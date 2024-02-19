@@ -7,22 +7,56 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Image from 'next/image';
 import { axiosNoAuth } from '@/lib/Constants';
+import Swal from 'sweetalert2'
+import { AppDispatch } from '@/context/store';
+import { handleSignup } from '@/context/features/AuthSlice';
 const index = () => {
-  const dispatch = useDispatch()
-  const [formData, setFormData] = useState({
+
+  interface FormData {
+    username: string;
+    email: string;
+    phone: string;
+    password: string;
+    CNI: string;
+    image: string;
+  }
+  interface FormErrors {
+    username?: string;
+    email?: string;
+    phone?: string;
+    password?: string;
+    confirmPassword?: string;
+    CNI?: string;
+    image?: string;
+  }
+  
+  const dispatch = useDispatch<AppDispatch>()
+  const [formData, setFormData] = useState<FormData>({
     username: '',
     email: '',
     phone: '',
     password: '',
     CNI: '',
-    image: '', 
+    image: '',
   });
-
   const [currentStep, setCurrentStep] = useState(1);
-  const [termsAccepted, setTermsAccepted] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [formErrors, setErrors] = useState({});
   const passwordVerifyRef = useRef(null);
+  const [formErrors, setErrors] = useState<FormErrors>({});
+
+  const getRequiredErrors = () => {
+    const errors: FormErrors = {};
+    if (!formData.username) errors.username = 'Le nom et prénom sont requis.';
+    if (!formData.email) errors.email = "L'email est requis.";
+    if (!formData.phone) errors.phone = "Le numéro de téléphone est requis.";
+    if (!formData.password) errors.password = "Le mot de passe est requis.";
+    if (!confirmPassword) errors.confirmPassword = "La confirmation du mot de passe est requise.";
+    if (!formData.CNI) errors.CNI = "Le numéro de CNI est requis.";
+    if (!formData.image) errors.image = "L'image est requise.";
+    return errors;
+  };
+  
+  
 
   const getPasswordStrength = (password:any) => {
     if (password.length <= 4) return 0;
@@ -58,30 +92,7 @@ const index = () => {
 
 
 
-  const handleSubmit = async () => {
-      const passwordError = validatePasswordConfirmation(confirmPassword);
-      const emailError = validateEmail(formData.email);
-  
-      if (passwordError || emailError || !termsAccepted || !isPasswordValid(formData.password)) {
-        setErrors({
-          email: emailError || null,
-          confirmPassword: passwordError || null,
-          Password: !isPasswordValid(formData.password) ? 'Le mot de passe doit contenir au moins 8 caractères, y compris des chiffres.' : null,
-          ...getRequiredErrors(),
-        });
-        // Swal.fire('Oops!', 'Veuillez vérifier les champs.', 'error');
-        return;
-      }
-      try {
-        console.log(formData);
-      const res =  await axiosNoAuth.post("/auth/signup", formData);
-       console.log(res);
-       
-      } catch (error) {
-        console.log('Error submitting form:', error);
-      
-    } 
-  };
+
   
 
   const handleInputChange = (e:any) => {
@@ -104,6 +115,24 @@ const index = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    const passwordError = validatePasswordConfirmation(confirmPassword);
+    const emailError = validateEmail(formData.email);
+    if (passwordError || emailError || !isPasswordValid(formData.password)) {
+       Swal.fire('Oops!', 'Veuillez vérifier les champs.', 'error');
+      return;
+    }
+    try {
+      console.log(formData);
+      dispatch(handleSignup(formData));
+    // const res =  await axiosNoAuth.post("/auth/signup", formData);
+    //  console.log(res);
+     
+    } catch (error) {
+      console.log('Error submitting form:', error);
+    
+  } 
+};
  
   return (
     <Formik initialValues={formData} onSubmit={handleSubmit}>
@@ -127,7 +156,7 @@ const index = () => {
               handlePreviousStep={handlePreviousStep}
               handleSubmit={handleSubmit}
               isValid={isValid}
-              termsAccepted={termsAccepted}
+              
             >
               {/* Step 1 */}
               <Form className="Sign__form">
@@ -143,8 +172,7 @@ const index = () => {
                     onChange={handleInputChange}
                     required
                   />
-                  <div className="invalid-feedback"></div>
-                </div>
+                { formErrors.username && <div className="invalid-feedback">{formErrors.username}</div>}                          </div>
 
                 <div className={`Margin__Input__Buttom `}>
                   <label htmlFor="name" className='Input_Label'>Email</label>
@@ -158,7 +186,7 @@ const index = () => {
                     onChange={handleInputChange}
                     required
                   />
-                  <div className="invalid-feedback"></div>
+                 {formErrors.email && <div className="invalid-feedback">{formErrors.email}</div>}
                 </div>
 
                 <div className={`Margin__Input__Buttom`}>
@@ -173,7 +201,7 @@ const index = () => {
                     onChange={handleInputChange}
                     required
                   />
-                  <div className="invalid-feedback"></div>
+                  {formErrors.phone && <div className="invalid-feedback">{formErrors.phone}</div>}
                 </div>
               </Form>
 
@@ -247,8 +275,7 @@ const index = () => {
                     onChange={handleInputChange}
                     required
                   />
-                  <div className="invalid-feedback"></div>
-                </div>
+             {formErrors.CNI && <div className="invalid-feedback">{formErrors.CNI}</div>}                </div>
                 
               </Form>
             </FormikStepper>
@@ -270,7 +297,7 @@ interface FormikStepperProps {
   handlePreviousStep: () => void;
   handleSubmit: () => void;
   isValid: boolean;
-  termsAccepted: boolean;
+
 }
 
 export function FormikStepper({
@@ -280,7 +307,6 @@ export function FormikStepper({
   handlePreviousStep,
   handleSubmit,
   isValid,
-  termsAccepted,
 }: FormikStepperProps) {
   const stepsCount = React.Children.count(children);
 
@@ -320,7 +346,7 @@ export function FormikStepper({
             type="button"
             className="px-2 Confirm__Button"
             onClick={handleSubmit}
-            disabled={!isValid || !termsAccepted}
+            disabled={!isValid }
           >
             {'Ajouter'}
           </button>
