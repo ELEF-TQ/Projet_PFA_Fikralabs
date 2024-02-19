@@ -5,8 +5,8 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { Request } from 'express';
 import { RoleGuard } from './guards/role.guard';
 import { Roles } from './decorators/roles.decorator';
-import { AuthPayloadDto } from './dto/auth.dto';
 import { JwtAuthGuard } from './guards/jwt.guard';
+import { RolesEnum } from 'src/enums/roles.enum';
 
 @Controller('auth')
 export class AuthController {
@@ -34,7 +34,7 @@ export class AuthController {
 
   @Get("status")
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles('ADMIN', 'CLIENT')
+  @Roles(RolesEnum.ADMIN, RolesEnum.CLIENT)
   getStatus(@Req() req){
       console.log("inside authcontroller getStatus()");
       console.log(req.user)
