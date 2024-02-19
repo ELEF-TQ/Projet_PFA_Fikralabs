@@ -7,6 +7,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AdminModule } from 'src/admin/admin.module';
+import 'dotenv/config'; // to resolve the .env file loading variables problem
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { AdminModule } from 'src/admin/admin.module';
     AdminModule,
     PassportModule,
     JwtModule.register({
-      secret: "pozihfkdsfjkc", //process.env.JWT_SECRET,
+      secret: process.env.JWT_SECRET, //process.env.JWT_SECRET,pozihfkdsfjkc
       signOptions: { expiresIn: '1d' }
     }),
   ],

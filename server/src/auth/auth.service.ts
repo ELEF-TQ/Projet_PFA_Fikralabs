@@ -1,11 +1,13 @@
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthPayloadDto } from './dto/auth.dto';
 import { AdminService } from 'src/admin/admin.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/schemas/user.schema';
 import { Admin } from 'src/admin/schemas/admin.schema';
+import { comparePasswords } from './utils/bcrypt';
+import { IsEmailAlreadyExists } from './utils/IsEmailAlreadyExist';
 
 @Injectable()
 export class AuthService {
@@ -19,22 +21,24 @@ export class AuthService {
     const userOrAdminFound = await this.findOneByEmail(email);
     if(!userOrAdminFound ){
       throw new HttpException("User Not found, Unnable to login", 404);
-    }else if(userOrAdminFound .password === password){
-      const {password, ...userDetails} = userOrAdminFound ;
-      return {
-        user: userOrAdminFound ,
-        JWT: this.jwtService.sign(userDetails)
-      }
     }else{
-      throw new HttpException("Wrong Password", 403);
+      const isPasswordMatched = comparePasswords(password, userOrAdminFound.password);
+      if(isPasswordMatched){
+        const {password, ...userDetails} = userOrAdminFound;
+        return {
+          user: userOrAdminFound ,
+          JWT: this.jwtService.sign(userDetails)
+        }
+      }else{
+        throw new HttpException("Wrong Password", 403);
+      }
     }
   }
 
   async register(userDetails: CreateUserDto){
-    const userFound = await this.usersService.findOneByEmail(userDetails.email);
-    const adminFound = await this.adminService.findOneByEmail(userDetails.email);
-    if(userFound || adminFound){
-      throw new HttpException("Email already Exists", HttpStatus.BAD_REQUEST);
+    const IsExists = await IsEmailAlreadyExists(userDetails, this.usersService, this.adminService);
+    if(IsExists){
+      throw new HttpException("Email already Exist", HttpStatus.BAD_REQUEST);
     }else{
       const userCreated = await this.usersService.create(userDetails);
       return userCreated;

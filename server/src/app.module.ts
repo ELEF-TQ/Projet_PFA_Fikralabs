@@ -6,16 +6,16 @@ import { PompistesModule } from './pompistes/pompistes.module';
 import { AdminModule } from './admin/admin.module';
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { IdValidationMiddleware } from './admin/middlewares/IdValidation.middleware';
+import { IdValidationMiddleware } from './middlewares/IdValidation.middleware';
 
 
 
 @Module({
-  imports: [MongooseModule.forRoot("mongodb://localhost/vivo_energy"),
-      ConfigModule.forRoot({
-        isGlobal: true,
-        envFilePath: ".env"
-    }),
+  imports: [ConfigModule.forRoot({
+    envFilePath: ".env",
+    isGlobal: true
+  }),
+    MongooseModule.forRoot(`${process.env.DB_TYPE}://${process.env.HOST_NAME}/${process.env.DB_NAME}`),
     ServicesModule, AuthModule, UsersModule, PompistesModule, AdminModule],
 })
 export class AppModule implements NestModule{
