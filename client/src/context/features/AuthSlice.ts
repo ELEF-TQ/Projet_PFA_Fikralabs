@@ -60,12 +60,12 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
-        storeUserSession(action.payload.user)
-        // if (action.payload.user.role === 'ADMIN') {
-        //   window.location.href =`/admin/${action.payload.user._id}`
-        // } else {
-        //   window.location.href =`/user/${action.payload.user._id}`
-        // }
+        storeUserSession(action.payload)
+        if (action.payload.user.role === 'ADMIN') {
+          window.location.href =`/admin/${action.payload.user._id}`
+        } else {
+          window.location.href =`/user/${action.payload.user._id}`
+        }
       })
       .addCase(handleLogin.rejected, (state, action :any) => {
         state.isLoading = false;
