@@ -11,10 +11,12 @@ const cryptr = new Cryptr(secretKey);
 export const storeUserSession = (userData: any) => {
     // console.log("user data: " + userData)
   try {
+    cookie.set('user', JSON.stringify(userData.user))
     const encryptedData = cryptr.encrypt(JSON.stringify(userData));
-    // console.log("Encrypted Data: " + encryptedData);
     cookie.set('userSession', encryptedData, { expires: expirationDays });
-  } catch (error) {
+ 
+
+} catch (error) {
     console.error('Error storing user session:', error);
   }
 };
