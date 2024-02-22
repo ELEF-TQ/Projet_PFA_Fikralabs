@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { useRouter } from 'next/router';
-import { axiosNoAuth } from '@/lib/Constants';
+import { axiosNoAuth } from '../../lib/Constants';
 import Swal from 'sweetalert2';
-import { storeUserSession } from '@/lib/Encryption';
+import { storeUserSession } from '../../lib/Encryption';
 
 
 // Async thunk to handle login

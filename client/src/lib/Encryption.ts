@@ -1,5 +1,3 @@
-'use client'
-
 import Cryptr from 'cryptr';
 import cookie from 'js-cookie';
 
