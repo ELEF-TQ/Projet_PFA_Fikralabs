@@ -6,9 +6,9 @@ import SignupPage from '../pages/Auth/signup/index'
 /*___Admin_____ */
 import Admin from '../pages/Admin/index'
 import Panel from "../pages/Admin/Panel";
-import GestionPompiste from "../pages/Admin/Pompiste";
-import GestionClients from "../pages/Admin/Clients";
-import GestionConverstions from "../pages/Admin/Convertion";
+import GestionPompiste from "../pages/Admin/GestPompiste/Pompiste";
+import GestionClients from "../pages/Admin/GestClient/Clients";
+import GestionConverstions from "../pages/Admin/GestConvertion/Convertion";
 import GestionProfile from "../pages/Admin/Profile";
 
 
@@ -16,7 +16,7 @@ import GestionProfile from "../pages/Admin/Profile";
 import Pompiste from "../pages/Pompiste/index";
 import HomePompiste from "../pages/Pompiste/Home";
 import Reviews from "../pages/Pompiste/Reviews";
-import Converstions from "../pages/Admin/Convertion";
+import Converstions from "../pages/Admin/GestConvertion/Convertion";
 import DemandeConvertion from "../pages/Pompiste/DemandeConvertion";
 import Formations from "../pages/Pompiste/Formations"
 import Quiz from "../pages/Pompiste/Quiz";

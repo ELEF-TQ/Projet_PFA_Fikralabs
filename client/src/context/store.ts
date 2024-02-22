@@ -1,14 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-//Reducers :
-import UserSlice from './features/UserSlice'
+//Slices :
 import AuthSlice from './features/AuthSlice'
+import ReclamationSlice from './features/ReclamationSlice'
+import AdminSlice from './features/AdminSlice'
+import ClientSlice from './features/ClientSlice'
+import PompisteSlice from './features/PompisteSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-        userReducer :UserSlice ,
         auth :AuthSlice,
+        admins : AdminSlice,
+        clients : ClientSlice,
+        pompistes : PompisteSlice,
+        reclamations : ReclamationSlice,
     },
   })
 }

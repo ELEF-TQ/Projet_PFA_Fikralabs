@@ -12,14 +12,14 @@ export const AdminItems = [
       icon: AiOutlineHome,
     },
     {
-      name: "Clients",
-      href: "/admin/clients",
-      icon: BsPeople,
-    },
-    {
       name: "Pompistes",
       href: "/admin/pompistes",
       icon: FaPeopleGroup ,
+    },
+    {
+      name: "Clients",
+      href: "/admin/clients",
+      icon: BsPeople,
     },
     {
       name: "Conversion",

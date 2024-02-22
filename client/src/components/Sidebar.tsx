@@ -1,6 +1,6 @@
 
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SidebarContext } from "../providers/SidebarProvider";
 import defaultUser from '../assets/images/defaultUser.png'
 import { Link, useLocation } from "react-router-dom";
@@ -8,9 +8,10 @@ import { Link, useLocation } from "react-router-dom";
 
 /*__Sidebar Items___*/
 import { AdminItems } from "../routes/dash-routes";
-import { ClientItems } from "../routes/dash-routes";
-import { PompisteItems } from "../routes/dash-routes";
-import { retrieveUserSession } from "../lib/Encryption";
+import { CiLogout } from "react-icons/ci";
+// import { ClientItems } from "../routes/dash-routes";
+// import { PompisteItems } from "../routes/dash-routes";
+// import { retrieveUserSession } from "../lib/Encryption";
 
 
 
@@ -18,13 +19,25 @@ const Sidebar = () => {
 
   const location = useLocation()
 
- 
-//  useEffect(()=> {
-//   const user = retrieveUserSession()
-  
-//  })
+  let sidebarItems = AdminItems ;
 
- const sidebarItems = PompisteItems ;
+  // useEffect(() => {
+  //   const user = retrieveUserSession();
+  //   switch (user.role) {
+  //     case "ADMIN":
+  //       sidebarItems = AdminItems;
+  //       break;
+  //     case "CLIENT":
+  //       sidebarItems = ClientItems;
+  //       break;
+  //     case "POMPISTE":
+  //       sidebarItems = PompisteItems;
+  //       break;
+  //     default:
+  //       break;
+  //   }}, []);
+  
+
 
   const { isCollapsed, toggleSidebarcollapse } = useContext(SidebarContext);
 
@@ -63,6 +76,15 @@ const Sidebar = () => {
             );
           })}
         </ul>
+
+        <span className="sidebar__item"  >
+           <button className="sidebar__link">
+           <span className="sidebar__icon"><CiLogout /></span>
+                  <span className="sidebar__name">Logout</span>
+           </button>
+        </span>
+
+        
       </aside>
     </div>
   );

@@ -21,7 +21,7 @@
 
 
 /* Resetting default browser styles */
-* {
+/* * {
     margin: 0;
     padding: 0;
     border: 0;
@@ -29,7 +29,7 @@
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
-}
+} */
 
 /* Global styles */
 body {
@@ -57,11 +57,11 @@ h1, h2, h3, h4, h5, h6 {
 
 
 /* Containers */
-.container {
+/* .container {
     width: 90%;
     margin: 0 auto;
     padding: 20px;
-}
+} */
 
 /* Responsive Images */
 img {
@@ -197,6 +197,7 @@ img {
 
 .layout__main-content {
   flex-grow: 1;
+  padding: 2rem;
 }
 
 .sidebar__wrapper {
@@ -250,6 +251,7 @@ img {
   background-color: rgba(232, 232, 232, 1);
   margin-bottom: 1rem;
   border-radius: 0.8rem;
+  text-decoration: none;
 }
 
 .sidebar__link--active {
