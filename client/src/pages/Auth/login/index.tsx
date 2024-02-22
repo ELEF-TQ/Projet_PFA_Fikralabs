@@ -79,7 +79,7 @@ const index: React.FC = () => {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
               Vous n’avez pas un compte ?  {' '}
-                <Link to="/auth/signup" className=" font-medium text-primary-600 hover:underline dark:text-primary-500 ">
+                <Link to="/signup" className=" font-medium text-primary-600 hover:underline dark:text-primary-500 ">
                 S’inscrire
                 </Link>
               </p>

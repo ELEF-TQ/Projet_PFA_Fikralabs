@@ -275,22 +275,22 @@ img {
   display: none;
 }
 
-.btn {
-  position: absolute;
-  right: 0;
-  top: 4.7rem;
-  border: none;
-  background-color: var(--color-bg);
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transform: translateX(50%);
-  font-size: 1.1rem;
+.Navbar__Navigation {
+    position: absolute;
+    right: 0;
+    top: 4rem;
+    border: none;
+    background-color: var(--color-bg);
+    width: 3.1rem;
+    height: 3.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transform: translateX(50%);
+    font-size: 1.1rem;
 }
 
 

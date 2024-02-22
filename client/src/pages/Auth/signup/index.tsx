@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
-import Illustration from '../../../public/images/illustration.png';
+import illustration from '../../../assets/images/illustration.png'; 
 import { Formik, Form } from 'formik';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
 import { AppDispatch } from '../../../context/store';
 import { handleSignup } from '../../../context/features/AuthSlice';
 import { Link } from 'react-router-dom';
-const index = () => {
+
+const index :React.FC= () => {
 
   interface FormData {
     username: string;
@@ -135,7 +136,7 @@ const index = () => {
       {({ isValid  }) => (
         <div className="flex flex-row items-center justify-around gap-0 h-full">
           <div className="Sign__overlay d-none d-md-block">
-            <img src={Illustration} alt="illustration" className="w-100" />
+            <img src={illustration} alt="illustration" className="w-100" />
           </div>
           <div className="Sign__content">
             <p className="text-center">
@@ -286,6 +287,8 @@ const index = () => {
 };
 
 export default index;
+
+
 interface FormikStepperProps {
   children: React.ReactNode;
   currentStep: number;

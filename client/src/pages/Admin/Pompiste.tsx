@@ -1,6 +1,6 @@
 import React from 'react'
 
-const updateModal = () => {
+const Pompiste : React.FC = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const updateModal = () => {
   )
 }
 
-export default updateModal
+export default Pompiste
