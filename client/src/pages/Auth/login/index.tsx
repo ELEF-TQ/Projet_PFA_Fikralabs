@@ -28,7 +28,7 @@ const index: React.FC = () => {
   };
 
   return (
-      <div className="flex flex-row items-center justify-around gap-0 h-full">
+      <div className="flex  flex-row items-center justify-around gap-0 h-full">
         <div className="hidden md:block " >
           <img src={illustration} alt="illustration" className="" />
         </div>

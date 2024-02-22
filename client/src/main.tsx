@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import StoreProvider from './providers/StoreProvider'; 
 import { RouterProvider } from 'react-router-dom';
 import { routes } from './routes'; 
+import './index.css'
 
 ReactDOM.render(
   <React.StrictMode>
