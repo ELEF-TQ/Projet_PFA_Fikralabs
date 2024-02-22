@@ -12,8 +12,8 @@ export const AdminItems = [
       icon: AiOutlineHome,
     },
     {
-      name: "Users",
-      href: "/admin/users",
+      name: "Clients",
+      href: "/admin/clients",
       icon: BsPeople,
     },
     {
@@ -23,7 +23,7 @@ export const AdminItems = [
     },
     {
       name: "Conversion",
-      href: "/admin/conversion",
+      href: "/admin/convertions",
       icon: TbTransform,
     },
     {
@@ -34,7 +34,46 @@ export const AdminItems = [
   ];
 
 
+
+export const PompisteItems = [
+  {
+    name: "Home",
+    href: "/pompiste",
+    icon: AiOutlineHome,
+  },
+  {
+    name: "Évaluations",
+    href: "/pompiste/evaluation",
+    icon: BsPeople,
+  },
+  {
+    name: "Demandes",
+    href: "/pompiste/demandeConvertion",
+    icon: FaPeopleGroup ,
+  },
+  {
+    name: "Conversion",
+    href: "/pompiste/mesConvertions",
+    icon: TbTransform,
+  },
+  {
+    name: "Quiz",
+    href: "/pompiste/quiz",
+    icon: IoSettingsOutline ,
+  },
+  {
+    name: "Formations",
+    href: "/pompiste/formations",
+    icon: IoSettingsOutline ,
+  },
+  {
+    name: "Profile",
+    href: "/pompiste/profile",
+    icon: IoSettingsOutline ,
+  },
+];
+
+
+
 export const ClientItems = []
 
-
-export const PompisteItems = []

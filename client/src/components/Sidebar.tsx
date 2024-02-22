@@ -1,11 +1,7 @@
-import { AiOutlineHome } from "react-icons/ai";
-import { BsPeople } from "react-icons/bs";
-import { FaPeopleGroup } from "react-icons/fa6";
+
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useContext } from "react";
 import { SidebarContext } from "../providers/SidebarProvider";
-import { TbTransform } from "react-icons/tb";
-import { IoSettingsOutline } from "react-icons/io5";
 import defaultUser from '../assets/images/defaultUser.png'
 import { Link, useLocation } from "react-router-dom";
 
@@ -14,6 +10,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AdminItems } from "../routes/dash-routes";
 import { ClientItems } from "../routes/dash-routes";
 import { PompisteItems } from "../routes/dash-routes";
+import { retrieveUserSession } from "../lib/Encryption";
 
 
 
@@ -22,8 +19,12 @@ const Sidebar = () => {
   const location = useLocation()
 
  
+//  useEffect(()=> {
+//   const user = retrieveUserSession()
+  
+//  })
 
-
+ const sidebarItems = PompisteItems ;
 
   const { isCollapsed, toggleSidebarcollapse } = useContext(SidebarContext);
 
@@ -41,10 +42,10 @@ const Sidebar = () => {
             src={defaultUser}
             alt="logo"
           />
-          <p className="sidebar__logo-name">Admin</p>
+          <p className="sidebar__logo-name">Username</p>
         </div>
         <ul className="sidebar__list">
-          {AdminItems.map(({ name, href, icon: Icon }) => {
+          {sidebarItems.map(({ name, href, icon: Icon }) => {
             return (
               <li className="sidebar__item" key={name}>
                 <Link

@@ -1,10 +1,18 @@
+import { Outlet } from "react-router-dom";
+import { SidebarProvider } from "../../providers/SidebarProvider";
+import Sidebar from "../../components/Sidebar";
 
-const index = () => {
+const Index = () => {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <SidebarProvider>
+      <div className="layout">
+        <Sidebar />
+        <main className="layout__main-content">
+          <Outlet />
+        </main>
+      </div>
+    </SidebarProvider>
+  );
+};
 
-export default index
+export default Index;
