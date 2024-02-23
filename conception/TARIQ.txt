@@ -1,0 +1,29 @@
+- Backlog de Produit :
+Gestion des pompistes : la platforme permet la gestion des comptes/besoin des bricoleurs
+Gestion des client : la platforme permet la gestion des coomptes/besoin des clients
+Gestion des reclamations :
+Gestion des services :
+Gestion des demande de convertion :
+Gestion des coupons :
+
+ - Use Cases Client :
+use1 : en tant que client je peut cree un compte 
+use2 : en tant que client je peut donnez un review sur un pompiste 
+use3 :en en tant que client je peut reserver un service a un temp donne afin d'eviter d'atttendre
+use4 : en tant que client je peut posez des reclamations sur un service ou un problem
+
+
+- Use case Admin :
+use1 : en tant qu'admin je peut confirmez les comptes des pompiste (POMPISTE)
+use2 : en tant qu'admin je peut consultez les review donnez au pompiste (REVIEW)
+use3 : en tant qu'admin je peut acceptez les demandes de convertion de score en sold (CONVERTION) 
+use4 : en tant qu'admin je faire la gestion des service(l'ajout/modif de date de disponibilite) (SERVICE)
+use5 : en tant qu'admin je peut cree des nouveau coupon avec un nombre max disponibile (COUPON)
+use6 : en tant qu'admin je peut traiter les reclamations donnez par les client (RECLAMATION)
+
+
+- Regle ed metier :
+
+
+entities :
+client - pompiste - admin - coupon - service - reclamation - convertion 
