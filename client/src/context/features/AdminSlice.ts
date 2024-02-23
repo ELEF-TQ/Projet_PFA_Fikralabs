@@ -1,31 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import Swal from 'sweetalert2';
 import { axiosAuth } from '../../lib/Constants'; // Assuming you have an axios instance configured
 
-// Async thunk to fetch admin data
-export const fetchAdminData = createAsyncThunk('admin/fetchData', async () => {
-  try {
-    const response = await axiosAuth.get('/admin/data');
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-});
+type DeleteParams = {
+  EndPoint: string;
+  Id?: string;
+  Ids?: string[];
+};
 
-// Async thunk to update admin data
-export const updateAdminData = createAsyncThunk('admin/updateData', async (adminData) => {
-  try {
-    const response = await axiosAuth.put('/admin/data', adminData);
-    return response.data;
-  } catch (error) {
-    throw error;
+// deleteItem:
+export const deleteItem = createAsyncThunk(
+  'delete/deleteItems',
+  async (params: DeleteParams, thunkAPI) => {
+    try {
+      const response = await axiosAuth.delete(`${params.EndPoint}/${params.Id}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
+
+// destroyItem:
+export const destroyItems = createAsyncThunk(
+  'destroy/deleteItems',
+  async (params: DeleteParams, thunkAPI) => {
+    try {
+      const response = await axiosAuth.post(params.EndPoint, params.Ids);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const initialState = {
-  adminData: null,
   isLoading: false,
-  error: null,
 };
 
 const adminSlice = createSlice({
@@ -34,7 +45,28 @@ const adminSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      
+      .addCase(deleteItem.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteItem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        Swal.fire('Success', 'Item deleted successfully', 'success');
+      })
+      .addCase(deleteItem.rejected, (state, action) => {
+        state.isLoading = false;
+        Swal.fire('Error', 'Failed to delete item', 'error');
+      })
+      .addCase(destroyItems.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(destroyItems.fulfilled, (state, action) => {
+        state.isLoading = false;
+        Swal.fire('Success', 'Items destroyed successfully', 'success');
+      })
+      .addCase(destroyItems.rejected, (state, action) => {
+        state.isLoading = false;
+        Swal.fire('Error', 'Failed to destroy items', 'error');
+      });
   },
 });
 

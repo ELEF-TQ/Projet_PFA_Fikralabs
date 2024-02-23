@@ -6,7 +6,7 @@ interface ContextType {
 }
 
 const initialValue: ContextType = {
-    isCollapsed: false,
+    isCollapsed: true,
     toggleSidebarcollapse: () => {}
 };
 
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const SidebarProvider: FC<Props> = ({ children }) => {
-    const [isCollapsed, setCollapse] = useState<boolean>(false);
+    const [isCollapsed, setCollapse] = useState<boolean>(true);
 
     const toggleSidebarcollapse = () => {
         setCollapse((prevState) => !prevState);

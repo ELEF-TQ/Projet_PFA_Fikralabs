@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosAuth } from '../../lib/Constants'; // Assuming you have an axios instance configured
 
 // Async thunk to fetch all pompistes
-export const fetchPompistes = createAsyncThunk('pompistes/fetchAll', async () => {
+export const GetPompistes = createAsyncThunk('pompistes/fetchAll', async () => {
   try {
     const response = await axiosAuth.get('/pompistes');
     return response.data;
