@@ -18,13 +18,13 @@ export class Pompiste {
   @Prop()
   email:string;
 
-  @Prop()
+  @Prop({default:5})
   score: number;
 
-  @Prop()
-  ranking: number;
+  @Prop({default:99})
+  rank: number;
 
-  @Prop()
+  @Prop({default:0})
   solde:number;
 
   @Prop()

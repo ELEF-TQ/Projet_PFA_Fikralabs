@@ -55,6 +55,17 @@ const pompistesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+    .addCase(GetPompistes.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(GetPompistes.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.pompistes = action.payload;
+    })
+    .addCase(GetPompistes.rejected, (state, action) => {
+      state.isLoading = false;
+    })
      
   },
 });

@@ -9,6 +9,7 @@ import Delete from '../../../components/Delete';
 import { GetPompistes } from '../../../context/features/PompisteSlice';
 import { useDispatch ,useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
+import EvaluationStars from '../../../components/EvaluationStars';
 const Pompiste : React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
@@ -22,11 +23,31 @@ const Pompiste : React.FC = () => {
  
   const [Element , setElement] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
-  const [selectedIds , setSelectedIds] = useState(null);
+  const [selectedIds , setSelectedIds] = useState<string[]>([]);;
  
+  const handleCheckboxChange = (id: string) => {
+    setSelectedIds((prevIds) => {
+      if (prevIds.includes(id)) {
+        return prevIds.filter((selectedId) => selectedId !== id);
+      } else {
+        return [...prevIds, id];
+      }
+    });
+  };
+
+  const handleSelectAllCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      const allIds = pompistes.map((pompiste: any) => pompiste.id);
+      setSelectedIds(allIds);
+    } else {
+      setSelectedIds([]);
+    }
+  };
+  
   useEffect(()=> {
-     dispatch(GetPompistes);
-  },[])
+    dispatch(GetPompistes());
+    },[])
 
   return (
     <div>
@@ -91,13 +112,16 @@ const Pompiste : React.FC = () => {
             <tr>
               <th scope="col" className="p-4">
                 <div className="flex items-center">
-                  <input id="checkbox-all" type="checkbox" className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                  <input 
+                   onChange={handleSelectAllCheckboxChange}
+                   id="checkbox-all"
+                   type="checkbox"
+                   className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                   <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                 </div>
               </th>
               <th scope="col" className="p-4 ">Pompiste</th>
               <th scope="col" className="p-4 ">Nom</th>
-              <th scope="col" className="p-4 ">Points</th>
               <th scope="col" className="p-4 ">Sold</th>
               <th scope="col" className="p-4 ">évaluation</th>
               <th scope="col" className="p-4 ">Rank</th>
@@ -105,12 +129,21 @@ const Pompiste : React.FC = () => {
             </tr>
           </thead>
           <tbody>
+          {pompistes?.map((pompiste :any) => (
             <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
               <td className="p-4 w-4">
                 <div className="flex items-center">
-                  <input id="checkbox-table-search-1" type="checkbox"  className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
-                </div>
+                <input
+                      id={`checkbox-table-search-${pompiste.id}`}
+                      type="checkbox"
+                      className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      checked={selectedIds.includes(pompiste.id)}
+                      onChange={() => handleCheckboxChange(pompiste.id)}
+                    />
+                    <label htmlFor={`checkbox-table-search-${pompiste.id}`} className="sr-only">
+                      Select
+                    </label>
+                    </div>
               </td>
               <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <div className="flex items-center justify-center mr-3">
@@ -118,21 +151,18 @@ const Pompiste : React.FC = () => {
                 </div>
               </th>
               <td className="px-4 py-3">
-                <span className="bg-primary-100 text-primary-800 text-xs font-medium rounded dark:bg-primary-900 dark:text-primary-300">Mohamed BAHA</span>
+                <span className="bg-primary-100 text-primary-800 text-xs font-medium rounded dark:bg-primary-900 dark:text-primary-300">{pompiste.username}</span>
               </td>
             
-              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">1.47</td>
-              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">0.47</td>
+              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pompiste.solde}</td>
               <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                
-                <div className="flex items-center justify-center">
-                  <svg aria-hidden="true" className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
+                <div className="flex items-center justify-center flex-row">
+                <EvaluationStars evaluation={pompiste.score} />
                 </div>
 
               </td>
-              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">1</td>
+              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pompiste.rank}</td>
 
               <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <div className="flex items-center justify-center space-x-4">
@@ -164,7 +194,7 @@ const Pompiste : React.FC = () => {
               </td>
             </tr>
            
-           
+          ))}
           </tbody>
         </table>
       </div>

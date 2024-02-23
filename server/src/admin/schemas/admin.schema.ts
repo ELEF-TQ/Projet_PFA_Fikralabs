@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema()
 export class Admin {
+  
   @Prop({ required: true })
   username: string;
 
@@ -12,7 +13,7 @@ export class Admin {
   @Prop({ required: true })
   password: string;
 
-  @Prop({ required: true })
+  @Prop()
   phone: string;
 
   @Prop({ default: 'ADMIN' }) 

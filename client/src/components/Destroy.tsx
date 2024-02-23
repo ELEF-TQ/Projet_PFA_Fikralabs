@@ -12,7 +12,7 @@ const Destroy : React.FC<Props>= ({show, handleClose, Ids, EndPoint , onDestroyS
   
     const params = { Ids, EndPoint };
     useEffect(()=> {
-        console.log(params);
+        // console.log(params);
     },[])
   
     function handleConfirmation() {

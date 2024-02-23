@@ -15,7 +15,7 @@ export class PompisteService {
   }
 
   async findAll(): Promise<Pompiste[]> {
-    return this.pompisteModel.find().exec();
+    return this.pompisteModel.find({}).exec();
   }
 
   async findOne(id: string): Promise<Pompiste> {

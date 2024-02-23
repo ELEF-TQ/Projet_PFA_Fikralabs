@@ -13,7 +13,7 @@ const Delete : React.FC<Props>= ({show, handleClose, Id, EndPoint , onDeletionSu
     const params = { Id, EndPoint };
 
     useEffect(()=> {
-        console.log(params);
+        // console.log(params);
     },[])
   
     function handleConfirmation() {
