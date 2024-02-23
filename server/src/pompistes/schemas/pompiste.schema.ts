@@ -5,20 +5,34 @@ export type PompisteDocument = Pompiste & Document;
 
 @Schema()
 export class Pompiste {
+
+  @Prop({required :true})
+  matriculeRH: string;
+
+  @Prop({required :true})
+  CIN:string;
+
   @Prop({ required: true })
   username: string;
 
-  @Prop({ required: true })
-  code: string;
+  @Prop()
+  email:string;
 
   @Prop()
-  points: number;
+  score: number;
 
   @Prop()
   ranking: number;
 
   @Prop()
+  solde:number;
+
+  @Prop()
   image: string;
+
+  @Prop({default :"POMPISTE"})
+  role:string;
+
 }
 
 export const PompisteSchema = SchemaFactory.createForClass(Pompiste);

@@ -1,12 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { GetPompistes, createPompiste } from "../../../context/features/PompisteSlice";
+import { useDispatch , useSelector } from "react-redux";
+import { AppDispatch } from "../../../context/store";
 
-interface Props {
-  show: boolean;
-  handleClose: () => void;
-}
+interface Props {show: boolean;handleClose: () => void}
 
 const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
  
+  const dispatch = useDispatch<AppDispatch>();
+  
   const initialFormData = {
     username: "",
     matriculeRH: "",
@@ -25,6 +27,9 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
 
   const handleSubmit = () => {
     console.log("Submit", formData);
+    dispatch(createPompiste(formData)).then(()=> {
+      dispatch(GetPompistes());
+    })
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {

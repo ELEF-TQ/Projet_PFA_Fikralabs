@@ -13,9 +13,9 @@ export const GetPompistes = createAsyncThunk('pompistes/fetchAll', async () => {
 });
 
 // Async thunk to create a new pompiste
-export const createPompiste = createAsyncThunk('pompistes/create', async (pompisteData) => {
+export const createPompiste = createAsyncThunk('pompistes/create', async (formData :any) => {
   try {
-    const response = await axiosAuth.post('/pompistes', pompisteData);
+    const response = await axiosAuth.post('/pompistes', formData);
     return response.data;
   } catch (error) {
     throw error;

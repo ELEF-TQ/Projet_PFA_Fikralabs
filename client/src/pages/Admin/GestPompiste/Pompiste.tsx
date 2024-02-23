@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import defaultUser from '../../../assets/images/defaultUser.png'
 
 import AddPompiste from './AddPompiste';
@@ -7,9 +7,12 @@ import EditPompiste from './EditPompiste';
 import Destroy from '../../../components/Destroy';
 import Delete from '../../../components/Delete';
 import { GetPompistes } from '../../../context/features/PompisteSlice';
-
+import { useDispatch ,useSelector } from 'react-redux';
+import { AppDispatch } from '../../../context/store';
 const Pompiste : React.FC = () => {
 
+  const dispatch = useDispatch<AppDispatch>();
+  const { pompistes } = useSelector((state :any) => state.pompistes);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -21,7 +24,10 @@ const Pompiste : React.FC = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [selectedIds , setSelectedIds] = useState(null);
  
-  
+  useEffect(()=> {
+     dispatch(GetPompistes);
+  },[])
+
   return (
     <div>
 
