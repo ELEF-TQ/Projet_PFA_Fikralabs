@@ -1,9 +1,9 @@
 - Backlog de Produit :
-    Gestion des pompistes : la platforme permet la gestion des comptes/besoin des bricoleurs
-    Gestion des client : la platforme permet la gestion des coomptes/besoin des clients
+    Gestion des pompistes : la platforme permet la gestion des comptes/besoins des pompistes
+    Gestion des client : la platforme permet la gestion des comptes/besoin des clients
     Gestion des reclamations :
     Gestion des services :
-    Gestion des demande de convertion :
+    Gestion des demandes de convertion :
     Gestion des coupons :
 
 
