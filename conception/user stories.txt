@@ -1,0 +1,37 @@
+- Backlog de Produit :
+    Gestion des pompistes : la platforme permet la gestion des comptes/besoin des bricoleurs
+    Gestion des client : la platforme permet la gestion des coomptes/besoin des clients
+    Gestion des reclamations :
+    Gestion des services :
+    Gestion des demande de convertion :
+    Gestion des coupons :
+
+
+Pompistes:
+    us1: en tant que Pompiste je peux creer un compte afin d'acceder à l'application
+    us2: en tant que Pompiste je peux changer mes données personnelles afin de garder une synchronisation reeles de mes données
+    us3: en tant que Pompiste je peux passer des Quizs afin de gagner des points
+    us4: en tant que Pompiste je peux passer des formation afin de gagner des points
+    us5: en tant que Pompiste je consulter mes reviews afin de voir mon score
+    us6: en tant que Pompiste je peux demander une convertion de points afin de recevoir de l'argent
+
+Clients:
+    us1: en tant que Clinent je peux creer un compte afin d'acceder à l'application
+    us2: en tant que Clinent je peux changer mes données personnelles afin de garder une synchronisation reeles de mes données
+    us3: en tant que Clinent je peux donner des reviews sur les pompistes afin de gagner des points
+    us4: en tant que Clinent je peux recevoir des coupons afin de benificier des reduction sur produits et services
+    us5: en tant que Clinent je reserver des services afin d'eviter la perte de temps
+    us6: en tant que Clinent je peux envoyer des reclamations à props d'un service ou pompiste afin de regler des problemes
+
+Admins :
+    use1 : en tant qu'admin je peut confirmez les comptes des pompiste (POMPISTE)
+    use2 : en tant qu'admin je peut consultez les review donnez au pompiste (REVIEW)
+    use3 : en tant qu'admin je peut acceptez les demandes de convertion de score en sold (CONVERTION) 
+    use4 : en tant qu'admin je faire la gestion des service(l'ajout/modif de date de disponibilite) (SERVICE)
+    use5 : en tant qu'admin je peut cree des nouveau coupon avec un nombre max disponibile (COUPON)
+    use6 : en tant qu'admin je peut traiter les reclamations donnez par les client (RECLAMATION)
+
+
+
+entities :
+client - pompiste - admin - coupon - service - reclamation - convertion 
