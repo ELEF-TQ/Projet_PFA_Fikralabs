@@ -23,21 +23,24 @@ export const createPompiste = createAsyncThunk('pompistes/create', async (formDa
 });
 
 // Async thunk to update a pompiste
-export const updatePompiste = createAsyncThunk('pompistes/update', async (pompisteId: string, pompisteData: any) => {
+export const updatePompiste = createAsyncThunk('pompistes/update',
+  async ({ Id, formData }: { Id: string, formData: any }) => {
     try {
-      const response = await axiosAuth.put(`/pompistes/${pompisteId}`, pompisteData);
+      const response = await axiosAuth.patch(`/pompistes/${Id}`, formData);
       return response.data;
     } catch (error) {
       throw error;
     }
-  });
+  }
+);
+
   
 
 // Async thunk to delete a pompiste
-export const deletePompiste = createAsyncThunk('pompistes/delete', async (pompisteId) => {
+export const deletePompiste = createAsyncThunk('pompistes/delete', async (Id) => {
   try {
-    await axiosAuth.delete(`/pompistes/${pompisteId}`);
-    return pompisteId;
+    await axiosAuth.delete(`/pompistes/${Id}`);
+    return Id;
   } catch (error) {
     throw error;
   }

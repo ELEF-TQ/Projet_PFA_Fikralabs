@@ -24,26 +24,25 @@ const Pompiste : React.FC = () => {
   const [Element , setElement] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [selectedIds , setSelectedIds] = useState<string[]>([]);;
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
  
-  const handleCheckboxChange = (id: string) => {
-    setSelectedIds((prevIds) => {
-      if (prevIds.includes(id)) {
-        return prevIds.filter((selectedId) => selectedId !== id);
-      } else {
-        return [...prevIds, id];
-      }
-    });
+
+  // Checkbox handling
+  const handleSelectAllChange = (e: { target: { checked: any; }; }) => {
+    const isChecked = e.target.checked;
+    setSelectAllChecked(isChecked);
+    setSelectedIds(isChecked ? pompistes.map((pompiste: { _id: any; }) => pompiste._id) : []);
   };
 
-  const handleSelectAllCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, Id: string) => {
     const isChecked = e.target.checked;
-    if (isChecked) {
-      const allIds = pompistes.map((pompiste: any) => pompiste.id);
-      setSelectedIds(allIds);
-    } else {
-      setSelectedIds([]);
-    }
+    setSelectedIds((prevSelected: any[]) =>
+      isChecked
+        ? [...prevSelected, Id]
+        : prevSelected.filter((id: any) => id !== Id)
+    );
   };
+
   
   useEffect(()=> {
     dispatch(GetPompistes());
@@ -112,11 +111,13 @@ const Pompiste : React.FC = () => {
             <tr>
               <th scope="col" className="p-4">
                 <div className="flex items-center">
-                  <input 
-                   onChange={handleSelectAllCheckboxChange}
-                   id="checkbox-all"
-                   type="checkbox"
-                   className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <input
+                        type="checkbox"
+                        id="selectAll"
+                        checked={selectAllChecked}
+                        onChange={handleSelectAllChange}
+                      />
+                 
                   <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                 </div>
               </th>
@@ -129,21 +130,24 @@ const Pompiste : React.FC = () => {
             </tr>
           </thead>
           <tbody>
-          {pompistes?.map((pompiste :any) => (
-            <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+          {pompistes?.map((pompiste :any ) => (
+            <tr key={pompiste._id} className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
               <td className="p-4 w-4">
                 <div className="flex items-center">
                 <input
-                      id={`checkbox-table-search-${pompiste.id}`}
-                      type="checkbox"
-                      className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      checked={selectedIds.includes(pompiste.id)}
-                      onChange={() => handleCheckboxChange(pompiste.id)}
-                    />
-                    <label htmlFor={`checkbox-table-search-${pompiste.id}`} className="sr-only">
-                      Select
-                    </label>
-                    </div>
+                  type="checkbox"
+                  id={`checkbox${pompiste._id}`}
+                  name="options[]"
+                  value={pompiste._id}
+                  checked={selectAllChecked || selectedIds.includes(pompiste._id)}
+                  onChange={(e) => handleCheckboxChange(e, pompiste._id)}
+                />
+
+              <label htmlFor={`checkbox-table-search-${pompiste._id}`} className="sr-only">
+                Select
+              </label>
+
+                </div>
               </td>
               <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <div className="flex items-center justify-center mr-3">
@@ -169,21 +173,21 @@ const Pompiste : React.FC = () => {
 
                   
 
-                  <button  onClick={() =>{setElement(null) , setIsEditModalOpen(true)}} type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" className="flex items-center text-yellow-700 hover:text-white border border-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:border-yellow-500 dark:text-yellow-500 dark:hover:text-white dark:hover:bg-yellow-600 dark:focus:ring-yellow-900">
+                  <button  onClick={() =>{setElement(pompiste) , setIsEditModalOpen(true)}} type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" className="flex items-center text-yellow-700 hover:text-white border border-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:border-yellow-500 dark:text-yellow-500 dark:hover:text-white dark:hover:bg-yellow-600 dark:focus:ring-yellow-900">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4  -ml-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                       <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                       <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" />
                     </svg>
                   </button>
 
-                  <button  onClick={() =>{setElement(null) , setIsViewModalOpen(true)}} type="button" data-drawer-target="drawer-read-product-advanced" data-drawer-show="drawer-read-product-advanced" aria-controls="drawer-read-product-advanced" className="py-2 px-2 flex items-center text-sm font-medium text-center text-green-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-green-700 dark:bg-gray-800 dark:text-green-400 dark:border-green-600 dark:hover:text-white dark:hover:bg-green-700">
+                  <button  onClick={() =>{setElement(pompiste) , setIsViewModalOpen(true)}} type="button" data-drawer-target="drawer-read-product-advanced" data-drawer-show="drawer-read-product-advanced" aria-controls="drawer-read-product-advanced" className="py-2 px-2 flex items-center text-sm font-medium text-center text-green-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-green-700 dark:bg-gray-800 dark:text-green-400 dark:border-green-600 dark:hover:text-white dark:hover:bg-green-700">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4  -ml-0.5">
                       <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                       <path fillRule="evenodd" clipRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" />
                     </svg>
                   </button>
                   
-                  <button onClick={() =>{setSelectedId(null) , setIsDeleteModalOpen(true)}}  type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" className="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                  <button onClick={() =>{setSelectedId(pompiste._id) , setIsDeleteModalOpen(true)}}  type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" className="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4  -ml-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                       <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
                     </svg>
@@ -203,7 +207,7 @@ const Pompiste : React.FC = () => {
   </div>
 </section>
 
-  <Destroy show={isDestroyModalOpen} handleClose={() => setIsDestroyModalOpen(false)} Ids={selectedIds} EndPoint="/pompistes_destroy" onDestroySuccess={GetPompistes} />
+  <Destroy show={isDestroyModalOpen} handleClose={() => setIsDestroyModalOpen(false)} ids={selectedIds} EndPoint="/pompistes/destroy" onDestroySuccess={GetPompistes} />
   <Delete show={isshowDeleteModalOpen} handleClose={() => setIsDeleteModalOpen(false)} Id={selectedId} EndPoint="/pompistes"  onDeletionSuccess={GetPompistes}/>
   <EditPompiste show={isEditModalOpen} handleClose={() => setIsEditModalOpen(false)} Element={Element} />
   <ViewPompiste show={isViewModalOpen} handleClose={() => setIsViewModalOpen(false)}  Element={Element}/>

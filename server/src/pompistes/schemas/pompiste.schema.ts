@@ -15,10 +15,13 @@ export class Pompiste {
   @Prop({ required: true })
   username: string;
 
+  @Prop({required: true})
+  password: string;
+
   @Prop()
   email:string;
 
-  @Prop({default:5})
+  @Prop({default:5}) //to be changed to 0
   score: number;
 
   @Prop({default:99})

@@ -1,4 +1,7 @@
 import React, { useEffect } from 'react'
+import { deleteItem } from '../context/features/AdminSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../context/store';
 
 interface Props {
     show: boolean;
@@ -6,18 +9,19 @@ interface Props {
     Id: any;
     EndPoint: string;
     onDeletionSuccess : any;
-
   }
 const Delete : React.FC<Props>= ({show, handleClose, Id, EndPoint , onDeletionSuccess}) => {
   
+    const dispatch = useDispatch<AppDispatch>()
     const params = { Id, EndPoint };
 
-    useEffect(()=> {
-        // console.log(params);
-    },[])
   
     function handleConfirmation() {
         console.log('confirme')
+        dispatch(deleteItem(params)).then(()=> {
+          handleClose();
+          dispatch(onDeletionSuccess());
+        })
     }
 
     return (

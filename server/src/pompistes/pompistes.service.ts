@@ -7,6 +7,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PompisteService {
+
   constructor(@InjectModel(Pompiste.name) private readonly pompisteModel: Model<PompisteDocument>) {}
 
   async create(createPompisteDto: CreatePompisteDto): Promise<Pompiste> {
@@ -29,4 +30,16 @@ export class PompisteService {
   async remove(id: string): Promise<void> {
     await this.pompisteModel.findByIdAndDelete(id).exec();
   }
+
+  async destroy(ids: string[]): Promise<void> {
+    try {
+        console.log('IDs to delete:', ids);
+        await this.pompisteModel.deleteMany({ _id: { $in: ids } }).exec();
+        console.log('Documents deleted successfully.');
+    } catch (error) {
+        console.error('Error deleting documents:', error);
+        throw error; 
+    }
+}
+
 }

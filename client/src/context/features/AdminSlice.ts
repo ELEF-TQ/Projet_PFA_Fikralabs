@@ -6,7 +6,7 @@ import { axiosAuth } from '../../lib/Constants'; // Assuming you have an axios i
 type DeleteParams = {
   EndPoint: string;
   Id?: string;
-  Ids?: string[];
+  ids?: string[];
 };
 
 // deleteItem:
@@ -23,17 +23,17 @@ export const deleteItem = createAsyncThunk(
 );
 
 // destroyItem:
-export const destroyItems = createAsyncThunk(
-  'destroy/deleteItems',
+export const destroyItems = createAsyncThunk('destroy/deleteItems',
   async (params: DeleteParams, thunkAPI) => {
-    try {
-      const response = await axiosAuth.post(params.EndPoint, params.Ids);
-      return response.data;
+
+    try { const response = await axiosAuth.delete(params.EndPoint, {data: { ids: params.ids } });
+  return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
 
 const initialState = {
   isLoading: false,

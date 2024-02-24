@@ -1,23 +1,28 @@
 import React, { useEffect } from 'react'
+import { destroyItems } from '../context/features/AdminSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../context/store';
+
 
 interface Props {
     show: boolean;
     handleClose: () => void;
-    Ids: any;
+    ids: any;
     EndPoint: string;
     onDestroySuccess : any;
 
   }
-const Destroy : React.FC<Props>= ({show, handleClose, Ids, EndPoint , onDestroySuccess}) => {
+const Destroy : React.FC<Props>= ({show, handleClose, ids, EndPoint , onDestroySuccess}) => {
   
-    const params = { Ids, EndPoint };
+    const dispatch = useDispatch<AppDispatch>()
+    const params = { ids, EndPoint };
+    
     useEffect(()=> {
-        // console.log(params);
-    },[])
+         console.log(params);
+    },[show])
   
     function handleConfirmation() {
-        console.log('confirme')
-
+        dispatch(destroyItems(params))
     }
 
     return (

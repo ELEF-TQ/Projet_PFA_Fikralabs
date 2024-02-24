@@ -31,4 +31,17 @@ export class PompistesController {
   remove(@Param('id') id: string) {
     return this.pompistesService.remove(id);
   }
+
+  @Delete('destroy') 
+  async destroy(@Body('ids') ids: string[]) {
+    try {
+      console.log(ids); // Log the received ids
+      const result = await this.pompistesService.destroy(ids);
+      return { success: true, result };
+    } catch (error) {
+      console.error('Error in destroy method:', error);
+      return { success: false, error: 'An error occurred while destroying items' };
+    }
+  }
+  
 }

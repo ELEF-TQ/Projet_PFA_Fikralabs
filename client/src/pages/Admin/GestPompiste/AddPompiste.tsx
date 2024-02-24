@@ -3,10 +3,12 @@ import { GetPompistes, createPompiste } from "../../../context/features/Pompiste
 import { useDispatch , useSelector } from "react-redux";
 import { AppDispatch } from "../../../context/store";
 
-interface Props {show: boolean;handleClose: () => void}
+interface Props {
+  show: boolean;
+  handleClose: () => void;
+}
 
 const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
- 
   const dispatch = useDispatch<AppDispatch>();
   
   const initialFormData = {
@@ -14,7 +16,8 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
     matriculeRH: "",
     CIN: "",
     phone: "",
-    email: ""
+    email: "",
+    password:"",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -27,9 +30,10 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
 
   const handleSubmit = () => {
     console.log("Submit", formData);
-    dispatch(createPompiste(formData)).then(()=> {
+    dispatch(createPompiste(formData)).then(() => {
+      handleClose();
       dispatch(GetPompistes());
-    })
+    });
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -40,6 +44,10 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
     });
   };
 
+  // Check if any field is empty
+  const isAnyFieldEmpty = Object.entries(formData).some(([key, value]) => {
+    if (key === 'email') { return false } return value === ''});
+  
   return (
     <>
       {show && (
@@ -138,11 +146,30 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
                   onChange={handleChange}
                 />
               </div>
+
+              <div className="mb-4">
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium Input_Label"
+                >
+                  Mot de passe
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  className="Input__Style w-full"
+                  placeholder="*******"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
             <div className="flex justify-between">
-            <button
-                className="btn bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+              <button
+                className={`btn bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded ${isAnyFieldEmpty ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={handleSubmit}
+                disabled={isAnyFieldEmpty} // Disable button if any field is empty
               >
                 Ajouter
               </button>
@@ -152,7 +179,6 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
               >
                 Annuler
               </button>
-          
             </div>
           </div>
         </div>

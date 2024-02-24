@@ -1,5 +1,7 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
-
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { updatePompiste } from '../../../context/features/PompisteSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../context/store';
 
 interface Props {
   show: boolean;
@@ -7,29 +9,34 @@ interface Props {
   Element: any;
 }
 
-const EditPompiste : React.FC<Props> = ({ show, handleClose ,Element }) => {
- 
- // GET INFORMATION FROM DATABASE
-  const initialFormData = {
+const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
+
+  const dispatch = useDispatch<AppDispatch>()
+  const [formData, setFormData] = useState({
     username: "",
     matriculeRH: "",
     CIN: "",
     phone: "",
     email: ""
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
+  });
 
   useEffect(() => {
-    if (!show) {
-      setFormData(initialFormData);
+    if (Element && show) {
+      setFormData(Element); 
+    } else {
+      setFormData({
+        username: "",
+        matriculeRH: "",
+        CIN: "",
+        phone: "",
+        email: ""
+      });
     }
-  }, [show]);
+  }, [show, Element]);
 
   const handleSubmit = () => {
     console.log("Submit", formData);
-   
-  };
+    dispatch(updatePompiste({ Id: Element._id, formData }));  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
@@ -60,7 +67,7 @@ const EditPompiste : React.FC<Props> = ({ show, handleClose ,Element }) => {
                   name="username"
                   id="username"
                   className="Input__Style w-full"
-                  placeholder="nom"
+                  placeholder="Nom"
                   value={formData.username}
                   onChange={handleChange}
                 />
@@ -78,7 +85,7 @@ const EditPompiste : React.FC<Props> = ({ show, handleClose ,Element }) => {
                   name="matriculeRH"
                   id="matriculeRH"
                   className="Input__Style w-full"
-                  placeholder="#7815"
+                  placeholder="Matricule"
                   value={formData.matriculeRH}
                   onChange={handleChange}
                 />
@@ -96,7 +103,7 @@ const EditPompiste : React.FC<Props> = ({ show, handleClose ,Element }) => {
                   name="CIN"
                   id="CIN"
                   className="Input__Style w-full"
-                  placeholder="JC785"
+                  placeholder="CIN"
                   value={formData.CIN}
                   onChange={handleChange}
                 />
@@ -107,14 +114,14 @@ const EditPompiste : React.FC<Props> = ({ show, handleClose ,Element }) => {
                   htmlFor="phone"
                   className="block mb-2 text-sm font-medium Input_Label"
                 >
-                  Telephone
+                  Téléphone
                 </label>
                 <input
                   type="text"
                   name="phone"
                   id="phone"
                   className="Input__Style w-full"
-                  placeholder="0666666"
+                  placeholder="Téléphone"
                   value={formData.phone}
                   onChange={handleChange}
                 />
@@ -132,14 +139,14 @@ const EditPompiste : React.FC<Props> = ({ show, handleClose ,Element }) => {
                   name="email"
                   id="email"
                   className="Input__Style w-full"
-                  placeholder="name@company.com"
+                  placeholder="Email"
                   value={formData.email}
                   onChange={handleChange}
                 />
               </div>
             </div>
             <div className="flex justify-between">
-            <button
+              <button
                 className="btn bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
                 onClick={handleSubmit}
               >
@@ -156,7 +163,7 @@ const EditPompiste : React.FC<Props> = ({ show, handleClose ,Element }) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default EditPompiste
+export default EditPompiste;
