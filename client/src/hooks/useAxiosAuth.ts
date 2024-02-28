@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
-import {axiosAuth } from "@/lib/Constants";
-import { retrieveUserSession } from "@/lib/Encryption";
+import { axiosAuth } from "../lib/Constants";
+import { retrieveUserSession } from "../lib/Encryption";
 
 const useAxiosAuth = () => {
     useEffect(() => {

@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { RolesEnum } from 'src/enums/roles.enum';
 
 
 @Schema()
@@ -16,7 +17,7 @@ export class Admin {
   @Prop()
   phone: string;
 
-  @Prop({ default: 'ADMIN' }) 
+  @Prop({ default: RolesEnum.ADMIN }) 
   role: string;
 }
 
