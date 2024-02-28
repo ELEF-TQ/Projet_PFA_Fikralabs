@@ -1,12 +1,12 @@
 import { MongooseModule } from '@nestjs/mongoose';
-import { ServicesModule } from './services/services.module';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { ClientsModule } from './clients/clients.module';
 import { PompistesModule } from './pompistes/pompistes.module';
 import { AdminModule } from './admin/admin.module';
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { IdValidationMiddleware } from './middlewares/IdValidation.middleware';
+import { ReviewsModule } from './reviews/reviews.module';
 
 
 
@@ -16,7 +16,7 @@ import { IdValidationMiddleware } from './middlewares/IdValidation.middleware';
     isGlobal: true
   }),
     MongooseModule.forRoot(`${process.env.DB_TYPE}://${process.env.HOST_NAME}/${process.env.DB_NAME}`),
-    ServicesModule, AuthModule, UsersModule, PompistesModule, AdminModule],
+     AuthModule, ClientsModule, PompistesModule, AdminModule, ReviewsModule],
 })
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) {

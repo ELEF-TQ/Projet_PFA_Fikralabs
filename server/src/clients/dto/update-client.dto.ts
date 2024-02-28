@@ -1,8 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateUserDto } from './create-user.dto';
+import { CreateClientDto } from './create-client.dto';
 import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class UpdateUserDto extends PartialType(CreateUserDto) {
+export class UpdateClientDto extends PartialType(CreateClientDto) {
     @IsOptional()
     @IsString()
     readonly username?: string;

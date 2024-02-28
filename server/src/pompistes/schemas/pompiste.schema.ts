@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { RolesEnum } from 'src/enums/roles.enum';
 
 export type PompisteDocument = Pompiste & Document;
 
@@ -33,7 +34,7 @@ export class Pompiste {
   @Prop()
   image: string;
 
-  @Prop({default :"POMPISTE"})
+  @Prop({default :RolesEnum.POMPISTE})
   role:string;
 
 }
