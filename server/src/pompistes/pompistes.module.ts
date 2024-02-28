@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PompistesController } from './pompistes.controller';
-import { PompisteService } from './pompistes.service';
+import { PompistesService } from './pompistes.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Pompiste, PompisteSchema } from './schemas/pompiste.schema';
 
@@ -12,6 +12,7 @@ import { Pompiste, PompisteSchema } from './schemas/pompiste.schema';
     }
   ])],
   controllers: [PompistesController],
-  providers: [PompisteService],
+  providers: [PompistesService],
+  exports: [PompistesService]
 })
 export class PompistesModule {}

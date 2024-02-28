@@ -1,10 +1,10 @@
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
+import { ClientsService } from '../clients/clients.service';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AuthPayloadDto } from './dto/auth.dto';
 import { AdminService } from 'src/admin/admin.service';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { User } from 'src/users/schemas/user.schema';
+import { CreateClientDto } from 'src/clients/dto/create-client.dto';
+import { Client } from 'src/clients/schemas/client.schema';
 import { Admin } from 'src/admin/schemas/admin.schema';
 import { comparePasswords } from './utils/bcrypt';
 import { IsEmailAlreadyExists } from './utils/IsEmailAlreadyExist';
@@ -12,7 +12,7 @@ import { IsEmailAlreadyExists } from './utils/IsEmailAlreadyExist';
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
+    private clientsService: ClientsService,
     private adminService: AdminService,
     private jwtService: JwtService,
   ) {}
@@ -35,18 +35,18 @@ export class AuthService {
     }
   }
 
-  async register(userDetails: CreateUserDto){
-    const IsExists = await IsEmailAlreadyExists(userDetails, this.usersService, this.adminService);
+  async register(userDetails: CreateClientDto){
+    const IsExists = await IsEmailAlreadyExists(userDetails, this.clientsService, this.adminService);
     if(IsExists){
       throw new HttpException("Email already Exist", HttpStatus.BAD_REQUEST);
     }else{
-      const userCreated = await this.usersService.create(userDetails);
+      const userCreated = await this.clientsService.create(userDetails);
       return userCreated;
     }
   }
 
-  async findOneById(id: string): Promise<User | Admin> {
-    const userClient = await this.usersService.findOne(id);
+  async findOneById(id: string): Promise<Client | Admin> {
+    const userClient = await this.clientsService.findOne(id);
     if(!userClient) {
       const userAdmin = await this.adminService.findOne(id);
       if(!userAdmin){
@@ -59,8 +59,8 @@ export class AuthService {
     }
   }
 
-  async findOneByEmail(email: string): Promise<User | Admin> {
-    const userClient = await this.usersService.findOneByEmail(email);
+  async findOneByEmail(email: string): Promise<Client | Admin> {
+    const userClient = await this.clientsService.findOneByEmail(email);
     if(!userClient) {
       const userAdmin = await this.adminService.findOneByEmail(email);
       if(!userAdmin){

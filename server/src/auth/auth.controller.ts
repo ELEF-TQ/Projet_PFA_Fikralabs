@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, UseGuards, Req, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local.guard';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateClientDto } from 'src/clients/dto/create-client.dto';
 import { Request } from 'express';
 import { RoleGuard } from './guards/role.guard';
 import { Roles } from './decorators/roles.decorator';
@@ -23,7 +23,7 @@ export class AuthController {
 
   @Post("signup")
   @UsePipes(ValidationPipe)
-  signup(@Body() userDetails: CreateUserDto){
+  signup(@Body() userDetails: CreateClientDto){
     return this.authService.register(userDetails);
   }
 

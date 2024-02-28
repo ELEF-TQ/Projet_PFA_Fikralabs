@@ -4,5 +4,6 @@ export class CreatePompisteDto {
     readonly points?: number;
     readonly ranking?: number;
     readonly image?: string;
+    readonly etoiles?: number;
   }
   

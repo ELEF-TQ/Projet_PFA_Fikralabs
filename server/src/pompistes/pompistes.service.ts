@@ -6,7 +6,7 @@ import { UpdatePompisteDto } from './dto/update-pompiste.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class PompisteService {
+export class PompistesService {
 
   constructor(@InjectModel(Pompiste.name) private readonly pompisteModel: Model<PompisteDocument>) {}
 
@@ -40,6 +40,19 @@ export class PompisteService {
         console.error('Error deleting documents:', error);
         throw error; 
     }
-}
+  }
+
+  
+  async getPompisteIdByMatriculeRH(matriculeRH: string): Promise<string> {
+    const pompiste = await this.pompisteModel.findOne({ matriculeRH }).exec();
+    if (pompiste) {
+      return pompiste._id;
+    }
+    return null; 
+  }
+
+  async updatePompisteScore(pompisteId: string, pompisteScore: number): Promise<void> {
+    await this.pompisteModel.findByIdAndUpdate(pompisteId, { $inc: { score: pompisteScore } }).exec();
+  }
 
 }

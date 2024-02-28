@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Logger } from '@nestjs/common';
-import { PompisteService } from './pompistes.service';
+import { PompistesService } from './pompistes.service';
 import { CreatePompisteDto } from './dto/create-pompiste.dto';
 import { UpdatePompisteDto } from './dto/update-pompiste.dto';
 
 @Controller('pompistes')
 export class PompistesController {
-  constructor(private readonly pompistesService: PompisteService) {}
+  constructor(private readonly pompistesService: PompistesService) {}
 
   @Post()
   create(@Body() createPompisteDto: CreatePompisteDto) {

@@ -1,26 +1,48 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { ClientsService } from '../clients/clients.service';
+import { PompistesService } from '../pompistes/pompistes.service';
+import { Review } from '../reviews/schemas/review.entity';
+import { UpdatePompisteDto } from '../pompistes/dto/update-pompiste.dto';
 
 @Injectable()
 export class ReviewsService {
-  create(createReviewDto: CreateReviewDto) {
-    return 'This action adds a new review';
-  }
+  constructor(
+    private readonly clientService: ClientsService,
+    private readonly pompisteService: PompistesService,
+    @InjectModel(Review.name)
+    private readonly reviewModel: Model<Review>,
+  ) {}
 
-  findAll() {
-    return `This action returns all reviews`;
-  }
+  async createReview(phone: string, matriculeRH: string, etoiles: number): Promise<void> {
+    const clientId = await this.clientService.getClientIdByPhone(phone);
+    const pompisteId = await this.pompisteService.getPompisteIdByMatriculeRH(matriculeRH);
 
-  findOne(id: number) {
-    return `This action returns a #${id} review`;
-  }
+    // Create the review
+    const review = new this.reviewModel({
+      client_id: clientId,
+      pompiste_id: pompisteId,
+      etoiles,
+    });
+    await review.save();
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
-  }
+    // Update the scores
+    const clientScore = 300;
+    const clientUpdatePromise = this.clientService.updateClientScore(clientId, clientScore);
 
-  remove(id: number) {
-    return `This action removes a #${id} review`;
+    // Update the pompiste's etoiles based on the mean etoiles
+    const reviews = await this.reviewModel.find({ pompiste_id: pompisteId }).exec();
+    let totalEtoiles = 0;
+    for (const review of reviews) {
+        totalEtoiles += review.etoiles;
+    }
+    const meanEtoiles = totalEtoiles / reviews.length;
+
+    // Update the pompiste's etoiles using the PompisteService
+    const updatePompisteDto: UpdatePompisteDto = { etoiles: meanEtoiles };
+    await this.pompisteService.update(pompisteId, updatePompisteDto);
+
+    await Promise.all([clientUpdatePromise]);
   }
 }
