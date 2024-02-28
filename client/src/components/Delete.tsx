@@ -17,7 +17,6 @@ const Delete : React.FC<Props>= ({show, handleClose, Id, EndPoint , onDeletionSu
 
   
     function handleConfirmation() {
-        console.log('confirme')
         dispatch(deleteItem(params)).then(()=> {
           handleClose();
           dispatch(onDeletionSuccess());

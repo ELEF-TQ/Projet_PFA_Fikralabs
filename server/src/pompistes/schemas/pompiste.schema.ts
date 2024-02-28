@@ -21,11 +21,11 @@ export class Pompiste {
   @Prop()
   email:string;
 
-  @Prop({default:5}) //to be changed to 0
+  @Prop({default:0}) 
   score: number;
 
-  @Prop({default:99})
-  rank: number;
+  @Prop({default:0})
+  etoiles:number;
 
   @Prop({default:0})
   solde:number;

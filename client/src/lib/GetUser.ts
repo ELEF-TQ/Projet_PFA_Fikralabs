@@ -6,13 +6,15 @@ async function getCurrentUser(role: string, id: string): Promise<UserData | null
     try {
         let endpoint = '';
         if (role === "CLIENT") {
-            endpoint = `/users/${id}`;
+            endpoint = `/clients/${id}`;
         } else if (role === "ADMIN") {
             endpoint = `/admins/${id}`;
-        } else {
+        } else if (role === "POMPISTE") {
+            endpoint = `/pompistes/${id}`;
+        }
+        else {
             throw new Error("Invalid role specified.");
         }
-
         const response = await axiosAuth.get(endpoint);
         const userData: UserData = response.data.user;
         return userData;

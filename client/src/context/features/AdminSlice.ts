@@ -24,14 +24,14 @@ export const deleteItem = createAsyncThunk(
 
 // destroyItem:
 export const destroyItems = createAsyncThunk('destroy/deleteItems',
-  async (params: DeleteParams, thunkAPI) => {
-
-    try { const response = await axiosAuth.delete(params.EndPoint, {data: { ids: params.ids } });
-  return response.data;
+  async (params: DeleteParams ,thunkAPI) => {
+    try {
+      const response = await axiosAuth.delete(params.EndPoint, { data: params.ids });
+      console.log(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
+    }  
     }
-  }
 );
 
 

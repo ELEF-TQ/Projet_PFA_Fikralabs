@@ -1,0 +1,18 @@
+Review :
+- client peut donnez un review (etoiles/phone/matriculeRH)
+- d'apres le review score dde client et pompiste sont calculer
+ clientScore = 300;
+  if (etoiles === 5) {
+      pompisteScore = 300;
+    } else if (etoiles === 4) {
+      pompisteScore = 200;
+    } else if (etoiles === 3) {
+      pompisteScore = 100;
+    }
+- pompiste peut consuler les review donner a lui avec un moyen etoile
+--> returner tous les 
+- calcul de moyenne etoile
+front :
+- admin peut voir ranking des pompiste depuis leur somme des etoiles
+- 
+Convertion :

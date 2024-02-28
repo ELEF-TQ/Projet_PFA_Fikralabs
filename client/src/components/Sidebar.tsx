@@ -21,22 +21,7 @@ const Sidebar = () => {
 
   let sidebarItems = AdminItems ;
 
-  // useEffect(() => {
-  //   const user = retrieveUserSession();
-  //   switch (user.role) {
-  //     case "ADMIN":
-  //       sidebarItems = AdminItems;
-  //       break;
-  //     case "CLIENT":
-  //       sidebarItems = ClientItems;
-  //       break;
-  //     case "POMPISTE":
-  //       sidebarItems = PompisteItems;
-  //       break;
-  //     default:
-  //       break;
-  //   }}, []);
-  
+  // getuser
 
 
   const { isCollapsed, toggleSidebarcollapse } = useContext(SidebarContext);

@@ -24,6 +24,7 @@ import Profile from "../pages/Admin/Profile";
 
 export const routes = createBrowserRouter([
  
+    /*______Auth Routes_______*/
     {
       path: "/",
       element :< LoginPage/>,
@@ -58,10 +59,10 @@ export const routes = createBrowserRouter([
         { path: "/pompiste/quiz", element: <Quiz/> },
         { path: "/pompiste/formations", element: <Formations/> },
         { path: "/pompiste/profile", element: <Profile/> },
-
-
       ],
     },
+
+      /*______Clients Routes_______*/
 
 
 ]);

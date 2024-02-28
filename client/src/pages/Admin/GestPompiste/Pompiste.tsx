@@ -125,7 +125,6 @@ const Pompiste : React.FC = () => {
               <th scope="col" className="p-4 ">Nom</th>
               <th scope="col" className="p-4 ">Sold</th>
               <th scope="col" className="p-4 ">évaluation</th>
-              <th scope="col" className="p-4 ">Rank</th>
               <th scope="col" className="p-4 ">Actions</th>
             </tr>
           </thead>
@@ -166,7 +165,6 @@ const Pompiste : React.FC = () => {
                 </div>
 
               </td>
-              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pompiste.rank}</td>
 
               <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <div className="flex items-center justify-center space-x-4">
