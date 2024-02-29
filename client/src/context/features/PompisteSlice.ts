@@ -36,15 +36,6 @@ export const updatePompiste = createAsyncThunk('pompistes/update',
 
   
 
-// Async thunk to delete a pompiste
-export const deletePompiste = createAsyncThunk('pompistes/delete', async (Id) => {
-  try {
-    await axiosAuth.delete(`/pompistes/${Id}`);
-    return Id;
-  } catch (error) {
-    throw error;
-  }
-});
 
 const initialState = {
   pompistes: [],
