@@ -33,7 +33,7 @@ const index: React.FC = () => {
         <div className="hidden md:block " >
           <img src={illustration} alt="illustration" className="" />
         </div>
-        <div className="w-5/12 xl:p-2 ">
+        <div className="w-5/12 xl:p-2 pt-20 ">
           <div className="space-y-4 md:space-y-6 md:p-5 sm:w-full ">
           <img src={Logo} alt='Logo'/>
             <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">
