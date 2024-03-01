@@ -13,9 +13,9 @@ export const createReview = createAsyncThunk('reviews/create', async (formData :
   }
 });
 
-export const getAllReviews= createAsyncThunk('reviews/fetchAll', async (matricule: any) => {
+export const getAllReviews= createAsyncThunk('reviews/fetchAll', async (matricule: string) => {
   try {
-    const response = await axiosAuth.post('/reviews/all', matricule);
+    const response = await axiosAuth.get(`/reviews/all/${matricule}`);
     return response.data;
   } catch (error) {
     throw error;
