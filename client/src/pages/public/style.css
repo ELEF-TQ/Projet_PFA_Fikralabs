@@ -1,0 +1,20 @@
+.Paragraphe_Text {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29.26px;
+    color: rgba(110, 111, 114, 1);
+  }
+
+.Title_Text {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--primary-color);
+
+}
+
+.Pompiste_Avatar {
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+}

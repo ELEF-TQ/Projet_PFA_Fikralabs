@@ -122,9 +122,6 @@ const index :React.FC= () => {
     try {
       console.log(formData);
       dispatch(handleSignup(formData));
-    // const res =  await axiosNoAuth.post("/auth/signup", formData);
-    //  console.log(res);
-     
     } catch (error) {
       console.log('Error submitting form:', error);
     

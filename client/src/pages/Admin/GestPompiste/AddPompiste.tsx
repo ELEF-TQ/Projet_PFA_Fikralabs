@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { GetPompistes, createPompiste } from "../../../context/features/PompisteSlice";
+import { getPompistes, createPompiste } from "../../../context/features/PompisteSlice";
 import { useDispatch , useSelector } from "react-redux";
 import { AppDispatch } from "../../../context/store";
 
@@ -32,7 +32,7 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
     console.log("Submit", formData);
     dispatch(createPompiste(formData)).then(() => {
       handleClose();
-      dispatch(GetPompistes());
+      dispatch(getPompistes());
     });
   };
 
