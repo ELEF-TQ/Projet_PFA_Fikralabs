@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpStatus, HttpException } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus, HttpException, Get } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 
@@ -15,4 +15,10 @@ export class ReviewsController {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
+
+  @Post("/all")
+  async getAllReviews(@Body("matriculeRH") matriculeRH: string){
+    return await this.reviewService.getAll(matriculeRH);
+  }
+
 }

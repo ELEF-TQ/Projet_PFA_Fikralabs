@@ -19,7 +19,7 @@ export class Pompiste {
   @Prop({required: true})
   password: string;
 
-  @Prop()
+  @Prop({required: true})
   email:string;
 
   @Prop({default:0}) 

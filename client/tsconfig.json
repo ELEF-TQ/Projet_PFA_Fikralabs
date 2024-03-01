@@ -18,7 +18,20 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Material UI */
+    "baseUrl": "./src",
+    "paths": {
+      "@mui/material/*": ["node_modules/@mui/material/*"],
+      "@mui/icons-material/*": ["node_modules/@mui/icons-material/*"]
+    },
+
+    "baseUrl": "./src",
+    "paths": {
+      "@emotion/react": ["node_modules/@emotion/react"],
+      "@emotion/styled": ["node_modules/@emotion/styled"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -13,6 +13,15 @@ export const createReview = createAsyncThunk('reviews/create', async (formData :
   }
 });
 
+export const getAllReviews= createAsyncThunk('reviews/fetchAll', async (matricule: any) => {
+  try {
+    const response = await axiosAuth.post('/reviews/all', matricule);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+});
+
 const initialState = {
   reviews: [],
   isLoading: false,
@@ -37,7 +46,16 @@ const reviewsSlice = createSlice({
         state.isLoading = false;
         Swal.fire({icon: 'error',title: 'Review Creation Failed',text: 'Failed to create the review. Please try again later.',
         });
-      });
+      })
+      .addCase(getAllReviews.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getAllReviews.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload)
+        state.reviews = action.payload;
+      })
   },
 });
 
