@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-import '../index.css'; // Import the animation styles
+import '../pages/Pompiste/style.css'
 
 // Interface for defining the type of props
 interface ClientInfosModalProps {

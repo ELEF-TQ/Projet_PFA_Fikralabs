@@ -7,7 +7,7 @@ import { getAllReviews } from "../../context/features/ReviewSlice";
 import Modal from "react-modal";
 import Spinner from "../../components/Spinner";
 import ClientInfosModal from "../../components/ClientInfos";
-
+import './style.css'
 // Assurez-vous que le style du modal est configuré correctement
 Modal.setAppElement("#root");
 
@@ -18,7 +18,7 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getAllReviews("P67890"));
+    dispatch(getAllReviews("TAAAS"));
   }, []);
 
   const averageStars =
