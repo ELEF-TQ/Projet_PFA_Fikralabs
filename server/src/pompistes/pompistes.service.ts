@@ -3,7 +3,8 @@ import { Model } from 'mongoose';
 import { Pompiste, PompisteDocument } from './schemas/pompiste.schema';
 import { CreatePompisteDto } from './dto/create-pompiste.dto';
 import { UpdatePompisteDto } from './dto/update-pompiste.dto';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { encodePassword } from 'src/auth/utils/bcrypt';
 
 @Injectable()
 export class PompistesService {
@@ -11,35 +12,55 @@ export class PompistesService {
   constructor(@InjectModel(Pompiste.name) private readonly pompisteModel: Model<PompisteDocument>) {}
 
   async create(createPompisteDto: CreatePompisteDto): Promise<Pompiste> {
-    const createdPompiste = new this.pompisteModel(createPompisteDto);
-    return createdPompiste.save();
+    const isEmailExists = await this.findOneByEmail(createPompisteDto.email);
+    if(isEmailExists){
+      throw new HttpException("Email already Exists", HttpStatus.BAD_REQUEST);
+    }else{
+      const encryptedPassword = encodePassword(createPompisteDto.password);
+      const createdPompiste = new this.pompisteModel({...createPompisteDto, password: encryptedPassword});
+      return createdPompiste.save();
+    }
   }
 
   async findAll(): Promise<Pompiste[]> {
-    return this.pompisteModel.find({}).exec();
+    return this.pompisteModel.find().exec();
   }
 
   async findOne(matriculeRH: string): Promise<Pompiste> {
     return this.pompisteModel.findOne({ matriculeRH }).exec(); 
   }
+
+  async findOneByEmail(email: string): Promise<Pompiste> {
+    return this.pompisteModel.findOne({email: email}).exec();
+  }
   
   async update(id: string, updatePompisteDto: UpdatePompisteDto): Promise<Pompiste> {
-    return this.pompisteModel.findByIdAndUpdate(id, updatePompisteDto, { new: true }).exec();
-  }
-
-  async remove(id: string): Promise<void> {
-    await this.pompisteModel.findByIdAndDelete(id).exec();
-  }
-
-  async destroy(ids: string[]): Promise<void> {
-    try {
-      console.log('IDs to delete:', ids);
-      await this.pompisteModel.deleteMany({ _id: { $in: ids } }).exec();
-      console.log('Documents deleted successfully.');
-    } catch (error) {
-      console.error('Error deleting documents:', error);
-      throw error; 
+    const isEmailExists = await this.findOneByEmail(updatePompisteDto.email);
+    if(isEmailExists){
+      throw new HttpException("Cannot Update User, Email already Exists", HttpStatus.BAD_REQUEST);
+    }else{
+      if(updatePompisteDto.password){
+        const encryptedPassword = encodePassword(updatePompisteDto.password);
+        return await this.pompisteModel.findByIdAndUpdate(id, {...updatePompisteDto, password: encryptedPassword}, {new: true}).exec();
+      }else{
+        return this.pompisteModel.findByIdAndUpdate(id, updatePompisteDto, { new: true }).exec();
+      }
     }
+  }
+
+  async remove(id: string): Promise<Pompiste> {
+    return await this.pompisteModel.findByIdAndDelete(id).exec();
+  }
+
+  async destroy(ids: string[]): Promise<Pompiste[]> {
+        // Fetch the users to be deleted
+        const deletedUsers = await this.pompisteModel.find({ _id: { $in: ids } }).exec();
+
+        // Delete the users
+        await this.pompisteModel.deleteMany({ _id: { $in: ids } }).exec();
+    
+        // Return the deleted users
+        return deletedUsers;
   }
 
   async getPompisteByMatriculeRH(matriculeRH: string): Promise<Pompiste> {

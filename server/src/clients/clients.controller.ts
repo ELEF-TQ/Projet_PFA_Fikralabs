@@ -18,7 +18,7 @@ export class ClientsController {
   async findAll() {
     const users = await this.clientsService.findAll();
     if(users.length === 0){
-      throw new HttpException("No Users Found",404)
+      throw new HttpException("No Users Found",404);
     }else{
       return users;
     }
