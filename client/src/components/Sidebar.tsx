@@ -7,7 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 
 
 /*__Sidebar Items___*/
-import { AdminItems } from "../routes/dash-routes";
+import { AdminItems, PompisteItems } from "../routes/dash-routes";
 import { CiLogout } from "react-icons/ci";
 // import { ClientItems } from "../routes/dash-routes";
 // import { PompisteItems } from "../routes/dash-routes";
@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   const location = useLocation()
 
-  let sidebarItems = AdminItems ;
+  let sidebarItems = PompisteItems ;
 
   // getuser
 

@@ -34,4 +34,4 @@ export class Client {
   role: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(Client);
+export const ClientSchema = SchemaFactory.createForClass(Client);
