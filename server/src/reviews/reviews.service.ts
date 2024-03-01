@@ -26,7 +26,7 @@ export class ReviewsService {
     await review.save();
 
     const clientScore = 300;
-    const clientUpdatePromise = this.clientService.updateClientScore(client, clientScore);
+    //  await  clientService.updateClientScore(client, clientScore);
 
     // Update the pompiste's etoiles based on the mean etoiles
     const reviews = await this.reviewModel.find({ pompiste: pompiste }).exec();
