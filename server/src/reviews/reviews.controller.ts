@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpStatus, HttpException, Get } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus, HttpException, Get, Param } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 
@@ -16,9 +16,9 @@ export class ReviewsController {
     }
   }
 
-  @Post("/all")
-  async getAllReviews(@Body("matriculeRH") matriculeRH: string){
+  @Get("/all/:matriculeRH")
+  async getAllReviews(@Param("matriculeRH") matriculeRH: string){
     return await this.reviewService.getAll(matriculeRH);
   }
-
+ 
 }

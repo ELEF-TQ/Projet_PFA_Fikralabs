@@ -33,7 +33,8 @@
 
 /* Global styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Cairo', sans-serif;
+    /* font-family: Arial, sans-serif; */
     font-size: 16px;
     line-height: 1.6;
     color: var(text-color );
@@ -380,6 +381,39 @@ img {
 
 
 
+.animated-modal {
+  top: 20px;
+  right: 20px;
+  left: auto;
+  bottom: auto;
+  margin-right: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  max-width: 400px;
+  overflow: hidden;
+  animation: slideInRight 0.5s ease-out;
+  position: fixed; /* Ensure it's fixed to the viewport */
+}
 
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed; /* Ensure it covers the entire viewport */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
 
 
