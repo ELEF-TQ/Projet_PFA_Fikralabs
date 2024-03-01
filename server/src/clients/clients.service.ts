@@ -8,7 +8,9 @@ import { encodePassword } from 'src/auth/utils/bcrypt';
 
 @Injectable()
 export class ClientsService {
+  
   constructor(@InjectModel(Client.name) private readonly clientModel: Model<ClientDocument>) {}
+
   async create(createclienteDto: CreateClientDto): Promise<Client> {
     const isEmailExists = await this.findOneByEmail(createclienteDto.email);
     if(isEmailExists){

@@ -100,7 +100,7 @@ const Home = () => {
             onClick={() => openModal(review)}
           >
             {/* Left part - Points earned */}
-            <div className="flex-shrink-0 mb-2 sm:mb-0 sm:mr-4">
+            <div className="flex-shrink-0 min-w-16 sm:mb-0 sm:mr-4">
               <p
                 className="text-base"
                 style={{ color: getPointsEarned(review.etoiles) > 0 ? "#3EBE12" : "#C2C2C2" }}
@@ -123,7 +123,7 @@ const Home = () => {
             </div>
 
             {/* Right part - Duration */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0"> {/*min-w-20*/}
               <p className="text-sm text-gray-500" style={{ color: "#C2C2C2" }}>
                 3 minutes ago
               </p>
