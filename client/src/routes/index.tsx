@@ -21,19 +21,26 @@ import DemandeConvertion from "../pages/Pompiste/DemandeConvertion";
 import Formations from "../pages/Pompiste/Formations"
 import Quiz from "../pages/Pompiste/Quiz";
 import Profile from "../pages/Admin/Profile";
+import AddReview from "../pages/public/AddReview";
 
 export const routes = createBrowserRouter([
- 
+
+     /*______Auth Routes_______*/
+     {
+      path: "/evaluation",
+      element :<AddReview/>,
+    },
+   
     /*______Auth Routes_______*/
     {
       path: "/",
-      element :< LoginPage/>,
+      element :<LoginPage/>,
     },
     {
       path: "/signup",
-      element :< SignupPage/>,
+      element :<SignupPage/>,
     },
-    
+  
     /*______Admin Routes_______*/
     {
       path: "/admin",

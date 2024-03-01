@@ -69,7 +69,7 @@ const authSlice = createSlice({
       .addCase(handleLogin.rejected, (state, action :any) => {
         state.isLoading = false;
         state.isAuthenticated = false;
-        state.error = action.payload.message;
+        // state.error = action.payload.message;
       });
   },
 });

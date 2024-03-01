@@ -6,7 +6,7 @@ import ViewPompiste from './ViewPompiste';
 import EditPompiste from './EditPompiste';
 import Destroy from '../../../components/Destroy';
 import Delete from '../../../components/Delete';
-import { GetPompistes } from '../../../context/features/PompisteSlice';
+import { getPompistes } from '../../../context/features/PompisteSlice';
 import { useDispatch ,useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import EvaluationStars from '../../../components/EvaluationStars';
@@ -45,7 +45,7 @@ const Pompiste : React.FC = () => {
 
   
   useEffect(()=> {
-    dispatch(GetPompistes());
+    dispatch(getPompistes());
     },[])
 
   return (
@@ -205,8 +205,8 @@ const Pompiste : React.FC = () => {
   </div>
 </section>
 
-  <Destroy show={isDestroyModalOpen} handleClose={() => setIsDestroyModalOpen(false)} ids={selectedIds} EndPoint="/pompistes/destroy" onDestroySuccess={GetPompistes} />
-  <Delete show={isshowDeleteModalOpen} handleClose={() => setIsDeleteModalOpen(false)} Id={selectedId} EndPoint="/pompistes"  onDeletionSuccess={GetPompistes}/>
+  <Destroy show={isDestroyModalOpen} handleClose={() => setIsDestroyModalOpen(false)} ids={selectedIds} EndPoint="/pompistes/destroy" onDestroySuccess={getPompistes} />
+  <Delete show={isshowDeleteModalOpen} handleClose={() => setIsDeleteModalOpen(false)} Id={selectedId} EndPoint="/pompistes"  onDeletionSuccess={getPompistes}/>
   <EditPompiste show={isEditModalOpen} handleClose={() => setIsEditModalOpen(false)} Element={Element} />
   <ViewPompiste show={isViewModalOpen} handleClose={() => setIsViewModalOpen(false)}  Element={Element}/>
   <AddPompiste show={isAddModalOpen} handleClose={() => setIsAddModalOpen(false)} />   

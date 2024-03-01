@@ -107,14 +107,15 @@ img {
     border-radius:10px ;
     height: 40px; 
 }
-.Confirm__Button2{
+.Cancel__Button {
   background-color: white;
-  color: black;
+  color: rgb(189, 188, 188);
   border-radius:10px ;
-  border: solid 1px black;
+  border: solid 1px rgb(189, 189, 189);
   height: 40px;
 
 }
+
 .Input__Style {
     border-radius: 10px;
     width: 100%;
@@ -371,7 +372,6 @@ img {
 .modal-content {
   width: 100%;
   margin-bottom: 10px;
- 
 }
 
 
