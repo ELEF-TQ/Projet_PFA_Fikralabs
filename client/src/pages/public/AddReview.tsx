@@ -15,9 +15,11 @@ import { AppDispatch } from '../../context/store';
 import { useSelector,useDispatch } from 'react-redux';
 import { getPompiste } from '../../context/features/PompisteSlice';
 import { createReview } from '../../context/features/ReviewSlice';
+import { axiosNoAuth } from '../../lib/Constants';
 const steps = ['', '', '', ''];
 
 const Index: React.FC = () => {
+  const phoneRegex = /^(0|\+212)([67])(\d{8}|\d{1}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2})$/;
   const dispatch = useDispatch<AppDispatch>()
   const {pompiste} = useSelector((state:any)=>state.pompistes)
   const [activeStep, setActiveStep] = React.useState(0);
@@ -59,9 +61,25 @@ const Index: React.FC = () => {
   
     switch (activeStep) {
       case 0:
-        localStorage.setItem('phone', phone);
-        break;
+          if (!phoneRegex.test(phone)) {
+            alert('Veuillez saisir un numéro de téléphone valide !');
+            return;
+          }
+          try {
+            await axiosNoAuth.get(`/clients/${phone}`);
+          } catch (error:any) {
+            alert(error.response.data.message);
+            return;
+          }
+          localStorage.setItem('phone', phone);
+          break;
       case 1:
+        try {
+          await axiosNoAuth.get(`/pompistes/${matriculeRH}`);
+        } catch (error:any) {
+          alert(error.response.data.message);
+          return;
+        }
         localStorage.setItem('matriculeRH', matriculeRH);
         dispatch(getPompiste(matriculeRH));
         break;
@@ -132,7 +150,7 @@ const Index: React.FC = () => {
                 pour accéder à la page d'évaluation.
               </p>
               <div className='flex flex-col items-center gap-10'>
-              <img src={QR} alt="scanner le code QR" className='w-20' />
+              <img src={QR} alt="scanner le code QR" className='w-30 m-20' />
 
              
               <div>
@@ -150,8 +168,6 @@ const Index: React.FC = () => {
               />
 
               </div>
-             
-
               </div>
              
           </div>
@@ -270,7 +286,7 @@ const Index: React.FC = () => {
                     <div className='transition-container '>
                       {renderStepContent(activeStep)}
                     </div>
-                    <div className='absolute bottom-0 w-full'>
+                    <div className='absolute bottom-10  mx-auto w-full lg:px-20'>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' ,width:'100%' }}>
                       <Button 
                       color="inherit" 

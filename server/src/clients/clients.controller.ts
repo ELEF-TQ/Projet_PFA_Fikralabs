@@ -24,15 +24,17 @@ export class ClientsController {
     }
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) { 
-    const userFound = await this.clientsService.findOne(id);
-    if(!userFound){
-      throw new HttpException("The User with the provided ID doesn't exist", HttpStatus.NOT_FOUND);
-    }else{
-        return userFound;
-    }
-  }
+  // @Get(':id')
+  // async findOne(@Param('id') id: string) { 
+  //   const userFound = await this.clientsService.findOne(id);
+  //   if(!userFound){
+  //     throw new HttpException("The User with the provided ID doesn't exist", HttpStatus.NOT_FOUND);
+  //   }else{
+  //       return userFound;
+  //   }
+  // }
+
+
 
   @Patch(':id')
   @UsePipes(ValidationPipe)
@@ -58,6 +60,16 @@ export class ClientsController {
         message: "User Deleted Successfully",
         deletedUser: deletedUser
       };
+    }
+  }
+
+  @Get(':phone')
+  async checkClient(@Param('phone') phone: string) {
+    try {
+      await this.clientsService.getClientByPhone(phone);
+      return 'Ce numéro de téléphone existe.';
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }
