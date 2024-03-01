@@ -8,8 +8,9 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import QR from '../../assets/images/Vectorscan.png'
-import PompisteImg from '../../assets/images/istockphoto-832990432-612x612 1.png'
-import { Rating } from '@mui/material';
+import defaultIMG from '../../assets/images/defaultUser.png';
+import {  Rating } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { AppDispatch } from '../../context/store';
 import { useSelector,useDispatch } from 'react-redux';
 import { getPompiste } from '../../context/features/PompisteSlice';
@@ -24,6 +25,7 @@ const Index: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [matriculeRH, setMatriculeRH] = useState('');
   const [ratings, setRatings] = useState<number[]>([0, 0, 0]);
+  const [commentaire , setCommentaire] = useState('');
  
   const handleRatingChange = (index:number, newValue: number | null) => {
     if(newValue !== null) {
@@ -38,7 +40,7 @@ const Index: React.FC = () => {
   const calculateAverage = () => {
     const sum = ratings.reduce((total, rating) => total + rating, 0);
     const average = sum / ratings.length;
-    const roundedAverage = Math.round(average);
+    const roundedAverage = Math.floor(average);
     return roundedAverage;
 };
 
@@ -68,9 +70,10 @@ const Index: React.FC = () => {
           phone: phone,
           matriculeRH: matriculeRH,
           etoiles: calculateAverage(),
+          commentaire: commentaire,
         };
         console.log('Form Data:', formData);
-        dispatch(createReview(formData));
+         dispatch(createReview(formData)); 
         break;
       case 3:
         console.log("Working on step 4");
@@ -115,7 +118,6 @@ const Index: React.FC = () => {
               />
 
             </div>
-
           </div>
         );
       case 1:
@@ -159,20 +161,21 @@ const Index: React.FC = () => {
           <div className='mt-10'>
               <h6 className="Title_Text">Évaluer le Service du Pompiste</h6>
 
-              <div className='flex flex-col items-center gap-10 mt-10'>
+              <div className='flex flex-col items-center gap-5 mt-5'>
                 <div className='flex flex-col items-center'>
-                  <img className='Pompiste_Avatar ' src={PompisteImg} alt="image" />
-                  <span>Mohamed Mohamed</span>
+                  <img className='Pompiste_Avatar ' src={pompiste?.image ?pompiste?.image : defaultIMG} alt="image" />
+                  <span>{pompiste?.username}</span>
                 </div>
 
-                <div className='flex flex-col items-center'>
-              <span>Comment évaluez-vous l'accueil du pompiste ?</span>  
-              <Rating
-                  name="accueil"
-                  value={Number(ratings[0])}
-                  onChange={(event, newValue) => handleRatingChange(0, newValue)}
-                />
+              <div className='flex flex-col items-center'>
+                <span>Comment évaluez-vous l'accueil du pompiste ?</span>  
+                <Rating
+                    name="accueil"
+                    value={Number(ratings[0])}
+                    onChange={(event, newValue) => handleRatingChange(0, newValue)}
+                  />
               </div>
+
               <div className='flex flex-col items-center'>
                 <span>Le pompiste était-il amical et souriant ?</span> 
                 <Rating
@@ -190,8 +193,16 @@ const Index: React.FC = () => {
                 />
               </div>
 
+
+             
               <div>
-                Moyenne des évaluations: {calculateAverage()}
+                <label htmlFor="commentaire" className='block mb-2 text-sm font-medium Input_Label'> Ajouter un Commentaire</label>
+                <textarea 
+                className='TextArea__Style ' 
+                name='commentaire'
+                value={commentaire}
+                onChange={(e)=> setCommentaire(e.target.value)}
+                ></textarea>
               </div>
               </div>
           </div>
@@ -230,18 +241,14 @@ const Index: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-around gap-0 h-full">
-      <div className="hidden md:block">
-        <img src={illustration} alt="illustration" className="" />
-      </div>
-      <div className=" xl:p-2 p-20 ">
-        <div className="space-y-4 md:space-y-6 md:p-5  sm:w-full ">
+    <div className=" p-10 h-screen">
+
+      <div className=" xl:p-2 p-20 h-screen ">
+        <div className="space-y-4 md:space-y-6 md:p-5  sm:w-full h-full relative ">
           <img src={Logo} alt="Logo" />
           <p className="Paragraphe_Text">
             évaluer votre expérience et gagner des points passionnants en suivant ces étapes simples
           </p>
-        
-
               <Box sx={{ width: '100%' }}>
                     <Stepper activeStep={activeStep}>
                       {steps.map((label, index) => {
@@ -260,24 +267,40 @@ const Index: React.FC = () => {
                         );
                       })}
                     </Stepper>
-                    <div>
+                    <div className='transition-container '>
                       {renderStepContent(activeStep)}
                     </div>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' }}>
-                      <Button color="inherit" disabled={activeStep === 0} onClick={handleBack}>
+                    <div className='absolute bottom-0 w-full'>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' ,width:'100%' }}>
+                      <Button 
+                      color="inherit" 
+                      disabled={activeStep === 0} 
+                      onClick={handleBack} 
+                      className='Cancel__Button w-2/5 '>
                         Back
                       </Button>
                       {activeStep !== steps.length - 1 && (
-                        <Button onClick={handleNext}>
+                        <Button 
+                          onClick={handleNext} 
+                          className='Confirm__Button w-3/6'
+                          disabled={
+                            activeStep === 0 && phone === '' || 
+                            activeStep === 1 && matriculeRH === ''  
+                          }
+                        >
                           Next
                         </Button>
                       )}
                       {activeStep === steps.length - 1 && (
-                        <Button onClick={handleNext}>
-                          Finish
+                        <Button onClick={handleNext} className='Confirm__Button w-3/6 '>
+                          <Link to='/'>
+                            Finish
+                          </Link>
+                          
                         </Button>
                       )}
                     </Box>
+                    </div>
             </Box>
 
         </div>

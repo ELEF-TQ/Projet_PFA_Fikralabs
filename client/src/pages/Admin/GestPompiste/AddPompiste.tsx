@@ -44,9 +44,8 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
     });
   };
 
-  // Check if any field is empty
-  const isAnyFieldEmpty = Object.entries(formData).some(([key, value]) => {
-    if (key === 'email') { return false } return value === ''});
+
+const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
   
   return (
     <>
@@ -169,7 +168,7 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
               <button
                 className={`btn bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded ${isAnyFieldEmpty ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={handleSubmit}
-                disabled={isAnyFieldEmpty} // Disable button if any field is empty
+                disabled={isAnyFieldEmpty} 
               >
                 Ajouter
               </button>

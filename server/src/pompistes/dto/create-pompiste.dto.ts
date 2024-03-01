@@ -4,8 +4,7 @@ export class CreatePompisteDto {
   readonly CIN:string;
   readonly email: string;
   readonly password: string;
-  readonly points?: number;
-  readonly ranking?: number;
+  readonly score?: number;
   readonly image?: string;
   readonly etoiles?: number;
 }

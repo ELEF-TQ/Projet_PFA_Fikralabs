@@ -50,16 +50,16 @@ export class ClientsService {
     return await this.clientModel.findByIdAndDelete(id).exec();
   }
   
-  async getClientIdByPhone(phone: string): Promise<string> {
+  async getClientByPhone(phone: string): Promise<Client> {
     const client = await this.clientModel.findOne({ phone: phone }).exec();
     if (client) {
-      return client._id;
+      return client;
     }
     return null;
   }
 
-  async updateClientScore(clientId: string, clientScore: number): Promise<void> {
-    await this.clientModel.findByIdAndUpdate(clientId, { $inc: { score: clientScore } }).exec();
+  async updateClientScore(client: Client, clientScore: number): Promise<void> {
+    await this.clientModel.findByIdAndUpdate(client, { $inc: { score: clientScore } }).exec();
   }
 
 }

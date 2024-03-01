@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosAuth } from '../../lib/Constants'; // Assuming you have an axios instance configured
+import { axiosAuth } from '../../lib/Constants'; 
 
 // Async thunk to fetch all pompistes
 export const getPompistes = createAsyncThunk('pompistes/fetchAll', async () => {
@@ -40,7 +40,7 @@ export const getPompiste = createAsyncThunk('pompistes/fetch', async (matriculeR
     const response = await axiosAuth.get(`/pompistes/${matriculeRH}`);
     return response.data;
   } catch (error) {
-    throw new Error('Failed to fetch pompiste'); // Handle error more gracefully
+    throw new Error('Failed to fetch pompiste'); 
   }
 });
   

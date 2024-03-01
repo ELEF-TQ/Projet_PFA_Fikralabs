@@ -18,3 +18,7 @@
   height: 94px;
   border-radius: 50%;
 }
+
+.transition-container {
+  transition: opacity 0.3s ease-in-out;
+}

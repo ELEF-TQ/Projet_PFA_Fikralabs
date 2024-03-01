@@ -101,17 +101,17 @@ img {
   width: 100%;
 }
 .Confirm__Button {
-    background-color: var(--primary-color);
-    color: white;
-    border-radius:10px ;
-    height: 40px; 
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    border-radius:10px !important;
+    height: 40px !important; 
 }
 .Cancel__Button {
-  background-color: white;
-  color: rgb(189, 188, 188);
-  border-radius:10px ;
-  border: solid 1px rgb(189, 189, 189);
-  height: 40px;
+  background-color: white !important;
+  color: rgb(189, 188, 188) !important;
+  border-radius:10px   !important;
+  border: solid 1px rgb(189, 189, 189) !important;
+  height: 40px !important;
 
 }
 
@@ -128,9 +128,19 @@ img {
 .Input_Label {
     color: var(--text-color);
     margin-bottom: 3px;
-    }
+}
+.TextArea__Style {
+  border-radius: 10px;
+  width: 100%;
+  border: none;
+  height: 100px;
+  padding: 0 20px;
+  color: rgb(131, 128, 128);
+  border: 1px solid rgba(184, 184, 210, 1);
+  background-color: rgba(255, 255, 255, 1);
+}
 
-.Input__Style:focus {
+.Input__Style ,.TextArea__Style:focus {
   outline: none;
   border-color: #80bdff;
 }

@@ -17,11 +17,12 @@ export class PompistesController {
     return this.pompistesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pompistesService.findOne(id);
+  @Get(':matriculeRH') 
+  findOne(@Param('matriculeRH') matriculeRH: string) { 
+    return this.pompistesService.findOne(matriculeRH); 
   }
 
+  
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updatePompisteDto: UpdatePompisteDto) {
     return this.pompistesService.update(id, updatePompisteDto);

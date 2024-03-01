@@ -9,7 +9,7 @@ export class ReviewsController {
   @Post()
   async createReview(@Body() createReviewDto: CreateReviewDto) {
     try {
-      await this.reviewService.createReview(createReviewDto.phone, createReviewDto.matriculeRH, createReviewDto.etoiles);
+      await this.reviewService.createReview(createReviewDto);
       return { message: 'Review created successfully' };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);

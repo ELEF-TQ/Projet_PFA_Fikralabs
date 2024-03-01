@@ -1,7 +1,6 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateClientDto {
-  
   @IsNotEmpty()
   @IsString()
   readonly username: string;
@@ -28,10 +27,10 @@ export class CreateClientDto {
 
   @IsOptional()
   @IsNumber()
-  readonly points?: number;
+  readonly score?: number;
 
   @IsOptional()
   @IsNumber()
-  readonly sold?: number;
+  readonly solde?: number;
 }
   

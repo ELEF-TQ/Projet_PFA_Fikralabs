@@ -19,10 +19,10 @@ export class PompistesService {
     return this.pompisteModel.find({}).exec();
   }
 
-  async findOne(id: string): Promise<Pompiste> {
-    return this.pompisteModel.findById(id).exec();
+  async findOne(matriculeRH: string): Promise<Pompiste> {
+    return this.pompisteModel.findOne({ matriculeRH }).exec(); 
   }
-
+  
   async update(id: string, updatePompisteDto: UpdatePompisteDto): Promise<Pompiste> {
     return this.pompisteModel.findByIdAndUpdate(id, updatePompisteDto, { new: true }).exec();
   }
@@ -42,10 +42,10 @@ export class PompistesService {
     }
   }
 
-  async getPompisteIdByMatriculeRH(matriculeRH: string): Promise<string> {
+  async getPompisteByMatriculeRH(matriculeRH: string): Promise<Pompiste> {
     const pompiste = await this.pompisteModel.findOne({ matriculeRH }).exec();
     if (pompiste) {
-      return pompiste._id;
+      return pompiste;
     }
     return null; 
   }
@@ -53,5 +53,10 @@ export class PompistesService {
   async updatePompisteScore(pompisteId: string, pompisteScore: number): Promise<void> {
     await this.pompisteModel.findByIdAndUpdate(pompisteId, { $inc: { score: pompisteScore } }).exec();
   }
+
+  async updateEtoiles(pompiste: Pompiste, meanEtoiles: number): Promise<void> {
+    await this.pompisteModel.findByIdAndUpdate(pompiste, { etoiles: meanEtoiles }).exec();
+  }
+
 
 }

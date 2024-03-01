@@ -7,6 +7,9 @@ export type ClientDocument = Client & Document;
 @Schema()
 export class Client {
   
+  // @Prop()
+  // _id?: string;
+
   @Prop({required: true})
   username: string;
 
@@ -26,7 +29,7 @@ export class Client {
   image: string;
 
   @Prop()
-  points: number;
+  score: number;
 
   @Prop()
   sold: number;
