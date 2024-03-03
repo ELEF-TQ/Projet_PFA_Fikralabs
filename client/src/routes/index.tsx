@@ -16,7 +16,7 @@ import GestionProfile from "../pages/Admin/Profile";
 import Pompiste from "../pages/Pompiste/index";
 import HomePompiste from "../pages/Pompiste/Home";
 import Reviews from "../pages/Pompiste/Reviews";
-import Converstions from "../pages/Admin/GestConversion/Conversion";
+import Converstions from "../pages/Pompiste/DemandeConvertion";
 import DemandeConvertion from "../pages/Pompiste/DemandeConvertion";
 import Formations from "../pages/Pompiste/Formations"
 import Quiz from "../pages/Pompiste/Quiz";

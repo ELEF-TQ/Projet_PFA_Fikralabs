@@ -6,13 +6,14 @@ import { useDispatch ,useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import Swal from 'sweetalert2';
 import conversions from '../../../utils/conversion';
+import { acceptConversion } from '../../../context/features/conversionSlice';
 
 const Pompiste : React.FC = () => {
 
   const handleAcceptConversion = (id:any) => {
     Swal.fire({title: 'Are you sure?',text: `You are about to perform an action on item ${id}`,icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, proceed!'}).then((result) => {
         if (result.isConfirmed) {
-            console.log(`Action confirmed for item ${id}`);
+          dispatch(acceptConversion(id))
         }
     });
   };
@@ -27,7 +28,6 @@ const Pompiste : React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { pompistes } = useSelector((state :any) => state.pompistes);
-
   const [selectedIds , setSelectedIds] = useState<string[]>([]);;
   const [selectAllChecked, setSelectAllChecked] = useState(false);
  
@@ -160,9 +160,9 @@ const Pompiste : React.FC = () => {
   <section className="  p-3 sm:p-5 antialiased">
     <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
       <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-          <div className="flex-1 flex items-center space-x-2">
-            <h5>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-2">
+          <div className="flex-1 flex items-center space-x-2 ">
+            <h5 className='m-0 '>
               <span className="text-white">Les demandes Accepter:</span>
               <span className="dark:text-white">{acceptedConversions.length}</span>
             </h5>
@@ -172,25 +172,11 @@ const Pompiste : React.FC = () => {
         </div>
     
         
-
-          
-      
         <div className="overflow-x-auto">
           <table className="w-full text-sm  text-gray-500 dark:text-gray-400 text-center  ">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className="p-4">
-                  <div className="flex items-center">
-                  <input
-                          type="checkbox"
-                          id="selectAll"
-                          checked={selectAllChecked}
-                          onChange={handleSelectAllChange}
-                        />
-                  
-                    <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
-                  </div>
-                </th>
+              
                 <th scope="col" className="p-4 ">Nom</th>
                 <th scope="col" className="p-4 ">score</th>
                 <th scope="col" className="p-4 ">montant</th>
@@ -199,25 +185,7 @@ const Pompiste : React.FC = () => {
             </thead>
             <tbody>
             {acceptedConversions?.map((acceptedConversion :any ) => (
-              <tr key={acceptedConversion._id} className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <td className="p-4 w-4">
-                  <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`checkbox${acceptedConversion._id}`}
-                    name="options[]"
-                    value={acceptedConversion._id}
-                    checked={selectAllChecked || selectedIds.includes(acceptedConversion._id)}
-                    onChange={(e) => handleCheckboxChange(e, acceptedConversion._id)}
-                  />
-
-                <label htmlFor={`checkbox-table-search-${acceptedConversion._id}`} className="sr-only">
-                  Select
-                </label>
-
-                  </div>
-                </td>
-              
+              <tr key={acceptedConversion._id} className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">        
                 <td className="px-4 py-1">
                   <span className="bg-primary-100 text-primary-800 text-xs font-medium rounded dark:bg-primary-900 dark:text-primary-300">{acceptedConversion.pompiste.username}</span>
                 </td>
