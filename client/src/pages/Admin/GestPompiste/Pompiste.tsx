@@ -59,8 +59,8 @@ const Pompiste : React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
         <div className="flex-1 flex items-center space-x-2">
           <h5>
-            <span className="text-white">Tous les pompistes :</span>
-            <span className="dark:text-white"> 123456</span>
+            <span className="text-white">Tous les pompistes : </span>
+            <span className="dark:text-white"> {pompistes.length}</span>
           </h5>
        
         </div>

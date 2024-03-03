@@ -13,6 +13,27 @@ export const createConversion = createAsyncThunk('convesions/create', async (for
   }
 });
 
+// Async thunk to create a new review
+export const acceptConversion = createAsyncThunk('convesions/accept', async (formData :any) => {
+    try {
+      const response = await axiosAuth.post('/conversions', formData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+});
+
+// Async thunk to create a new review
+export const acceptAllConversion = createAsyncThunk('convesions/acceptAll', async (formData :any) => {
+    try {
+      const response = await axiosAuth.post('/conversions', formData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+});
+
+
 
 const initialState = {
   conversions: [],
