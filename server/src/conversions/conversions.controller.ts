@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ConversionsService } from './conversions.service';
 // import { CreateConversionDto } from './dto/create-conversion.dto';
 // import { UpdateConversionDto } from './dto/update-conversion.dto';

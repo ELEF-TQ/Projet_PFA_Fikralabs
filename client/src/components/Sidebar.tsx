@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   const location = useLocation()
 
-  let sidebarItems = AdminItems ;
+  let sidebarItems = PompisteItems ;
 
   // getuser
 
