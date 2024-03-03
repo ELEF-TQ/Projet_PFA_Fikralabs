@@ -15,6 +15,9 @@ export class Conversion extends Document {
   @Prop()
   montant:number;
 
+  @Prop()
+  dateConversion: Date;
+
   @Prop({default: ConversionStatus.PENDING})
   status:string;
 

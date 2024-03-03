@@ -11,7 +11,7 @@ import { PompistesModule } from 'src/pompistes/pompistes.module';
       name: Conversion.name,
       schema: ConversionSchema
     }
-  ]),
+  ],),
   PompistesModule],
   controllers: [ConversionsController],
   providers: [ConversionsService],

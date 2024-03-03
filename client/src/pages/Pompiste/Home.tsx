@@ -18,7 +18,7 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getAllReviews("TAAAS"));
+    dispatch(getAllReviews("P1267645"));
   }, []);
 
   const averageStars =

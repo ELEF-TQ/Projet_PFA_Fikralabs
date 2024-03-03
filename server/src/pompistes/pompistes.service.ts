@@ -30,6 +30,10 @@ export class PompistesService {
     return this.pompisteModel.findOne({ matriculeRH }).exec(); 
   }
 
+  async findOneById(id: string): Promise<Pompiste> {
+    return this.pompisteModel.findOne({_id: id}) 
+  }
+
   async findOneByEmail(email: string): Promise<Pompiste> {
     return this.pompisteModel.findOne({email: email}).exec();
   }
@@ -71,8 +75,9 @@ export class PompistesService {
     return null; 
   }
 
-  async updatePompisteScore(pompisteId: string, pompisteScore: number): Promise<void> {
-    await this.pompisteModel.findByIdAndUpdate(pompisteId, { $inc: { score: pompisteScore } }).exec();
+  async updatePompisteScore(pompisteId: string, pompisteScore: number): Promise<Pompiste> {
+    const pompiste = await this.pompisteModel.findById(pompisteId);
+    return await this.pompisteModel.findByIdAndUpdate(pompiste, { score: pompisteScore }).exec();
   }
 
   async updateEtoiles(pompiste: Pompiste, meanEtoiles: number): Promise<void> {

@@ -56,6 +56,10 @@ const reviewsSlice = createSlice({
         console.log(action.payload)
         state.reviews = action.payload;
       })
+      .addCase(getAllReviews.rejected, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload)
+      })
   },
 });
 
