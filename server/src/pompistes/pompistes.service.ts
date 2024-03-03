@@ -75,12 +75,11 @@ export class PompistesService {
     return null; 
   }
 
-  async updatePompisteScore(pompisteId: string, pompisteScore: number): Promise<Pompiste> {
-    const pompiste = await this.pompisteModel.findById(pompisteId);
+  async updatePompisteScore(pompiste: Pompiste, pompisteScore: number): Promise<Pompiste> {
     return await this.pompisteModel.findByIdAndUpdate(pompiste, { score: pompisteScore }).exec();
   }
 
-  async updateEtoiles(pompiste: Pompiste, meanEtoiles: number): Promise<void> {
+  async updatePompisteEtoiles(pompiste: Pompiste, meanEtoiles: number): Promise<void> {
     await this.pompisteModel.findByIdAndUpdate(pompiste, { etoiles: meanEtoiles }).exec();
   }
 

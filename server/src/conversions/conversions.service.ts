@@ -33,7 +33,7 @@ export class ConversionsService {
     const savedConversion = await createdConversion.save();
     if(savedConversion){
       const scoreAfterConversion = 0
-      const updatedpompiste = await this.pompisteService.updatePompisteScore(pompisteId, scoreAfterConversion);
+      const updatedpompiste = await this.pompisteService.updatePompisteScore(pompiste, scoreAfterConversion);
       return savedConversion;
     }else{
       throw new HttpException("Probleme occurs", HttpStatus.AMBIGUOUS);

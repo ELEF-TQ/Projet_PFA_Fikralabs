@@ -15,6 +15,7 @@ export const createConversion = createAsyncThunk('convesions/create', async (for
 
 // Async thunk to create a new review
 export const acceptConversion = createAsyncThunk('convesions/accept', async (id :any) => {
+   console.log(id)
     try {
       const response = await axiosAuth.patch(`/conversions${id}`);
       return response.data;

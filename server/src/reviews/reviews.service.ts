@@ -17,33 +17,27 @@ export class ReviewsService {
   ) {}
 
   async createReview(createReviewDto: CreateReviewDto): Promise<void> {
-    // Obtain client and pompiste entities
-    const client = await this.clientService.getClientByPhone(createReviewDto.phone);
-    const pompiste = await this.pompisteService.getPompisteByMatriculeRH(createReviewDto.matriculeRH);
-    const etoiles = createReviewDto.etoiles;
-    const commentaire = createReviewDto.commentaire;
+    const { phone, matriculeRH, etoiles, commentaire } = createReviewDto;
+    const client = await this.clientService.getClientByPhone(phone);
+    const pompiste = await this.pompisteService.getPompisteByMatriculeRH(matriculeRH);
 
-    // Create the review document
     const review = new this.reviewModel({ client, pompiste, etoiles, commentaire });
     await review.save();
 
-    // Update client score
     const clientScore = 300;
     const clientUpdatePromise = this.clientService.updateClientScore(client, clientScore);
 
-    // Calculate mean etoiles for pompiste
-    const reviews = await this.reviewModel.find({ pompiste: pompiste }).exec();
-    let totalEtoiles = 0;
-    for (const review of reviews) {
-      totalEtoiles += Number(review.etoiles);
-    }
-    const meanEtoiles = Math.floor(totalEtoiles / reviews.length);
+    let pompisteScore = [300, 200, 100, 0][etoiles - 2] || 0;
+    await this.pompisteService.updatePompisteScore(pompiste, pompisteScore);
 
-    const updatePompisteDto: UpdatePompisteDto = { etoiles: meanEtoiles };
-    await this.pompisteService.updateEtoiles(pompiste, meanEtoiles);
+    const reviews = await this.reviewModel.find({ pompiste }).exec();
+    const meanEtoiles = Math.floor(reviews.reduce((acc, cur) => acc + cur.etoiles, 0) / reviews.length);
+    await this.pompisteService.updatePompisteEtoiles(pompiste, meanEtoiles);
 
     await Promise.all([clientUpdatePromise]);
-  }
+}
+
+
 
   async getAll(matriculeRH: string) {
     const id = await this.pompisteService.getPompisteByMatriculeRH(matriculeRH);
