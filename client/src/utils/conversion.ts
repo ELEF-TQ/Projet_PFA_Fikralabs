@@ -1,3 +1,8 @@
+const generateRandomNumber = () => {
+    return Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+};
+
+
 const conversions = [
     {
         _id: "60abcf4e85774a36a4dfe7e1",
@@ -7,7 +12,8 @@ const conversions = [
         },
         score: 80,
         montant: 100,
-        status: "PENDING"
+        status: "PENDING",
+        Num_Demande: generateRandomNumber()
     },
     {
         _id: "60abcf4e85774a36a4dfe7e3",
@@ -17,7 +23,9 @@ const conversions = [
         },
         score: 90,
         montant: 150,
-        status: "ACCEPTED"
+        status: "ACCEPTED",
+        Num_Demande: generateRandomNumber()
+
     },
     {
         _id: "60abcf4e85774a36a4dfe7e5",
@@ -27,7 +35,9 @@ const conversions = [
         },
         score: 75,
         montant: 120,
-        status: "PENDING"
+        status: "PENDING",
+        Num_Demande: generateRandomNumber()
+
     },
     {
         _id: "60abcf4e85774a36a4dfe7e7",
@@ -37,7 +47,9 @@ const conversions = [
         },
         score: 85,
         montant: 80,
-        status: "ACCEPTED"
+        status: "ACCEPTED",
+        Num_Demande: generateRandomNumber()
+
     },
     {
         _id: "60abcf4e85774a36a4dfe7e9",
@@ -47,7 +59,9 @@ const conversions = [
         },
         score: 95,
         montant: 200,
-        status: "PENDING"
+        status: "PENDING",
+        Num_Demande: generateRandomNumber()
+
     },
     {
         _id: "60abcf4e85774a36a4dfe7eb",
@@ -57,7 +71,9 @@ const conversions = [
         },
         score: 88,
         montant: 180,
-        status: "ACCEPTED"
+        status: "ACCEPTED",
+        Num_Demande: generateRandomNumber()
+
     },
     {
         _id: "60abcf4e85774a36a4dfe7ed",
@@ -67,7 +83,9 @@ const conversions = [
         },
         score: 70,
         montant: 90,
-        status: "PENDING"
+        status: "PENDING",
+        Num_Demande: generateRandomNumber()
+
     },
     {
         _id: "60abcf4e85774a36a4dfe7ef",
@@ -77,7 +95,9 @@ const conversions = [
         },
         score: 82,
         montant: 110,
-        status: "ACCEPTED"
+        status: "ACCEPTED",
+        Num_Demande: generateRandomNumber()
+
     },
     {
         _id: "60abcf4e85774a36a4dfe7f1",
@@ -87,7 +107,9 @@ const conversions = [
         },
         score: 78,
         montant: 130,
-        status: "PENDING"
+        status: "PENDING",
+        Num_Demande: generateRandomNumber()
+
     },
     {
         _id: "60abcf4e85774a36a4dfe7f3",
@@ -97,7 +119,9 @@ const conversions = [
         },
         score: 87,
         montant: 95,
-        status: "ACCEPTED"
+        status: "ACCEPTED",
+        Num_Demande: generateRandomNumber()
+
     }
 ];
 

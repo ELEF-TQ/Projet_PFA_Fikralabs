@@ -6,6 +6,10 @@ import { ConversionStatus } from '../enums/conversionStatus';
 @Schema()
 export class Conversion extends Document {
 
+
+  @Prop()
+  Num_Demande: number;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Pompiste', required: true })
   pompiste: Pompiste;
 

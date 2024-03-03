@@ -6,7 +6,7 @@ import { useDispatch ,useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import Swal from 'sweetalert2';
 import conversions from '../../../utils/conversion';
-import { acceptAllConversion, acceptConversion } from '../../../context/features/conversionSlice';
+import { acceptAllConversion, acceptConversion } from '../../../context/features/ConversionSlice';
 
 const Pompiste : React.FC = () => {
 

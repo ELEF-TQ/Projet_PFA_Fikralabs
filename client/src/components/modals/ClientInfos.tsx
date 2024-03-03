@@ -1,8 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import '../pages/Pompiste/style.css'
+import '../../pages/Pompiste/style.css'
 
-// Interface for defining the type of props
 interface ClientInfosModalProps {
   isModalOpen: boolean;
   closeModal: () => void;
@@ -15,7 +14,7 @@ const ClientInfosModal: React.FC<ClientInfosModalProps> = ({ isModalOpen, closeM
       isOpen={isModalOpen}
       onRequestClose={closeModal}
       contentLabel="Customer Information"
-      className="custom-modal animated-modal" // Add your custom modal class for styling
+      className="custom-modal animated-modal" 
       overlayClassName="modal-overlay"
     >
       {selectedReview && (
@@ -24,7 +23,6 @@ const ClientInfosModal: React.FC<ClientInfosModalProps> = ({ isModalOpen, closeM
           <p className="mb-2">Name: {selectedReview.client.username}</p>
           <p>etoiles: {selectedReview.etoiles}</p>
           <p>Email: {selectedReview.client.email}</p>
-          {/* Add more customer information as needed */}
           <button
             onClick={closeModal}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

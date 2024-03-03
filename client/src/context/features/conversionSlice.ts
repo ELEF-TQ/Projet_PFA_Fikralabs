@@ -42,7 +42,7 @@ const initialState = {
   error: null,
 };
 
-const conversionsSlice = createSlice({
+const ConversionsSlice = createSlice({
   name: 'conversions',
   initialState,
   reducers: {},
@@ -77,4 +77,4 @@ const conversionsSlice = createSlice({
   },
 });
 
-export default conversionsSlice.reducer;
+export default ConversionsSlice.reducer;
