@@ -17,6 +17,7 @@ const DemandeConvertion = () => {
   const handleConversion = async () => {
     try {
       // Dispatch createConversion with the pompisteId
+      console.log(pompiste._id)
       await dispatch(createConversion(pompiste._id));
       // Handle success (e.g., show a success message)
     } catch (error) {

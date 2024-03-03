@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException } from '@nestjs/common';
 import { ConversionsService } from './conversions.service';
 // import { CreateConversionDto } from './dto/create-conversion.dto';
 // import { UpdateConversionDto } from './dto/update-conversion.dto';
@@ -7,9 +7,12 @@ import { ConversionsService } from './conversions.service';
 export class ConversionsController {
   constructor(private readonly conversionsService: ConversionsService) {}
 
-  @Post()
-  create(@Body("pompisteId") pompisteId: string) {
-    return this.conversionsService.create(pompisteId);
+  @Post("/:pompisteId")
+  async create(@Param("pompisteId") pompisteId: string) {
+    const conversion = await this.conversionsService.create(pompisteId);
+    // if(!conversion){
+    //   throw new HttpException("")
+    // }
   }
 
   // @Get()

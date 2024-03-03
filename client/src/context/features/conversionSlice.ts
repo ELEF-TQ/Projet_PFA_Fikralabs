@@ -7,6 +7,7 @@ import { axiosAuth } from '../../lib/Constants';
 export const createConversion = createAsyncThunk('convesions/create', async (pompisteId :string) => {
   try {
     const response = await axiosAuth.post(`/conversions/${pompisteId}`);
+    console.log(response.data)
     return response.data;
   } catch (error) {
     throw error;
@@ -56,9 +57,9 @@ const ConversionsSlice = createSlice({
         state.isLoading = false;
         Swal.fire({icon: 'success',title: 'Conversion Created!',text: 'Your conversion has been successfully created.',})
       })
-      .addCase(createConversion.rejected, (state) => {
+      .addCase(createConversion.rejected, (state, action) => {
         state.isLoading = false;
-        Swal.fire({icon: 'error',title: 'Conversion Creation Failed',text: 'Failed to create the conversion. Please try again later.',});
+        Swal.fire({icon: 'error',title: 'Conversion Creation Failed',text: action.error.message,});
       })
       .addCase(acceptConversion.fulfilled, (state) => {
         state.isLoading = false;

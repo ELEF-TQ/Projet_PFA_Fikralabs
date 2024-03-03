@@ -25,7 +25,7 @@ export class ConversionsService {
 
     const score = pompiste.score;
     if (score < 2500) {
-        throw new HttpException("Impossible de convertir une somme de points qui est inferieur à 2500pts", HttpStatus.BAD_REQUEST);
+        throw new HttpException("Impossible de convertir une somme de points qui est inferieur à 2500 pts", HttpStatus.BAD_REQUEST);
     }
     
     const montant = calculeMontant(score);
