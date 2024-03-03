@@ -14,7 +14,7 @@ const Sidebar = () => {
 
   const location = useLocation()
 
-  let sidebarItems = AdminItems ;
+  let sidebarItems = PompisteItems ;
 
   const { isCollapsed, toggleSidebarcollapse } = useContext(SidebarContext);
 
