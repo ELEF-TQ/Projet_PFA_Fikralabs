@@ -14,9 +14,9 @@ export const createConversion = createAsyncThunk('convesions/create', async (for
 });
 
 // Async thunk to create a new review
-export const acceptConversion = createAsyncThunk('convesions/accept', async (formData :any) => {
+export const acceptConversion = createAsyncThunk('convesions/accept', async (id :any) => {
     try {
-      const response = await axiosAuth.post('/conversions', formData);
+      const response = await axiosAuth.patch(`/conversions${id}`);
       return response.data;
     } catch (error) {
       throw error;
@@ -24,9 +24,9 @@ export const acceptConversion = createAsyncThunk('convesions/accept', async (for
 });
 
 // Async thunk to create a new review
-export const acceptAllConversion = createAsyncThunk('convesions/acceptAll', async (formData :any) => {
+export const acceptAllConversion = createAsyncThunk('convesions/acceptAll', async (ids :any) => {
     try {
-      const response = await axiosAuth.post('/conversions', formData);
+      const response = await axiosAuth.post('/acceptAll', ids);
       return response.data;
     } catch (error) {
       throw error;
@@ -60,6 +60,17 @@ const conversionsSlice = createSlice({
         Swal.fire({icon: 'error',title: 'Conversion Creation Failed',text: 'Failed to create the conversion. Please try again later.',
         });
       })
+      .addCase(acceptConversion.fulfilled, (state) => {
+        state.isLoading = false;
+        Swal.fire({icon: 'success',title: 'Conversion Creation Failed',text: 'Failed to create the conversion. Please try again later.',
+        });
+      })
+      .addCase(acceptAllConversion.fulfilled, (state) => {
+        state.isLoading = false;
+        Swal.fire({icon: 'success',title: 'Conversion Creation Failed',text: 'Failed to create the conversion. Please try again later.',
+        });
+      })
+     
      
      
   },

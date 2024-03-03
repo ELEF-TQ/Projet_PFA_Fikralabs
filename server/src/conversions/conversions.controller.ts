@@ -19,16 +19,24 @@ export class ConversionsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.conversionsService.findOne(+id);
+    return this.conversionsService.findOne(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateConversionDto: UpdateConversionDto) {
-  //   return this.conversionsService.update(+id, updateConversionDto);
-  // }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.conversionsService.remove(+id);
+  @Patch(':id')
+  update(@Param('id') id: string) {
+    return this.conversionsService.update(id);
   }
+
+  @Post('acceptAll')
+  async updateAll(@Body() ids: string[]) {
+    try {
+      const updatedConversions = await this.conversionsService.updateAll(ids);
+      return { success: true, data: updatedConversions };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
+  }
+
+
+
 }
