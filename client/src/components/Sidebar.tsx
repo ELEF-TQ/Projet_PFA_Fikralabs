@@ -9,20 +9,12 @@ import { Link, useLocation } from "react-router-dom";
 /*__Sidebar Items___*/
 import { AdminItems, PompisteItems } from "../routes/dash-routes";
 import { CiLogout } from "react-icons/ci";
-// import { ClientItems } from "../routes/dash-routes";
-// import { PompisteItems } from "../routes/dash-routes";
-// import { retrieveUserSession } from "../lib/Encryption";
-
-
 
 const Sidebar = () => {
 
   const location = useLocation()
 
   let sidebarItems = PompisteItems ;
-
-  // getuser
-
 
   const { isCollapsed, toggleSidebarcollapse } = useContext(SidebarContext);
 

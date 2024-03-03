@@ -15,6 +15,7 @@ export const createConversion = createAsyncThunk('convesions/create', async (pom
 
 // Async thunk to create a new review
 export const acceptConversion = createAsyncThunk('convesions/accept', async (id :any) => {
+   console.log(id)
     try {
       const response = await axiosAuth.patch(`/conversions${id}`);
       return response.data;
@@ -41,7 +42,7 @@ const initialState = {
   error: null,
 };
 
-const conversionsSlice = createSlice({
+const ConversionsSlice = createSlice({
   name: 'conversions',
   initialState,
   reducers: {},
@@ -75,4 +76,4 @@ const conversionsSlice = createSlice({
   },
 });
 
-export default conversionsSlice.reducer;
+export default ConversionsSlice.reducer;

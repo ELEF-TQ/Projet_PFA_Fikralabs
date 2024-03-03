@@ -12,20 +12,20 @@ export class ConversionsController {
     return this.conversionsService.create(pompisteId);
   }
 
-  @Get()
-  findAll() {
-    return this.conversionsService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.conversionsService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.conversionsService.findOne(id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.conversionsService.findOne(id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string) {
-    return this.conversionsService.update(id);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string) {
+  //   return this.conversionsService.update(id);
+  // }
 
   @Post('acceptAll')
   async updateAll(@Body() ids: string[]) {

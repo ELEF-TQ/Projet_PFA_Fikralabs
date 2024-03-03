@@ -6,7 +6,7 @@ import { useDispatch ,useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import Swal from 'sweetalert2';
 import conversions from '../../../utils/conversion';
-import { acceptConversion } from '../../../context/features/ConversionSlice';
+import { acceptAllConversion, acceptConversion } from '../../../context/features/ConversionSlice';
 
 const Pompiste : React.FC = () => {
 
@@ -21,7 +21,7 @@ const Pompiste : React.FC = () => {
   const handleAcceptConversions = (ids:any) => {
     Swal.fire({title: 'Are you sure?',text: `You are about to perform an action on item ${ids}`,icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, proceed!'}).then((result) => {
         if (result.isConfirmed) {
-            console.log(`Action confirmed for item ${ids}`);
+          dispatch(acceptAllConversion(ids))
         }
     });
   };

@@ -6,7 +6,7 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { getAllReviews } from "../../context/features/ReviewSlice";
 import Modal from "react-modal";
 import Spinner from "../../components/Spinner";
-import ClientInfosModal from "../../components/ClientInfos";
+import ClientInfosModal from "../../components/modals/ClientInfos";
 import './style.css'
 // Assurez-vous que le style du modal est configuré correctement
 Modal.setAppElement("#root");
