@@ -67,7 +67,7 @@ const pompistesSlice = createSlice({
       state.isLoading = false;
       state.pompistes = action.payload;
     })
-    .addCase(getPompistes.rejected, (state, action) => {
+    .addCase(getPompistes.rejected, (state) => {
       state.isLoading = false;
     })
     .addCase(getPompiste.pending, (state) => {
@@ -78,7 +78,7 @@ const pompistesSlice = createSlice({
       state.isLoading = false;
       state.pompiste = action.payload;
     })
-    .addCase(getPompiste.rejected, (state, action) => {
+    .addCase(getPompiste.rejected, (state) => {
       state.isLoading = false;
     })
 
