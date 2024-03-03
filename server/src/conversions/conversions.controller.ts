@@ -8,7 +8,6 @@ export class ConversionsController {
   constructor(private readonly conversionsService: ConversionsService) {}
 
   @Post()
-  @UsePipes(ValidationPipe)
   create(@Body("pompisteId") pompisteId: string) {
     return this.conversionsService.create(pompisteId);
   }
