@@ -19,6 +19,26 @@
     --color-sidebar-item: #f3f4f6;
 }
 
+.bg-primary-color{
+  background-color: var(--primary-color);
+}
+
+.text-primary-color{
+  color: var(--primary-color);
+}
+
+.text-gray-color{
+  color: var(--text-color);
+}
+
+.border-primary-color-1{
+  border: solid 8px var(--primary-color);
+}
+
+.border-primary-color-2{
+  border: solid 3px var(--primary-color);
+}
+
 
 /* Resetting default browser styles */
 /* * {

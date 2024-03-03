@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import '../pages/Pompiste/style.css'
+import { InfoOutlined, InfoRounded, Star } from '@mui/icons-material';
 
 // Interface for defining the type of props
 interface ClientInfosModalProps {
@@ -19,18 +20,25 @@ const ClientInfosModal: React.FC<ClientInfosModalProps> = ({ isModalOpen, closeM
       overlayClassName="modal-overlay"
     >
       {selectedReview && (
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Customer Information</h2>
-          <p className="mb-2">Name: {selectedReview.client.username}</p>
-          <p>etoiles: {selectedReview.etoiles}</p>
-          <p>Email: {selectedReview.client.email}</p>
-          {/* Add more customer information as needed */}
-          <button
-            onClick={closeModal}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Close
-          </button>
+        <div className="custom-modal-content">
+          <div className="modal-header">
+            <InfoOutlined style={{ fontSize: '2rem', color: 'green', marginBottom: '8px'}}/>
+            <h2 className="text-2xl font-bold mb-2 ml-1">Client Information</h2>
+          </div>
+          <div className="modal-body">
+            <p className="mb-2"><strong>Name:</strong> {selectedReview.client.username}</p>
+            <p className="mb-2"><strong>Etoiles:</strong> {selectedReview.etoiles}</p>
+            <p className="mb-2"><strong>Commentaire:</strong> {selectedReview.commentaire}</p>
+            {/* Add more customer information as needed */}
+          </div>
+          <div className="modal-footer">
+            <button
+              onClick={closeModal}
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-0 px-4 rounded"
+            >
+              Close
+            </button>
+          </div>
         </div>
       )}
     </Modal>

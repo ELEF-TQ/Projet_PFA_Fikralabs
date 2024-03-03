@@ -8,6 +8,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: #fff;
+    /* width: 400px; */
     max-width: 400px;
     overflow: hidden;
     animation: slideInRight 0.2s ease-out;

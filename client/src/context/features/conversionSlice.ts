@@ -4,9 +4,9 @@ import Swal from 'sweetalert2';
 import { axiosAuth } from '../../lib/Constants'; 
 
 // Async thunk to create a new review
-export const createConversion = createAsyncThunk('convesions/create', async (formData :any) => {
+export const createConversion = createAsyncThunk('convesions/create', async (pompisteId :string) => {
   try {
-    const response = await axiosAuth.post('/conversions', formData);
+    const response = await axiosAuth.post(`/conversions/${pompisteId}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -57,8 +57,7 @@ const conversionsSlice = createSlice({
       })
       .addCase(createConversion.rejected, (state) => {
         state.isLoading = false;
-        Swal.fire({icon: 'error',title: 'Conversion Creation Failed',text: 'Failed to create the conversion. Please try again later.',
-        });
+        Swal.fire({icon: 'error',title: 'Conversion Creation Failed',text: 'Failed to create the conversion. Please try again later.',});
       })
       .addCase(acceptConversion.fulfilled, (state) => {
         state.isLoading = false;
