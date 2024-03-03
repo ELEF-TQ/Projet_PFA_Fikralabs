@@ -12,6 +12,11 @@ export const AdminItems = [
       icon: AiOutlineHome,
     },
     {
+      name: "Conversion",
+      href: "/admin/conversions",
+      icon: TbTransform,
+    },
+    {
       name: "Pompistes",
       href: "/admin/pompistes",
       icon: FaPeopleGroup ,
@@ -21,11 +26,7 @@ export const AdminItems = [
       href: "/admin/clients",
       icon: BsPeople,
     },
-    {
-      name: "Conversion",
-      href: "/admin/convertions",
-      icon: TbTransform,
-    },
+ 
     {
       name: "Profile",
       href: "/admin/profile",
