@@ -35,16 +35,19 @@ export class AppModule implements NestModule{
         method: RequestMethod.DELETE
       },
       {
-        path: "/users/:id",
+        path: "/clients/:id",
         method: RequestMethod.GET
       },
       {
-        path: "/users/:id",
+        path: "/clients/:id",
         method: RequestMethod.PATCH
       },
       {
-        path: "/users/:id",
+        path: "/clients/:id",
         method: RequestMethod.DELETE
+      },{
+        path: "/conversions/:id",
+        method: RequestMethod.POST
       }
     )
 }

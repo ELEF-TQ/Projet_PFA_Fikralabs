@@ -94,7 +94,7 @@ const Home = () => {
         reviews.reviews.map((review: any) => (
           <div
             key={review._id}
-            className="flex flex-col sm:flex-row border-b border-gray-300 p-4 mb-4 items-center justify-between rounded-lg shadow-md bg-white cursor-pointer"
+            className="flex flex-col sm:flex-row border-b border-gray-300 p-4 mb-4 items-center justify-between rounded-lg shadow-md bg-white cursor-pointer hover:bg-slate-100 transition duration-300 ease-in-out"
             onClick={() => openModal(review)}
           >
             {/* Left part - Points earned */}

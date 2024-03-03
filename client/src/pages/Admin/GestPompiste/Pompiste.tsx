@@ -46,7 +46,7 @@ const Pompiste : React.FC = () => {
   
   useEffect(()=> {
     dispatch(getPompistes());
-    },[])
+  },[])
 
   return (
     <div>
