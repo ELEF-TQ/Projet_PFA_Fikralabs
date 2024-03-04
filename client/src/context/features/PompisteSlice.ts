@@ -82,7 +82,6 @@ const pompistesSlice = createSlice({
       state.isLoading = false;
     })
 
-     
   },
 });
 

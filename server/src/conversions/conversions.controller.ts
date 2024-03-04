@@ -7,12 +7,9 @@ import { ConversionsService } from './conversions.service';
 export class ConversionsController {
   constructor(private readonly conversionsService: ConversionsService) {}
 
-  @Post("/:pompisteId")
-  async create(@Param("pompisteId") pompisteId: string) {
-    const conversion = await this.conversionsService.create(pompisteId);
-    // if(!conversion){
-    //   throw new HttpException("")
-    // }
+  @Post(":id")
+  async create(@Param("id") pompisteId: string) {
+    return await this.conversionsService.create(pompisteId);
   }
 
   // @Get()
