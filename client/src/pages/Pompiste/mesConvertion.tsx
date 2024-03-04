@@ -10,7 +10,7 @@ const Conversion = () => {
   const {conversions} = useSelector((state:any)=>state.conversions)
   
   const [pendingConversions, setPendingConversions] = useState<any[]>([]);
-const [acceptedConversions, setAcceptedConversions] = useState<any[]>([]);
+  const [acceptedConversions, setAcceptedConversions] = useState<any[]>([]);
 
   useEffect(() => {
     dispatch(getConversions(userData.user._id)).then(()=> {
@@ -19,26 +19,28 @@ const [acceptedConversions, setAcceptedConversions] = useState<any[]>([]);
       setPendingConversions(pending);
       setAcceptedConversions(accepted);
     })
+
   }, []);
 
   return (
-    <div>
-      <h1 className="mb-4 font-semibold leading-none tracking-tight text-gray-900 lg:text-6xl dark:text-black">Demandes</h1>
-      <div>
+    <div className="container mx-auto p-4">
+      <h1 className="text-4xl font-semibold mb-4 text-gray-900 dark:text-black">Demandes</h1>
+
+      <div className="mb-8">
         <h2 className="text-lg font-semibold mb-2">Demandes en attente :</h2>
-       <div className="flex flex-col justify-center items-center">
-       {pendingConversions.map((conversion, index) => (
-          <ConversionCard key={index} conversion={conversion} />
-        ))}
-       </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {pendingConversions.map((conversion, index) => (
+            <ConversionCard key={index} conversion={conversion} />
+          ))}
+        </div>
       </div>
 
       <div>
-      <h2 className="text-lg font-semibold mb-2">Demandes acceptées :</h2>
-      <div className="flex flex-col justify-center items-center">
-        {acceptedConversions.map((conversion, index) => (
-          <ConversionCard key={index} conversion={conversion} />
-        ))}
+        <h2 className="text-lg font-semibold mb-2">Demandes acceptées :</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {acceptedConversions.map((conversion, index) => (
+            <ConversionCard key={index} conversion={conversion} />
+          ))}
         </div>
       </div>
     </div>
