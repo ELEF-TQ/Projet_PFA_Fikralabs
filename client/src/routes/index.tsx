@@ -15,7 +15,6 @@ import GestionProfile from "../pages/Admin/Profile";
 /*___Pompiste_____ */
 import Pompiste from "../pages/Pompiste/index";
 import HomePompiste from "../pages/Pompiste/Home";
-import Reviews from "../pages/Pompiste/Reviews";
 import Converstions from "../pages/Pompiste/mesConvertion";
 import DemandeConvertion from "../pages/Pompiste/DemandeConvertion";
 import Formations from "../pages/Pompiste/Formations"
@@ -62,7 +61,6 @@ export const routes = createBrowserRouter([
         { path: "/pompiste", element: <HomePompiste/>},
         { path: "/pompiste/demandeConvertion", element: <DemandeConvertion/> },
         { path: "/pompiste/mesConvertions", element: <Converstions/> },
-        { path: "/pompiste/evaluation", element: <Reviews/> },
         { path: "/pompiste/quiz", element: <Quiz/> },
         { path: "/pompiste/formations", element: <Formations/> },
         { path: "/pompiste/profile", element: <Profile/> },

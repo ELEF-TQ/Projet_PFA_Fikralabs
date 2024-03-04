@@ -53,6 +53,7 @@ export class ClientsService {
   }
   
   async getClientByPhone(phone: string): Promise<Client> {
+    console.log(phone)
     const client = await this.clientModel.findOne({ phone: phone }).exec();
     if (client) {
         return client;

@@ -23,6 +23,7 @@ const Sidebar = () => {
   const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([]);
   useEffect(() => {
     const userData = retrieveUserSession(); 
+    console.log(userData);
     if (userData?.user.role == 'ADMIN') {
       setSidebarItems(AdminItems); 
     } else if (userData?.user.role == 'POMPISTE') {
