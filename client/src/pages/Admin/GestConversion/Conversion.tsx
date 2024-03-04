@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react'
-
-
-import { getPompistes } from '../../../context/features/PompisteSlice';
 import { useDispatch ,useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import Swal from 'sweetalert2';
-import conversions from '../../../utils/conversion';
-import { acceptAllConversion, acceptConversion } from '../../../context/features/ConversionSlice';
+import { acceptAllConversion, acceptConversion, getAllConversions } from '../../../context/features/ConversionSlice';
 
 const Pompiste : React.FC = () => {
 
   const handleAcceptConversion = (id:any) => {
     Swal.fire({title: 'Are you sure?',text: `You are about to perform an action on item ${id}`,icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, proceed!'}).then((result) => {
         if (result.isConfirmed) {
-          dispatch(acceptConversion(id))
+          dispatch(acceptConversion(id)).then(()=>{
+            dispatch(getAllConversions())
+          })
         }
     });
   };
@@ -21,13 +19,15 @@ const Pompiste : React.FC = () => {
   const handleAcceptConversions = (ids:any) => {
     Swal.fire({title: 'Are you sure?',text: `You are about to perform an action on item ${ids}`,icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, proceed!'}).then((result) => {
         if (result.isConfirmed) {
-          dispatch(acceptAllConversion(ids))
+          dispatch(acceptAllConversion(ids)).then(()=>{
+            dispatch(getAllConversions())
+          })
         }
     });
   };
 
   const dispatch = useDispatch<AppDispatch>();
-  const { pompistes } = useSelector((state :any) => state.pompistes);
+  const {conversions} = useSelector((state :any)=>state.conversions )
   const [selectedIds , setSelectedIds] = useState<string[]>([]);;
   const [selectAllChecked, setSelectAllChecked] = useState(false);
  
@@ -36,7 +36,7 @@ const Pompiste : React.FC = () => {
   const handleSelectAllChange = (e: { target: { checked: any; }; }) => {
     const isChecked = e.target.checked;
     setSelectAllChecked(isChecked);
-    setSelectedIds(isChecked ? pompistes.map((pompiste: { _id: any; }) => pompiste._id) : []);
+    setSelectedIds(isChecked ? pendingConversions.map((conversion: { _id: any; }) => conversion._id) : []);
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, Id: string) => {
@@ -50,12 +50,12 @@ const Pompiste : React.FC = () => {
 
   
   useEffect(()=> {
-    dispatch(getPompistes());
+    dispatch(getAllConversions());
     },[])
 
     const [pendingConversions, acceptedConversions] = [
-      conversions.filter(conversion => conversion.status === "PENDING"),
-      conversions.filter(conversion => conversion.status === "ACCEPTED")
+      conversions.filter((conversion: { status: string; }) => conversion.status === "PENDING"),
+      conversions.filter((conversion: { status: string; }) => conversion.status === "ACCEPTED")
     ];
       return (
     <div>
@@ -106,6 +106,7 @@ const Pompiste : React.FC = () => {
                 <th scope="col" className="p-2 ">Nom</th>
                 <th scope="col" className="p-2 ">score</th>
                 <th scope="col" className="p-2 ">montant</th>
+                <th scope="col" className="p-2 ">Date</th>
                 <th scope="col" className="p-2 ">Actions</th>
               </tr>
             </thead>
@@ -134,7 +135,8 @@ const Pompiste : React.FC = () => {
                   <span className="bg-primary-100 text-primary-800 text-xs font-medium rounded dark:bg-primary-900 dark:text-primary-300">{pendingConversion.pompiste.username}</span>
                 </td>
                 <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pendingConversion.score}</td>
-                <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pendingConversion.montant} DH</td>
+                <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pendingConversion.montant} MAD</td>
+                <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{new Date(pendingConversion.dateConversion).toLocaleDateString()}</td>
                 <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <div className="flex items-center justify-center space-x-4">
                     <button   onClick={() => handleAcceptConversion(pendingConversion._id)} type="button" data-drawer-target="drawer-read-product-advanced" data-drawer-show="drawer-read-product-advanced" aria-controls="drawer-read-product-advanced" className="py-2 px-2 flex items-center text-sm font-medium text-center text-green-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-yellow-700 dark:bg-gray-800 dark:text-yellow-400 dark:border-yellow-600 dark:hover:text-white dark:hover:bg-green-700">
@@ -180,6 +182,7 @@ const Pompiste : React.FC = () => {
                 <th scope="col" className="p-4 ">Nom</th>
                 <th scope="col" className="p-4 ">score</th>
                 <th scope="col" className="p-4 ">montant</th>
+                <th scope="col" className="p-4 ">date</th>
                 <th scope="col" className="p-4 ">Status</th>
               </tr>
             </thead>
@@ -191,6 +194,7 @@ const Pompiste : React.FC = () => {
                 </td>
                 <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{acceptedConversion.score}</td>
                 <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{acceptedConversion.montant} DH</td>
+                <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{new Date(acceptedConversion.dateConversion).toLocaleDateString()}</td>
                 <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <div className="flex items-center justify-center space-x-4">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 -ml-0.5 text-green-500">

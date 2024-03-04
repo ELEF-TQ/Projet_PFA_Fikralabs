@@ -10,6 +10,8 @@ import { generateRandomNumber } from './utils/generateRandomNumber';
 
 @Injectable()
 export class ConversionsService {
+ 
+  
   constructor(
     @InjectModel(Conversion.name) private readonly conversionModel: Model<Conversion>,
     private readonly pompisteService: PompistesService
@@ -44,20 +46,7 @@ export class ConversionsService {
     }
   }
 
-  async updateAll(ids: string[]): Promise<Conversion[]> {
-    try {
-      const updatedConversions: Conversion[] = [];
-      for (const id of ids) {
-        const conversion = await this.conversionModel.findById(id);
-        conversion.status = ConversionStatus.ACCEPTED;
-        const updatedConversion = await conversion.save();
-        updatedConversions.push(updatedConversion);
-      }
-      return updatedConversions;
-    } catch (error) {
-      throw new Error(`Failed to update conversions: ${error.message}`);
-    }
-  }
+ 
 
   async findAllByPompiste(pompisteId: string): Promise<Conversion[]> {
     const pompiste = await this.pompisteService.findOneById(pompisteId);
@@ -68,7 +57,24 @@ export class ConversionsService {
     .find({ pompiste: pompiste })
     .exec();
   }
+
+  async findAll() {
+    return this.conversionModel.find()
+        .populate('pompiste', 'username') 
+        .exec();
+  }
+
+  async acceptOne(id: string) {
+    return this.conversionModel.findByIdAndUpdate(id, { status: ConversionStatus.ACCEPTED }, { new: true });
+  }
+
+  async acceptAll(ids: string[]) {
+  
+  }
 }
+
+
+
 
  
 

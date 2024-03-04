@@ -12,25 +12,25 @@ export class ConversionsController {
     return await this.conversionsService.create(pompisteId);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.conversionsService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.conversionsService.findAll();
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {
   //   return this.conversionsService.findOne(id);
   // }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string) {
-  //   return this.conversionsService.update(id);
-  // }
+  @Patch(':id')
+  aceeptOne(@Param('id') id: string) {
+    return this.conversionsService.acceptOne(id);
+  }
 
-  @Post('acceptAll')
-  async updateAll(@Body() ids: string[]) {
+  @Patch('acceptAll')
+  async acceptAll(@Body() ids: string[]) {
     try {
-      const updatedConversions = await this.conversionsService.updateAll(ids);
+      const updatedConversions = await this.conversionsService.acceptAll(ids);
       return { success: true, data: updatedConversions };
     } catch (error) {
       return { success: false, message: error.message };
