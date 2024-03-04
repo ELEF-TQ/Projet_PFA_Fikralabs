@@ -27,7 +27,7 @@ export class ReviewsService {
     const clientScore = 300;
     const clientUpdatePromise = this.clientService.updateClientScore(client, clientScore);
 
-    let pompisteScore = [300, 200, 100, 0][etoiles - 2] || 0;
+    let pompisteScore = [0, 100, 200, 300][etoiles - 2] || 0;
     await this.pompisteService.updatePompisteScore(pompiste, pompisteScore);
 
     const reviews = await this.reviewModel.find({ pompiste }).exec();

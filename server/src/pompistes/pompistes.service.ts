@@ -75,9 +75,16 @@ export class PompistesService {
     return null; 
   }
 
-  async updatePompisteScore(pompiste: Pompiste, pompisteScore: number): Promise<Pompiste> {
-    return await this.pompisteModel.findByIdAndUpdate(pompiste, { score: pompisteScore }).exec();
-  }
+  async updatePompisteScore(pompiste: Pompiste, newScore: number): Promise<Pompiste> {
+    const oldPompiste = await this.pompisteModel.findById(pompiste).exec();
+    if (!oldPompiste) {
+        throw new Error('Pompiste not found');
+    }
+    const oldScore = oldPompiste.score || 0; 
+    const updatedScore = oldScore + newScore;
+    return await this.pompisteModel.findByIdAndUpdate(pompiste, { score: updatedScore }).exec();
+}
+
 
   async updatePompisteEtoiles(pompiste: Pompiste, meanEtoiles: number): Promise<void> {
     await this.pompisteModel.findByIdAndUpdate(pompiste, { etoiles: meanEtoiles }).exec();
