@@ -8,7 +8,7 @@ import Modal from "react-modal";
 import Spinner from "../../components/Spinner";
 import ClientInfosModal from "../../components/modals/ClientInfos";
 import './style.css'
-// Assurez-vous que le style du modal est configuré correctement
+import { retrieveUserSession } from "../../lib/Encryption";
 Modal.setAppElement("#root");
 
 const Home = () => {
@@ -18,7 +18,8 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(getAllReviews("P1267645"));
+    const userData = retrieveUserSession()
+    dispatch(getAllReviews(userData.user.matriculeRH));
   }, []);
 
   const averageStars = reviews.reviews.reduce((sum, review: any) => sum + review.etoiles, 0) /reviews.reviews.length;
@@ -49,7 +50,7 @@ const Home = () => {
   
   return (
     <div className="container mx-auto my-8">
-      <h1 className="text-3xl font-bold mb-4">Reviews</h1>
+      <h1 className="text-3xl font-bold mb-4">Évaluations</h1>
 
       {/* Spinner */}
       {reviews.isLoading && (

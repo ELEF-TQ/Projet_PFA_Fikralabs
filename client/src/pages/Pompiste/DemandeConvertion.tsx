@@ -3,21 +3,24 @@ import { AppDispatch, RootState } from "../../context/store";
 import { useEffect } from "react";
 import { getPompiste } from "../../context/features/PompisteSlice";
 import { createConversion } from "../../context/features/ConversionSlice";
-import { EastOutlined, EastRounded, SouthRounded } from "@mui/icons-material";
+import {  EastRounded } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import Spinner from "../../components/Spinner";
 import { retrieveUserSession } from "../../lib/Encryption";
 
 const DemandeConvertion = () => {
+
+  const userData = retrieveUserSession()
+
   const dispatch = useDispatch<AppDispatch>();
   const pompiste: any = useSelector((state: RootState) => state.pompistes.pompiste);
   const isLoading: boolean = useSelector((state: RootState) => state.pompistes.isLoading);
   const pompisteSession = retrieveUserSession();
   console.log(pompisteSession)
 
+  
   useEffect(() => {
-    // Fetch pompiste data when the component mounts
-    dispatch(getPompiste("P1267645"));
+    dispatch(getPompiste(userData.user.matriculeRH));
   }, []);
 
   const handleConversion = async () => {
@@ -28,7 +31,7 @@ const DemandeConvertion = () => {
         if (result.isConfirmed) {
             console.log(pompiste._id)
             await dispatch(createConversion(pompiste._id)).then(() => {
-              dispatch(getPompiste("P1267645"));
+              dispatch(getPompiste(userData.user.matriculeRH));
             })
         }
       });
@@ -36,7 +39,7 @@ const DemandeConvertion = () => {
   };
 
   const calculateMontant = (score: number) => {
-    return (score * 1) / 25; // Adjust the formula based on your actual calculation
+    return (score * 1) / 25; 
   };
 
   return (

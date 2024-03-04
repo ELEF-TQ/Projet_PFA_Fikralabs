@@ -43,11 +43,6 @@ export const PompisteItems = [
     icon: AiOutlineHome,
   },
   {
-    name: "Évaluations",
-    href: "/pompiste/evaluation",
-    icon: BsPeople,
-  },
-  {
     name: "Demandes",
     href: "/pompiste/demandeConvertion",
     icon: FaPeopleGroup ,
