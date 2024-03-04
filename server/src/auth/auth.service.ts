@@ -1,3 +1,4 @@
+import { PompistesService } from 'src/pompistes/pompistes.service';
 import { JwtService } from '@nestjs/jwt';
 import { ClientsService } from '../clients/clients.service';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
@@ -8,12 +9,14 @@ import { Client } from 'src/clients/schemas/client.schema';
 import { Admin } from 'src/admin/schemas/admin.schema';
 import { comparePasswords } from './utils/bcrypt';
 import { IsEmailAlreadyExists } from './utils/IsEmailAlreadyExist';
+import { Pompiste } from 'src/pompistes/schemas/pompiste.schema';
 
 @Injectable()
 export class AuthService {
   constructor(
     private clientsService: ClientsService,
     private adminService: AdminService,
+    private pompistesService : PompistesService,
     private jwtService: JwtService,
   ) {}
 
@@ -59,19 +62,25 @@ export class AuthService {
     }
   }
 
-  async findOneByEmail(email: string): Promise<Client | Admin> {
+  async findOneByEmail(email: string): Promise<Client | Admin | Pompiste | null> {
     const userClient = await this.clientsService.findOneByEmail(email);
-    if(!userClient) {
-      const userAdmin = await this.adminService.findOneByEmail(email);
-      if(!userAdmin){
-        return null;
-      }else{
-        return userAdmin;
-      }
-    }else{
+    if (userClient) {
       return userClient;
     }
+  
+    const userAdmin = await this.adminService.findOneByEmail(email);
+    if (userAdmin) {
+      return userAdmin;
+    }
+  
+    const userPompiste = await this.pompistesService.findOneByEmail(email);
+    if (userPompiste) {
+      return userPompiste;
+    }
+  
+    return null;
   }
+  
 
 
 }

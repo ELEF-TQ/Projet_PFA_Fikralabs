@@ -8,11 +8,13 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AdminModule } from 'src/admin/admin.module';
 import 'dotenv/config'; 
+import { PompistesModule } from 'src/pompistes/pompistes.module';
 
 @Module({
   imports: [
     ClientsModule, 
     AdminModule,
+    PompistesModule,
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET, 

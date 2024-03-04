@@ -62,8 +62,10 @@ const authSlice = createSlice({
         storeUserSession(action.payload)
         if (action.payload.user.role === 'ADMIN') {
           window.location.href ='/admin'
-        } else {
-          window.location.href ='/user'
+        } else if(action.payload.user.role === 'POMPISTE'){
+          window.location.href ='/pompiste'
+        } else if(action.payload.user.role === 'CLIENT'){
+          window.location.href ='/client'
         }
       })
       .addCase(handleLogin.rejected, (state, action :any) => {
