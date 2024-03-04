@@ -6,11 +6,14 @@ import { createConversion } from "../../context/features/ConversionSlice";
 import { EastOutlined, EastRounded, SouthRounded } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import Spinner from "../../components/Spinner";
+import { retrieveUserSession } from "../../lib/Encryption";
 
 const DemandeConvertion = () => {
   const dispatch = useDispatch<AppDispatch>();
   const pompiste: any = useSelector((state: RootState) => state.pompistes.pompiste);
   const isLoading: boolean = useSelector((state: RootState) => state.pompistes.isLoading);
+  const pompisteSession = retrieveUserSession();
+  console.log(pompisteSession)
 
   useEffect(() => {
     // Fetch pompiste data when the component mounts
