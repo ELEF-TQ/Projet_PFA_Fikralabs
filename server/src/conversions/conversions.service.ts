@@ -10,8 +10,6 @@ import { generateRandomNumber } from './utils/generateRandomNumber';
 
 @Injectable()
 export class ConversionsService {
-  
-
   constructor(
     @InjectModel(Conversion.name) private readonly conversionModel: Model<Conversion>,
     private readonly pompisteService: PompistesService
@@ -45,7 +43,7 @@ export class ConversionsService {
     } else {
         throw new HttpException("Probleme occurs", HttpStatus.AMBIGUOUS);
     }
-}
+  }
 
   async updateAll(ids: string[]): Promise<Conversion[]> {
     try {
@@ -61,5 +59,17 @@ export class ConversionsService {
       throw new Error(`Failed to update conversions: ${error.message}`);
     }
   }
- 
+
+  async findAllByPompiste(pompisteId: string): Promise<Conversion[]> {
+    const pompiste = await this.pompisteService.findOneById(pompisteId);
+    if (!pompiste) {
+        throw new NotFoundException(`Aucun pompiste avec cet id ${pompisteId}`);
+    }
+    return await this.conversionModel
+    .find({ pompiste: pompiste })
+    .exec();
+  }
 }
+
+ 
+

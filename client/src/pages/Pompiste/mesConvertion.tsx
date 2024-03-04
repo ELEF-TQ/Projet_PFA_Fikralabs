@@ -1,17 +1,24 @@
 import  { useEffect, useState } from "react";
-import conversions from "../../utils/conversion";
 import ConversionCard from "../../components/ConversionCard";
-
+import { useDispatch, useSelector } from "react-redux";
+import { retrieveUserSession } from "../../lib/Encryption";
+import { getConversions } from "../../context/features/ConversionSlice";
+import { AppDispatch } from "../../context/store";
 const Conversion = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const userData = retrieveUserSession()
+  const {conversions} = useSelector((state:any)=>state.conversions)
+  
   const [pendingConversions, setPendingConversions] = useState<any[]>([]);
 const [acceptedConversions, setAcceptedConversions] = useState<any[]>([]);
 
-
   useEffect(() => {
-    const pending = conversions.filter(conversion => conversion.status === "PENDING");
-    const accepted = conversions.filter(conversion => conversion.status === "ACCEPTED");
-    setPendingConversions(pending);
-    setAcceptedConversions(accepted);
+    dispatch(getConversions(userData.user._id)).then(()=> {
+      const pending = conversions?.filter((conversion: { status: string; }) => conversion.status === "PENDING");
+      const accepted = conversions?.filter((conversion: { status: string; }) => conversion.status === "ACCEPTED");
+      setPendingConversions(pending);
+      setAcceptedConversions(accepted);
+    })
   }, []);
 
   return (

@@ -37,6 +37,11 @@ export class ConversionsController {
     }
   }
 
+  @Get(':id')
+  findAllByPompiste(@Param('id') pompisteId:string){
+    return this.conversionsService.findAllByPompiste(pompisteId);
+  }
+
 
 
 }
