@@ -63,7 +63,7 @@ export class ClientsController {
     }
   }
 
-  @Get(':phone')
+  @Post(':phone')
   async checkClient(@Param('phone') phone: string) {
     try {
       await this.clientsService.getClientByPhone(phone);

@@ -66,8 +66,7 @@ const Index: React.FC = () => {
             return;
           }
           try {
-            console.log('here')
-            await axiosNoAuth.get(`/clients/${phone}`);
+            await axiosNoAuth.post(`/clients/${phone}`);
           } catch (error:any) {
             alert(error.response.data.message);
             return;
