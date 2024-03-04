@@ -2,11 +2,11 @@ import {  useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../context/store";
 import { useEffect } from "react";
 import { getPompiste } from "../../context/features/PompisteSlice";
-import { createConversion } from "../../context/features/ConversionSlice";
 import {  EastRounded } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import Spinner from "../../components/Spinner";
 import { retrieveUserSession } from "../../lib/Encryption";
+import { createConversion } from "../../context/features/ConversionSlice";
 
 const DemandeConvertion = () => {
 
@@ -36,7 +36,7 @@ const DemandeConvertion = () => {
 
   const calculateMontant = (score: number) => {
     return (score * 1) / 25; 
-  };
+  }
 
   return (
     <div className="my-8">
