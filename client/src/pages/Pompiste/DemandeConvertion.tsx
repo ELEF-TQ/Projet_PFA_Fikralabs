@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../context/store";
+import {  useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../context/store";
 import { useEffect } from "react";
 import { getPompiste } from "../../context/features/PompisteSlice";
 import { createConversion } from "../../context/features/ConversionSlice";
@@ -13,11 +13,8 @@ const DemandeConvertion = () => {
   const userData = retrieveUserSession();
 
   const dispatch = useDispatch<AppDispatch>();
-  const pompiste: any = useSelector((state: RootState) => state.pompistes.pompiste);
-  const isLoading: boolean = useSelector((state: RootState) => state.pompistes.isLoading);
-
+  const {pompiste , isLoading} = useSelector((state:any) => state.pompistes);
   
-
   useEffect(() => {
     dispatch(getPompiste(userData.user.matriculeRH));
   }, []);

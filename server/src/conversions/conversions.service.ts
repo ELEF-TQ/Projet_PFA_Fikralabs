@@ -37,8 +37,7 @@ export class ConversionsService {
     });
     const savedConversion = await createdConversion.save();
     if (savedConversion) {
-        const scoreAfterConversion = 0;
-        const updatedpompiste = await this.pompisteService.updatePompisteScore(pompiste, scoreAfterConversion);
+        await this.pompisteService.resetPompisteScoreToZero(pompiste);
         return savedConversion;
     } else {
         throw new HttpException("Probleme occurs", HttpStatus.AMBIGUOUS);

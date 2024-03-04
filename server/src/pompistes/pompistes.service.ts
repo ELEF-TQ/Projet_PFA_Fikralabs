@@ -57,13 +57,8 @@ export class PompistesService {
   }
 
   async destroy(ids: string[]): Promise<Pompiste[]> {
-        // Fetch the users to be deleted
         const deletedUsers = await this.pompisteModel.find({ _id: { $in: ids } }).exec();
-
-        // Delete the users
         await this.pompisteModel.deleteMany({ _id: { $in: ids } }).exec();
-    
-        // Return the deleted users
         return deletedUsers;
   }
 
@@ -89,6 +84,15 @@ export class PompistesService {
   async updatePompisteEtoiles(pompiste: Pompiste, meanEtoiles: number): Promise<void> {
     await this.pompisteModel.findByIdAndUpdate(pompiste, { etoiles: meanEtoiles }).exec();
   }
+
+  async resetPompisteScoreToZero(pompiste: Pompiste): Promise<void> {
+    try {
+        await this.pompisteModel.findByIdAndUpdate(pompiste, { score: 0 }).exec();
+    } catch (error) {
+        throw new Error(`Failed to reset Pompiste score to zero: ${error.message}`);
+    }
+}
+
 
 
 }
