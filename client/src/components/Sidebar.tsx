@@ -1,20 +1,36 @@
 
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SidebarContext } from "../providers/SidebarProvider";
 import defaultUser from '../assets/images/defaultUser.png'
 import { Link, useLocation } from "react-router-dom";
 
 
 /*__Sidebar Items___*/
-import { AdminItems, PompisteItems } from "../routes/dash-routes";
+import { AdminItems, PompisteItems ,ClientItems} from "../routes/dash-routes";
 import { CiLogout } from "react-icons/ci";
+import { retrieveUserSession } from "../lib/Encryption";
 
+interface SidebarItem {
+  name: string;
+  href: string;
+  icon: any; 
+}
 const Sidebar = () => {
 
   const location = useLocation()
 
-  let sidebarItems = AdminItems ;
+  const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([]);
+  useEffect(() => {
+    const userData = retrieveUserSession(); 
+    if (userData?.user.role == 'ADMIN') {
+      setSidebarItems(AdminItems); 
+    } else if (userData?.user.role == 'POMPISTE') {
+      setSidebarItems(PompisteItems)
+    } else if (userData?.user.role == 'CLIENT') {
+      setSidebarItems(ClientItems)
+    }
+  }, []);
 
   const { isCollapsed, toggleSidebarcollapse } = useContext(SidebarContext);
 

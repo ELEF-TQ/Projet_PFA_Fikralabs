@@ -76,5 +76,11 @@ export const PompisteItems = [
 
 
 
-export const ClientItems = []
+export const ClientItems = [
+  {
+    name: "Home",
+    href: "/client",
+    icon: AiOutlineHome,
+  },
+]
 

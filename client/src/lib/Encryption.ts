@@ -1,30 +1,23 @@
-import Cryptr from 'cryptr';
+import CryptoJS from 'crypto-js';
 import cookie from 'js-cookie';
 
 const secretKey = 'yourSecretKey';
-const expirationDays = 1;
-const cryptr = new Cryptr(secretKey);
 
 export const storeUserSession = (userData: any) => {
   try {
-    cookie.set('user', JSON.stringify(userData.user))
-    const encryptedData = cryptr.encrypt(JSON.stringify(userData));
-    cookie.set('userSession', encryptedData, { expires: expirationDays });
-} catch (error) {
+    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData), secretKey).toString();
+    cookie.set('session', encryptedData);
+  } catch (error) {
     console.error('Error storing user session:', error);
   }
 };
 
-
-
-
 export const retrieveUserSession = () => {
   try {
-    const encryptedData = cookie.get('userSession');
+    const encryptedData = cookie.get('session');
     if (encryptedData) {
-      const decryptedData = cryptr.decrypt(encryptedData);
-      const userData = JSON.parse(decryptedData);
-      return userData;
+      const decryptedData = CryptoJS.AES.decrypt(encryptedData, secretKey).toString(CryptoJS.enc.Utf8);
+      return JSON.parse(decryptedData);
     }
   } catch (error) {
     console.error('Error retrieving user session:', error);
