@@ -49,7 +49,7 @@ export const getAllConversions = createAsyncThunk('convesions/getAll', async () 
 // Async thunk to get a specific conversion
 export const getConversions = createAsyncThunk('convesions/get', async (pompisteId:string) => {
   try {
-    const response = await axiosAuth.post(`/conversions/${pompisteId}`);
+    const response = await axiosAuth.get(`/conversions/${pompisteId}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -105,10 +105,8 @@ const ConversionsSlice = createSlice({
         state.error = null;
       })
       .addCase(getConversions.fulfilled, (state, action) => {
-        console.log(action.payload)
-        state.isLoading = false;
+         state.isLoading = false;
          state.conversions = action.payload;
-         
       })
       .addCase(getConversions.rejected, (state, action) => {
         state.isLoading = false;
