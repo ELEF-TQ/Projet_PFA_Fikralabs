@@ -57,9 +57,9 @@ export class PompistesService {
   }
 
   async destroy(ids: string[]): Promise<Pompiste[]> {
-        const deletedUsers = await this.pompisteModel.find({ _id: { $in: ids } }).exec();
-        await this.pompisteModel.deleteMany({ _id: { $in: ids } }).exec();
-        return deletedUsers;
+    const deletedUsers = await this.pompisteModel.find({ _id: { $in: ids } }).exec();
+    await this.pompisteModel.deleteMany({ _id: { $in: ids } }).exec();
+    return deletedUsers;
   }
 
   async getPompisteByMatriculeRH(matriculeRH: string): Promise<Pompiste> {
@@ -92,7 +92,5 @@ export class PompistesService {
         throw new Error(`Failed to reset Pompiste score to zero: ${error.message}`);
     }
 }
-
-
 
 }

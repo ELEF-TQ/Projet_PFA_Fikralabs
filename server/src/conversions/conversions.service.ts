@@ -69,7 +69,11 @@ export class ConversionsService {
   }
 
   async acceptAll(ids: string[]) {
-  
+    const updatedConversions = await this.conversionModel.updateMany(
+      { _id: { $in: ids }, status: ConversionStatus.PENDING  },
+      { $set: { status: ConversionStatus.ACCEPTED } }
+    ).exec();
+    return updatedConversions;
   }
 }
 

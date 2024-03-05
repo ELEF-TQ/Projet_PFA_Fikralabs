@@ -4,6 +4,7 @@ import { AppDispatch } from '../../../context/store';
 import Swal from 'sweetalert2';
 import { acceptAllConversion, acceptConversion, getAllConversions } from '../../../context/features/ConversionSlice';
 
+
 const Pompiste : React.FC = () => {
 
   const handleAcceptConversion = (id:any) => {
@@ -19,7 +20,7 @@ const Pompiste : React.FC = () => {
   const handleAcceptConversions = (ids:any) => {
     Swal.fire({title: 'Are you sure?',text: `You are about to perform an action on item ${ids}`,icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, proceed!'}).then((result) => {
         if (result.isConfirmed) {
-          dispatch(acceptAllConversion(ids)).then(()=>{
+          dispatch(acceptAllConversion({ids})).then(()=>{
             dispatch(getAllConversions())
           })
         }
@@ -51,7 +52,7 @@ const Pompiste : React.FC = () => {
   
   useEffect(()=> {
     dispatch(getAllConversions());
-    },[])
+  },[])
 
     const [pendingConversions, acceptedConversions] = [
       conversions.filter((conversion: { status: string; }) => conversion.status === "PENDING"),

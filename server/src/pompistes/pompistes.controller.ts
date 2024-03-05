@@ -74,8 +74,5 @@ export class PompistesController {
       return deletedPompistes;
     }
   }
-
-  
-  
   
 }

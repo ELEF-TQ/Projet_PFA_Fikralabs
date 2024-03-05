@@ -18,7 +18,7 @@ export const createConversion = createAsyncThunk('convesions/create', async (pom
 export const acceptConversion = createAsyncThunk('convesions/accept', async (id :any) => {
    console.log(id)
     try {
-      const response = await axiosAuth.patch(`/conversions${id}`);
+      const response = await axiosAuth.patch(`/conversions/acceptOne/${id}`);
       return response.data;
     } catch (error) {
       throw error;
@@ -28,7 +28,7 @@ export const acceptConversion = createAsyncThunk('convesions/accept', async (id 
 // Async thunk to accept all conversions
 export const acceptAllConversion = createAsyncThunk('convesions/acceptAll', async (ids :any) => {
     try {
-      const response = await axiosAuth.post('/acceptAll', ids);
+      const response = await axiosAuth.patch('/conversions/acceptAll', ids);
       return response.data;
     } catch (error) {
       throw error;
@@ -39,7 +39,7 @@ export const acceptAllConversion = createAsyncThunk('convesions/acceptAll', asyn
 // Async thunk to get all conversions
 export const getAllConversions = createAsyncThunk('convesions/getAll', async () => {
   try {
-    const response = await axiosAuth.post('/conversions');
+    const response = await axiosAuth.get('/conversions');
     return response.data;
   } catch (error) {
     throw error;

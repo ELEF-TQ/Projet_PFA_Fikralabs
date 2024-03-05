@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException } from '@nestjs/common';
 import { ConversionsService } from './conversions.service';
+import { UpdateMultipleDto } from './dto/update-conversion.dto';
 // import { CreateConversionDto } from './dto/create-conversion.dto';
 // import { UpdateConversionDto } from './dto/update-conversion.dto';
 
@@ -22,14 +23,16 @@ export class ConversionsController {
   //   return this.conversionsService.findOne(id);
   // }
 
-  @Patch(':id')
-  aceeptOne(@Param('id') id: string) {
+  @Patch('/acceptOne/:id')
+  acceptOne(@Param('id') id: string) {
     return this.conversionsService.acceptOne(id);
   }
 
-  @Patch('acceptAll')
-  async acceptAll(@Body() ids: string[]) {
+  @Patch("/acceptAll")
+  async acceptAll(@Body() updateMultipleDto: UpdateMultipleDto) {
     try {
+      const { ids } = updateMultipleDto;
+      console.log(ids)
       const updatedConversions = await this.conversionsService.acceptAll(ids);
       return { success: true, data: updatedConversions };
     } catch (error) {
@@ -41,7 +44,5 @@ export class ConversionsController {
   findAllByPompiste(@Param('id') pompisteId:string){
     return this.conversionsService.findAllByPompiste(pompisteId);
   }
-
-
 
 }
