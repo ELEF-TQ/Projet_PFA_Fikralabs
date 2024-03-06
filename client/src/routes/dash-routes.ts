@@ -83,7 +83,7 @@ export const ClientItems = [
     icon: AiOutlineHome,
   },
   {
-    name: "Coupons",
+    name: "Mes Coupons",
     href: "/client/coupons",
     icon: RiCoupon2Fill  ,
   },

@@ -24,7 +24,8 @@ import AddReview from "../pages/public/AddReview";
 
 /*___Clients_____ */
 import Client from '../pages/Client/index'
-import Coupons from "../pages/Client/Coupons";
+import HomeClient from "../pages/Client/Home";
+import Coupons from "../pages/Client/mesCoupons";
 
 export const routes = createBrowserRouter([
 
@@ -77,6 +78,7 @@ export const routes = createBrowserRouter([
         path: "/client",
         element: <Client/>,
         children: [
+          { path: "/client", element: <HomeClient/>},
           { path: "/client/coupons", element: <Coupons/>},
         ],
       },

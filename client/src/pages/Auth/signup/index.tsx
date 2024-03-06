@@ -139,7 +139,7 @@ const index :React.FC= () => {
             <p className="text-center">
               Avez-vous déjà un Compte?
               <br />
-              <Link to="/auth/login">- Connectez-vous ici</Link>
+              <Link to="/">- Connectez-vous ici</Link>
             </p>
             <h1 className="text-center  mx-auto mb-5 Sign__Title">Créer votre compte </h1>
 

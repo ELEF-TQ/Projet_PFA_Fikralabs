@@ -73,7 +73,7 @@ const DemandeConvertion = () => {
                       {pompiste && (
                         <div className="text-center">
                           <span className="text-lg">Compatible (en Dirham marocain)</span>
-                          <span className="my-3 block text-2xl text-primary-color text-3xl">{calculateMontant(pompiste.score)} DHS</span>
+                          <span className="my-3 block text-primary-color text-3xl">{calculateMontant(pompiste.score)} DHS</span>
                         </div>
                       )}
                     </div>

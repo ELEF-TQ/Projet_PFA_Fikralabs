@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-    --primary-color: rgba(128, 189, 10, 1); /* Primary color */
-    --secondary-color: rgba(255, 180, 0, 1); /* Secondary color */
+    --primary-color: rgba(128, 189, 10, 1);
+    --secondary-color: rgba(255, 180, 0, 1);
     --text-color : rgba(110, 111, 114, 1);
     --font-weight : 600;
     --input-color : rgba(229, 231, 243, 1) ;
