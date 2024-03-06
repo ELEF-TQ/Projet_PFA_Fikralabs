@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Coupon extends Document {
-  @Prop({ required: true })
+  @Prop({ required: true , unique: true  })
   code: string;
 
   @Prop({ required: true })
@@ -14,6 +14,9 @@ export class Coupon extends Document {
 
   @Prop({ required: true })
   dateExpiration: Date;
+
+  @Prop({ required: true })
+  score: number;
 
 }
 

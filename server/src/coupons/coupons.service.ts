@@ -9,6 +9,7 @@ import { UpdateCouponDto } from './dto/update-coupon.dto';
 
 @Injectable()
 export class CouponsService {
+  
   constructor(@InjectModel(Coupon.name) private couponModel: Model<Coupon>) {}
 
   async createCoupon(createCouponDto: CreateCouponDto): Promise<Coupon> {
@@ -30,5 +31,9 @@ export class CouponsService {
 
   async deleteCoupon(id: string): Promise<Coupon> {
     return await this.couponModel.findOneAndDelete({id}).exec();
+  }
+
+  reserveCouponById(id: string): Coupon | PromiseLike<Coupon> {
+    throw new Error('Method not implemented.');
   }
 }

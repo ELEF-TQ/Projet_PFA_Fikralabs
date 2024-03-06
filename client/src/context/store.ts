@@ -7,6 +7,7 @@ import PompisteSlice from './features/PompisteSlice'
 import ReviewSlice from './features/ReviewSlice'
 import ClientSlice from './features/ClientSlice'
 import ConversionSlice from './features/ConversionSlice'
+import CouponSlice from './features/CouponSlice'
 
 export const makeStore = () => {
   return configureStore({
@@ -17,6 +18,7 @@ export const makeStore = () => {
         reviews : ReviewSlice,
         clients :ClientSlice,
         conversions :ConversionSlice,
+        coupons : CouponSlice,
     },
   })
 }
@@ -24,3 +26,4 @@ export const makeStore = () => {
 export type AppStore = ReturnType<typeof makeStore>
 export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
+

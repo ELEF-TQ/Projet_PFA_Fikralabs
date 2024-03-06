@@ -8,11 +8,8 @@ import { UpdateCouponDto } from './dto/update-coupon.dto';
 export class CouponsController {
   constructor(private readonly couponsService: CouponsService) {}
 
-  @Post()
-  async createCoupon(@Body() createCouponDto: CreateCouponDto): Promise<Coupon> {
-    return await this.couponsService.createCoupon(createCouponDto);
-  }
 
+   /// ___ PUBLIC ROUTES :
   @Get()
   async getAllCoupons(): Promise<Coupon[]> {
     return await this.couponsService.getAllCoupons();
@@ -22,6 +19,14 @@ export class CouponsController {
   async getCouponById(@Param('id') id: string): Promise<Coupon> {
     return await this.couponsService.getCouponById(id);
   }
+
+
+  /// ___ ADMIN ROUTES :
+  @Post()
+  async createCoupon(@Body() createCouponDto: CreateCouponDto): Promise<Coupon> {
+    return await this.couponsService.createCoupon(createCouponDto);
+  }
+
 
   @Put(':id')
   async updateCoupon(
@@ -35,4 +40,15 @@ export class CouponsController {
   async deleteCoupon(@Param('id') id: string): Promise<Coupon> {
     return await this.couponsService.deleteCoupon(id);
   }
+  
+
+
+  /// ___ CLIENT ROUTES :
+  @Get('reserve/:id')
+  async reserveCouponById(@Param('id') id: string): Promise<Coupon> {
+    return await this.couponsService.reserveCouponById(id);
+  }
+ 
+
+
 }
