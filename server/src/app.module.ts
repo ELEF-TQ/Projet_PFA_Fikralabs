@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { IdValidationMiddleware } from './middlewares/IdValidation.middleware';
 import { ReviewsModule } from './reviews/reviews.module';
 import { ConversionsModule } from './conversions/conversions.module';
+import { CouponsModule } from './coupons/coupons.module';
 
 
 
@@ -17,7 +18,7 @@ import { ConversionsModule } from './conversions/conversions.module';
     isGlobal: true
   }),
     MongooseModule.forRoot(`${process.env.DB_TYPE}://${process.env.HOST_NAME}/${process.env.DB_NAME}`),
-     AuthModule, ClientsModule, PompistesModule, AdminModule, ReviewsModule, ConversionsModule],
+     AuthModule, ClientsModule, PompistesModule, AdminModule, ReviewsModule, ConversionsModule, CouponsModule],
 })
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) {

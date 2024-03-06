@@ -10,7 +10,7 @@ import GestionPompiste from "../pages/Admin/GestPompiste/Pompiste";
 import GestionClients from "../pages/Admin/GestClient/Clients";
 import GestionConversions from "../pages/Admin/GestConversion/Conversion";
 import GestionProfile from "../pages/Admin/Profile";
-
+import GestCoupons from '../pages/Admin/GestCoupon/Coupon'
 
 /*___Pompiste_____ */
 import Pompiste from "../pages/Pompiste/index";
@@ -21,6 +21,10 @@ import Formations from "../pages/Pompiste/Formations"
 import Quiz from "../pages/Pompiste/Quiz";
 import Profile from "../pages/Admin/Profile";
 import AddReview from "../pages/public/AddReview";
+
+/*___Clients_____ */
+import Client from '../pages/Client/index'
+import Coupons from "../pages/Client/Coupons";
 
 export const routes = createBrowserRouter([
 
@@ -50,6 +54,7 @@ export const routes = createBrowserRouter([
         { path: "/admin/pompistes", element: <GestionPompiste/> },
         { path: "/admin/conversions", element: <GestionConversions/> },
         { path: "/admin/profile", element: <GestionProfile/> },
+        { path: "/admin/coupons", element: <GestCoupons/> },
       ],
     },
 
@@ -68,6 +73,13 @@ export const routes = createBrowserRouter([
     },
 
       /*______Clients Routes_______*/
+      {
+        path: "/client",
+        element: <Client/>,
+        children: [
+          { path: "/client/coupons", element: <Coupons/>},
+        ],
+      },
 
 
 ]);

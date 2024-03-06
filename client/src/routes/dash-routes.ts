@@ -3,7 +3,7 @@ import { BsPeople } from "react-icons/bs";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbTransform } from "react-icons/tb";
-
+import { RiCoupon2Fill } from "react-icons/ri";
 
 export const AdminItems = [
     {
@@ -20,6 +20,11 @@ export const AdminItems = [
       name: "Pompistes",
       href: "/admin/pompistes",
       icon: FaPeopleGroup ,
+    },
+    {
+      name: "Coupons",
+      href: "/admin/coupons",
+      icon: RiCoupon2Fill  ,
     },
     {
       name: "Clients",
@@ -76,6 +81,11 @@ export const ClientItems = [
     name: "Home",
     href: "/client",
     icon: AiOutlineHome,
+  },
+  {
+    name: "Coupons",
+    href: "/client/coupons",
+    icon: RiCoupon2Fill  ,
   },
 ]
 

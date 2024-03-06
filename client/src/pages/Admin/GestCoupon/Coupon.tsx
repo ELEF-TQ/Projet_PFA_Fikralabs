@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Coupons = () => {
+const Coupon = () => {
   return (
     <div>
-      coupons
+      coupon
     </div>
   )
 }
 
-export default Coupons
+export default Coupon
