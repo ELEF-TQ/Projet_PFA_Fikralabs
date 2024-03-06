@@ -51,6 +51,7 @@ const authSlice = createSlice({
       .addCase(handleSignup.rejected, (state, action :any) => {
         state.isAuthenticated = false;
         state.isLoading = false;
+        console.log(action.payload.message)
         state.error = action.payload.message;
         Swal.fire({icon: 'error', title: 'Ooops!' , text:  state.error})
       })
