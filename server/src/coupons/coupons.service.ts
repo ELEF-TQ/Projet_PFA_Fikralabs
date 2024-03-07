@@ -42,12 +42,12 @@ export class CouponsService {
 
   async reserveCouponById(reserveCouponDto: ReserveCouponDto): Promise<Coupon> {
     const client = await this.clientService.findOne(reserveCouponDto.clientId);
-    const coupon = await this.getCouponByCode(reserveCouponDto.couponId);
+    const coupon = await this.couponModel.findById(reserveCouponDto.couponId);
 
-    if (!client || !coupon) {
-      throw new NotFoundException('Client ou coupon non trouvé');
+    if (!coupon ) {
+      throw new NotFoundException('coupon  non trouvé');
     }
-
+ 
     if (client.score < coupon.score) {
       throw new HttpException('Le client n\'a pas suffisamment de points pour réserver ce coupon', HttpStatus.BAD_REQUEST);
     }
@@ -63,5 +63,7 @@ export class CouponsService {
 
     return coupon;
   }
+
+  
 
 }

@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Validation
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { Coupon } from 'src/coupons/Schemas/coupon.schema';
 
 
 @Controller('clients')
@@ -24,15 +25,6 @@ export class ClientsController {
     }
   }
 
-  // @Get(':id')
-  // async findOne(@Param('id') id: string) { 
-  //   const userFound = await this.clientsService.findOne(id);
-  //   if(!userFound){
-  //     throw new HttpException("The User with the provided ID doesn't exist", HttpStatus.NOT_FOUND);
-  //   }else{
-  //       return userFound;
-  //   }
-  // }
 
 
 
@@ -71,5 +63,12 @@ export class ClientsController {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
+  }
+
+
+  
+  @Get(':clientId/coupons')
+  async getClientReservedCoupons(@Param('clientId') clientId: string): Promise<Coupon[]> {
+    return await this.clientsService.findReservedCouponsByClientId(clientId);
   }
 }

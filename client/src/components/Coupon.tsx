@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux'; // Import useDispatch hook
+import { useDispatch } from 'react-redux'; 
 import CouponInfo from '../components/modals/CouponInfo';
 import Swal from 'sweetalert2';
 import { AppDispatch } from '../context/store';
-import { reserveCouponById } from '../context/features/CouponSlice';
+import { fetchAllCoupons, reserveCoupon } from '../context/features/CouponSlice';
+import { retrieveUserSession } from '../lib/Encryption';
 
 interface CouponProps {
     coupon: Coupon;
@@ -19,14 +20,22 @@ interface Coupon {
 }
 
 const Coupon: React.FC<CouponProps> = ({ coupon }) => {
+    
+    const user = retrieveUserSession().user;
     const [showModal, setShowModal] = useState(false);
     const [codeShown, setCodeShown] = useState(false);
+    const formData = {
+        couponId: coupon._id, 
+        clientId: user._id
+    };
     const dispatch = useDispatch<AppDispatch>(); 
 
     const handleConfirmReservation = () => {Swal.fire({title: 'Confirm Reservation',text: 'Are you sure you want to reserve this coupon?',icon: 'question',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, reserve it!'}).then((result) => {
             if (result.isConfirmed) {
                 setCodeShown(true);
-                dispatch(reserveCouponById(coupon._id)); 
+                dispatch(reserveCoupon(formData)).then(()=>{
+                    dispatch(fetchAllCoupons())
+                })
             }
         });
     };
