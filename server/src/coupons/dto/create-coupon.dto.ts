@@ -1,7 +1,20 @@
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+
 export class CreateCouponDto {
-    reduction: number;
-    nbrDisponible: number;
-    dateExpiration: Date;
-    score: number;
-  }
+  @IsNotEmpty()
+  @IsNumber()
+  reduction: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  nbrDisponible: number;
+
+  @IsNotEmpty()
+  @IsDateString()
+  dateExpiration: Date;
+
+  @IsNotEmpty()
+  @IsNumber()
+  score: number;
+}
   

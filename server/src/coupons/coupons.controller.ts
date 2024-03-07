@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UsePipes, ValidationPipe, Patch, NotFoundException } from '@nestjs/common';
 import { CouponsService } from './coupons.service';
 import { Coupon } from './Schemas/coupon.schema';
 import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
+import { DeleteMultipleDto } from './dto/delete-multiple.dto';
 
 @Controller('coupons')
 export class CouponsController {
@@ -23,12 +24,13 @@ export class CouponsController {
 
   /// ___ ADMIN ROUTES :
   @Post()
+  @UsePipes(ValidationPipe)
   async createCoupon(@Body() createCouponDto: CreateCouponDto): Promise<Coupon> {
     return await this.couponsService.createCoupon(createCouponDto);
   }
 
 
-  @Put(':id')
+  @Patch(':id')
   async updateCoupon(
     @Param('id') id: string,
     @Body() updateCouponDto: UpdateCouponDto,
@@ -39,6 +41,17 @@ export class CouponsController {
   @Delete(':id')
   async deleteCoupon(@Param('id') id: string): Promise<Coupon> {
     return await this.couponsService.deleteCoupon(id);
+  }
+
+  @Post('/destroy')
+  async deleteMultiple(@Body() deleteMultipleDto: DeleteMultipleDto): Promise<Coupon[]> {
+    const { ids } = deleteMultipleDto;
+    const deletedCoupons = await this.couponsService.destroy(ids);
+    if(deletedCoupons.length === 0){
+      throw new NotFoundException("Aucun coupon n'est supprimmé")
+    }else{
+      return deletedCoupons;
+    }
   }
   
 
