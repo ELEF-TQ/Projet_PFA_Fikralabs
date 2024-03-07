@@ -1,15 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { RolesEnum } from 'src/enums/roles.enum';
-
+import { Coupon } from 'src/coupons/Schemas/coupon.schema';
 export type ClientDocument = Client & Document;
 
 @Schema()
 export class Client {
   
-  // @Prop()
-  // _id?: string;
-
+ 
   @Prop({required: true})
   username: string;
 
@@ -31,11 +29,11 @@ export class Client {
   @Prop()
   score: number;
 
-  @Prop()
-  sold: number;
-
   @Prop({ default: RolesEnum.CLIENT }) 
   role: string;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Coupon' }] })
+  coupons: Coupon[];
 }
 
 export const ClientSchema = SchemaFactory.createForClass(Client);

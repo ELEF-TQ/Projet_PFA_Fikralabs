@@ -5,10 +5,11 @@ import { Client, ClientDocument } from './schemas/client.schema';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { encodePassword } from 'src/auth/utils/bcrypt';
+import { Coupon } from 'src/coupons/Schemas/coupon.schema';
 
 @Injectable()
 export class ClientsService {
-  
+ 
   constructor(@InjectModel(Client.name) private readonly clientModel: Model<ClientDocument>) {}
 
   async create(createclienteDto: CreateClientDto): Promise<Client> {
@@ -64,6 +65,22 @@ export class ClientsService {
   async updateClientScore(client: Client, clientScore: number): Promise<void> {
     await this.clientModel.findByIdAndUpdate(client, { $inc: { score: clientScore } }).exec();
   }
+
+  async updateClientCoupons(client: Client, coupon: Coupon): Promise<Client> {
+    try {
+      const updatedClient = await this.clientModel.findByIdAndUpdate( client,
+        { $addToSet: { coupons: coupon._id } ,
+          $inc: { score : -coupon.score }
+        }, 
+        { new: true } 
+      ).exec();
+
+      return updatedClient;
+    } catch (error) {
+      throw new Error('Failed to update client coupons');
+    }
+  }
+  
 
 
  

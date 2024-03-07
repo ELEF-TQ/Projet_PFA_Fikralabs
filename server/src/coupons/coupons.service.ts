@@ -1,17 +1,20 @@
-// coupon.service.ts
-
-import { Delete, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ClientsService } from './../clients/clients.service';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Coupon } from './Schemas/coupon.schema';
 import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
 import { generateCouponCode } from './utils/generateCouponCode';
+import { ReserveCouponDto } from './dto/reserve-coupon.dto';
 
 @Injectable()
 export class CouponsService {
   
-  constructor(@InjectModel(Coupon.name) private couponModel: Model<Coupon>) {}
+  constructor(
+    @InjectModel(Coupon.name) private couponModel: Model<Coupon> ,
+    private readonly clientService: ClientsService,
+    ) {}
 
   async createCoupon(createCouponDto: CreateCouponDto): Promise<Coupon> {
     let couponCode: string; 
@@ -48,6 +51,10 @@ export class CouponsService {
     return await this.couponModel.findById(id).exec();
   }
 
+  async getCouponByCode(code: string): Promise<Coupon> {
+    return await this.couponModel.findOne({code}).exec();
+  }
+
   async updateCoupon(id: string, updateCouponDto: UpdateCouponDto): Promise<Coupon> {
     const updatedCoupon = await this.couponModel.findByIdAndUpdate(id, updateCouponDto, { new: true }).exec();
     if(updateCouponDto){
@@ -72,7 +79,28 @@ export class CouponsService {
     return deletedCoupons;
   }
 
-  reserveCouponById(id: string): Coupon | PromiseLike<Coupon> {
-    throw new Error('Method not implemented.');
+  async reserveCouponById(reserveCouponDto: ReserveCouponDto): Promise<Coupon> {
+    const client = await this.clientService.findOne(reserveCouponDto.clientId);
+    const coupon = await this.getCouponByCode(reserveCouponDto.couponId);
+
+    if (!client || !coupon) {
+      throw new NotFoundException('Client ou coupon non trouvé');
+    }
+
+    if (client.score < coupon.score) {
+      throw new HttpException('Le client n\'a pas suffisamment de points pour réserver ce coupon', HttpStatus.BAD_REQUEST);
+    }
+
+    if (coupon.nbrDisponible <= 0) {
+      throw new HttpException('Coupon non disponible', HttpStatus.BAD_REQUEST);
+    }
+
+    coupon.nbrDisponible -= 1;
+
+    await coupon.save();
+    await this.clientService.updateClientCoupons(client, coupon);
+
+    return coupon;
   }
+
 }

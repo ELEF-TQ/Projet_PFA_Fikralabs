@@ -3,7 +3,11 @@ import { CouponsService } from './coupons.service';
 import { Coupon } from './Schemas/coupon.schema';
 import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
+<<<<<<< HEAD
 import { DeleteMultipleDto } from './dto/delete-multiple.dto';
+=======
+import { ReserveCouponDto } from './dto/reserve-coupon.dto';
+>>>>>>> c601578c8a9fd913def6189b9179e8339d83118c
 
 @Controller('coupons')
 export class CouponsController {
@@ -57,9 +61,11 @@ export class CouponsController {
 
 
   /// ___ CLIENT ROUTES :
-  @Get('reserve/:id')
-  async reserveCouponById(@Param('id') id: string): Promise<Coupon> {
-    return await this.couponsService.reserveCouponById(id);
+  @Post('reserve')
+  async reserveCouponById(
+    @Body() reserveCouponDto: ReserveCouponDto
+  ): Promise<Coupon> {
+    return await this.couponsService.reserveCouponById(reserveCouponDto);
   }
  
 

@@ -7,8 +7,7 @@ export type PompisteDocument = Pompiste & Document;
 @Schema()
 export class Pompiste {
 
-  // @Prop()
-  // _id?:string;
+
 
   @Prop({required :true})
   matriculeRH: string;
