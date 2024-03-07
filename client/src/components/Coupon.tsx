@@ -31,15 +31,7 @@ const Coupon: React.FC<CouponProps> = ({ coupon, reserved }) => {
     const dispatch = useDispatch<AppDispatch>(); 
 
     const handleConfirmReservation = () => {
-        Swal.fire({
-            title: 'Confirm Reservation',
-            text: 'Are you sure you want to reserve this coupon?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, reserve it!'
-        }).then((result) => {
+        Swal.fire({title: 'Confirm Reservation',text: 'Are you sure you want to reserve this coupon?',icon: 'question',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, reserve it!'}).then((result) => {
             if (result.isConfirmed) {
                 dispatch(reserveCoupon(formData)).then(() => {
                     dispatch(fetchAllCoupons()) ;

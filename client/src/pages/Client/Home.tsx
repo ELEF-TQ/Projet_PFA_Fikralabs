@@ -5,12 +5,13 @@ import { AppDispatch } from '../../context/store';
 import { fetchAllCoupons } from '../../context/features/CouponSlice';
 import { getClient } from '../../context/features/ClientSlice';
 import { retrieveUserSession } from '../../lib/Encryption';
+import Spinner from '../../components/Spinner';
 const Home = () => {
     const dispatch = useDispatch<AppDispatch>();
     const userSession = retrieveUserSession().user
-    const { coupons } = useSelector((state:any)=>state.coupons)
+    const { coupons , isLoading } = useSelector((state:any)=>state.coupons)
     const { client } = useSelector((state:any)=>state.clients)
-    const currentSold = 500; 
+   
 
     useEffect(()=>{
         dispatch(getClient(userSession._id))
@@ -45,12 +46,15 @@ const Home = () => {
     return (
         <div className="flex flex-col">
             <h2 className="text-center text-2xl font-semibold mb-4">Solde actuel : {client?.score}</h2>
-         
-           <div className='flex flex-col gap-10'>
-                {getCouponElements(couponsStandard, 'Coupons Standard :')}
-                {getCouponElements(couponsPremium, 'Coupons Premium :')}
-                {getCouponElements(couponsUltime, 'Coupons Ultime :')}
-           </div>
+            {isLoading ? ( 
+                <Spinner />
+            ) : (
+                <div className='flex flex-col gap-10'>
+                    {getCouponElements(couponsStandard, 'Coupons Standard :')}
+                    {getCouponElements(couponsPremium, 'Coupons Premium :')}
+                    {getCouponElements(couponsUltime, 'Coupons Ultime :')}
+                </div>
+            )}
            
         </div>
     );
