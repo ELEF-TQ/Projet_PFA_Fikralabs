@@ -22,7 +22,10 @@ const Destroy : React.FC<Props>= ({show, handleClose, ids, EndPoint , onDestroyS
     },[show])
   
     function handleConfirmation() {
-        dispatch(destroyItems(params))
+      dispatch(destroyItems(params)).then(() => {
+        handleClose();
+        dispatch(onDestroySuccess());
+      })
     }
 
     return (

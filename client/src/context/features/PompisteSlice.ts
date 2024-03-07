@@ -23,8 +23,7 @@ export const createPompiste = createAsyncThunk('pompistes/create', async (formDa
 });
 
 // Async thunk to update a pompiste
-export const updatePompiste = createAsyncThunk('pompistes/update',
-  async ({ Id, formData }: { Id: string, formData: any }) => {
+export const updatePompiste = createAsyncThunk('pompistes/update', async ({ Id, formData }: { Id: string, formData: any }) => {
     try {
       const response = await axiosAuth.patch(`/pompistes/${Id}`, formData);
       return response.data;

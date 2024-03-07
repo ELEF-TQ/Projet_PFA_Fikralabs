@@ -59,9 +59,7 @@ export class ConversionsService {
   }
 
   async findAll() {
-    return this.conversionModel.find()
-        .populate('pompiste', 'username') 
-        .exec();
+    return this.conversionModel.find().populate('pompiste', 'username').exec();
   }
 
   async acceptOne(id: string) {

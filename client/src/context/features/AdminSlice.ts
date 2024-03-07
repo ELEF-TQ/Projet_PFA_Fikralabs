@@ -26,7 +26,7 @@ export const deleteItem = createAsyncThunk(
 export const destroyItems = createAsyncThunk('destroy/deleteItems',
   async (params: DeleteParams ,thunkAPI) => {
     try {
-      const response = await axiosAuth.post(params.EndPoint, { data: params.ids });
+      const response = await axiosAuth.post(params.EndPoint, {ids: params.ids}); // { data: params.ids }
       console.log(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
