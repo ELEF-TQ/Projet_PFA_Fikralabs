@@ -19,15 +19,15 @@ interface SidebarItem {
 const Sidebar = () => {
 
   const location = useLocation()
+  const userData = retrieveUserSession().user
 
   const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([]);
   useEffect(() => {
-    const userData = retrieveUserSession(); 
-    if (userData?.user.role == 'ADMIN') {
+    if (userData?.role == 'ADMIN') {
       setSidebarItems(AdminItems); 
-    } else if (userData?.user.role == 'POMPISTE') {
+    } else if (userData?.role == 'POMPISTE') {
       setSidebarItems(PompisteItems)
-    } else if (userData?.user.role == 'CLIENT') {
+    } else if (userData?.role == 'CLIENT') {
       setSidebarItems(ClientItems)
     }
   }, []);
@@ -48,7 +48,7 @@ const Sidebar = () => {
             src={defaultUser}
             alt="logo"
           />
-          <p className="sidebar__logo-name">Username</p>
+          <p className="sidebar__logo-name">{userData?.username}</p>
         </div>
         <ul className="sidebar__list">
           {sidebarItems.map(({ name, href, icon: Icon }) => {

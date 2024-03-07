@@ -12,6 +12,7 @@ const Coupons = () => {
 
   useEffect(() => {
     if (user) {
+      
       dispatch(fetchReservedCoupons(user._id));
     }
   }, []);
@@ -19,7 +20,7 @@ const Coupons = () => {
   return (
     <div className="flex flex-wrap justify-center gap-5">
       {reservedCoupons.map((coupon: any, index: number) => (
-        <Coupon key={index} coupon={coupon} />
+        <Coupon key={index} coupon={coupon} reserved={true} />
       ))}
     </div>
   );
