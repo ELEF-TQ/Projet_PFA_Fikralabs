@@ -3,6 +3,7 @@ import { CouponsService } from './coupons.service';
 import { Coupon } from './Schemas/coupon.schema';
 import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
+import { ReserveCouponDto } from './dto/reserve-coupon.dto';
 
 @Controller('coupons')
 export class CouponsController {
@@ -44,9 +45,11 @@ export class CouponsController {
 
 
   /// ___ CLIENT ROUTES :
-  @Get('reserve/:id')
-  async reserveCouponById(@Param('id') id: string): Promise<Coupon> {
-    return await this.couponsService.reserveCouponById(id);
+  @Post('reserve')
+  async reserveCouponById(
+    @Body() reserveCouponDto: ReserveCouponDto
+  ): Promise<Coupon> {
+    return await this.couponsService.reserveCouponById(reserveCouponDto);
   }
  
 
