@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosAuth } from '../../lib/Constants';
+import Swal from 'sweetalert2';
 
 // Async thunk to fetch all coupons
 export const fetchAllCoupons = createAsyncThunk('coupons/fetchAll', async () => {
@@ -10,6 +11,8 @@ export const fetchAllCoupons = createAsyncThunk('coupons/fetchAll', async () => 
     throw error;
   }
 });
+
+
 
 export const getCouponById = createAsyncThunk('coupons/fetchById', async (id: string) => {
   try {
@@ -39,16 +42,31 @@ export const createCoupon = createAsyncThunk('coupons/create', async (formData: 
 });
 
 // Async thunk to reserve a coupon by ID
-export const reserveCouponById = createAsyncThunk('coupons/reserveById', async (id: string) => {
+export const fetchReservedCoupons = createAsyncThunk('coupons/reserveById', async (clientId: string) => {
   try {
-    const response = await axiosAuth.get(`/coupons/reserve/${id}`);
+    const response = await axiosAuth.get(`/clients/${clientId}/coupons`);
     return response.data;
   } catch (error) {
     throw error;
   }
 });
 
+
+// Async thunk to reserve a coupon by ID
+export const reserveCoupon = createAsyncThunk('coupons/reserve', async (formData:any) => {
+  try {
+    console.log(formData)
+    const response = await axiosAuth.post(`/coupons/reserve`,formData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+});
+
+
+
 const initialState = {
+  reservedCoupons :[],
   coupon: null,
   coupons: [],
   loading: false,
@@ -73,16 +91,30 @@ const couponSlice = createSlice({
       .addCase(fetchAllCoupons.rejected, (state) => {
         state.loading = false;
       })
-      .addCase(reserveCouponById.pending, (state) => {
+      .addCase(fetchReservedCoupons.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(reserveCouponById.fulfilled, (state) => {
+      .addCase(fetchReservedCoupons.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+        state.reservedCoupons = action.payload;
       })
-      .addCase(reserveCouponById.rejected, (state) => {
+      .addCase(fetchReservedCoupons.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(reserveCoupon.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(reserveCoupon.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+        Swal.fire({icon: 'success', title: 'Le coupon est réservé avec succès!'});
+      })
+      .addCase(reserveCoupon.rejected, (state , action) => {
+        state.loading = false;
+        Swal.fire({icon: 'error', title: 'Échec de la réservation du coupon!', text: 'vous avez pas suffisamment de points pour réserver ce coupon'});
       })
       .addCase(getCouponById.pending, (state) => {
         state.loading = true;

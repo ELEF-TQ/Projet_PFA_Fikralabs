@@ -1,4 +1,4 @@
-import { axiosAuth } from "../lib/Constants";
+import {  axiosNoAuth } from "../lib/Constants";
 
 interface UserData {_id: string;role: string}
 
@@ -15,7 +15,7 @@ async function getCurrentUser(role: string, id: string): Promise<UserData | null
         else {
             throw new Error("Invalid role specified.");
         }
-        const response = await axiosAuth.get(endpoint);
+        const response = await axiosNoAuth.get(endpoint);
         const userData: UserData = response.data.user;
         return userData;
     } catch (error) {

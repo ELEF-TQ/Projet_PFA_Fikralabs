@@ -840,6 +840,13 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.11.tgz"
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
 
+"@types/rc-slider@^9.3.1":
+  version "9.3.1"
+  resolved "https://registry.yarnpkg.com/@types/rc-slider/-/rc-slider-9.3.1.tgz#ed0a11a87fdb3064b2767705c7bd94b62a112725"
+  integrity sha512-apvhMnpQltIzLIvKfZGeI5uvBK4CoDAnqXlV7rtFRVn4Ecwe5Db32I4LF1sNlhAVevLjLJuE+7Fpi3OnG1mVbg==
+  dependencies:
+    rc-slider "*"
+
 "@types/react-datepicker@^6.0.3":
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/@types/react-datepicker/-/react-datepicker-6.0.3.tgz#7447af00555e18b392b87b97d071da43513c8f5b"
@@ -2418,7 +2425,7 @@ quick-lru@^5.1.1:
   resolved "https://registry.npmjs.org/quick-lru/-/quick-lru-5.1.1.tgz"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-rc-slider@^10.5.0:
+rc-slider@*, rc-slider@^10.5.0:
   version "10.5.0"
   resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-10.5.0.tgz#1bd4853d114cb3403b67c485125887adb6a2a117"
   integrity sha512-xiYght50cvoODZYI43v3Ylsqiw14+D7ELsgzR40boDZaya1HFa1Etnv9MDkQE8X/UrXAffwv2AcNAhslgYuDTw==

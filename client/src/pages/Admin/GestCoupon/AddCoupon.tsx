@@ -19,7 +19,7 @@ const AddCoupon: React.FC<Props> = ({ show, handleClose }) => {
   const initialFormData = {
     reduction: 10,
     nbrDisponible: "",
-    dateExpiration: null as Date | null, // Set default value to today
+    dateExpiration: null as Date | null,
     score: "",
   };
 

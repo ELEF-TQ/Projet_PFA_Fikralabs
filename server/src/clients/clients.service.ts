@@ -77,11 +77,16 @@ export class ClientsService {
 
       return updatedClient;
     } catch (error) {
-      throw new Error('Failed to update client coupons');
-    }
+      throw new Error('Une erreur est survenue lors de la réservation du coupon');    }
   }
   
 
-
+  async findReservedCouponsByClientId(clientId: string): Promise<Coupon[]> {
+    const client = await this.clientModel.findById(clientId).populate('coupons').exec();
+    if (!client) {
+      throw new Error('Client not found');
+    }
+    return client.coupons;
+  }
  
 }
