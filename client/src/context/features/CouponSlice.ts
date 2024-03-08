@@ -133,10 +133,11 @@ const couponSlice = createSlice({
       })
       .addCase(createCoupon.fulfilled, (state, action) => {
         state.isLoading = false;
-        // state.coupon = action.payload
+        Swal.fire({icon: 'success', title: 'Le coupon a été crée avec succès!'});
       })
       .addCase(createCoupon.rejected, (state) => {
         state.isLoading = false;
+        Swal.fire({icon: 'error', title: 'Échec de la création du coupon!', text: 'Un erreur est survenue lors de la créaction'});
       })
       .addCase(updateCoupon.pending, (state) => {
         state.isLoading = true;
@@ -144,10 +145,11 @@ const couponSlice = createSlice({
       })
       .addCase(updateCoupon.fulfilled, (state, action) => {
         state.isLoading = false;
-        // state.coupon = action.payload
+        Swal.fire({icon: 'success', title: 'Le coupon a modification avec succès!'});
       })
       .addCase(updateCoupon.rejected, (state) => {
         state.isLoading = false;
+        Swal.fire({icon: 'error', title: 'Échec de modification du coupon!', text: 'Un erreur est survenue lors de la modification'});
       })
   },
 });

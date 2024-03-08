@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { destroyItems } from '../context/features/AdminSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../context/store';
+import Swal from 'sweetalert2';
 
 
 interface Props {
@@ -22,10 +23,15 @@ const Destroy : React.FC<Props>= ({show, handleClose, ids, EndPoint , onDestroyS
     },[show])
   
     function handleConfirmation() {
-      dispatch(destroyItems(params)).then(() => {
+      if(params.ids.length !== 0){
+        dispatch(destroyItems(params)).then(() => {
+          handleClose();
+          dispatch(onDestroySuccess());
+        })
+      }else{
         handleClose();
-        dispatch(onDestroySuccess());
-      })
+        Swal.fire({icon: 'error', title: 'Aucun item n\'est selectionné', text: 'veuillez selectioner au moins un item'});
+      }
     }
 
     return (
