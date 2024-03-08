@@ -3,12 +3,18 @@ import { ReactElement, JSXElementConstructor, ReactNode, useEffect } from 'react
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../context/store';
 import { fetchAllCoupons } from '../../context/features/CouponSlice';
+import { getClient } from '../../context/features/ClientSlice';
+import { retrieveUserSession } from '../../lib/Encryption';
+import Spinner from '../../components/Spinner';
 const Home = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { coupons } = useSelector((state:any)=>state.coupons)
-    const currentSold = 500; 
+    const userSession = retrieveUserSession().user
+    const { coupons , isLoading } = useSelector((state:any)=>state.coupons)
+    const { client } = useSelector((state:any)=>state.clients)
+   
 
     useEffect(()=>{
+        dispatch(getClient(userSession._id))
      dispatch(fetchAllCoupons());
      console.log(coupons)
     },[])
@@ -25,7 +31,7 @@ const Home = () => {
                 <h3 className="text-center text-xl font-semibold mb-2">{title}</h3>
                 <div className='flex flex-wrap gap-7'>
                     {coupons.map((coupon, index) => (
-                        <Coupon key={index} coupon={coupon} />
+                        <Coupon key={index} coupon={coupon}  reserved={false}/>
                            
                     ))}
                 </div>
@@ -39,13 +45,16 @@ const Home = () => {
 
     return (
         <div className="flex flex-col">
-            <h2 className="text-center text-2xl font-semibold mb-4">Solde actuel : {currentSold}</h2>
-         
-           <div className='flex flex-col gap-10'>
-                {getCouponElements(couponsStandard, 'Coupons Standard :')}
-                {getCouponElements(couponsPremium, 'Coupons Premium :')}
-                {getCouponElements(couponsUltime, 'Coupons Ultime :')}
-           </div>
+            <h2 className="text-center text-2xl font-semibold mb-4">Solde actuel : {client?.score}</h2>
+            {isLoading ? ( 
+                <Spinner />
+            ) : (
+                <div className='flex flex-col gap-10'>
+                    {getCouponElements(couponsStandard, 'Coupons Standard :')}
+                    {getCouponElements(couponsPremium, 'Coupons Premium :')}
+                    {getCouponElements(couponsUltime, 'Coupons Ultime :')}
+                </div>
+            )}
            
         </div>
     );

@@ -25,6 +25,10 @@ export class ClientsController {
     }
   }
 
+  @Get(':id')
+  async findById(@Param('id') id: string){
+    return await this.clientsService.findOne(id);
+  }
 
 
 

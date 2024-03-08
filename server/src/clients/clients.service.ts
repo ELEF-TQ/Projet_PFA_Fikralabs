@@ -28,8 +28,9 @@ export class ClientsService {
   }
 
   async findOne(id: string): Promise<Client> {
-    return this.clientModel.findById(id).exec();
-  }
+    return this.clientModel.findById(id).select('-password -coupons').exec();
+  }  
+
 
   async findOneByEmail(email: string): Promise<Client> {
     return this.clientModel.findOne({email: email}).exec();

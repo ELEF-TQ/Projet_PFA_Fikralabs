@@ -4,9 +4,9 @@ import { axiosAuth } from '../../lib/Constants';
 import Swal from 'sweetalert2';
 
 // Async thunk to fetch a single pompiste by matriculeRH
-export const getClient = createAsyncThunk('clients/fetch', async (phone: string) => {
+export const getClient = createAsyncThunk('clients/fetch', async (id: string) => {
   try {
-    const response = await axiosAuth.get(`/clients/${phone}`);
+    const response = await axiosAuth.get(`/clients/${id}`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch pompiste'); 

@@ -69,7 +69,7 @@ const initialState = {
   reservedCoupons :[],
   coupon: null,
   coupons: [],
-  loading: false,
+  isLoading: false,
   error: null,
 };
 
@@ -80,74 +80,74 @@ const couponSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllCoupons.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchAllCoupons.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = null;
         state.coupons = action.payload;
       })
       .addCase(fetchAllCoupons.rejected, (state) => {
-        state.loading = false;
+        state.isLoading = false;
       })
       .addCase(fetchReservedCoupons.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchReservedCoupons.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = null;
         state.reservedCoupons = action.payload;
       })
       .addCase(fetchReservedCoupons.rejected, (state) => {
-        state.loading = false;
+        state.isLoading = false;
       })
       .addCase(reserveCoupon.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(reserveCoupon.fulfilled, (state) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = null;
         Swal.fire({icon: 'success', title: 'Le coupon est réservé avec succès!'});
       })
       .addCase(reserveCoupon.rejected, (state , action) => {
-        state.loading = false;
+        state.isLoading = false;
         Swal.fire({icon: 'error', title: 'Échec de la réservation du coupon!', text: 'vous avez pas suffisamment de points pour réserver ce coupon'});
       })
       .addCase(getCouponById.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(getCouponById.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.coupon = action.payload
       })
       .addCase(getCouponById.rejected, (state) => {
-        state.loading = false;
+        state.isLoading = false;
       })
       .addCase(createCoupon.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(createCoupon.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         // state.coupon = action.payload
       })
       .addCase(createCoupon.rejected, (state) => {
-        state.loading = false;
+        state.isLoading = false;
       })
       .addCase(updateCoupon.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(updateCoupon.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         // state.coupon = action.payload
       })
       .addCase(updateCoupon.rejected, (state) => {
-        state.loading = false;
+        state.isLoading = false;
       })
   },
 });
