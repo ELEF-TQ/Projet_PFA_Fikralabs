@@ -10,6 +10,19 @@ import Header from '../../../components/Header';
 import Logo from '../../../assets/icons/LogoBlack.png';
 const index :React.FC= () => {
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
+    const phoneRegex = /^(06|07|2126|2127)\d{8}$/;
+    const usernameRegex = /^[a-zA-Z]+$/;
+
+
+ 
+ 
+    
+
+    const [errors, setErrors] = useState<Record<string, string>>({});
+
+
   interface FormData {
     username: string;
     email: string;
@@ -36,25 +49,14 @@ const index :React.FC= () => {
  
   
   
-
-  const getPasswordStrength = (password:any) => {
-    if (password.length <= 4) return 0;
-    if (password.length <= 6) return 1;
-    if (password.length <= 8) return 2;
-    if (password.length <= 12) return 3;
-    return 4;
-  };
-
-  const isPasswordValid = (password:any) => {
-    return /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/.test(password);
-  };
-
-  const validateEmail = (value:any) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) {
-      return 'Adresse e-mail invalide.';
-    }
-  };
+  const getPasswordStrength = (password: any) => {
+    if (!password) return 0; // Handle empty password case
+    if (password.length <= 4) return 1; // Very weak
+    if (password.length <= 6) return 2; // Weak
+    if (password.length <= 8 && /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password)) return 3; // Moderate
+    if (password.length <= 12 && /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/.test(password)) return 4; // Strong
+    if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) return 4; // Very strong
+    return 0;  };
 
   const handlePasswordVerifyChange = (e:any) => {
     passwordVerifyRef.current = e.target.value;
@@ -73,21 +75,63 @@ const index :React.FC= () => {
 
 
   
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
-    if (name === 'image' && files) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        image: files[0], 
-      }));
+    let error = '';
+
+    if (name === 'image' && files && files.length > 0) {
+        const selectedImage = files[0];
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            image: selectedImage
+        }));
     } else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: value
+        }));
+
+        switch (name) {
+            case 'phone':
+                if (!phoneRegex.test(value)) {
+                    error = 'Le numéro de téléphone n\'est pas valide';
+                } else {
+                    error = '';
+                }
+                break;
+            case 'password':
+                if (!passwordRegex.test(value)) {
+                    error = 'Le mot de passe doit contenir au moins 8 caractères, une lettre et un chiffre';
+                } else {
+                    error = ''; 
+                }
+                break;
+            case 'email':
+                if (!emailRegex.test(value)) {
+                    error = 'Adresse e-mail invalide';
+                } else {
+                    error = ''; 
+                }
+                break;
+            case 'username':
+                if (!usernameRegex.test(value)) {
+                    error = 'Le nom d\'utilisateur ne doit contenir que des lettres.';
+                } else {
+                    error = ''; 
+                }
+                break;
+            default:
+                break;
+        }
+
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            [name]: error
+        }));
     }
-  };
+};
+
+
 
  
 
@@ -102,20 +146,37 @@ const index :React.FC= () => {
   };
 
   const handleSubmit = async () => {
-    const passwordError = validatePasswordConfirmation(confirmPassword);
-    const emailError = validateEmail(formData.email);
-    if (passwordError || emailError || !isPasswordValid(formData.password)) {
-       Swal.fire('Oops!', 'Veuillez vérifier les champs.', 'error');
-      return;
+    // Check if any field is empty
+    const isEmptyField = Object.values(formData).some(value => value === '');
+    if (isEmptyField) {
+        Swal.fire('Oops!', 'Veuillez remplir tous les champs.', 'error');
+        return;
     }
+
+    // Check for errors in input fields
+    const hasErrors = Object.values(errors).some(error => error !== '');
+    if (hasErrors) {
+        Swal.fire('Oops!', 'Veuillez vérifier le formulaire.', 'error');
+        return;
+    }
+
+    // Check password confirmation
+    const passwordError = validatePasswordConfirmation(confirmPassword);
+    if (passwordError) {
+        Swal.fire('Oops!', 'Veuillez vérifier le Mot de passe.', 'error');
+        return;
+    }
+
     try {
-      console.log(formData);
-      dispatch(handleSignup(formData));
+        dispatch(handleSignup(formData));
+        // Optionally, you can show a success message here
     } catch (error) {
-      console.log('Error submitting form:', error);
-    
-  } 
+        console.log('Error submitting form:', error);
+        // Optionally, you can show an error message here
+        Swal.fire('Error!', 'Une erreur s\'est produite lors de la soumission du formulaire.', 'error');
+    }
 };
+
  
   return (
     <>
@@ -163,7 +224,10 @@ const index :React.FC= () => {
                     onChange={handleInputChange}
                     required
                   />
-</div>
+                    {errors.username && (
+                    <div className="text-red-400">{errors.username}</div>
+                  )}
+                  </div>
                 <div className={`Margin__Input__Buttom `}>
                   <label htmlFor="name" className='Input_Label'>Email</label>
                   <input
@@ -176,6 +240,9 @@ const index :React.FC= () => {
                     onChange={handleInputChange}
                     required
                   />
+                   {errors.email && (
+                    <div className="text-red-400">{errors.email}</div>
+                  )}
                 </div>
 
                 <div className={`Margin__Input__Buttom`}>
@@ -185,12 +252,16 @@ const index :React.FC= () => {
                     className={`form-control Input__Style `}
                     id="phone"
                     name="phone"
-                    placeholder="N° de l’administration..."
+                    placeholder="Téléphone"
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
                   />
-                </div>
+                     {errors.phone && (
+                      <div className="text-red-400">{errors.phone}</div>
+                    )}
+                        </div>
+                
               </Form>
 
               {/* Step 2 */}
@@ -236,7 +307,7 @@ const index :React.FC= () => {
                     required
                   />
                   {formData.password && passwordVerifyRef.current && formData.password !== passwordVerifyRef.current && (
-                    <div className="invalid-feedback">Les mots de passe ne correspondent pas.</div>
+                    <div className="text-red-400">Les mots de passe ne correspondent pas.</div>
                   )}
                 </div>
                
@@ -364,7 +435,5 @@ export function FormikStepper({
     </div>
   );
 }
-function getRequiredErrors(): React.SetStateAction<{}> {
-  throw new Error('Function not implemented.');
-}
+
 

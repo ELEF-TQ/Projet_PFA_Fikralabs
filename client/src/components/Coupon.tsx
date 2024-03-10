@@ -17,7 +17,7 @@ interface Coupon {
     reduction: number;
     code: string;
     nbrDisponible: number;
-    dateExpidition: string;
+    dateExpiration: string;
     score: number;
 }
 
@@ -52,6 +52,7 @@ const Coupon: React.FC<CouponProps> = ({ coupon, reserved }) => {
     };
 
     const couponColor = getCouponColor(coupon.reduction);
+    console.log(coupon)
 
     return (
         <div className={`p-2 w-100 flex flex-col items-center justify-center text-white text-center rounded-lg shadow-md relative ${couponColor}`}>
@@ -66,7 +67,7 @@ const Coupon: React.FC<CouponProps> = ({ coupon, reserved }) => {
                     <button className="border border-white bg-white text-purple-600 px-4 py-2 rounded-r cursor-pointer" onClick={handleConfirmReservation}>Reserve</button>
                 )}
             </div>
-            <p className="text-sm">Valid Till: {new Date(coupon.dateExpidition).toLocaleDateString()}</p>
+            <p className="text-sm">Valid Till: {new Date(coupon.dateExpiration).toLocaleDateString()}</p>
             <CouponInfo showModal={showModal} setShowModal={setShowModal} />
         </div>
     );

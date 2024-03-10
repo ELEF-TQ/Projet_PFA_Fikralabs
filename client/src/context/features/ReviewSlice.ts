@@ -4,24 +4,24 @@ import Swal from 'sweetalert2'; // Import SweetAlert
 import { axiosAuth } from '../../lib/AxiosBase'; // Assuming you have an axios instance configured
 
 // Async thunk to create a new review
-export const createReview = createAsyncThunk('reviews/create', async (formData :any) => {
+export const createReview = createAsyncThunk('reviews/create', async (formData, thunkAPI) => {
   try {
     const response = await axiosAuth.post('/reviews', formData);
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
-export const getAllReviews= createAsyncThunk('reviews/fetchAll', async (matriculeRH: string) => {
+// Async thunk to fetch all reviews
+export const getAllReviews= createAsyncThunk('reviews/fetchAll', async (matriculeRH, thunkAPI) => {
   try {
     const response = await axiosAuth.get(`/reviews/all/${matriculeRH}`);
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
-
 const initialState = {
   reviews: [],
   isLoading: false,

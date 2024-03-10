@@ -3,43 +3,42 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosAuth } from '../../lib/AxiosBase'; 
 
 // Async thunk to fetch all pompistes
-export const getPompistes = createAsyncThunk('pompistes/fetchAll', async () => {
+export const getPompistes = createAsyncThunk('pompistes/fetchAll', async (_, thunkAPI) => {
   try {
     const response = await axiosAuth.get('/pompistes');
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
 // Async thunk to create a new pompiste
-export const createPompiste = createAsyncThunk('pompistes/create', async (formData :any) => {
+export const createPompiste = createAsyncThunk('pompistes/create', async (formData :any, thunkAPI) => {
   try {
     const response = await axiosAuth.post('/pompistes', formData);
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
 // Async thunk to update a pompiste
-export const updatePompiste = createAsyncThunk('pompistes/update', async ({ Id, formData }: { Id: string, formData: any }) => {
-    try {
-      const response = await axiosAuth.patch(`/pompistes/${Id}`, formData);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+export const updatePompiste = createAsyncThunk('pompistes/update', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
+  try {
+    const response = await axiosAuth.patch(`/pompistes/${Id}`, formData);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
-);
+});
 
 // Async thunk to fetch a single pompiste by matriculeRH
-export const getPompiste = createAsyncThunk('pompistes/fetch', async (matriculeRH: string) => {
+export const getPompiste = createAsyncThunk('pompistes/fetch', async (matriculeRH: string, thunkAPI) => {
   try {
     const response = await axiosAuth.get(`/pompistes/${matriculeRH}`);
     return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch pompiste'); 
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
   

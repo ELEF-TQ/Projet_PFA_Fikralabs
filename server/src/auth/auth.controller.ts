@@ -35,13 +35,13 @@ export class AuthController {
 
 
 
-  @Get("status")
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(RolesEnum.ADMIN, RolesEnum.CLIENT)
-  getStatus(@Req() req){
-      console.log("inside authcontroller getStatus()");
-      console.log(req.user)
-      return req.user;
-  }
+  // @Get("status")
+  // @UseGuards(JwtAuthGuard, RoleGuard)
+  // @Roles(RolesEnum.ADMIN, RolesEnum.CLIENT)
+  // getStatus(@Req() req){
+  //     console.log("inside authcontroller getStatus()");
+  //     console.log(req.user)
+  //     return req.user;
+  // }
   
 }

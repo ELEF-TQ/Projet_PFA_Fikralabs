@@ -3,66 +3,64 @@ import { axiosAuth } from '../../lib/AxiosBase';
 import Swal from 'sweetalert2';
 
 // Async thunk to fetch all coupons
-export const fetchAllCoupons = createAsyncThunk('coupons/fetchAll', async () => {
+export const fetchAllCoupons = createAsyncThunk('coupons/fetchAll', async (_, thunkAPI) => {
   try {
     const response = await axiosAuth.get('/coupons');
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
-
-
-export const getCouponById = createAsyncThunk('coupons/fetchById', async (id: string) => {
+// Async thunk to fetch a coupon by ID
+export const getCouponById = createAsyncThunk('coupons/fetchById', async (id: string, thunkAPI) => {
   try {
     const response = await axiosAuth.get(`/coupons/${id}`);
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
-export const updateCoupon = createAsyncThunk('coupons/update', async ({ id, formData }: { id: string, formData: any }) => {
+// Async thunk to update a coupon
+export const updateCoupon = createAsyncThunk('coupons/update', async ({ id, formData }: { id: string, formData: any }, thunkAPI) => {
   try {
     const response = await axiosAuth.patch(`/coupons/${id}`, formData);
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
-export const createCoupon = createAsyncThunk('coupons/create', async (formData: any) => {
+// Async thunk to create a coupon
+export const createCoupon = createAsyncThunk('coupons/create', async (formData: any, thunkAPI) => {
   try {
     const response = await axiosAuth.post('/coupons', formData);
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
 // Async thunk to reserve a coupon by ID
-export const fetchReservedCoupons = createAsyncThunk('coupons/reserveById', async (clientId: string) => {
+export const reserveCoupon = createAsyncThunk('coupons/reserve', async (formData: any, thunkAPI) => {
+  try {
+    const response = await axiosAuth.post('/coupons/reserve', formData);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
+// Async thunk to fetch reserved coupons
+export const fetchReservedCoupons = createAsyncThunk('coupons/fetchReserved', async (clientId: string, thunkAPI) => {
   try {
     const response = await axiosAuth.get(`/clients/${clientId}/coupons`);
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
-
-
-// Async thunk to reserve a coupon by ID
-export const reserveCoupon = createAsyncThunk('coupons/reserve', async (formData:any) => {
-  try {
-    console.log(formData)
-    const response = await axiosAuth.post(`/coupons/reserve`,formData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-});
-
 
 
 const initialState = {

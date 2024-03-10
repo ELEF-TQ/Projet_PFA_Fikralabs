@@ -4,37 +4,39 @@ import { axiosNoAuth, axiosNoAuthMultipart } from '../../lib/AxiosBase';
 import Swal from 'sweetalert2';
 import { storeUserSession } from '../../lib/Encryption';
 
-
 // Async thunk to handle login
-export const handleLogin = createAsyncThunk('auth/login', async (formData :any) => {
-    try {
-      const response = await axiosNoAuth.post('/auth/login',formData);
-  
-      return response.data.data;
-    } catch (error) {
-      throw error;
-    }
-});
-
-// Async thunk to handle signup
-export const handleSignup = createAsyncThunk('auth/signup', async (formData:any) => {
+export const handleLogin = createAsyncThunk('auth/login', async (formData: any, thunkAPI) => {
   try {
-  
-
-    const response = await axiosNoAuthMultipart.post('/auth/signup',formData);
+    const response = await axiosNoAuth.post('/auth/login', formData);
     return response.data.data;
-  } catch (error) {
-    throw error;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
-const initialState = {
-  user: null,
-  isAuthenticated: false,
-  isLoading: false,
-  error: 'null' ,
-};
+// Async thunk to handle signup
+export const handleSignup = createAsyncThunk('auth/signup', async (formData: any, thunkAPI) => {
+  try {
+    const response = await axiosNoAuthMultipart.post('/auth/signup', formData);
+    return response.data.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
 
+interface AuthState {
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  user: any;
+  error: string | null;
+}
+
+const initialState: AuthState = {
+  isLoading: false,
+  isAuthenticated: false,
+  user: null,
+  error: null,
+};
 
 const authSlice = createSlice({
   name: 'auth',
@@ -45,35 +47,42 @@ const authSlice = createSlice({
       .addCase(handleSignup.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(handleSignup.fulfilled, (state, action) => {
+      .addCase(handleSignup.fulfilled, (state) => {
         state.isLoading = false;
-        Swal.fire({icon: 'success', title : "Votre compte a cree avec succes",text: action.payload.message,showConfirmButton: true}).then(()=> {window.location.href ='/auth/login'})
+        Swal.fire('Success!', 'Votre inscription a été soumise avec succès.', 'success').then(() => {
+          window.location.href = '/';
+        });
       })
-      .addCase(handleSignup.rejected, (state, action :any) => {
+      .addCase(handleSignup.rejected, (state, action: any) => {
         state.isAuthenticated = false;
         state.isLoading = false;
-        console.log(action.payload.message)
-        state.error = action.payload.message;
-        Swal.fire({icon: 'error', title: 'Ooops!' , text:  state.error})
+        if (action.payload && action.payload.message) {
+          Swal.fire({ icon: 'error', title: 'Ooops!', text: action.payload.message || '' }); 
+        } else {
+          Swal.fire({ icon: 'error', title: 'Ooops!', text: 'Une erreur s\'est produite lors de l\'inscription.' }); 
+        }
       })
       .addCase(handleLogin.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
-         storeUserSession(action.payload)
+        storeUserSession(action.payload);
         if (action.payload.user.role === 'ADMIN') {
-          window.location.href ='/admin'
-        } else if(action.payload.user.role === 'POMPISTE'){
-          window.location.href = '/pompiste'
-        } else if(action.payload.user.role === 'CLIENT'){
-          window.location.href = '/client'
+          window.location.href = '/admin';
+        } else if (action.payload.user.role === 'POMPISTE') {
+          window.location.href = '/pompiste';
+        } else if (action.payload.user.role === 'CLIENT') {
+          window.location.href = '/client';
         }
       })
-      .addCase(handleLogin.rejected, (state, action :any) => {
+      .addCase(handleLogin.rejected, (state, action: any) => {
         state.isLoading = false;
         state.isAuthenticated = false;
-        // state.error = action.payload.message;
+        if (action.payload && action.payload.message) {
+          Swal.fire({ icon: 'error', title: 'Ooops!', text: action.payload.message || '' }); 
+        } else {
+          Swal.fire({ icon: 'error', title: 'Ooops!', text: 'Une erreur s\'est produite lors de la connexion.' }); 
+        }
       });
   },
 });

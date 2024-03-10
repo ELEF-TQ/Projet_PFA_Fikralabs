@@ -12,7 +12,6 @@ const Home = () => {
     const { coupons , isLoading } = useSelector((state:any)=>state.coupons)
     const { client } = useSelector((state:any)=>state.clients)
    
-console.log(client)
     useEffect(()=>{
         dispatch(getClient(userSession._id))
      dispatch(fetchAllCoupons());

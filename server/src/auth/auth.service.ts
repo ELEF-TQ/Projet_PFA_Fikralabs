@@ -22,27 +22,26 @@ export class AuthService {
 
   async validateUser({email, password}: AuthPayloadDto): Promise<any> {
     const userOrAdminFound = await this.findOneByEmail(email);
-    if(!userOrAdminFound ){
-      throw new HttpException("User Not found, Unnable to login", 404);
-    }else{
+    if (!userOrAdminFound) {
+      throw new HttpException({ message: "Utilisateur non trouvé, impossible de se connecter" }, 404);
+    } else {
       const isPasswordMatched = comparePasswords(password, userOrAdminFound.password);
-      if(isPasswordMatched){
-        const {password, ...userDetails} = userOrAdminFound;
+      if (isPasswordMatched) {
+        const { password, ...userDetails } = userOrAdminFound;
         return {
-          user: userOrAdminFound ,
+          user: userOrAdminFound,
           JWT: this.jwtService.sign(userDetails)
         }
-      }else{
-        throw new HttpException("Wrong Password", 403);
+      } else {
+        throw new HttpException({ message: "Mot de passe incorrect" }, HttpStatus.BAD_REQUEST);
       }
     }
-  }
-
+}
   async register(userDetails: CreateClientDto){
     const IsExists = await IsEmailAlreadyExists(userDetails, this.clientsService, this.adminService);
     if(IsExists){
-      throw new HttpException("Email already Exist", HttpStatus.BAD_REQUEST);
-    }else{
+      throw new HttpException({ message: "L'email existe déjà" }, HttpStatus.BAD_REQUEST);
+    } else {
       const userCreated = await this.clientsService.create(userDetails);
       return userCreated;
     }
@@ -53,7 +52,7 @@ export class AuthService {
     if(!userClient) {
       const userAdmin = await this.adminService.findOne(id);
       if(!userAdmin){
-        throw new HttpException("User Doesn't exist", 404)
+        throw new HttpException("Utilisateur non trouvé", HttpStatus.BAD_REQUEST)
       }else{
         return userAdmin;
       }
