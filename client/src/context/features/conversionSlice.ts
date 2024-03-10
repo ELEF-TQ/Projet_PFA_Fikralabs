@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2'; 
-import { axiosAuth } from '../../lib/Constants'; 
+import { axiosAuth } from '../../lib/AxiosBase'; 
 
 // Async thunk to create a new conversion
 export const createConversion = createAsyncThunk('convesions/create', async (pompisteId :string) => {

@@ -19,7 +19,7 @@ export class CreateClientDto {
 
   @IsOptional()
   @IsString()
-  readonly image?: string;
+  readonly image?: File;
 
   @IsOptional()
   @IsString()

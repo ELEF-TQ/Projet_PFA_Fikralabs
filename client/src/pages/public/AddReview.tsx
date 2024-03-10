@@ -15,7 +15,7 @@ import { AppDispatch } from '../../context/store';
 import { useSelector,useDispatch } from 'react-redux';
 import { getPompiste } from '../../context/features/PompisteSlice';
 import { createReview } from '../../context/features/ReviewSlice';
-import { axiosNoAuth } from '../../lib/Constants';
+import { axiosNoAuth } from '../../lib/AxiosBase';
 const steps = ['', '', '', ''];
 
 const Index: React.FC = () => {

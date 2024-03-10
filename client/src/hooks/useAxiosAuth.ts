@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import {axiosAuth } from "../lib/Constants";
+import {axiosAuth } from "../lib/AxiosBase";
 import { retrieveUserSession } from "../lib/Encryption";
 
 const useAxiosAuth = () => {

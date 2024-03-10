@@ -187,6 +187,33 @@ img {
   
   }
 
+.Margin__Input__Buttom {
+  margin-bottom: 1rem;
+}
+
+/*_________Image uploading________*/
+.image-container {
+  position: relative;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-image,
+.default-image {
+  width: 130px; 
+  height: 130px; 
+  object-fit: cover;
+}
+
+.upload-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: 24px;
+  color: #555;
+}
 
   /*_____Password verification_____*/
   /* Add this CSS to your existing styles */

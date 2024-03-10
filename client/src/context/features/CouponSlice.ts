@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosAuth } from '../../lib/Constants';
+import { axiosAuth } from '../../lib/AxiosBase';
 import Swal from 'sweetalert2';
 
 // Async thunk to fetch all coupons

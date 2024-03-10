@@ -24,7 +24,7 @@ export class Client {
   CNI: string;
 
   @Prop()
-  image: string;
+  image: File;
 
   @Prop()
   score: number;

@@ -1,34 +1,30 @@
-
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { SidebarContext } from "../providers/SidebarProvider";
 import defaultUser from '../assets/images/defaultUser.png'
 import { Link, useLocation } from "react-router-dom";
-
-
-/*__Sidebar Items___*/
-import { AdminItems, PompisteItems ,ClientItems} from "../routes/dash-routes";
 import { CiLogout } from "react-icons/ci";
 import { retrieveUserSession } from "../lib/Encryption";
+import { AdminItems, ClientItems, PompisteItems } from "../routes/dash-routes";
 
 interface SidebarItem {
   name: string;
   href: string;
   icon: any; 
 }
-const Sidebar = () => {
 
-  const location = useLocation()
-  const userData = retrieveUserSession().user
+const Sidebar = () => {
+  const location = useLocation();
+  const userData = retrieveUserSession().user;
 
   const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([]);
   useEffect(() => {
-    if (userData?.role == 'ADMIN') {
+    if (userData?.role === 'ADMIN') {
       setSidebarItems(AdminItems); 
-    } else if (userData?.role == 'POMPISTE') {
-      setSidebarItems(PompisteItems)
-    } else if (userData?.role == 'CLIENT') {
-      setSidebarItems(ClientItems)
+    } else if (userData?.role === 'POMPISTE') {
+      setSidebarItems(PompisteItems);
+    } else if (userData?.role === 'CLIENT') {
+      setSidebarItems(ClientItems);
     }
   }, []);
 
@@ -45,39 +41,35 @@ const Sidebar = () => {
             width={80}
             height={80}
             className="sidebar__logo"
-            src={defaultUser}
+            src={`data:image/png;base64,${userData.image.buffer}`}
             alt="logo"
           />
           <p className="sidebar__logo-name">{userData?.username}</p>
         </div>
         <ul className="sidebar__list">
-          {sidebarItems.map(({ name, href, icon: Icon }) => {
-            return (
-              <li className="sidebar__item" key={name}>
-                <Link
-                  className={`sidebar__link ${
-                    location.pathname === href ? "sidebar__link--active" : ""
-                  }`}
-                  to={href}
-                >
-                  <span className="sidebar__icon">
-                    <Icon />
-                  </span>
-                  <span className="sidebar__name">{name}</span>
-                </Link>
-              </li>
-            );
-          })}
+          {sidebarItems.map(({ name, href, icon: Icon }) => (
+            <li className="sidebar__item" key={name}>
+              <Link
+                className={`sidebar__link ${
+                  location.pathname === href ? "sidebar__link--active" : ""
+                }`}
+                to={href}
+              >
+                <span className="sidebar__icon">
+                  <Icon />
+                </span>
+                <span className="sidebar__name">{name}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
 
-        <span className="sidebar__item"  >
-           <button className="sidebar__link">
-           <span className="sidebar__icon"><CiLogout /></span>
-                  <span className="sidebar__name">Logout</span>
-           </button>
+        <span className="sidebar__item">
+          <button className="sidebar__link">
+            <span className="sidebar__icon"><CiLogout /></span>
+            <span className="sidebar__name">Logout</span>
+          </button>
         </span>
-
-        
       </aside>
     </div>
   );

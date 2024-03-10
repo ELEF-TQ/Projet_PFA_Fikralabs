@@ -1,4 +1,4 @@
-import {  axiosNoAuth } from "../lib/Constants";
+import {  axiosNoAuth } from "./AxiosBase";
 
 interface UserData {_id: string;role: string}
 

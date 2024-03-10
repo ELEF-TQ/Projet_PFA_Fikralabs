@@ -6,7 +6,8 @@ import Swal from 'sweetalert2'
 import { AppDispatch } from '../../../context/store';
 import { handleSignup } from '../../../context/features/AuthSlice';
 import { Link } from 'react-router-dom';
-
+import { FiUpload } from 'react-icons/fi'; 
+import defaultIMG from '../../../assets/images/defaultUser.png'
 const index :React.FC= () => {
 
   interface FormData {
@@ -15,17 +16,9 @@ const index :React.FC= () => {
     phone: string;
     password: string;
     CNI: string;
-    image: string;
+    image:  File | null;
   }
-  interface FormErrors {
-    username?: string;
-    email?: string;
-    phone?: string;
-    password?: string;
-    confirmPassword?: string;
-    CNI?: string;
-    image?: string;
-  }
+ 
   
   const dispatch = useDispatch<AppDispatch>()
   const [formData, setFormData] = useState<FormData>({
@@ -34,24 +27,13 @@ const index :React.FC= () => {
     phone: '',
     password: '',
     CNI: '',
-    image: '',
+    image: null,
   });
   const [currentStep, setCurrentStep] = useState(1);
   const [confirmPassword, setConfirmPassword] = useState('');
   const passwordVerifyRef = useRef(null);
-  const [formErrors, setErrors] = useState<FormErrors>({});
 
-  const getRequiredErrors = () => {
-    const errors: FormErrors = {};
-    if (!formData.username) errors.username = 'Le nom et prénom sont requis.';
-    if (!formData.email) errors.email = "L'email est requis.";
-    if (!formData.phone) errors.phone = "Le numéro de téléphone est requis.";
-    if (!formData.password) errors.password = "Le mot de passe est requis.";
-    if (!confirmPassword) errors.confirmPassword = "La confirmation du mot de passe est requise.";
-    if (!formData.CNI) errors.CNI = "Le numéro de CNI est requis.";
-    if (!formData.image) errors.image = "L'image est requise.";
-    return errors;
-  };
+ 
   
   
 
@@ -92,12 +74,19 @@ const index :React.FC= () => {
 
   
 
-  const handleInputChange = (e:any) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
+    if (name === 'image' && files) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        image: files[0], 
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
 
  
@@ -133,7 +122,7 @@ const index :React.FC= () => {
       {({ isValid  }) => (
         <div className="flex flex-row items-center justify-around gap-0 h-full">
           <div className="Sign__overlay d-none d-md-block">
-            <img src={illustration} alt="illustration" className="w-100" />
+            {/* <img src={illustration} alt="illustration" className="w-100" /> */}
           </div>
           <div className="Sign__content">
             <p className="text-center">
@@ -166,8 +155,7 @@ const index :React.FC= () => {
                     onChange={handleInputChange}
                     required
                   />
-                { formErrors.username && <div className="invalid-feedback">{formErrors.username}</div>}                          </div>
-
+</div>
                 <div className={`Margin__Input__Buttom `}>
                   <label htmlFor="name" className='Input_Label'>Email</label>
                   <input
@@ -180,7 +168,6 @@ const index :React.FC= () => {
                     onChange={handleInputChange}
                     required
                   />
-                 {formErrors.email && <div className="invalid-feedback">{formErrors.email}</div>}
                 </div>
 
                 <div className={`Margin__Input__Buttom`}>
@@ -195,7 +182,6 @@ const index :React.FC= () => {
                     onChange={handleInputChange}
                     required
                   />
-                  {formErrors.phone && <div className="invalid-feedback">{formErrors.phone}</div>}
                 </div>
               </Form>
 
@@ -250,10 +236,28 @@ const index :React.FC= () => {
 
               {/* Step 3 */}
               <Form className="Sign__form">
-              <div className={`d-flex flex-column Margin__Input__Buttom`}>
-                <label htmlFor="image" className='Input_Label'>Image</label>
-                <input type="file" id="region" name="region" accept="image/*" onChange={handleInputChange} />
-              </div>
+              <div className="flex items-center justify-center Margin__Input__Buttom">
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={handleInputChange}
+                style={{ display: 'none' }}
+              />
+              <label htmlFor="image">
+                <div className="image-container">
+                  {formData.image ? (
+                    <img src={URL.createObjectURL(formData.image)} alt="profile" className="profile-image" />
+                  ) : (
+                    <img src={defaultIMG} alt="default" className="default-image" />
+                  )}
+                  {/* <FiUpload className="upload-icon" /> */}
+                </div>
+              </label>
+            </div>
+
+
 
 
 
@@ -269,8 +273,7 @@ const index :React.FC= () => {
                     onChange={handleInputChange}
                     required
                   />
-             {formErrors.CNI && <div className="invalid-feedback">{formErrors.CNI}</div>}                </div>
-                
+             </div>                
               </Form>
             </FormikStepper>
 

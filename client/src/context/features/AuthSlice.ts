@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosNoAuth } from '../../lib/Constants';
+import { axiosNoAuth, axiosNoAuthMultipart } from '../../lib/AxiosBase';
 import Swal from 'sweetalert2';
 import { storeUserSession } from '../../lib/Encryption';
 
@@ -9,6 +9,7 @@ import { storeUserSession } from '../../lib/Encryption';
 export const handleLogin = createAsyncThunk('auth/login', async (formData :any) => {
     try {
       const response = await axiosNoAuth.post('/auth/login',formData);
+  
       return response.data.data;
     } catch (error) {
       throw error;
@@ -18,7 +19,9 @@ export const handleLogin = createAsyncThunk('auth/login', async (formData :any) 
 // Async thunk to handle signup
 export const handleSignup = createAsyncThunk('auth/signup', async (formData:any) => {
   try {
-    const response = await axiosNoAuth.post('/auth/signup',formData);
+  
+
+    const response = await axiosNoAuthMultipart.post('/auth/signup',formData);
     return response.data.data;
   } catch (error) {
     throw error;
@@ -44,9 +47,7 @@ const authSlice = createSlice({
       })
       .addCase(handleSignup.fulfilled, (state, action) => {
         state.isLoading = false;
-        Swal.fire({icon: 'success', title : "Votre compte a cree avec succes",text: action.payload.message,showConfirmButton: true}).then(()=> {
-          window.location.href ='/auth/login'
-        })
+        Swal.fire({icon: 'success', title : "Votre compte a cree avec succes",text: action.payload.message,showConfirmButton: true}).then(()=> {window.location.href ='/auth/login'})
       })
       .addCase(handleSignup.rejected, (state, action :any) => {
         state.isAuthenticated = false;
@@ -60,8 +61,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
-        console.log(action.payload)
-        storeUserSession(action.payload)
+         storeUserSession(action.payload)
         if (action.payload.user.role === 'ADMIN') {
           window.location.href ='/admin'
         } else if(action.payload.user.role === 'POMPISTE'){

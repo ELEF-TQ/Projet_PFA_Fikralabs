@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosAuth } from '../../lib/Constants'; 
+import { axiosAuth } from '../../lib/AxiosBase'; 
 import Swal from 'sweetalert2';
 
 // Async thunk to fetch a single pompiste by matriculeRH

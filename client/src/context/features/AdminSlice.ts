@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
-import { axiosAuth } from '../../lib/Constants'; // Assuming you have an axios instance configured
+import { axiosAuth } from '../../lib/AxiosBase'; // Assuming you have an axios instance configured
 
 type DeleteParams = {
   EndPoint: string;

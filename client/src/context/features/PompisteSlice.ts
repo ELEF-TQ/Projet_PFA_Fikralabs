@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosAuth } from '../../lib/Constants'; 
+import { axiosAuth } from '../../lib/AxiosBase'; 
 
 // Async thunk to fetch all pompistes
 export const getPompistes = createAsyncThunk('pompistes/fetchAll', async () => {
