@@ -39,7 +39,7 @@ const DemandeConvertion = () => {
   }
 
   return (
-    <div className="my-8">
+    <div className="my-3">
       <h2 className="text-2xl font-bold mb-4">Demande de conversion</h2>
       {
         isLoading ? <Spinner/> : 
@@ -78,6 +78,19 @@ const DemandeConvertion = () => {
                       )}
                     </div>
                   </div>
+
+                  {/* Part 2.1 */}
+                  <div className="flex justify-center items-center mt-3.5">
+                    <div className="text-black px-8 py-6 rounded-3xl border-primary-color-2 text-center bg-white">
+                      {pompiste && (
+                        <div className="w-full max-w-md mx-auto">
+                          <span className="text-lg font-semibold">Solde actuel (Global)</span>
+                          <span className="my-3 block text-primary-color text-3xl">{pompiste.solde} DHS</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
           
                   {/* Part 3 */}
                   <div className="mt-6 md:mt-16 mr-0 md:mr-6 flex justify-center md:justify-end"> {/* Center the button on small screens, move to the right on medium and larger screens */}
