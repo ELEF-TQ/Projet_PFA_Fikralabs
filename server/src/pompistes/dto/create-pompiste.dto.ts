@@ -27,7 +27,7 @@ export class CreatePompisteDto {
 
   @IsOptional()
   @IsString()
-  readonly image?: string;
+  readonly image?: File;
 
   @IsOptional()
   @IsNumber()

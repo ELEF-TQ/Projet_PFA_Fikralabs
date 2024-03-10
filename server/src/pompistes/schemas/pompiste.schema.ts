@@ -34,7 +34,7 @@ export class Pompiste {
   solde:number;
 
   @Prop()
-  image: string;
+  image: File;
 
   @Prop({default :RolesEnum.POMPISTE})
   role:string;

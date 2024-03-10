@@ -12,11 +12,10 @@ const Home = () => {
     const { coupons , isLoading } = useSelector((state:any)=>state.coupons)
     const { client } = useSelector((state:any)=>state.clients)
    
-
+console.log(client)
     useEffect(()=>{
         dispatch(getClient(userSession._id))
      dispatch(fetchAllCoupons());
-     console.log(coupons)
     },[])
 
     const getCouponElements = (coupons: any[], title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined) => {
@@ -45,7 +44,7 @@ const Home = () => {
 
     return (
         <div className="flex flex-col">
-            <h2 className="text-center text-2xl font-semibold mb-4">Solde actuel : {client?.score}</h2>
+            <h2 className="text-center text-2xl font-semibold mb-4">Solde actuel : {client?.score || 0}</h2>
             {isLoading ? ( 
                 <Spinner />
             ) : (

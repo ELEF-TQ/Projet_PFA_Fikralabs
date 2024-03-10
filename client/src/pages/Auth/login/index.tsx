@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import illustration from '../../../assets/images/illustration.png';
 import Logo from '../../../assets/icons/LogoBlack.png';
 import { useDispatch } from 'react-redux';
 import { handleLogin } from '../../../context/features/AuthSlice';
 import { AppDispatch } from '../../../context/store';
 import { Link } from 'react-router-dom';
+import Header from '../../../components/Header';
 
 const Index: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,12 +33,12 @@ const Index: React.FC = () => {
   const isDisabled = !formData.email || !formData.password;
 
   return (
-    <div className="flex flex-row items-center justify-around gap-0 h-full">
-      <div className="hidden md:block">
-        <img src={illustration} alt="illustration" className="" />
-      </div>
-      <div className=" xl:p-2 pt-20 ">
-        <div className="space-y-4 md:space-y-6 md:p-5  sm:w-full ">
+    <>
+<Header />
+<div className=" h-full">
+    
+      <div className="md:px-60 p-14">
+        <div className="space-y-4 sm:w-full ">
           <img src={Logo} alt="Logo" />
           <div>
             <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">Se connecter</h1>
@@ -108,6 +108,8 @@ const Index: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
+   
   );
 };
 

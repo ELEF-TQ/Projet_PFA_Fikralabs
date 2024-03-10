@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
-import illustration from '../../../assets/images/illustration.png'; 
 import { Formik, Form } from 'formik';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
 import { AppDispatch } from '../../../context/store';
 import { handleSignup } from '../../../context/features/AuthSlice';
 import { Link } from 'react-router-dom';
-import { FiUpload } from 'react-icons/fi'; 
 import defaultIMG from '../../../assets/images/defaultUser.png'
+import Header from '../../../components/Header';
+import Logo from '../../../assets/icons/LogoBlack.png';
 const index :React.FC= () => {
 
   interface FormData {
@@ -118,16 +118,24 @@ const index :React.FC= () => {
 };
  
   return (
+    <>
+    <Header />
     <Formik initialValues={formData} onSubmit={handleSubmit}>
       {({ isValid  }) => (
-        <div className="flex flex-row items-center justify-around gap-0 h-full">
-          <div className="Sign__overlay d-none d-md-block">
-            {/* <img src={illustration} alt="illustration" className="w-100" /> */}
-          </div>
+        
+        <div className="md:px-60 p-14">
+        <div className="space-y-4 sm:w-full ">
+          <img src={Logo} alt="Logo" />
+         </div>
+         <div className='mt-5'>
+         <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">S'inscrire</h1>
+         </div>
+       
+           
           <div className="Sign__content">
             <p className="text-center">
               Avez-vous déjà un Compte?
-              <br />
+             
               <Link to="/">- Connectez-vous ici</Link>
             </p>
             <h1 className="text-center  mx-auto mb-5 Sign__Title">Créer votre compte </h1>
@@ -283,6 +291,8 @@ const index :React.FC= () => {
         </div>
       )}
     </Formik>
+    </>
+    
   );
 };
 
@@ -329,7 +339,7 @@ export function FormikStepper({
         return null;
       })}
 
-      <div className="d-flex justify-content-between mt-4">
+      <div className="flex justify-between mt-4">
         {currentStep > 1 && (
           <button type="button" className="btn mr-20 px-2 Confirm__Button2 " onClick={handlePreviousStep}>
             Précédent
