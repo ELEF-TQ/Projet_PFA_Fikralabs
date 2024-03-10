@@ -1,12 +1,16 @@
+import { Link } from 'react-router-dom';
 import LogoWhite from '../assets/icons/LogoWhite.png';
 
 const Header = () => {
   return (
     <div className='hidden md:block'>
       <div className="header-container" style={headerContainerStyle}>
-        <div className="logo">
+       <Link to={'/'}>
+       <div className="logo">
           <img src={LogoWhite} alt="Logo" />
         </div>
+       </Link>
+      
       </div>
     </div>
   );

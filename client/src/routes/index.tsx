@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 /*___Authentication_____ */
 import LoginPage from '../pages/Auth/login/index'
 import SignupPage from '../pages/Auth/signup/index'
-
+import RestPasswordPage from '../pages/Auth/resetPassword/index'
 /*___Admin_____ */
 import Admin from '../pages/Admin/index'
 import Panel from "../pages/Admin/Panel";
@@ -43,6 +43,10 @@ export const routes = createBrowserRouter([
     {
       path: "/signup",
       element :<SignupPage/>,
+    },
+    {
+      path: "/reset",
+      element :<RestPasswordPage/>,
     },
   
     /*______Admin Routes_______*/

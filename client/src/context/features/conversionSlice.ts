@@ -4,55 +4,52 @@ import Swal from 'sweetalert2';
 import { axiosAuth } from '../../lib/AxiosBase'; 
 
 // Async thunk to create a new conversion
-export const createConversion = createAsyncThunk('convesions/create', async (pompisteId :string) => {
+export const createConversion = createAsyncThunk('conversions/create', async (pompisteId: string, thunkAPI) => {
   try {
     const response = await axiosAuth.post(`/conversions/${pompisteId}`);
-    console.log(response.data)
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
 // Async thunk to create accept a conversion
-export const acceptConversion = createAsyncThunk('convesions/accept', async (id :any) => {
-   console.log(id)
-    try {
-      const response = await axiosAuth.patch(`/conversions/acceptOne/${id}`);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+export const acceptConversion = createAsyncThunk('conversions/accept', async (id: any, thunkAPI) => {
+  try {
+    const response = await axiosAuth.patch(`/conversions/acceptOne/${id}`);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
 });
 
 // Async thunk to accept all conversions
-export const acceptAllConversion = createAsyncThunk('convesions/acceptAll', async (ids :any) => {
-    try {
-      const response = await axiosAuth.patch('/conversions/acceptAll', ids);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+export const acceptAllConversion = createAsyncThunk('conversions/acceptAll', async (ids: any, thunkAPI) => {
+  try {
+    const response = await axiosAuth.patch('/conversions/acceptAll', ids);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
 });
 
-
 // Async thunk to get all conversions
-export const getAllConversions = createAsyncThunk('convesions/getAll', async () => {
+export const getAllConversions = createAsyncThunk('conversions/getAll', async (_, thunkAPI) => {
   try {
     const response = await axiosAuth.get('/conversions');
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
 // Async thunk to get a specific conversion
-export const getConversions = createAsyncThunk('convesions/get', async (pompisteId:string) => {
+export const getConversions = createAsyncThunk('conversions/get', async (pompisteId: string, thunkAPI) => {
   try {
     const response = await axiosAuth.get(`/conversions/${pompisteId}`);
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 

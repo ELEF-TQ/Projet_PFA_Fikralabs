@@ -3,8 +3,15 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2'; // Import SweetAlert
 import { axiosAuth } from '../../lib/AxiosBase'; // Assuming you have an axios instance configured
 
+interface ReviewData {
+  phone: string;
+  matriculeRH: string;
+  etoiles: number;
+  commentaire: string;
+}
+
 // Async thunk to create a new review
-export const createReview = createAsyncThunk('reviews/create', async (formData, thunkAPI) => {
+export const createReview = createAsyncThunk('reviews/create', async (formData:ReviewData, thunkAPI) => {
   try {
     const response = await axiosAuth.post('/reviews', formData);
     return response.data;

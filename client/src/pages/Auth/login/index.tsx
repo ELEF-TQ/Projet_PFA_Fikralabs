@@ -73,7 +73,7 @@ const Index: React.FC = () => {
             </div>
             <div className="flex justify-end ">
               <Link
-                to="/ForgotPassword"
+                to="/reset"
                 className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
               >
                 Mot de passe oublié ?

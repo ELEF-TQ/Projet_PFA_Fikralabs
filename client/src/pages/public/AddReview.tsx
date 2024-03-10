@@ -16,6 +16,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { getPompiste } from '../../context/features/PompisteSlice';
 import { createReview } from '../../context/features/ReviewSlice';
 import { axiosNoAuth } from '../../lib/AxiosBase';
+import Header from '../../components/Header';
 const steps = ['', '', '', ''];
 
 const Index: React.FC = () => {
@@ -91,7 +92,14 @@ const Index: React.FC = () => {
           commentaire: commentaire,
         };
         console.log('Form Data:', formData);
-         dispatch(createReview(formData)); 
+      dispatch(createReview(formData)).then(()=>{
+        setPhone('');
+        setMatriculeRH('');
+        setRatings([0, 0, 0]);
+        setCommentaire('');
+        localStorage.removeItem('phone');
+        localStorage.removeItem('matriculeRH'); 
+      })
         break;
       case 3:
         console.log("Working on step 4");
@@ -118,7 +126,7 @@ const Index: React.FC = () => {
     switch (step) {
       case 0:
         return (
-          <div className='mt-10'>
+          <div className='mt-5'>
               <h6 className="Title_Text">Vérification du Numéro de Téléphone</h6>
               
               <div>
@@ -140,7 +148,7 @@ const Index: React.FC = () => {
         );
       case 1:
         return (
-          <div className='mt-10'>
+          <div className='mt-5'>
               <h6 className="Title_Text">Scanner le Code QR sur le Badge du Pompiste</h6>
              
               <p>
@@ -149,8 +157,8 @@ const Index: React.FC = () => {
                 En cas de problème, vous pouvez saisir manuellement le code 
                 pour accéder à la page d'évaluation.
               </p>
-              <div className='flex flex-col items-center gap-10'>
-              <img src={QR} alt="scanner le code QR" className='w-30 m-20' />
+              <div className='flex flex-col items-center '>
+              <img src={QR} alt="scanner le code QR" className='w-24 m-10' />
 
              
               <div>
@@ -174,10 +182,10 @@ const Index: React.FC = () => {
         );
       case 2:
         return (
-          <div className='mt-10'>
+          <div className='mt-5'>
               <h6 className="Title_Text">Évaluer le Service du Pompiste</h6>
 
-              <div className='flex flex-col items-center gap-5 mt-5'>
+              <div className='flex flex-col items-center gap-2'>
                 <div className='flex flex-col items-center'>
                   <img className='Pompiste_Avatar ' src={pompiste?.image ?pompiste?.image : defaultIMG} alt="image" />
                   <span>{pompiste?.username}</span>
@@ -225,7 +233,7 @@ const Index: React.FC = () => {
         );
       case 3:
         return ( 
-          <div className='mt-10'>
+          <div className='mt-5'>
              <h6 className="Title_Text">Félicitations</h6>
 
              <div className='flex flex-col items-center gap-10 mt-10'>
@@ -257,10 +265,12 @@ const Index: React.FC = () => {
   };
 
   return (
-    <div className=" p-10 h-screen">
+    <div className='flex flex-col h-screen'> 
+    <Header />
+   
 
-      <div className=" xl:p-2 p-20 h-screen ">
-        <div className="space-y-4 md:space-y-6 md:p-5  sm:w-full h-full relative ">
+      <div className="justify-center items-center flex-grow md:px-60 p-10">
+        <div className="space-y-4 md:space-y-6   sm:w-full h-full relative ">
           <img src={Logo} alt="Logo" />
           <p className="Paragraphe_Text">
             évaluer votre expérience et gagner des points passionnants en suivant ces étapes simples
@@ -321,7 +331,7 @@ const Index: React.FC = () => {
 
         </div>
       </div>
-    </div>
+     </div>
   );
 };
 
