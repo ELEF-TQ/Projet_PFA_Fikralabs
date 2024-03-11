@@ -17,6 +17,9 @@ export class Review extends Document {
 
   @Prop()
   commentaire:string;
+
+  @Prop()
+  dateReview: Date;
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);

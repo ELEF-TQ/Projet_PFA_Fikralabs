@@ -8,6 +8,7 @@ interface ReviewData {
   matriculeRH: string;
   etoiles: number;
   commentaire: string;
+  dateReview: Date;
 }
 
 // Async thunk to create a new review

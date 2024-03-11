@@ -9,6 +9,8 @@ import Spinner from "../../components/Spinner";
 import ClientInfosModal from "../../components/modals/ClientInfos";
 import './style.css'
 import { retrieveUserSession } from "../../lib/Encryption";
+import moment from 'moment';
+
 Modal.setAppElement("#root");
 
 const Home = () => {
@@ -35,6 +37,14 @@ const Home = () => {
       default:
         return 0;
     }
+  };
+
+  const calculateDuration = (reviewDate: Date) => {
+    const now = moment();
+    const reviewDateTime = moment(reviewDate);
+    const duration = moment.duration(now.diff(reviewDateTime));
+    const formattedDuration = duration.humanize();
+    return formattedDuration;
   };
 
   const openModal = (review: any) => {
@@ -124,7 +134,7 @@ const Home = () => {
             {/* Right part - Duration */}
             <div className="flex-shrink-0"> {/*min-w-20*/}
               <p className="text-sm text-gray-500" style={{ color: "#C2C2C2" }}>
-                3 minutes ago
+                {calculateDuration(review.dateReview)}
               </p>
             </div>
           </div>
