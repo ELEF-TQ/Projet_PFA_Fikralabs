@@ -41,7 +41,7 @@ export class PompistesService {
   async update(id: string, updatePompisteDto: UpdatePompisteDto): Promise<Pompiste> {
     const isEmailExists = await this.findOneByEmail(updatePompisteDto.email);
     if(isEmailExists){
-      throw new HttpException("Cannot Update User, Email already Exists", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Impossible de mettre à jour l'utilisateur, l'e-mail existe déjà", HttpStatus.BAD_REQUEST);
     }else{
       if(updatePompisteDto.password){
         const encryptedPassword = encodePassword(updatePompisteDto.password);
@@ -73,7 +73,7 @@ export class PompistesService {
   async updatePompisteScore(pompiste: Pompiste, newScore: number): Promise<Pompiste> {
     const oldPompiste = await this.pompisteModel.findById(pompiste).exec();
     if (!oldPompiste) {
-        throw new Error('Pompiste not found');
+      throw new Error('Pompiste non trouvé');
     }
     const oldScore = oldPompiste.score || 0; 
     const updatedScore = oldScore + newScore;
@@ -89,7 +89,7 @@ export class PompistesService {
     try {
         await this.pompisteModel.findByIdAndUpdate(pompiste, { score: 0 }).exec();
     } catch (error) {
-        throw new Error(`Failed to reset Pompiste score to zero: ${error.message}`);
+      throw new Error(`Échec de la réinitialisation du score du pompiste à zéro : ${error.message}`);
     }
 }
 

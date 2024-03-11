@@ -28,7 +28,7 @@ export class AdminController {
   async findOne(@Param('id') id: string) {
       const adminFound = await this.adminService.findOne(id);
       if(!adminFound){
-        throw new HttpException("The admin with the provided ID doesn't exist", HttpStatus.NOT_FOUND);
+        throw new HttpException("L'administrateur avec l'identifiant fourni n'existe pas", HttpStatus.NOT_FOUND);
       }else{
           return adminFound;
       }
@@ -39,10 +39,10 @@ export class AdminController {
   async update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
       const adminFound = await this.adminService.update(id, updateAdminDto);
       if(!adminFound){
-        throw new HttpException("The admin with the provided ID doesn't exist", HttpStatus.NOT_FOUND);
+        throw new HttpException("L'administrateur avec l'identifiant fourni n'existe pas", HttpStatus.NOT_FOUND);
       }else{
           return {
-            message: "Admin Updated Successfully",
+            message: "Administrateur mis à jour avec succès",
             updatedAdmin: adminFound
           };
       }
@@ -52,10 +52,10 @@ export class AdminController {
   async remove(@Param('id') id: string) {
     const deletedAdmin = await this.adminService.remove(id);
     if(!deletedAdmin){
-      throw new HttpException("No Admin Found To Delete", 404)
+      throw new HttpException("Aucun administrateur trouvé", HttpStatus.BAD_REQUEST)
     }else{
       return {
-        message: "Admin Deleted Successfully",
+        message: "Administrateur supprimé avec succès",
         deletedAdmin: deletedAdmin
       };
     }

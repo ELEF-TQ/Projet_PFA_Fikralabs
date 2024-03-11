@@ -10,18 +10,18 @@ export class ReviewsController {
   @UsePipes(ValidationPipe)
   async createReview(@Body() createReviewDto: CreateReviewDto) {
     try {
-      await this.reviewService.createReview(createReviewDto);
-      return { message: 'Review created successfully' };
+        await this.reviewService.createReview(createReviewDto);
+        return { message: 'Évaluation créée avec succès' }; 
     } catch (error) {
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+        throw new HttpException({ message: `Échec de la création de l\'évaluation : ${error.message}` }, HttpStatus.BAD_REQUEST);
     }
-  }
+}
 
   @Get("/all/:matriculeRH")
   async getAllReviews(@Param("matriculeRH") matriculeRH: string){
     const reviews = await this.reviewService.getAll(matriculeRH);
     if(reviews.length === 0){
-      throw new NotFoundException("No reviews Found");
+      throw new NotFoundException("Aucune évaluation trouvée");
     }else{
       return reviews;
     }
