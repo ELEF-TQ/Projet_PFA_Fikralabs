@@ -8,12 +8,11 @@ import Spinner from "../../components/Spinner";
 
 const Coupons = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const user = retrieveUserSession()?.user;
+  const user = retrieveUserSession();
   const { reservedCoupons ,isLoading } = useSelector((state: any) => state.coupons);
 
   useEffect(() => {
     if (user) {
-
       dispatch(fetchReservedCoupons(user._id));
     }
   }, []);

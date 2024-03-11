@@ -14,7 +14,7 @@ const Conversion = () => {
   const [acceptedConversions, setAcceptedConversions] = useState<any[]>([]);
 
   useEffect(() => {
-    dispatch(getConversions(userData.user._id));
+    dispatch(getConversions(userData._id));
   }, []);
 
   useEffect(() => {

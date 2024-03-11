@@ -19,7 +19,7 @@ const Home = () => {
 
   useEffect(() => {
     const userData = retrieveUserSession()
-    dispatch(getAllReviews(userData.user.matriculeRH));
+    dispatch(getAllReviews(userData.matriculeRH));
   }, []);
 
   const averageStars = reviews.reviews.reduce((sum, review: any) => sum + review.etoiles, 0) /reviews.reviews.length;

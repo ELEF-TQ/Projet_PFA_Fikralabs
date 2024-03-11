@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import illustration from '../../assets/images/illustration.png';
 import Logo from '../../assets/icons/LogoBlack.png';
 import './style.css';
 import Box from '@mui/material/Box';

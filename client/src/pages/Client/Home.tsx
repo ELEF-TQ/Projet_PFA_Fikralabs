@@ -8,12 +8,12 @@ import { retrieveUserSession } from '../../lib/Encryption';
 import Spinner from '../../components/Spinner';
 const Home = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const userSession = retrieveUserSession().user
+    const user = retrieveUserSession()
     const { coupons , isLoading } = useSelector((state:any)=>state.coupons)
     const { client } = useSelector((state:any)=>state.clients)
    
     useEffect(()=>{
-        dispatch(getClient(userSession._id))
+        dispatch(getClient(user._id))
      dispatch(fetchAllCoupons());
     },[])
 

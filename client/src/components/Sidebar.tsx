@@ -15,7 +15,7 @@ interface SidebarItem {
 
 const Sidebar = () => {
   const location = useLocation();
-  const userData = retrieveUserSession().user;
+  const userData = retrieveUserSession();
 
   const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([]);
   useEffect(() => {

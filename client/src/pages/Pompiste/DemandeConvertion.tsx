@@ -16,7 +16,7 @@ const DemandeConvertion = () => {
   const {pompiste , isLoading} = useSelector((state:any) => state.pompistes);
   
   useEffect(() => {
-    dispatch(getPompiste(userData.user.matriculeRH));
+    dispatch(getPompiste(userData.matriculeRH));
   }, []);
 
   const handleConversion = async () => {

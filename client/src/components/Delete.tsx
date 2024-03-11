@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { deleteItem } from '../context/features/AdminSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../context/store';

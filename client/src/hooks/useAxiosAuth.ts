@@ -1,14 +1,14 @@
 import { useEffect } from "react";
-import {axiosAuth } from "../lib/AxiosBase";
-import { retrieveUserSession } from "../lib/Encryption";
+import { axiosAuth, axiosAuthMultipart } from "../lib/AxiosBase";
+import { retrieveToken } from "../lib/Encryption";
 
-const useAxiosAuth = () => {
+export const useAxiosAuth = () => {
     useEffect(() => {
-        const userData = retrieveUserSession();
-        if (userData && userData.JWT ) {
+        const token = retrieveToken();
+        if (token) {
             const requestInterceptor = axiosAuth.interceptors.request.use((config) => {
                 if (!config.headers["Authorization"]) {
-                    config.headers["Authorization"] = `Bearer ${userData.JWT}`;
+                    config.headers["Authorization"] = `Bearer ${token}`;
                 }
                 return config;
             });
@@ -21,4 +21,21 @@ const useAxiosAuth = () => {
     return axiosAuth;
 };
 
-export default useAxiosAuth;
+export const useAxiosAuthMultipart = () => {
+    useEffect(() => {
+        const token = retrieveToken();
+        if (token) {
+            const requestInterceptor = axiosAuthMultipart.interceptors.request.use((config) => {
+                if (!config.headers["Authorization"]) {
+                    config.headers["Authorization"] = `Bearer ${token}`;
+                }
+                return config;
+            });
+            return () => {
+                axiosAuthMultipart.interceptors.request.eject(requestInterceptor);
+            };
+        }
+    }, []); 
+
+    return axiosAuthMultipart;
+};
