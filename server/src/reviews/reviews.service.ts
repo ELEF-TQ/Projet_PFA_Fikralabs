@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { ClientsService } from '../clients/clients.service';
 import { PompistesService } from '../pompistes/pompistes.service';
 import { Review } from './schemas/review.schema';
-import { UpdatePompisteDto } from '../pompistes/dto/update-pompiste.dto';
 import { CreateReviewDto } from './dto/create-review.dto';
 
 @Injectable()
@@ -21,7 +20,7 @@ export class ReviewsService {
     const client = await this.clientService.getClientByPhone(phone);
     const pompiste = await this.pompisteService.getPompisteByMatriculeRH(matriculeRH);
 
-    const review = new this.reviewModel({ client, pompiste, etoiles, commentaire });
+    const review = new this.reviewModel({ client, pompiste, etoiles, commentaire, dateReview: new Date() });
     await review.save();
 
     const clientScore = 300;
