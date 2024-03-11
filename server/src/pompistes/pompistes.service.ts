@@ -8,6 +8,7 @@ import { encodePassword } from 'src/auth/utils/bcrypt';
 
 @Injectable()
 export class PompistesService {
+ 
 
   constructor(@InjectModel(Pompiste.name) private readonly pompisteModel: Model<PompisteDocument>) {}
 
@@ -26,13 +27,12 @@ export class PompistesService {
     return this.pompisteModel.find().exec();
   }
 
-  async findOne(matriculeRH: string): Promise<Pompiste> {
-    return this.pompisteModel.findOne({ matriculeRH }).exec(); 
-  }
 
-  async findOneById(id: string): Promise<Pompiste> {
-    return this.pompisteModel.findOne({_id: id}) 
+
+  async findOne(id: string): Promise<Pompiste> {
+    return this.pompisteModel.findById(id).select('-password').exec();
   }
+  
 
   async findOneByEmail(email: string): Promise<Pompiste> {
     return this.pompisteModel.findOne({email: email}).exec();
@@ -78,8 +78,7 @@ export class PompistesService {
     const oldScore = oldPompiste.score || 0; 
     const updatedScore = oldScore + newScore;
     return await this.pompisteModel.findByIdAndUpdate(pompiste, { score: updatedScore }).exec();
-}
-
+  }
 
   async updatePompisteEtoiles(pompiste: Pompiste, meanEtoiles: number): Promise<void> {
     await this.pompisteModel.findByIdAndUpdate(pompiste, { etoiles: meanEtoiles }).exec();

@@ -33,9 +33,9 @@ export const updatePompiste = createAsyncThunk('pompistes/update', async ({ Id, 
 });
 
 // Async thunk to fetch a single pompiste by matriculeRH
-export const getPompiste = createAsyncThunk('pompistes/fetch', async (matriculeRH: string, thunkAPI) => {
+export const getPompisteByMatriculeRH = createAsyncThunk('pompistes/fetch', async (matriculeRH: string, thunkAPI) => {
   try {
-    const response = await axiosAuth.get(`/pompistes/${matriculeRH}`);
+    const response = await axiosAuth.get(`/pompistes/matriculeRH/${matriculeRH}`);
     return response.data;
   } catch (error:any) {
     return thunkAPI.rejectWithValue(error.response.data);
@@ -68,15 +68,15 @@ const pompistesSlice = createSlice({
     .addCase(getPompistes.rejected, (state) => {
       state.isLoading = false;
     })
-    .addCase(getPompiste.pending, (state) => {
+    .addCase(getPompisteByMatriculeRH.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     })
-    .addCase(getPompiste.fulfilled, (state, action) => {
+    .addCase(getPompisteByMatriculeRH.fulfilled, (state, action) => {
       state.isLoading = false;
       state.pompiste = action.payload;
     })
-    .addCase(getPompiste.rejected, (state) => {
+    .addCase(getPompisteByMatriculeRH.rejected, (state) => {
       state.isLoading = false;
     })
 

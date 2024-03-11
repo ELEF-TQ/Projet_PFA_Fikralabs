@@ -1,7 +1,7 @@
 import {  useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../context/store";
 import { useEffect } from "react";
-import { getPompiste } from "../../context/features/PompisteSlice";
+import { getPompisteByMatriculeRH } from "../../context/features/PompisteSlice";
 import {  EastRounded } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import Spinner from "../../components/Spinner";
@@ -16,7 +16,7 @@ const DemandeConvertion = () => {
   const {pompiste , isLoading} = useSelector((state:any) => state.pompistes);
   
   useEffect(() => {
-    dispatch(getPompiste(userData.matriculeRH));
+    dispatch(getPompisteByMatriculeRH(userData.matriculeRH));
   }, []);
 
   const handleConversion = async () => {
@@ -27,7 +27,7 @@ const DemandeConvertion = () => {
         if (result.isConfirmed) {
           console.log(pompiste._id);
           await dispatch(createConversion(pompiste._id)).then(() => {
-            dispatch(getPompiste(userData.user.matriculeRH));
+            dispatch(getPompisteByMatriculeRH(userData.matriculeRH));
           });
         }
       });

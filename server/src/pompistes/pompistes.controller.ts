@@ -25,14 +25,19 @@ export class PompistesController {
     }
   }
 
-  @Get(':matriculeRH') 
-  async findOne(@Param('matriculeRH') matriculeRH: string) { 
-    const pompisteFound = await this.pompistesService.findOne(matriculeRH);
+  @Get('matriculeRH/:matriculeRH') 
+  async findByMatriculeRH(@Param('matriculeRH') matriculeRH: string) { 
+    const pompisteFound = await this.pompistesService.getPompisteByMatriculeRH(matriculeRH);
     if (!pompisteFound){
       throw new NotFoundException("Aucun pompiste trouvé avec ce matriculeRH")
     }else{
       return pompisteFound;
     }
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string){
+    return await this.pompistesService.findOne(id);
   }
 
   

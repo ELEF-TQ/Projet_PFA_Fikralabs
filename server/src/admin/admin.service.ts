@@ -26,8 +26,9 @@ export class AdminService {
   }
 
   async findOne(id: string): Promise<Admin | null> {
-    return this.adminModel.findById(id).exec();
+    return this.adminModel.findById(id).select('-password').exec();
   }
+  
 
   async findOneByEmail(email: string): Promise<Admin> {
     return this.adminModel.findOne({email: email}).exec();

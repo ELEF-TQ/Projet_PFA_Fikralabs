@@ -12,7 +12,7 @@ import {  Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AppDispatch } from '../../context/store';
 import { useSelector,useDispatch } from 'react-redux';
-import { getPompiste } from '../../context/features/PompisteSlice';
+import { getPompisteByMatriculeRH } from '../../context/features/PompisteSlice';
 import { createReview } from '../../context/features/ReviewSlice';
 import { axiosNoAuth } from '../../lib/AxiosBase';
 import Header from '../../components/Header';
@@ -81,7 +81,7 @@ const Index: React.FC = () => {
           return;
         }
         localStorage.setItem('matriculeRH', matriculeRH);
-        dispatch(getPompiste(matriculeRH));
+        dispatch(getPompisteByMatriculeRH(matriculeRH));
         break;
       case 2:
         const formData = {

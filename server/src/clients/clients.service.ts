@@ -28,7 +28,7 @@ export class ClientsService {
   }
 
   async findOne(id: string): Promise<Client> {
-    return this.clientModel.findById(id).select('-password -coupons').exec();
+    return this.clientModel.findById(id).select('-password').exec();
   }  
 
 
