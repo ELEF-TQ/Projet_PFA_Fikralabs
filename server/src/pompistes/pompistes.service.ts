@@ -8,6 +8,7 @@ import { encodePassword } from 'src/auth/utils/bcrypt';
 
 @Injectable()
 export class PompistesService {
+ 
 
   constructor(@InjectModel(Pompiste.name) private readonly pompisteModel: Model<PompisteDocument>) {}
 
@@ -26,13 +27,12 @@ export class PompistesService {
     return this.pompisteModel.find().exec();
   }
 
-  async findOne(matriculeRH: string): Promise<Pompiste> {
-    return this.pompisteModel.findOne({ matriculeRH }).exec(); 
-  }
 
-  async findOneById(id: string): Promise<Pompiste> {
-    return this.pompisteModel.findOne({_id: id}) 
+
+  async findOne(id: string): Promise<Pompiste> {
+    return this.pompisteModel.findById(id).select('-password').exec();
   }
+  
 
   async findOneByEmail(email: string): Promise<Pompiste> {
     return this.pompisteModel.findOne({email: email}).exec();
@@ -41,7 +41,7 @@ export class PompistesService {
   async update(id: string, updatePompisteDto: UpdatePompisteDto): Promise<Pompiste> {
     const isEmailExists = await this.findOneByEmail(updatePompisteDto.email);
     if(isEmailExists){
-      throw new HttpException("Cannot Update User, Email already Exists", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Impossible de mettre à jour l'utilisateur, l'e-mail existe déjà", HttpStatus.BAD_REQUEST);
     }else{
       if(updatePompisteDto.password){
         const encryptedPassword = encodePassword(updatePompisteDto.password);
@@ -73,13 +73,12 @@ export class PompistesService {
   async updatePompisteScore(pompiste: Pompiste, newScore: number): Promise<Pompiste> {
     const oldPompiste = await this.pompisteModel.findById(pompiste).exec();
     if (!oldPompiste) {
-        throw new Error('Pompiste not found');
+      throw new Error('Pompiste non trouvé');
     }
     const oldScore = oldPompiste.score || 0; 
     const updatedScore = oldScore + newScore;
     return await this.pompisteModel.findByIdAndUpdate(pompiste, { score: updatedScore }).exec();
-}
-
+  }
 
   async updatePompisteEtoiles(pompiste: Pompiste, meanEtoiles: number): Promise<void> {
     await this.pompisteModel.findByIdAndUpdate(pompiste, { etoiles: meanEtoiles }).exec();
@@ -89,7 +88,7 @@ export class PompistesService {
     try {
         await this.pompisteModel.findByIdAndUpdate(pompiste, { score: 0 }).exec();
     } catch (error) {
-        throw new Error(`Failed to reset Pompiste score to zero: ${error.message}`);
+      throw new Error(`Échec de la réinitialisation du score du pompiste à zéro : ${error.message}`);
     }
 }
 

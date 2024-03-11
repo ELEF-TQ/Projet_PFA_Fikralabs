@@ -21,7 +21,7 @@ export const createReview = createAsyncThunk('reviews/create', async (formData:R
 });
 
 // Async thunk to fetch all reviews
-export const getAllReviews= createAsyncThunk('reviews/fetchAll', async (matriculeRH, thunkAPI) => {
+export const getAllReviews= createAsyncThunk('reviews/fetchAll', async (matriculeRH :any, thunkAPI) => {
   try {
     const response = await axiosAuth.get(`/reviews/all/${matriculeRH}`);
     return response.data;
@@ -47,12 +47,11 @@ const reviewsSlice = createSlice({
       })
       .addCase(createReview.fulfilled, (state) => {
         state.isLoading = false;
-        Swal.fire({icon: 'success',title: 'Review Created!',text: 'Your review has been successfully created.',})
+        Swal.fire({ icon: 'success', title: 'Avis créé !', text: 'Votre avis a été créé avec succès.' })
       })
       .addCase(createReview.rejected, (state) => {
         state.isLoading = false;
-        Swal.fire({icon: 'error',title: 'Review Creation Failed',text: 'Failed to create the review. Please try again later.',
-        });
+        Swal.fire({ icon: 'error', title: 'Échec de la création de l\'avis', text: 'Échec de la création de l\'avis. Veuillez réessayer plus tard.' })
       })
       .addCase(getAllReviews.pending, (state) => {
         state.isLoading = true;

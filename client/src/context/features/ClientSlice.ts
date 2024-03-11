@@ -28,7 +28,7 @@ const clientSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(getClient.rejected, (state, action) => {
+    .addCase(getClient.rejected, (state) => {
       state.isLoading = false;
       Swal.fire({icon: 'error',title: 'Code n\'est pas correct',text:'nigga'})
     })

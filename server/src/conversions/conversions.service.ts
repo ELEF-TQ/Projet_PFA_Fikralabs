@@ -18,7 +18,7 @@ export class ConversionsService {
   ){}
 
   async create(pompisteId: string) {
-    const pompiste = await this.pompisteService.findOneById(pompisteId);
+    const pompiste = await this.pompisteService.findOne(pompisteId);
     if (!pompiste) {
         throw new NotFoundException(`Aucun pompiste avec cet id ${pompisteId}`);
     }
@@ -49,7 +49,7 @@ export class ConversionsService {
  
 
   async findAllByPompiste(pompisteId: string): Promise<Conversion[]> {
-    const pompiste = await this.pompisteService.findOneById(pompisteId);
+    const pompiste = await this.pompisteService.findOne(pompisteId);
     if (!pompiste) {
         throw new NotFoundException(`Aucun pompiste avec cet id ${pompisteId}`);
     }

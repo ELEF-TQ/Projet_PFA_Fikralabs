@@ -8,22 +8,16 @@ import { retrieveUserSession } from '../../lib/Encryption';
 import Spinner from '../../components/Spinner';
 const Home = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const userSession = retrieveUserSession().user
+    const user = retrieveUserSession()
     const { coupons , isLoading } = useSelector((state:any)=>state.coupons)
     const { client } = useSelector((state:any)=>state.clients)
    
     useEffect(()=>{
-        dispatch(getClient(userSession._id))
+        dispatch(getClient(user._id))
      dispatch(fetchAllCoupons());
     },[])
 
     const getCouponElements = (coupons: any[], title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined) => {
-        if (coupons.length === 0) {
-            return (
-                <div className="text-center text-gray-600 mt-4">{`Aucun coupon disponible pour ${title}`}</div>
-            );
-        }
-
         return (
             <div className='flex flex-col justify-start items-start'>
                 <h3 className="text-center text-xl font-semibold mb-2">{title}</h3>
@@ -43,18 +37,24 @@ const Home = () => {
 
     return (
         <div className="flex flex-col">
-            <h2 className="text-center text-2xl font-semibold mb-4">Solde actuel : {client?.score || 0}</h2>
-            {isLoading ? ( 
-                <Spinner />
-            ) : (
-                <div className='flex flex-col gap-10'>
-                    {getCouponElements(couponsStandard, 'Coupons Standard :')}
-                    {getCouponElements(couponsPremium, 'Coupons Premium :')}
-                    {getCouponElements(couponsUltime, 'Coupons Ultime :')}
-                </div>
-            )}
-           
-        </div>
+        <h2 className="text-center text-2xl font-semibold mb-4">Solde actuel : {client?.score || 0}</h2>
+        {isLoading ? ( 
+            <Spinner />
+        ) : (
+            <div className='flex flex-col gap-10'>
+                {couponsStandard.length === 0 && couponsPremium.length === 0 && couponsUltime.length === 0 ? (
+                    <div className="text-center text-gray-600 mt-4">Aucun coupon disponible</div>
+                ) : (
+                    <>
+                        {couponsStandard.length > 0 && getCouponElements(couponsStandard, 'Coupons Standard :')}
+                        {couponsPremium.length > 0 && getCouponElements(couponsPremium, 'Coupons Premium :')}
+                        {couponsUltime.length > 0 && getCouponElements(couponsUltime, 'Coupons Ultime :')}
+                    </>
+                )}
+            </div>
+        )}
+       
+    </div>
     );
 }
 

@@ -1,4 +1,3 @@
-// ConversionInfosModal.tsx
 import React from 'react';
 
 interface ConversionInfosModalProps {

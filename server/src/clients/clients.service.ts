@@ -15,7 +15,7 @@ export class ClientsService {
   async create(createclienteDto: CreateClientDto): Promise<Client> {
     const isEmailExists = await this.findOneByEmail(createclienteDto.email);
     if(isEmailExists){
-      throw new HttpException("Email already Exists", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Email déjà existant", HttpStatus.BAD_REQUEST);
     }else{
       const encryptedPassword = encodePassword(createclienteDto.password);
       const createdUser = new this.clientModel({...createclienteDto, password: encryptedPassword});
@@ -28,7 +28,7 @@ export class ClientsService {
   }
 
   async findOne(id: string): Promise<Client> {
-    return this.clientModel.findById(id).select('-password -coupons').exec();
+    return this.clientModel.findById(id).select('-password').exec();
   }  
 
 
@@ -39,7 +39,7 @@ export class ClientsService {
   async update(id: string, updateclientDto: UpdateClientDto): Promise<Client> {
     const isEmailExists = await this.findOneByEmail(updateclientDto.email);
     if(isEmailExists){
-      throw new HttpException("Cannot Update User, Email already Exists", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Impossible de mettre à jour l'utilisateur, l'email existe déjà", HttpStatus.BAD_REQUEST);
     }else{
       if(updateclientDto.password){
         const encryptedPassword = encodePassword(updateclientDto.password);
@@ -85,7 +85,7 @@ export class ClientsService {
   async findReservedCouponsByClientId(clientId: string): Promise<Coupon[]> {
     const client = await this.clientModel.findById(clientId).populate('coupons').exec();
     if (!client) {
-      throw new Error('Client not found');
+      throw new HttpException({ message: "Client non trouvé" }, HttpStatus.NOT_FOUND);
     }
     return client.coupons;
   }
