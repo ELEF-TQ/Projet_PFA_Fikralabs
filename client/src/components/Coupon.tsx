@@ -4,7 +4,7 @@ import CouponInfo from '../components/modals/CouponInfo';
 import Swal from 'sweetalert2';
 import { AppDispatch } from '../context/store';
 import { fetchAllCoupons, reserveCoupon } from '../context/features/CouponSlice';
-import { retrieveUserSession } from '../lib/Encryption';
+import { retrieveUserSession, updateUserSession } from '../lib/Encryption';
 import { getClient } from '../context/features/ClientSlice';
 
 interface CouponProps {
@@ -30,12 +30,20 @@ const Coupon: React.FC<CouponProps> = ({ coupon, reserved }) => {
     };
     const dispatch = useDispatch<AppDispatch>(); 
 
+    //calcul de date expiration :
+    const { dateExpiration } = coupon;
+   const differenceEnJours = Math.ceil((new Date(dateExpiration).getTime() - Date.now()) / (1000 * 3600 * 24));
+    
+
     const handleConfirmReservation = () => {
-        Swal.fire({title: 'Confirm Reservation',text: 'Are you sure you want to reserve this coupon?',icon: 'question',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, reserve it!'}).then((result) => {
+        Swal.fire({title:'Confirmer la réservation',text:'Êtes-vous sûr de vouloir réserver ce coupon ?',icon: 'question',showCancelButton: true,cancelButtonColor: '#d33',confirmButtonText: 'Oui, réserver !',cancelButtonText:'Anuller'}).then((result) => {
             if (result.isConfirmed) {
                 dispatch(reserveCoupon(formData)).then(() => {
-                    dispatch(fetchAllCoupons()) ;
-                    dispatch(getClient(retrieveUserSession().user._id))
+                    dispatch(fetchAllCoupons()).then(()=>{
+                        dispatch(getClient(user._id))
+                        updateUserSession('/clients',user._id)
+                    })
+                  
                 });
             }
         });
@@ -66,7 +74,8 @@ const Coupon: React.FC<CouponProps> = ({ coupon, reserved }) => {
                     <button className="border border-white bg-white text-purple-600 px-4 py-2 rounded-r cursor-pointer" onClick={handleConfirmReservation}>Reserve</button>
                 )}
             </div>
-            <p className="text-sm">Valid Till: {new Date(coupon.dateExpiration).toLocaleDateString()}</p>
+              <p className="text-sm">Valable jusqu'au : {new Date(dateExpiration).toLocaleDateString()}</p>
+           <p className="text-sm">Il reste : {differenceEnJours} jour(s) avant expiration</p>
             <CouponInfo showModal={showModal} setShowModal={setShowModal} />
         </div>
     );

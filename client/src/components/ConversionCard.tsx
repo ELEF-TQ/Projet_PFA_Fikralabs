@@ -24,7 +24,6 @@ const ConversionCard: React.FC<Props> = ({ conversion }) => {
   const [color, setColor] = useState<string | undefined>();
   const [isModalOpen, setIsModalOpen] = useState(false); // State for managing modal visibility
 
-  console.log(conversion)
   useEffect(() => {
     if (conversion.status === "PENDING") {
       setImage(pendingImage);

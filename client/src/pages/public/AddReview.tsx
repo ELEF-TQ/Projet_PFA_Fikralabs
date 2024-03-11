@@ -75,7 +75,7 @@ const Index: React.FC = () => {
           break;
       case 1:
         try {
-          await axiosNoAuth.get(`/pompistes/${matriculeRH}`);
+          await axiosNoAuth.get(`/pompistes/matriculeRH/${matriculeRH}`);
         } catch (error:any) {
           alert(error.response.data.message);
           return;
