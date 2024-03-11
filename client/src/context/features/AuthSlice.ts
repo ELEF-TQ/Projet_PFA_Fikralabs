@@ -57,9 +57,9 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.isLoading = false;
         if (action.payload && action.payload.message) {
-          Swal.fire({ icon: 'error', title: 'Ooops!', text: action.payload.message || '' }); 
+          Swal.fire({ icon: 'error', title: 'Oops!', text: action.payload.message || '' }); 
         } else {
-          Swal.fire({ icon: 'error', title: 'Ooops!', text: 'Une erreur s\'est produite lors de l\'inscription.' }); 
+          Swal.fire({ icon: 'error', title: 'Oops!', text: 'Une erreur s\'est produite lors de l\'inscription.' }); 
         }
       })
       .addCase(handleLogin.fulfilled, (state, action) => {
@@ -79,9 +79,9 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = false;
         if (action.payload && action.payload.message) {
-          Swal.fire({ icon: 'error', title: 'Ooops!', text: action.payload.message || '' }); 
+          Swal.fire({ icon: 'error', title: 'Oops!', text: action.payload.message || '' }); 
         } else {
-          Swal.fire({ icon: 'error', title: 'Ooops!', text: 'Une erreur s\'est produite lors de la connexion.' }); 
+          Swal.fire({ icon: 'error', title: 'Oops!', text: 'Une erreur s\'est produite lors de la connexion.' }); 
         }
       });
   },

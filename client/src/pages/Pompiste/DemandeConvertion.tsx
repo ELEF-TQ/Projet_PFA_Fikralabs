@@ -20,19 +20,20 @@ const DemandeConvertion = () => {
   }, []);
 
   const handleConversion = async () => {
-    if(pompiste.score < 2500){
-      Swal.fire({title: 'Conversion Forbidden', text: 'You cannot convert points with a score less than 2500.', icon: 'error', confirmButtonColor: '#3085d6',});
-    }else{
-      Swal.fire({title: 'Are you sure?',text: `You are about to convert your points`,icon: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, proceed!'}).then( async (result) => {
+    if (pompiste.score < 2500) {
+      Swal.fire({title: 'Conversion interdite',text: 'Vous ne pouvez pas convertir des points avec un score inférieur à 2500.',icon: 'error'});
+    } else {
+      Swal.fire({title: 'Êtes-vous sûr(e) ?',text: `Vous êtes sur le point de convertir vos points.`,icon: 'warning',showCancelButton: true,cancelButtonColor: '#d33',confirmButtonText: 'Oui, procéder !'}).then(async (result) => {
         if (result.isConfirmed) {
-            console.log(pompiste._id)
-            await dispatch(createConversion(pompiste._id)).then(() => {
-              dispatch(getPompiste(userData.user.matriculeRH));
-            })
+          console.log(pompiste._id);
+          await dispatch(createConversion(pompiste._id)).then(() => {
+            dispatch(getPompiste(userData.user.matriculeRH));
+          });
         }
       });
     }
   };
+  
 
   const calculateMontant = (score: number) => {
     return (score * 1) / 25; 

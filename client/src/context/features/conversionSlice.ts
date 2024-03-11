@@ -74,9 +74,9 @@ const ConversionsSlice = createSlice({
         state.isLoading = false;
         Swal.fire({icon: 'success', title: 'Conversion Créée!', text: 'Votre conversion a été créée avec succès.'});
       })
-      .addCase(createConversion.rejected, (state, action) => {
+      .addCase(createConversion.rejected, (state, action:any) => {
         state.isLoading = false;
-        Swal.fire({icon: 'error', title: 'Échec de la Création de la Conversion', text: action.error.message});
+        Swal.fire({icon: 'error', title: 'Échec de la Création de la Conversion', text: action.payload.message});
       })
       .addCase(acceptConversion.fulfilled, (state) => {
         state.isLoading = false;

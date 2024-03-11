@@ -21,7 +21,7 @@ export const createReview = createAsyncThunk('reviews/create', async (formData:R
 });
 
 // Async thunk to fetch all reviews
-export const getAllReviews= createAsyncThunk('reviews/fetchAll', async (matriculeRH, thunkAPI) => {
+export const getAllReviews= createAsyncThunk('reviews/fetchAll', async (matriculeRH :any, thunkAPI) => {
   try {
     const response = await axiosAuth.get(`/reviews/all/${matriculeRH}`);
     return response.data;
