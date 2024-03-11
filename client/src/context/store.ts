@@ -6,7 +6,7 @@ import AdminSlice from './features/AdminSlice'
 import PompisteSlice from './features/PompisteSlice'
 import ReviewSlice from './features/ReviewSlice'
 import ClientSlice from './features/ClientSlice'
-import ConversionSlice from './features/ConversionSlice'
+import ConversionSlice from './features/conversionSlice'
 import CouponSlice from './features/CouponSlice'
 
 export const makeStore = () => {
