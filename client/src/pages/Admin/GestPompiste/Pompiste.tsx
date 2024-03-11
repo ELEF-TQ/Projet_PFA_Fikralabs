@@ -150,7 +150,9 @@ const Pompiste : React.FC = () => {
               </td>
               <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <div className="flex items-center justify-center mr-3">
-               <img src={defaultUser} alt="img" width={50} height={50} />
+               <img 
+                src={pompiste?.image?.buffer ? `data:image/png;base64,${pompiste.image.buffer}` : defaultUser}
+                alt="img" width={50} height={50} />
                 </div>
               </th>
               <td className="px-4 py-3">

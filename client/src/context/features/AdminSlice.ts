@@ -45,28 +45,24 @@ const adminSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(deleteItem.pending, (state, action) => {
+      .addCase(deleteItem.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteItem.fulfilled, (state, action) => {
+      .addCase(deleteItem.fulfilled, (state) => {
         state.isLoading = false;
-        Swal.fire('Success', 'Item deleted successfully', 'success');
-      })
-      .addCase(deleteItem.rejected, (state, action) => {
+        Swal.fire('Succès', 'Supprimé avec succès', 'success')})
+      .addCase(deleteItem.rejected, (state) => {
         state.isLoading = false;
-        Swal.fire('Error', 'Failed to delete item', 'error');
-      })
-      .addCase(destroyItems.pending, (state, action) => {
+        Swal.fire('Erreur', 'Échec de la suppression', 'error')})
+      .addCase(destroyItems.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(destroyItems.fulfilled, (state, action) => {
+      .addCase(destroyItems.fulfilled, (state) => {
         state.isLoading = false;
-        Swal.fire('Success', 'Items destroyed successfully', 'success');
-      })
-      .addCase(destroyItems.rejected, (state, action) => {
+        Swal.fire('Succès', 'Détruit avec succès', 'success') })
+      .addCase(destroyItems.rejected, (state) => {
         state.isLoading = false;
-        Swal.fire('Error', 'Failed to destroy items', 'error');
-      });
+        Swal.fire('Erreur', 'Échec de la destruction', 'error')});
   },
 });
 

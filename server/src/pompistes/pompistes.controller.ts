@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Logger, UsePipes, ValidationPipe, HttpException, HttpStatus, NotFoundException, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Logger, UsePipes, ValidationPipe, HttpException, HttpStatus, NotFoundException, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { PompistesService } from './pompistes.service';
 import { CreatePompisteDto } from './dto/create-pompiste.dto';
 import { UpdatePompisteDto } from './dto/update-pompiste.dto';
 import { DeleteMultipleDto } from './dto/delete-multiple.dto';
 import { Pompiste } from './schemas/pompiste.schema';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('pompistes')
 export class PompistesController {
@@ -11,9 +12,15 @@ export class PompistesController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  create(@Body() createPompisteDto: CreatePompisteDto) {
-    return this.pompistesService.create(createPompisteDto);
+  @UseInterceptors(FileInterceptor('image')) 
+  create(@UploadedFile() image:File ,@Body() createPompisteDto: CreatePompisteDto) {
+    const pompisteDataWithImage = { ...createPompisteDto, image: image };
+    return this.pompistesService.create(pompisteDataWithImage);
   }
+
+ 
+
+
 
   @Get()
   async findAll() {

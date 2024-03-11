@@ -21,7 +21,7 @@ export class Client {
   phone: string;
 
   @Prop({required: true})
-  CNI: string;
+  CIN: string;
 
   @Prop()
   image: File;

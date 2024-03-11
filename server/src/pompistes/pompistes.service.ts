@@ -15,7 +15,7 @@ export class PompistesService {
   async create(createPompisteDto: CreatePompisteDto): Promise<Pompiste> {
     const isEmailExists = await this.findOneByEmail(createPompisteDto.email);
     if(isEmailExists){
-      throw new HttpException("Email already Exists", HttpStatus.BAD_REQUEST);
+      throw new HttpException("L'email existe déjà", HttpStatus.BAD_REQUEST);
     }else{
       const encryptedPassword = encodePassword(createPompisteDto.password);
       const createdPompiste = new this.pompisteModel({...createPompisteDto, password: encryptedPassword});

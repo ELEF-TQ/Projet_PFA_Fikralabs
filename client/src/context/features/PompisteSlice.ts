@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosAuth } from '../../lib/AxiosBase'; 
+import { axiosAuth, axiosAuthMultipart } from '../../lib/AxiosBase'; 
 
 // Async thunk to fetch all pompistes
 export const getPompistes = createAsyncThunk('pompistes/fetchAll', async (_, thunkAPI) => {
@@ -15,7 +15,7 @@ export const getPompistes = createAsyncThunk('pompistes/fetchAll', async (_, thu
 // Async thunk to create a new pompiste
 export const createPompiste = createAsyncThunk('pompistes/create', async (formData :any, thunkAPI) => {
   try {
-    const response = await axiosAuth.post('/pompistes', formData);
+    const response = await axiosAuthMultipart.post('/pompistes', formData);
     return response.data;
   } catch (error:any) {
     return thunkAPI.rejectWithValue(error.response.data);
@@ -25,7 +25,7 @@ export const createPompiste = createAsyncThunk('pompistes/create', async (formDa
 // Async thunk to update a pompiste
 export const updatePompiste = createAsyncThunk('pompistes/update', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
   try {
-    const response = await axiosAuth.patch(`/pompistes/${Id}`, formData);
+    const response = await axiosAuthMultipart.patch(`/pompistes/${Id}`, formData);
     return response.data;
   } catch (error:any) {
     return thunkAPI.rejectWithValue(error.response.data);

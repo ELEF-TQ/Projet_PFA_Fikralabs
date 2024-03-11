@@ -15,20 +15,14 @@ const index :React.FC= () => {
     const phoneRegex = /^(06|07|2126|2127)\d{8}$/;
     const usernameRegex = /^[a-zA-Z]+$/;
 
-
- 
- 
-    
-
     const [errors, setErrors] = useState<Record<string, string>>({});
-
 
   interface FormData {
     username: string;
     email: string;
     phone: string;
     password: string;
-    CNI: string;
+    CIN: string;
     image:  File | null;
   }
  
@@ -39,7 +33,7 @@ const index :React.FC= () => {
     email: '',
     phone: '',
     password: '',
-    CNI: '',
+    CIN: '',
     image: null,
   });
   const [currentStep, setCurrentStep] = useState(1);
@@ -50,8 +44,8 @@ const index :React.FC= () => {
   
   
   const getPasswordStrength = (password: any) => {
-    if (!password) return 0; // Handle empty password case
-    if (password.length <= 4) return 1; // Very weak
+    if (!password) return 0; 
+    if (password.length <= 4) return 1; 
     if (password.length <= 6) return 2; // Weak
     if (password.length <= 8 && /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password)) return 3; // Moderate
     if (password.length <= 12 && /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/.test(password)) return 4; // Strong
@@ -334,11 +328,7 @@ const index :React.FC= () => {
                   {/* <FiUpload className="upload-icon" /> */}
                 </div>
               </label>
-            </div>
-
-
-
-
+             </div>
 
                 <div className={`Margin__Input__Buttom `}>
                   <label htmlFor="CNI" className='Input_Label'>Numéro de CNI</label>
@@ -348,16 +338,14 @@ const index :React.FC= () => {
                     id="CNI"
                     name="CNI"
                     placeholder="Numéro de CNI"
-                    value={formData.CNI}
+                    value={formData.CIN}
                     onChange={handleInputChange}
                     required
                   />
              </div>                
               </Form>
             </FormikStepper>
-
             <hr />
-          
           </div>
         </div>
       )}

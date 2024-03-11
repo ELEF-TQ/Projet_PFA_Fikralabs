@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { getPompistes, createPompiste } from "../../../context/features/PompisteSlice";
-import { useDispatch , useSelector } from "react-redux";
+import { useDispatch  } from "react-redux";
 import { AppDispatch } from "../../../context/store";
-
+import defaultIMG from '../../../assets/images/defaultUser.png';
 interface Props {
   show: boolean;
   handleClose: () => void;
@@ -11,22 +11,29 @@ interface Props {
 const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
   const dispatch = useDispatch<AppDispatch>();
   
-  const initialFormData = {
-    username: "",
-    matriculeRH: "",
-    CIN: "",
-    phone: "",
-    email: "",
-    password:"",
-  };
+  interface FormData {
+    username: string;
+    matriculeRH:string;
+    email: string;
+    phone: string;
+    password: string;
+    CIN: string;
+    image:  File | null;
+  }
+  const [formData, setFormData] = useState<FormData>({
+    username: '',
+    matriculeRH:'',
+    email: '',
+    phone: '',
+    password: '',
+    CIN: '',
+    image: null,
+  });
+  
+ 
 
-  const [formData, setFormData] = useState(initialFormData);
 
-  useEffect(() => {
-    if (!show) {
-      setFormData(initialFormData);
-    }
-  }, [show]);
+
 
   const handleSubmit = () => {
     console.log("Submit", formData);
@@ -36,13 +43,22 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
     });
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
+    if (name === 'image' && files && files.length > 0) {
+        const selectedImage = files[0];
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            image: selectedImage
+        }));
+    } else {
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: value
+        }));
+    }
+};
+
 
 
 const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
@@ -56,6 +72,28 @@ const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
               <h3 className="modal-title">Ajouter un nouveau Pompiste</h3>
             </div>
             <div className="modal-content">
+
+            <div className="flex items-center justify-center Margin__Input__Buttom">
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={handleChange}
+                style={{ display: 'none' }}
+              />
+              <label htmlFor="image">
+                <div className="image-container">
+                  {formData.image ? (
+                    <img src={URL.createObjectURL(formData.image)} alt="profile" className="profile-image" />
+                  ) : (
+                    <img src={defaultIMG} alt="default" className="default-image" />
+                  )}
+                  {/* <FiUpload className="upload-icon" /> */}
+                </div>
+              </label>
+             </div>
+
               <div className="mb-4">
                 <label
                   htmlFor="username"

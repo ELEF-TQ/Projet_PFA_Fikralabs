@@ -187,7 +187,9 @@ const Index: React.FC = () => {
 
               <div className='flex flex-col items-center gap-2'>
                 <div className='flex flex-col items-center'>
-                <img className='Pompiste_Avatar' src={pompisteInfo?.image ?? defaultIMG} alt="image" />
+                <img className='Pompiste_Avatar'
+                src={pompisteInfo?.image?.buffer ? `data:image/png;base64,${pompisteInfo.image.buffer}` : defaultIMG}
+                alt="image" />
                   <span>{pompisteInfo?.username}</span>
                 </div>
 

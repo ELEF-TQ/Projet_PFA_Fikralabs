@@ -15,7 +15,7 @@ export class CreateClientDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly CNI: string;
+  readonly CIN: string;
 
   @IsOptional()
   @IsString()

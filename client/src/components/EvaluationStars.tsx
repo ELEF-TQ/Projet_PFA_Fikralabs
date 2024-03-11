@@ -8,7 +8,6 @@ const EvaluationStars: React.FC<Props> = ({ etoiles }) => {
   const renderStars = () => {
     const stars = [];
     const maxStars = 5;
-    console.log(etoiles);
 
     for (let i = 0; i < maxStars; i++) {
       if (i < etoiles) {
