@@ -12,22 +12,23 @@ import {  Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AppDispatch } from '../../context/store';
 import { useSelector,useDispatch } from 'react-redux';
-import { getPompisteByMatriculeRH } from '../../context/features/PompisteSlice';
 import { createReview } from '../../context/features/ReviewSlice';
 import { axiosNoAuth } from '../../lib/AxiosBase';
 import Header from '../../components/Header';
+import Swal from 'sweetalert2';
 const steps = ['', '', '', ''];
 
 const Index: React.FC = () => {
   const phoneRegex = /^(0|\+212)([67])(\d{8}|\d{1}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2})$/;
   const dispatch = useDispatch<AppDispatch>()
-  const {pompiste} = useSelector((state:any)=>state.pompistes)
+  // const {pompiste} = useSelector((state:any)=>state.pompistes)
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [phone, setPhone] = useState('');
   const [matriculeRH, setMatriculeRH] = useState('');
   const [ratings, setRatings] = useState<number[]>([0, 0, 0]);
   const [commentaire , setCommentaire] = useState('');
+  const [pompisteInfo , setPompisteInfo] = useState<any>(null);
  
   const handleRatingChange = (index:number, newValue: number | null) => {
     if(newValue !== null) {
@@ -62,26 +63,27 @@ const Index: React.FC = () => {
     switch (activeStep) {
       case 0:
           if (!phoneRegex.test(phone)) {
-            alert('Veuillez saisir un numéro de téléphone valide !');
+            Swal.fire({icon: 'warning',title: 'Attention',text: 'Veuillez saisir un numéro de téléphone valide !'});    
             return;
           }
           try {
-            await axiosNoAuth.post(`/clients/${phone}`);
+            await axiosNoAuth.get(`/clients/phone/${phone}`);
           } catch (error:any) {
-            alert(error.response.data.message);
+            Swal.fire({icon: 'error',title: 'Erreur',text: error.response.data.message});   
             return;
           }
           localStorage.setItem('phone', phone);
           break;
       case 1:
         try {
-          await axiosNoAuth.get(`/pompistes/matriculeRH/${matriculeRH}`);
+        const res =  await axiosNoAuth.get(`/pompistes/matriculeRH/${matriculeRH}`);
+        setPompisteInfo(res.data)
+        console.log(res)
         } catch (error:any) {
-          alert(error.response.data.message);
+          Swal.fire({icon: 'error',title: 'Erreur',text: error.response.data.message});
           return;
         }
         localStorage.setItem('matriculeRH', matriculeRH);
-        dispatch(getPompisteByMatriculeRH(matriculeRH));
         break;
       case 2:
         const formData = {
@@ -90,8 +92,7 @@ const Index: React.FC = () => {
           etoiles: calculateAverage(),
           commentaire: commentaire,
         };
-        console.log('Form Data:', formData);
-      dispatch(createReview(formData)).then(()=>{
+       dispatch(createReview(formData)).then(()=>{
         setPhone('');
         setMatriculeRH('');
         setRatings([0, 0, 0]);
@@ -186,8 +187,8 @@ const Index: React.FC = () => {
 
               <div className='flex flex-col items-center gap-2'>
                 <div className='flex flex-col items-center'>
-                  <img className='Pompiste_Avatar ' src={pompiste?.image ?pompiste?.image : defaultIMG} alt="image" />
-                  <span>{pompiste?.username}</span>
+                <img className='Pompiste_Avatar' src={pompisteInfo?.image ?? defaultIMG} alt="image" />
+                  <span>{pompisteInfo?.username}</span>
                 </div>
 
               <div className='flex flex-col items-center'>
@@ -195,7 +196,7 @@ const Index: React.FC = () => {
                 <Rating
                     name="accueil"
                     value={Number(ratings[0])}
-                    onChange={(event, newValue) => handleRatingChange(0, newValue)}
+                    onChange={(_event, newValue) => handleRatingChange(0, newValue)}
                   />
               </div>
 
@@ -204,7 +205,7 @@ const Index: React.FC = () => {
                 <Rating
                   name="amical"
                   value={Number(ratings[1])}
-                  onChange={(event, newValue) => handleRatingChange(1, newValue)}
+                  onChange={(_event, newValue) => handleRatingChange(1, newValue)}
                 />
               </div>
               <div className='flex flex-col items-center'>
@@ -212,7 +213,7 @@ const Index: React.FC = () => {
                 <Rating
                   name="efficacite"
                   value={Number(ratings[2])}
-                  onChange={(event, newValue) => handleRatingChange(2, newValue)}
+                  onChange={(_event, newValue) => handleRatingChange(2, newValue)}
                 />
               </div>
 
