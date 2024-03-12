@@ -102,7 +102,9 @@ const Home = () => {
       {/* Reviews List */}
       {!reviews.isLoading &&
         !noReviews &&
-        reviews.reviews.map((review: any) => (
+        [...reviews.reviews]
+        .sort((reviewA: { dateReview: Date }, reviewB: { dateReview: Date }) => new Date(reviewB.dateReview).getTime() - new Date(reviewA.dateReview).getTime())
+        .map((review: any) => (
           <div
             key={review._id}
             className="flex flex-col sm:flex-row border-b border-gray-300 p-4 mb-4 items-center justify-between rounded-lg shadow-md bg-white cursor-pointer hover:bg-slate-100 transition duration-300 ease-in-out"
@@ -132,7 +134,7 @@ const Home = () => {
             </div>
 
             {/* Right part - Duration */}
-            <div className="flex-shrink-0"> {/*min-w-20*/}
+            <div className="flex-shrink-0 min-w-20 text-center"> {/*min-w-20*/}
               <p className="text-sm text-gray-500" style={{ color: "#C2C2C2" }}>
                 {calculateDuration(review.dateReview)}
               </p>
