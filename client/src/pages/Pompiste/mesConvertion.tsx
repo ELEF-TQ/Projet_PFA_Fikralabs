@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ConversionCard from "../../components/ConversionCard";
 import { useDispatch, useSelector } from "react-redux";
 import { retrieveUserSession } from "../../lib/Encryption";
-import { getConversions } from "../../context/features/conversionSlice";
+import { getConversions } from "../../context/features/ConversionSlice";
 import { AppDispatch, RootState } from "../../context/store";
 
 const Conversion = () => {

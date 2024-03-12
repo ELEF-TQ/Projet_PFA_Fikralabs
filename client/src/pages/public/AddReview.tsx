@@ -11,7 +11,7 @@ import defaultIMG from '../../assets/images/defaultUser.png';
 import {  Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AppDispatch } from '../../context/store';
-import { useSelector,useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createReview } from '../../context/features/ReviewSlice';
 import { axiosNoAuth } from '../../lib/AxiosBase';
 import Header from '../../components/Header';
@@ -21,7 +21,6 @@ const steps = ['', '', '', ''];
 const Index: React.FC = () => {
   const phoneRegex = /^(0|\+212)([67])(\d{8}|\d{1}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2})$/;
   const dispatch = useDispatch<AppDispatch>()
-  // const {pompiste} = useSelector((state:any)=>state.pompistes)
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [phone, setPhone] = useState('');
@@ -91,6 +90,7 @@ const Index: React.FC = () => {
           matriculeRH: matriculeRH,
           etoiles: calculateAverage(),
           commentaire: commentaire,
+          dateReview: new Date(),
         };
        dispatch(createReview(formData)).then(()=>{
         setPhone('');
