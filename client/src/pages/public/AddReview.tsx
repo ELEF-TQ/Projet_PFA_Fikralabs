@@ -90,7 +90,6 @@ const Index: React.FC = () => {
           matriculeRH: matriculeRH,
           etoiles: calculateAverage(),
           commentaire: commentaire,
-          dateReview: new Date(),
         };
        dispatch(createReview(formData)).then(()=>{
         setPhone('');
