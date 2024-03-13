@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosAuth, axiosAuthMultipart } from '../../lib/AxiosBase'; 
+import Swal from 'sweetalert2';
 
 // Async thunk to fetch all pompistes
 export const getPompistes = createAsyncThunk('pompistes/fetchAll', async (_, thunkAPI) => {
@@ -79,6 +80,28 @@ const pompistesSlice = createSlice({
     .addCase(getPompisteByMatriculeRH.rejected, (state) => {
       state.isLoading = false;
     })
+    .addCase(createPompiste.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(createPompiste.fulfilled, (state) => {
+      state.isLoading = false;
+      Swal.fire({
+        title: 'Succès!',
+        text: 'Le pompiste a été créé avec succès.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+    })
+    .addCase(createPompiste.rejected, (state,action:any) => {
+      state.isLoading = false;
+      Swal.fire({
+        title: 'Erreur!',
+        text:action.payload.error.message,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    });
 
   },
 });

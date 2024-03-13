@@ -133,7 +133,7 @@ const Pompiste : React.FC = () => {
                 </td>
               
                 <td className="px-4 py-1">
-                  <span className="bg-primary-100 text-primary-800 text-xs font-medium rounded dark:bg-primary-900 dark:text-primary-300">{pendingConversion.pompiste.username}</span>
+                  <span className="bg-primary-100 text-primary-800 text-xs font-medium rounded dark:bg-primary-900 dark:text-primary-300">{pendingConversion?.pompiste?.username}</span>
                 </td>
                 <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pendingConversion.score}</td>
                 <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pendingConversion.montant} MAD</td>
@@ -191,7 +191,7 @@ const Pompiste : React.FC = () => {
             {acceptedConversions?.map((acceptedConversion :any ) => (
               <tr key={acceptedConversion._id} className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">        
                 <td className="px-4 py-1">
-                  <span className="bg-primary-100 text-primary-800 text-xs font-medium rounded dark:bg-primary-900 dark:text-primary-300">{acceptedConversion.pompiste.username}</span>
+                  <span className="bg-primary-100 text-primary-800 text-xs font-medium rounded dark:bg-primary-900 dark:text-primary-300">{acceptedConversion?.pompiste?.username}</span>
                 </td>
                 <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{acceptedConversion.score}</td>
                 <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">{acceptedConversion.montant} DH</td>

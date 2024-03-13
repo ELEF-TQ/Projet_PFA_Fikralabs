@@ -1,4 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
+/*_____Public___*/
+import Home from "../pages/public/Home";
+import AddReview from "../pages/public/AddReview";
+
 /*___Authentication_____ */
 import LoginPage from '../pages/Auth/login/index'
 import SignupPage from '../pages/Auth/signup/index'
@@ -20,7 +24,6 @@ import DemandeConvertion from "../pages/Pompiste/DemandeConvertion";
 import Formations from "../pages/Pompiste/Formations"
 import Quiz from "../pages/Pompiste/Quiz";
 import Profile from "../pages/Pompiste/Profile";
-import AddReview from "../pages/public/AddReview";
 
 /*___Clients_____ */
 import Client from '../pages/Client/index'
@@ -29,15 +32,19 @@ import Coupons from "../pages/Client/mesCoupons";
 
 export const routes = createBrowserRouter([
 
-     /*______Auth Routes_______*/
-     {
+     /*______Public Routes_______*/
+    {
       path: "/evaluation",
       element :<AddReview/>,
+    },
+    {
+      path: "/",
+      element :<Home/>,
     },
    
     /*______Auth Routes_______*/
     {
-      path: "/",
+      path: "/login",
       element :<LoginPage/>,
     },
     {
