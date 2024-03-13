@@ -3,7 +3,7 @@ import React from 'react'
 const Profile : React.FC= () => {
   return (
     <div>
-      Profile
+      Profile 123
     </div>
   )
 }

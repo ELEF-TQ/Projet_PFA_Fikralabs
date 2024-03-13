@@ -19,7 +19,7 @@ import Converstions from "../pages/Pompiste/mesConvertion";
 import DemandeConvertion from "../pages/Pompiste/DemandeConvertion";
 import Formations from "../pages/Pompiste/Formations"
 import Quiz from "../pages/Pompiste/Quiz";
-import Profile from "../pages/Admin/Profile";
+import Profile from "../pages/Pompiste/Profile";
 import AddReview from "../pages/public/AddReview";
 
 /*___Clients_____ */
