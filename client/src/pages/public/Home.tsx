@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { locations } from '../../utils/Stations';
 import Header from '../../components/Header';
 import StationCard from '../../components/StationCard'; // Import the StationCard component
+import SearchIcon from '@mui/icons-material/Search';
 
 interface Station {
   id: string;
@@ -43,9 +44,26 @@ const Home: React.FC = () => {
   );
 
   return (
-    <div>
-      <Header />
-      <div className="mb-4">
+<>
+  <Header />
+  <div className="container mx-auto px-6 mt-5">
+    <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+      <div className="relative flex items-center w-full md:w-auto mb-4 md:mb-0">
+        <input
+          type="text"
+          placeholder="Search by station name"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="px-10 py-1 border border-gray-300 rounded-md w-full md:w-auto"
+        />
+        <button
+          type="button"
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
+        >
+          <SearchIcon />
+        </button>
+      </div>
+      <div>
         <label htmlFor="citySelect" className="mr-2">Select a city:</label>
         <select
           id="citySelect"
@@ -58,24 +76,17 @@ const Home: React.FC = () => {
           ))}
         </select>
       </div>
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search by station name"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="px-2 py-1 border border-gray-300 rounded-md"
-        />
-      </div>
-      <div>
-        <h1 className="text-2xl font-semibold mb-4">{selectedCity}</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredStations.map(station => (
-            <StationCard key={station.id} station={station} />
-          ))}
-        </div>
+    </div>
+    <div>
+      <h1 className="text-2xl font-semibold mb-4">{selectedCity}</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {filteredStations.map(station => (
+          <StationCard key={station.id} station={station} />
+        ))}
       </div>
     </div>
+  </div>
+</>
   );
 };
 
