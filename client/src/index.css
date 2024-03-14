@@ -62,7 +62,6 @@ body {
 
 /* Links */
 a {
-    color: #007bff;
     text-decoration: none;
 }
 
@@ -73,6 +72,10 @@ a:hover {
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
     margin-bottom: 10px;
+}
+
+* {
+  text-decoration: none !important;
 }
 
 
@@ -449,4 +452,44 @@ img {
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
   background-color: var(--primary-color);
   width: fit-content;
+}
+
+
+
+
+
+
+
+/*_____Stations_____*/
+
+.station-list-item {
+  background-color: #fff;
+  border-bottom: 2px solid var(--primary-color);
+  box-shadow: 0 4px 8px rgba(0,0,0,.1);
+  color: #404040;
+  display: flex;
+  font-family: Roboto, sans-serif;
+  font-size: 0.75rem;
+  text-decoration: none;
+ 
+}
+.station-list-item__link {
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  outline: none;
+  padding: 12px;
+  text-decoration: none;
+  width: 100%;
+}
+.station-list-item__heading {
+  font-family: ShellFutura, sans-serif;
+  font-size: 1rem;
+  margin: 0;
+}
+.station-list-item__address {
+  line-height: 1.2rem;
+  margin: 0;
+  white-space: pre-wrap;
 }
