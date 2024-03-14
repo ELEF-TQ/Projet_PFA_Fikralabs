@@ -10,6 +10,7 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { ConversionsModule } from './conversions/conversions.module';
 import { CouponsModule } from './coupons/coupons.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { GeolocationModule } from './geolocation/geolocation.module';
 
 
 @Module({
@@ -21,7 +22,7 @@ import { MulterModule } from '@nestjs/platform-express';
     dest:'/uploads'
   }),
     MongooseModule.forRoot(`${process.env.DB_TYPE}://${process.env.HOST_NAME}/${process.env.DB_NAME}`),
-     AuthModule, ClientsModule, PompistesModule, AdminModule, ReviewsModule, ConversionsModule, CouponsModule],
+     AuthModule, ClientsModule, PompistesModule, AdminModule, ReviewsModule, ConversionsModule, CouponsModule, GeolocationModule],
 })
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) {
