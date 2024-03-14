@@ -9,4 +9,9 @@ export class GeolocationController {
   getNearestGasStations(@Query('lat') lat: number, @Query('lng') lng: number) {
       return this.geolocationService.getNearestGasStations(lat, lng);
   }
+
+  @Get('gas-stations-by-city')
+  getGasStationsByCity(@Query('city') city: string) {
+      return this.geolocationService.getGasStationsByCity(city);
+  }
 }

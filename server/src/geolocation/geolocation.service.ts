@@ -15,4 +15,8 @@ export class GeolocationService {
 
         return sortedLocations;
     }
+
+    getGasStationsByCity(city: string) {
+        return this.locations.filter(location => location.city.toLowerCase() === city.toLowerCase());
+    }
 }
