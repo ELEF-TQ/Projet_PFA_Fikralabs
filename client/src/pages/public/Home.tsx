@@ -46,7 +46,7 @@ const Home: React.FC = () => {
   return (
 <>
   <Header />
-  <div className="container mx-auto px-6 mt-5">
+  <div className="container mx-auto px-6 my-5">
     <div className="flex flex-col md:flex-row justify-between items-center mb-4">
       <div className="relative flex items-center w-full md:w-auto mb-4 md:mb-0">
         <input
