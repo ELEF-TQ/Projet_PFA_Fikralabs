@@ -270,8 +270,8 @@ const Index: React.FC = () => {
     <Header />
    
 
-      <div className="justify-center items-center flex-grow md:px-60 p-10">
-        <div className="space-y-4 md:space-y-6   sm:w-full h-full relative ">
+      <div className=" md:px-60 p-10 ">
+        <div className="space-y-4 md:space-y-6   sm:w-full  relative ">
           <img src={Logo} alt="Logo" />
           <p className="Paragraphe_Text">
             évaluer votre expérience et gagner des points passionnants en suivant ces étapes simples
@@ -297,7 +297,7 @@ const Index: React.FC = () => {
                     <div className='transition-container '>
                       {renderStepContent(activeStep)}
                     </div>
-                    <div className='absolute bottom-10  mx-auto w-full lg:px-20'>
+                    <div className='  mx-auto w-full lg:px-20'>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: 'space-between' ,width:'100%' }}>
                       <Button 
                       color="inherit" 
