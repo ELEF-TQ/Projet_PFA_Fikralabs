@@ -1,51 +1,46 @@
-import React, {  useState } from 'react';
-import { locations } from '../../utils/Stations';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import StationCard from '../../components/StationCard'; // Import the StationCard component
 import SearchIcon from '@mui/icons-material/Search';
-
-interface Station {
-  id: string;
-  name: string;
-  address: string;
-  city: string;
-  telephone: string;
-  website_url: string;
-  country: string;
-}
-
-// interface Coordinates {
-//   latitude: number;
-//   longitude: number;
-// }
+import { fetchNearestStations } from '../../context/features/StationSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../../context/store';
+import { Station } from '../../types/Station';
+import GetUserGeolocation, { Coordinates } from '../../lib/GetUserGeolocation';
 
 const Home: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { nearestStations } = useSelector((state: RootState) => state.stations) as { nearestStations: Station[] };
 
- 
+  const [userCoordinates, setUserCoordinates] = useState<Coordinates | null>(null);
 
+  useEffect(() => {
+    GetUserGeolocation()
+      .then(coords => {
+        setUserCoordinates(coords);
+      })
+      .catch(error => {
+        console.error('Error getting user geolocation:', error);
+        setUserCoordinates({ latitude:  30.427755, longitude: -9.598107 });
+      });
+  }, []);
 
-  const cityCount: { [key: string]: number } = {};
-  const cityStations: { [key: string]: Station[] } = {};
+  useEffect(() => {
+    if (userCoordinates) {
+      dispatch(fetchNearestStations(userCoordinates));
+    }
+  }, [userCoordinates, dispatch]);
 
-  locations
-    .filter((location: Station) => location.country === "Morocco")
-    .forEach((location: Station) => {
-      const city = location.city;
-      cityCount[city] = (cityCount[city] || 0) + 1;
-      if (!cityStations[city]) {
-        cityStations[city] = [];
-      }
-      cityStations[city].push(location);
-    });
-
-  const sortedCities = Object.keys(cityCount).sort((a, b) => cityCount[b] - cityCount[a]);
-
-  const [selectedCity, setSelectedCity] = useState<string>("Agadir");
+  const [selectedCity, setSelectedCity] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const filteredStations = cityStations[selectedCity]?.filter(station =>
-    station.name.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  // Filter stations based on search query and selected city
+  const filteredStations = nearestStations.filter(station => {
+    const nameMatch = station.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const addressMatch = station.address.toLowerCase().includes(searchQuery.toLowerCase());
+    const cityMatch = !selectedCity || station.city === selectedCity;
+    return (nameMatch || addressMatch) && cityMatch;
+  });
 
   return (
     <>
@@ -55,27 +50,27 @@ const Home: React.FC = () => {
           <div className="relative flex items-center w-full md:w-auto mb-4 md:mb-0">
             <input
               type="text"
-              placeholder="Search by station name"
+              placeholder="Recherche ..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="px-10 py-1 border border-gray-300 rounded-md w-full md:w-auto"
+              className=" px-10 py-1  w-full md:w-auto border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
             />
             <button
               type="button"
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none ml-2"
             >
               <SearchIcon />
             </button>
           </div>
           <div>
-            <label htmlFor="citySelect" className="mr-2">Select a city:</label>
+            <label htmlFor="citySelect" className="mr-2">Choisir votre ville:</label>
             <select
               id="citySelect"
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
-              className="px-2 py-1 border border-gray-300 rounded-md"
+              className=" cursor-pointer px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
             >
-              {sortedCities.map(city => (
+              {[...new Set(nearestStations.map(station => station.city))].map(city => (
                 <option key={city} value={city}>{city}</option>
               ))}
             </select>
@@ -90,7 +85,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
-    
     </>
   );
 };

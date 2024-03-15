@@ -58,6 +58,8 @@ body {
     font-size: 16px;
     line-height: 1.6;
     color: var(text-color );
+    scrollbar-width :0;
+    scroll-behavior: smooth;
 }
 
 /* Links */
@@ -166,7 +168,7 @@ img {
 
 .Input__Style ,.TextArea__Style:focus {
   outline: none;
-  border-color: #80bdff;
+  border-color: var(--primary-color);
 }
 
   .progress {
