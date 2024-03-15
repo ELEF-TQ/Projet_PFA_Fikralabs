@@ -27,6 +27,10 @@ export class CreatePompisteDto {
 
   @IsOptional()
   @IsString()
+  readonly phone?: string;
+
+  @IsOptional()
+  @IsString()
   readonly image?: File;
 
   @IsOptional()

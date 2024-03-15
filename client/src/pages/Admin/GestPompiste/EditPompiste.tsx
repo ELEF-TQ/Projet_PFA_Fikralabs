@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { updatePompiste } from '../../../context/features/PompisteSlice';
+import { getPompistes, updatePompiste } from '../../../context/features/PompisteSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 
@@ -36,7 +36,11 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
 
   const handleSubmit = () => {
     console.log("Submit", formData);
-    dispatch(updatePompiste({ Id: Element._id, formData }));  };
+    dispatch(updatePompiste({ Id: Element._id, formData })).then(() => {
+      handleClose();
+      dispatch(getPompistes);
+    });  
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;

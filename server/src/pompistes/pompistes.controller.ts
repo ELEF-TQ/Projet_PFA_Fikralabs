@@ -18,10 +18,6 @@ export class PompistesController {
     return this.pompistesService.create(pompisteDataWithImage);
   }
 
- 
-
-
-
   @Get()
   async findAll() {
     const pompistes = await this.pompistesService.findAll();

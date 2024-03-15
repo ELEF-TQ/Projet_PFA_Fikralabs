@@ -7,8 +7,6 @@ export type PompisteDocument = Pompiste & Document;
 @Schema()
 export class Pompiste {
 
-
-
   @Prop({required :true})
   matriculeRH: string;
 
@@ -24,6 +22,9 @@ export class Pompiste {
   @Prop({required: true})
   email:string;
 
+  @Prop()
+  phone: string;
+
   @Prop({default:0}) 
   score: number;
 
@@ -36,7 +37,7 @@ export class Pompiste {
   @Prop()
   image: File;
 
-  @Prop({default :RolesEnum.POMPISTE})
+  @Prop({default: RolesEnum.POMPISTE})
   role:string;
 
 }
