@@ -1,48 +1,47 @@
-// stationSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {axiosNoAuth} from '../../lib/AxiosBase'; // assuming you have Axios instance without authentication
+import { axiosNoAuth } from '../../lib/AxiosBase';
 import { Station } from '../../types/Station';
 
 interface StationState {
   nearestStations: Station[];
   stationsByCity: Station[];
   status: string;
-  error: any; 
+  isLoading: boolean; 
+  error: any;
 }
 
 const initialState: StationState = {
   nearestStations: [],
   stationsByCity: [],
   status: 'idle',
+  isLoading: false, // Initialize isLoading to false
   error: null,
 };
-// Define thunk for fetching nearest gas stations by geolocation
+
 export const fetchNearestStations = createAsyncThunk(
   'station/fetchNearestStations',
-  async (coordinates:any, { rejectWithValue }) => {
+  async (coordinates: any, { rejectWithValue }) => {
     try {
-      const response = await axiosNoAuth.get(`/geolocation/nearest-gas-stations?lat=${coordinates.lat}&lng=${coordinates.lng}`);
+      const response = await axiosNoAuth.get(`/geolocation/nearest-gas-stations?lat=${coordinates.latitude}&lng=${coordinates.longitude}`);
       return response.data;
-    } catch (error:any) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-// Define thunk for fetching gas stations by city
 export const fetchStationsByCity = createAsyncThunk(
   'station/fetchStationsByCity',
   async (city: string, { rejectWithValue }) => {
     try {
       const response = await axiosNoAuth.get(`/geolocation/gas-stations-by-city?city=${city}`);
       return response.data;
-    } catch (error:any) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-// Create stationSlice
 const stationSlice = createSlice({
   name: 'station',
   initialState,
@@ -51,29 +50,34 @@ const stationSlice = createSlice({
     builder
       .addCase(fetchNearestStations.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
       .addCase(fetchNearestStations.fulfilled, (state, action: { payload: Station[] }) => {
         state.status = 'succeeded';
         const uniqueStations = action.payload.filter((station, index, self) =>
-          index === self.findIndex(s => s.id === station.id)
+          index === self.findIndex((s) => s.id === station.id)
         );
         state.nearestStations = uniqueStations;
+        state.isLoading = false;
       })
-      
-      .addCase(fetchNearestStations.rejected, (state, action:any) => {
+      .addCase(fetchNearestStations.rejected, (state, action: any) => {
         state.status = 'failed';
         state.error = action.payload;
+        state.isLoading = false;
       })
       .addCase(fetchStationsByCity.pending, (state) => {
         state.status = 'loading';
+        state.isLoading = true;
       })
-      .addCase(fetchStationsByCity.fulfilled, (state, action:any) => {
+      .addCase(fetchStationsByCity.fulfilled, (state, action: any) => {
         state.status = 'succeeded';
         state.stationsByCity = action.payload;
+        state.isLoading = false;
       })
-      .addCase(fetchStationsByCity.rejected, (state, action:any) => {
+      .addCase(fetchStationsByCity.rejected, (state, action: any) => {
         state.status = 'failed';
         state.error = action.payload;
+        state.isLoading = false;
       });
   },
 });

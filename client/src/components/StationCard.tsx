@@ -20,7 +20,7 @@ const StationCard: React.FC<StationCardProps> = ({ station }) => {
     <div className="station-list-item bg-white rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
       <Link to={station.website_url} className="station-list-item__link block p-4">
         <h3 className="station-list-item__heading text-lg font-semibold mb-2">{station.name}</h3>
-        <p className="station-list-item__address text-gray-600">{station.address}<br />{station.city}</p>
+        <p className="station-list-item__address text-gray-600">{station.address}<br />{station.telephone}</p>
         <span className="open-now open-now--is-open block mt-2 text-green-600" data-testid="open-now"><strong>Open 24 Hours</strong></span>
       </Link>
     </div>

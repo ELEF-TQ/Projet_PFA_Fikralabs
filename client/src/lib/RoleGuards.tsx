@@ -1,33 +1,23 @@
-import { ComponentType } from "react";
-import { Navigate } from "react-router-dom";
-import { retrieveUserSession } from "./Encryption";
+import { Navigate, RouteProps as BaseRouteProps } from "react-router-dom";
+import { retrieveUserSession } from "../lib/Encryption";
+import React from "react";
 
-interface GuardProps {
-  element: JSX.Element;
+
+interface ProtectedRouteProps {
+  element: React.ReactNode;
+  allowedRole: string; 
 }
 
-const AdminGuard: ComponentType<GuardProps> = ({ element }) => {
+type FinalRouteProps = BaseRouteProps & ProtectedRouteProps;
+
+const ProtectedRoute: React.FC<FinalRouteProps> = ({ element, allowedRole }) => {
   const user = retrieveUserSession();
-  if (user && user.role === 'ADMIN') {
-    return element;
+  
+  if (user && user.role === allowedRole) {
+    return <>{element}</>; 
+  } else {
+    return <Navigate to="/login" />; 
   }
-  return <Navigate to="/login" />;
 };
 
-const PompisteGuard: ComponentType<GuardProps> = ({ element }) => {
-  const user = retrieveUserSession();
-  if (user && user.role === 'POMPISTE') {
-    return element;
-  }
-  return <Navigate to="/login" />;
-};
-
-const ClientGuard: ComponentType<GuardProps> = ({ element }) => {
-  const user = retrieveUserSession();
-  if (user && user.role === 'CLIENT') {
-    return element;
-  }
-  return <Navigate to="/login" />;
-};
-
-export { AdminGuard, PompisteGuard, ClientGuard };
+export default ProtectedRoute;

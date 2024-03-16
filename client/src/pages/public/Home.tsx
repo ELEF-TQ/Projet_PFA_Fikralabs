@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
-import StationCard from '../../components/StationCard'; // Import the StationCard component
+import StationCard from '../../components/StationCard';
 import SearchIcon from '@mui/icons-material/Search';
 import { fetchNearestStations } from '../../context/features/StationSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../context/store';
 import { Station } from '../../types/Station';
 import GetUserGeolocation, { Coordinates } from '../../lib/GetUserGeolocation';
+import Spinner from '../../components/Spinner';
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { nearestStations } = useSelector((state: RootState) => state.stations) as { nearestStations: Station[] };
+  const { nearestStations, isLoading } = useSelector((state: RootState) => state.stations) as { nearestStations: Station[], isLoading: boolean };
 
   const [userCoordinates, setUserCoordinates] = useState<Coordinates | null>(null);
 
@@ -21,7 +22,7 @@ const Home: React.FC = () => {
       })
       .catch(error => {
         console.error('Error getting user geolocation:', error);
-        setUserCoordinates({ latitude:  30.427755, longitude: -9.598107 });
+        setUserCoordinates({ latitude: 30.427755, longitude: -9.598107 });
       });
   }, []);
 
@@ -76,14 +77,18 @@ const Home: React.FC = () => {
             </select>
           </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-semibold mb-4">{selectedCity}</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredStations.map(station => (
-              <StationCard key={station.id} station={station} />
-            ))}
+        {isLoading ? (
+          <Spinner /> // Render spinner if loading
+        ) : (
+          <div>
+            <h1 className="text-2xl font-semibold mb-4">{selectedCity}</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {filteredStations.map(station => (
+                <StationCard key={station.id} station={station} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

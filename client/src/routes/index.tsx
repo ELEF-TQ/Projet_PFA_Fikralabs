@@ -1,6 +1,5 @@
-import {  createBrowserRouter, RouteObject } from "react-router-dom";
-import { FC } from "react";
-
+import {  createBrowserRouter } from "react-router-dom";
+import ProtectedRoute from "../lib/RoleGuards";
 /*_____Public___*/
 import Home from "../pages/public/Home";
 import AddReview from "../pages/public/AddReview";
@@ -32,58 +31,38 @@ import Profile from "../pages/Pompiste/Profile";
 import Client from '../pages/Client/index';
 import HomeClient from "../pages/Client/Home";
 import Coupons from "../pages/Client/mesCoupons";
-import { AdminGuard, ClientGuard, PompisteGuard } from "../lib/RoleGuards";
+import NotFound from "../pages/Error/NotFound";
 
-type CustomRouteObject = RouteObject & {
-  guard?: React.ComponentType; // Change guard type to React.ComponentType
-};
 
-const routes: CustomRouteObject[] = [
+
+export const routes = createBrowserRouter([
   /*______Public Routes_______*/
-  {
-    path: "/evaluation",
-    element: <AddReview />,
-  },
-  {
-    path: "/",
-    element: <Home />,
-  },
-
+  { path: "/evaluation", element: <AddReview /> },
+  { path: "/", element: <Home /> },
+  
   /*______Auth Routes_______*/
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/signup",
-    element: <SignupPage />,
-  },
-  {
-    path: "/reset",
-    element: <RestPasswordPage />,
-  },
+  { path: "/login", element: <LoginPage /> },
+  { path: "/signup", element: <SignupPage /> },
+  { path: "/reset", element: <RestPasswordPage /> },
 
   /*______Admin Routes_______*/
-  {
+  { 
     path: "/admin",
-    element: <Admin />,
-   // guard: AdminGuard,
+    element: <ProtectedRoute element={<Admin />} allowedRole="ADMIN" />,   
     children: [
-      { path: "", element: <Panel /> },
+      { path: "", element: <Panel /> }, 
       { path: "clients", element: <GestionClients /> },
       { path: "pompistes", element: <GestionPompiste /> },
       { path: "conversions", element: <GestionConversions /> },
       { path: "profile", element: <GestionProfile /> },
       { path: "coupons", element: <GestCoupons /> },
     ],
-   
   },
 
   /*______Pompiste Routes_______*/
-  {
+  { 
     path: "/pompiste",
-    element: <Pompiste />,
-    //guard: PompisteGuard,
+    element: <ProtectedRoute element={<Pompiste /> }   allowedRole="POMPISTE"/>,
     children: [
       { path: "", element: <HomePompiste /> },
       { path: "demandeConvertion", element: <DemandeConvertion /> },
@@ -92,20 +71,19 @@ const routes: CustomRouteObject[] = [
       { path: "formations", element: <Formations /> },
       { path: "profile", element: <Profile /> },
     ],
-   
   },
 
   /*______Clients Routes_______*/
-  {
+  { 
     path: "/client",
-    element: <Client />,
-   // guard: ClientGuard,
+    element: <ProtectedRoute element={<Client />}  allowedRole="CLIENT" />,
     children: [
-      { path: "", element: <HomeClient /> },
+      { path: "", element: <HomeClient /> }, 
       { path: "coupons", element: <Coupons /> },
     ],
-    
   },
-];
 
-export const AppRoutes = createBrowserRouter(routes);
+  // Wildcard route for "not found" page
+  { path: "*", element: <NotFound /> },
+]);
+
