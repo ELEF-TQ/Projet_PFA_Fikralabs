@@ -24,7 +24,7 @@ const Coupons = () => {
     ) : (
         reservedCoupons.length > 0 ? (
             reservedCoupons.map((coupon: any, index: number) => (
-                <Coupon key={index} coupon={coupon} reserved={true} />
+                <Coupon key={index} coupon={coupon} reserved={true} reservedHome={false} />
             ))
         ) : (
             <p>Aucun coupon réservé pour le moment.</p>
