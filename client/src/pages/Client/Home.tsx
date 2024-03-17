@@ -10,8 +10,8 @@ import Spinner from '../../components/Status/Spinner';
 const Home = () => {
     const dispatch = useDispatch<AppDispatch>();
     const user = retrieveUserSession();
-    const { coupons, isLoading } = useSelector((state:any)=>state.coupons);
-    const { client } = useSelector((state:any)=>state.clients);
+    const { coupons, isLoading } = useSelector((state:any) => state.coupons);
+    const { client } = useSelector((state:any) => state.clients);
 
     useEffect(() => {
         dispatch(getClient(user._id));
@@ -19,27 +19,30 @@ const Home = () => {
     }, []);
 
     const getCouponElements = (coupons: any[], title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined) => {
-        const currentDate = new Date();
         return (
             <div className='flex flex-col justify-start items-start'>
                 <h3 className="text-center text-xl font-semibold mb-2">{title}</h3>
                 <div className='flex flex-wrap gap-7'>
-                    {coupons.map((coupon, index) => {
-                        // Check if the expiration date of the coupon is after the current date
-                        const expirationDate = new Date(coupon.expirationDate);
-                        if (expirationDate > currentDate) {
-                            return <Coupon key={index} coupon={coupon}  reserved={false}/>;
-                        }
-                        return null;
-                    })}
+                    {coupons.map((coupon, index) => (
+                        <Coupon key={index} coupon={coupon} reserved={false}/>
+                    ))}
                 </div>
             </div>
         );
     };
 
-    const couponsStandard = coupons.filter((coupon:any) => coupon.reduction < 20);
-    const couponsPremium = coupons.filter((coupon :any)=> coupon.reduction >= 20 && coupon.reduction < 50);
-    const couponsUltime = coupons.filter((coupon :any)=> coupon.reduction >= 50);
+    const currentDate = new Date();
+
+    const filterCouponsByStatus = (couponList: any[]) => {
+        return couponList.filter((coupon: any) => {
+            const expirationDate = new Date(coupon.dateExpiration);
+            return expirationDate >= currentDate;
+        });
+    };
+
+    const couponsStandard = filterCouponsByStatus(coupons.filter((coupon:any) => coupon.reduction < 20));
+    const couponsPremium = filterCouponsByStatus(coupons.filter((coupon :any) => coupon.reduction >= 20 && coupon.reduction < 50));
+    const couponsUltime = filterCouponsByStatus(coupons.filter((coupon :any) => coupon.reduction >= 50));
 
     return (
         <div className="flex flex-col">
@@ -61,6 +64,6 @@ const Home = () => {
             )}
         </div>
     );
-}
+};
 
 export default Home;

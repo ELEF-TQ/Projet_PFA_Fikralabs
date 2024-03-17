@@ -32,9 +32,9 @@ const Coupon: React.FC<CouponProps> = ({ coupon, reserved }) => {
 
     //calcul de date expiration :
     const { dateExpiration } = coupon;
-   const differenceEnJours = Math.ceil((new Date(dateExpiration).getTime() - Date.now()) / (1000 * 3600 * 24));
+    const differenceEnJours = Math.ceil((new Date(dateExpiration).getTime() - Date.now()) / (1000 * 3600 * 24));
     
-
+console.log(coupon);
     const handleConfirmReservation = () => {
         Swal.fire({title:'Confirmer la réservation',text:'Êtes-vous sûr de vouloir réserver ce coupon ?',icon: 'question',showCancelButton: true,cancelButtonColor: '#d33',confirmButtonText: 'Oui, réserver !',cancelButtonText:'Anuller'}).then((result) => {
             if (result.isConfirmed) {
