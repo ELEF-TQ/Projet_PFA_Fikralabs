@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import LogoWhite from '../assets/icons/LogoWhite.png';
+import LogoWhite from '../../assets/icons/LogoWhite.png';
 import { useEffect, useState } from 'react';
 
 const Header = () => {

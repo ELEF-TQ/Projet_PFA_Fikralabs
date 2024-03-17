@@ -4,12 +4,12 @@ import defaultUser from '../../../assets/images/defaultUser.png'
 import AddPompiste from './AddPompiste';
 import ViewPompiste from './ViewPompisteModal';
 import EditPompiste from './EditPompiste';
-import Destroy from '../../../components/Destroy';
-import Delete from '../../../components/Delete';
+import Destroy from '../../../components/crud/Destroy';
+import Delete from '../../../components/crud/Delete';
 import { getPompistes } from '../../../context/features/PompisteSlice';
 import { useDispatch ,useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
-import EvaluationStars from '../../../components/EvaluationStars';
+import EvaluationStars from '../../../components/shared/EvaluationStars';
 const Pompiste : React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();

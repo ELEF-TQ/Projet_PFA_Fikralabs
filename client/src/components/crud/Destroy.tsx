@@ -1,7 +1,7 @@
 import React from 'react'
-import { destroyItems } from '../context/features/AdminSlice';
+import { destroyItems } from '../../context/features/AdminSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../context/store';
+import { AppDispatch } from '../../context/store';
 import Swal from 'sweetalert2';
 
 

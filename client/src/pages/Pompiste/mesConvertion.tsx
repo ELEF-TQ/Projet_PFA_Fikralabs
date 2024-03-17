@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ConversionCard from "../../components/ConversionCard";
+import ConversionCard from "../../components/others/ConversionCard";
 import { useDispatch, useSelector } from "react-redux";
 import { retrieveUserSession } from "../../lib/Encryption";
 import { getConversions } from "../../context/features/ConversionSlice";

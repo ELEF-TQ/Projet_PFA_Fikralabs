@@ -14,7 +14,7 @@ import { AppDispatch } from '../../context/store';
 import { useDispatch } from 'react-redux';
 import { createReview } from '../../context/features/ReviewSlice';
 import { axiosNoAuth } from '../../lib/AxiosBase';
-import Header from '../../components/Header';
+import Header from '../../components/shared/Header';
 import Swal from 'sweetalert2';
 const steps = ['', '', '', ''];
 

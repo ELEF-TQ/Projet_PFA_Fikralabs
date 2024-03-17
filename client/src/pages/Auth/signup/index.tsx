@@ -6,7 +6,7 @@ import { AppDispatch } from '../../../context/store';
 import { handleSignup } from '../../../context/features/AuthSlice';
 import { Link } from 'react-router-dom';
 import defaultIMG from '../../../assets/images/defaultUser.png'
-import Header from '../../../components/Header';
+import Header from '../../../components/shared/Header';
 import Logo from '../../../assets/icons/LogoBlack.png';
 import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../../utils/Regex';
 

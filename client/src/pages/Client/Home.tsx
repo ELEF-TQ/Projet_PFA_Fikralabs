@@ -1,11 +1,11 @@
-import Coupon from '../../components/Coupon';
+import Coupon from '../../components/others/Coupon';
 import { ReactElement, JSXElementConstructor, ReactNode, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../context/store';
 import { fetchAllCoupons } from '../../context/features/CouponSlice';
 import { getClient } from '../../context/features/ClientSlice';
 import { retrieveUserSession } from '../../lib/Encryption';
-import Spinner from '../../components/Status/Spinner';
+import Spinner from '../../components/status/Spinner';
 
 const Home = () => {
     const dispatch = useDispatch<AppDispatch>();

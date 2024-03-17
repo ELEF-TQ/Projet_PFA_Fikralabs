@@ -1,7 +1,7 @@
 import React from 'react'
-import { deleteItem } from '../context/features/AdminSlice';
+import { deleteItem } from '../../context/features/AdminSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../context/store';
+import { AppDispatch } from '../../context/store';
 
 interface Props {
     show: boolean;

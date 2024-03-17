@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import Coupon from "../../components/Coupon";
+import Coupon from "../../components/others/Coupon";
 import { useDispatch, useSelector } from "react-redux";
 import { retrieveUserSession } from "../../lib/Encryption";
 import { AppDispatch } from "../../context/store";
 import { fetchReservedCoupons } from "../../context/features/CouponSlice";
-import Spinner from "../../components/Status/Spinner";
+import Spinner from "../../components/status/Spinner";
 
 const Coupons = () => {
   const dispatch = useDispatch<AppDispatch>();
