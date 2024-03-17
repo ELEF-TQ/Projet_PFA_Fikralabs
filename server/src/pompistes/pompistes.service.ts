@@ -4,7 +4,8 @@ import { Pompiste, PompisteDocument } from './schemas/pompiste.schema';
 import { CreatePompisteDto } from './dto/create-pompiste.dto';
 import { UpdatePompisteDto } from './dto/update-pompiste.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { encodePassword } from 'src/auth/utils/bcrypt';
+import { comparePasswords, encodePassword } from 'src/auth/utils/bcrypt';
+import { UpdatePompisteProfileDto } from './dto/update-pompiste-profile.dto';
 
 @Injectable()
 export class PompistesService {
@@ -52,6 +53,46 @@ export class PompistesService {
     }
   }
 
+  async updateProfilePompiste(id: string, updateProfileDto: UpdatePompisteProfileDto): Promise<Pompiste> {
+    // Retrieve the pompiste from the database
+    const pompiste = await this.pompisteModel.findById(id);
+    if (!pompiste) {
+      throw new HttpException('Pompiste not found', HttpStatus.NOT_FOUND);
+    }
+
+    // Check if the email already exists
+    if (updateProfileDto.email) {
+      const existingPompiste = await this.pompisteModel.findOne({ email: updateProfileDto.email });
+      if (existingPompiste && existingPompiste._id.toString() !== id) {
+        throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
+      }
+    }
+
+    // Check if the old password matches
+    if (updateProfileDto.oldPassword && updateProfileDto.NewPassword && !comparePasswords(updateProfileDto.oldPassword, pompiste.password)) {
+      throw new HttpException('Old password is incorrect', HttpStatus.BAD_REQUEST);
+    }
+
+    // Update the fields
+    if (updateProfileDto.username) {
+      pompiste.username = updateProfileDto.username;
+    }
+    if (updateProfileDto.email) {
+      pompiste.email = updateProfileDto.email;
+    }
+    if(updateProfileDto.phone){
+      pompiste.phone = updateProfileDto.phone
+    }
+    if(updateProfileDto.NewPassword){
+      pompiste.password = encodePassword(updateProfileDto.NewPassword)
+    }
+    if(updateProfileDto.image){
+      pompiste.image = updateProfileDto.image;
+    }
+    
+    return await pompiste.save();
+  }
+
   async remove(id: string): Promise<Pompiste> {
     return await this.pompisteModel.findByIdAndDelete(id).exec();
   }
@@ -90,6 +131,6 @@ export class PompistesService {
     } catch (error) {
       throw new Error(`Échec de la réinitialisation du score du pompiste à zéro : ${error.message}`);
     }
-}
+  }
 
 }

@@ -33,6 +33,15 @@ export const updatePompiste = createAsyncThunk('pompistes/update', async ({ Id, 
   }
 });
 
+export const updateProfilePompiste = createAsyncThunk('pompistes/updateProfile', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
+  try {
+    const response = await axiosAuthMultipart.post(`/pompistes/updateProfile/${Id}`, formData);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
 // Async thunk to fetch a single pompiste by matriculeRH
 export const getPompisteByMatriculeRH = createAsyncThunk('pompistes/fetch', async (matriculeRH: string, thunkAPI) => {
   try {
@@ -101,6 +110,21 @@ const pompistesSlice = createSlice({
         icon: 'error',
         confirmButtonText: 'OK'
       });
+    })
+    .addCase(updateProfilePompiste.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(updateProfilePompiste.fulfilled, (state) => {
+      state.isLoading = false;
+      Swal.fire('Success!', 'Votre profile a été mise à jour avec succès.', 'success');
+    })
+    .addCase(updateProfilePompiste.rejected, (state, action: any) => {
+      state.isLoading = false;
+      if (action.payload && action.payload.message) {
+        Swal.fire({ icon: 'error', title: 'Oops!', text: action.payload.message || '' }); 
+      } else {
+        Swal.fire({ icon: 'error', title: 'Oops!', text: 'Une erreur s\'est produite lors de l\'inscription.' }); 
+      }
     });
 
   },

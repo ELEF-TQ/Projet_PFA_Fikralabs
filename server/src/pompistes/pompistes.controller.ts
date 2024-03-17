@@ -5,6 +5,7 @@ import { UpdatePompisteDto } from './dto/update-pompiste.dto';
 import { DeleteMultipleDto } from './dto/delete-multiple.dto';
 import { Pompiste } from './schemas/pompiste.schema';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UpdatePompisteProfileDto } from './dto/update-pompiste-profile.dto';
 
 @Controller('pompistes')
 export class PompistesController {
@@ -56,6 +57,14 @@ export class PompistesController {
         updatedUser: pompisteFound,
       };
     }
+  }
+
+  @Post("updateProfile/:id")
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(FileInterceptor('image')) 
+  updateProfile(@Param('id') id: string, @UploadedFile() image:File ,@Body() updateProfileDto: UpdatePompisteProfileDto) {
+    const pompisteDataWithImage = { ...updateProfileDto, image: image };
+    return this.pompistesService.updateProfilePompiste(id, pompisteDataWithImage);
   }
 
   @Delete(':id')

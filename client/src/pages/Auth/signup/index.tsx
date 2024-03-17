@@ -8,12 +8,9 @@ import { Link } from 'react-router-dom';
 import defaultIMG from '../../../assets/images/defaultUser.png'
 import Header from '../../../components/Header';
 import Logo from '../../../assets/icons/LogoBlack.png';
-const index :React.FC= () => {
+import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../../utils/Regex';
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
-    const phoneRegex = /^(06|07|2126|2127)\d{8}$/;
-    const usernameRegex = /^[a-zA-Z]+$/;
+const index :React.FC= () => {
 
     const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -50,7 +47,8 @@ const index :React.FC= () => {
     if (password.length <= 8 && /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password)) return 3; // Moderate
     if (password.length <= 12 && /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/.test(password)) return 4; // Strong
     if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) return 4; // Very strong
-    return 0;  };
+    return 0;  
+  };
 
   const handlePasswordVerifyChange = (e:any) => {
     passwordVerifyRef.current = e.target.value;
@@ -310,25 +308,25 @@ const index :React.FC= () => {
               {/* Step 3 */}
               <Form className="Sign__form">
               <div className="flex items-center justify-center Margin__Input__Buttom">
-              <input
-                type="file"
-                id="image"
-                name="image"
-                accept="image/*"
-                onChange={handleInputChange}
-                style={{ display: 'none' }}
-              />
-              <label htmlFor="image">
-                <div className="image-container">
-                  {formData.image ? (
-                    <img src={URL.createObjectURL(formData.image)} alt="profile" className="profile-image" />
-                  ) : (
-                    <img src={defaultIMG} alt="default" className="default-image" />
-                  )}
-                  {/* <FiUpload className="upload-icon" /> */}
-                </div>
-              </label>
-             </div>
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                  style={{ display: 'none' }}
+                />
+                <label htmlFor="image">
+                  <div className="image-container">
+                    {formData.image ? (
+                      <img src={URL.createObjectURL(formData.image)} alt="profile" className="profile-image" />
+                    ) : (
+                      <img src={defaultIMG} alt="default" className="default-image" />
+                    )}
+                    {/* <FiUpload className="upload-icon" /> */}
+                  </div>
+                </label>
+              </div>
 
                 <div className={`Margin__Input__Buttom `}>
                   <label htmlFor="CNI" className='Input_Label'>Numéro de CNI</label>
