@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../context/store';
 import { Station } from '../../types/Station';
 import GetUserGeolocation, { Coordinates } from '../../lib/GetUserGeolocation';
-import Spinner from '../../components/Spinner';
+import Spinner from '../../components/Status/Spinner';
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -7,7 +7,8 @@ import Delete from '../../../components/Delete';
 import AddCoupon from './AddCoupon';
 import EditCoupon from './EditCoupon';
 import ViewCoupon from './ViewCoupon';
-import Spinner from '../../../components/Spinner';
+import Spinner from '../../../components/Status/Spinner';
+import StatusLabel, { StatusLabelProps } from '../../../components/Status/StatusLablel';
 
 const Coupon : React.FC = () => {
 
@@ -26,6 +27,20 @@ const Coupon : React.FC = () => {
   const [selectedIds , setSelectedIds] = useState<string[]>([]);;
   const [selectAllChecked, setSelectAllChecked] = useState(false);
  
+  const getCouponStatus = (expirationDate: string): StatusLabelProps => {
+    const currentDate = new Date();
+    const expiration = new Date(expirationDate);
+    const oneDay = 24 * 60 * 60 * 1000; 
+  
+    if (expiration < currentDate) {
+      return { text: 'Expiré', variant: 'danger' };
+    } else if (expiration.getTime() - currentDate.getTime() <= oneDay) {
+      return { text: 'Bientôt fini', variant: 'warning' };
+    } else {
+      return { text: 'Actif', variant: 'success' };
+    }
+  };
+  
 
   // Checkbox handling
   const handleSelectAllChange = (e: { target: { checked: any; }; }) => {
@@ -138,6 +153,7 @@ const Coupon : React.FC = () => {
                       <th scope="col" className="p-4 ">Score</th>
                       <th scope="col" className="p-4 ">Disponible</th>
                       <th scope="col" className="p-4 ">date Expiration</th>
+                      <th scope="col" className="p-4 ">status</th>
                       <th scope="col" className="p-4 ">Actions</th>
                     </tr>
                   </thead>
@@ -172,7 +188,6 @@ const Coupon : React.FC = () => {
                     
                       <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{coupon.score}pts</td>
                       <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      
                         <div className="flex items-center justify-center flex-row">
                           <span>{coupon.nbrDisponible}</span>
                         </div>
@@ -180,6 +195,7 @@ const Coupon : React.FC = () => {
                       </td>
       
                       <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{formatExpirationDate(coupon.dateExpiration)}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">   <StatusLabel  {...getCouponStatus(coupon.dateExpiration)} /></td>
       
                       <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <div className="flex items-center justify-center space-x-4">

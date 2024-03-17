@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { retrieveUserSession } from "../../lib/Encryption";
 import { AppDispatch } from "../../context/store";
 import { fetchReservedCoupons } from "../../context/features/CouponSlice";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/Status/Spinner";
 
 const Coupons = () => {
   const dispatch = useDispatch<AppDispatch>();
