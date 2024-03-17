@@ -94,7 +94,7 @@ const ConversionsSlice = createSlice({
         state.isLoading = false;
         state.conversions = action.payload;
       })
-      .addCase(getAllConversions.rejected, (state, action) => {
+      .addCase(getAllConversions.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(getConversions.pending, (state) => {
@@ -105,7 +105,7 @@ const ConversionsSlice = createSlice({
          state.isLoading = false;
          state.conversions = action.payload;
       })
-      .addCase(getConversions.rejected, (state, action) => {
+      .addCase(getConversions.rejected, (state) => {
         state.isLoading = false;
       });
   },

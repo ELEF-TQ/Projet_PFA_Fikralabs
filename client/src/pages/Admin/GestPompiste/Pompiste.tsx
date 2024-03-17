@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import defaultUser from '../../../assets/images/defaultUser.png'
 
 import AddPompiste from './AddPompiste';
-import ViewPompiste from './ViewPompiste';
+import ViewPompiste from './ViewPompisteModal';
 import EditPompiste from './EditPompiste';
 import Destroy from '../../../components/Destroy';
 import Delete from '../../../components/Delete';

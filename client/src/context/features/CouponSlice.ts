@@ -110,7 +110,7 @@ const couponSlice = createSlice({
         state.error = null;
         Swal.fire({icon: 'success', title: 'Le coupon est réservé avec succès!'});
       })
-      .addCase(reserveCoupon.rejected, (state , action) => {
+      .addCase(reserveCoupon.rejected, (state ) => {
         state.isLoading = false;
         Swal.fire({icon: 'error', title: 'Échec de la réservation du coupon!', text: 'vous avez pas suffisamment de points pour réserver ce coupon'});
       })
@@ -129,7 +129,7 @@ const couponSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(createCoupon.fulfilled, (state, action) => {
+      .addCase(createCoupon.fulfilled, (state) => {
         state.isLoading = false;
         Swal.fire({icon: 'success', title: 'Le coupon a été crée avec succès!'});
       })
@@ -141,7 +141,7 @@ const couponSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(updateCoupon.fulfilled, (state, action) => {
+      .addCase(updateCoupon.fulfilled, (state) => {
         state.isLoading = false;
         Swal.fire({icon: 'success', title: 'Le coupon a modification avec succès!'});
       })

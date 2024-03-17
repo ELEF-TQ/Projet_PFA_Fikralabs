@@ -7,35 +7,8 @@ interface Props {
 }
 
 const ViewPompiste: React.FC<Props> = ({ show, handleClose ,Element }) => {
- 
-  const initialFormData = {
-    username: "",
-    matriculeRH: "",
-    CIN: "",
-    phone: "",
-    email: ""
-  };
 
-  const [formData, setFormData] = useState(initialFormData);
 
-  useEffect(() => {
-    if (!show) {
-      setFormData(initialFormData);
-    }
-  }, [show]);
-
-  const handleSubmit = () => {
-    console.log("Submit", formData);
-   
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
 
   return (
     <>
