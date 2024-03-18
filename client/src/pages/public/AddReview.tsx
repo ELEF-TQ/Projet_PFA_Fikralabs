@@ -320,7 +320,7 @@ const Index: React.FC = () => {
                       )}
                       {activeStep === steps.length - 1 && (
                         <Button onClick={handleNext} className='Confirm__Button w-3/6 '>
-                          <Link to='/'>
+                          <Link to='/login'>
                             Finish
                           </Link>
                           

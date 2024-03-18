@@ -1,4 +1,3 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
 
 interface Props {
   show: boolean;
@@ -6,7 +5,7 @@ interface Props {
   Element:any;
 }
 
-const ViewPompiste: React.FC<Props> = ({ show, handleClose ,Element }) => {
+const ViewPompiste: React.FC<Props> = ({ show, handleClose  }) => {
 
 
 

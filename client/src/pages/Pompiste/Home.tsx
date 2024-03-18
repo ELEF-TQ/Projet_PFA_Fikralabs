@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../context/store";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import { getAllReviews } from "../../context/features/ReviewSlice";
+import { getAllReviewsByPompiste } from "../../context/features/ReviewSlice";
 import Modal from "react-modal";
 import Spinner from "../../components/status/Spinner";
 import ClientInfosModal from "../../components/modals/ClientInfos";
@@ -20,8 +20,8 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    const userData = retrieveUserSession()
-    dispatch(getAllReviews(userData.matriculeRH));
+    const user = retrieveUserSession()
+    dispatch(getAllReviewsByPompiste(user.matriculeRH));
   }, []);
 
   const calculateDuration = (reviewDate: Date) => {

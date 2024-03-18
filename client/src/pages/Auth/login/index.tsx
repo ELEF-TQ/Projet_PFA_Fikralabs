@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import Logo from '../../../assets/icons/LogoBlack.png';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { handleLogin } from '../../../context/features/AuthSlice';
-import { AppDispatch } from '../../../context/store';
+import { AppDispatch, RootState } from '../../../context/store';
 import { Link } from 'react-router-dom';
 import Header from '../../../components/shared/Header';
 
 const Index: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const {isLoading} = useSelector((state:RootState)=>state.auth)
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -86,7 +87,8 @@ const Index: React.FC = () => {
               className={`w-full text-white ${isDisabled ? 'Cancel__Button' : 'Confirm__Button'} hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`}
               disabled={isDisabled}
             >
-              Connecter
+              {isLoading ? 'en cours...' : 'Connecter' }
+              
             </button>
             
             <Link to={'/evaluation'}  
@@ -101,6 +103,7 @@ const Index: React.FC = () => {
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
               Vous n’avez pas un compte ?{' '}
               <Link to="/signup" className=" font-medium text-primary-600 hover:underline dark:text-primary-500 ">
+              
                 S’inscrire
               </Link>
             </p>

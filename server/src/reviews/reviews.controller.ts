@@ -1,6 +1,7 @@
-import { Controller, Post, Body, HttpStatus, HttpException, Get, Param, NotFoundException, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus, HttpException, Get, Param, NotFoundException, UsePipes, ValidationPipe, Patch } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { UpdateReviewDto } from './dto/update-review.dto';
 
 @Controller('reviews')
 export class ReviewsController {
@@ -17,13 +18,36 @@ export class ReviewsController {
     }
 }
 
-  @Get("/all/:matriculeRH")
-  async getAllReviews(@Param("matriculeRH") matriculeRH: string){
-    const reviews = await this.reviewService.getAll(matriculeRH);
+  @Get("/all-pompiste/:matriculeRH")
+  async getAllReviewsByPompiste(@Param("matriculeRH") matriculeRH: string){
+    const reviews = await this.reviewService.getAllByPompiste(matriculeRH);
     if(reviews.length === 0){
       throw new NotFoundException("Aucune évaluation trouvée");
     }else{
       return reviews;
+    }
+  }
+
+  
+  @Get("/all-client/:clientId")
+  async getAllReviewsByClient(@Param("clientId") clientId: string){
+    const reviews = await this.reviewService.getAllByClient(clientId);
+    if(reviews.length === 0){
+      throw new NotFoundException("Aucune évaluation trouvée");
+    }else{
+      return reviews;
+    }
+  }
+
+
+
+  @Patch(":id") 
+  async update(@Param("id") id: string, @Body() updateReviewDto: UpdateReviewDto) {
+    try {
+        const updatedReview = await this.reviewService.update(id, updateReviewDto);
+        return { message: 'Évaluation mise à jour avec succès', updatedReview }; 
+    } catch (error) {
+        throw new HttpException({ message: `Échec de la mise à jour de l\'évaluation : ${error.message}` }, HttpStatus.BAD_REQUEST);
     }
   }
  
