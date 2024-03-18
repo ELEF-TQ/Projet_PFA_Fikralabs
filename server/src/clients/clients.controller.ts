@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, HttpException, HttpStatus, UseInterceptors, UploadedFile } from '@nestjs/common'; // Import ParseIntPipe
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, HttpException, HttpStatus, UseInterceptors, UploadedFile, NotFoundException } from '@nestjs/common'; // Import ParseIntPipe
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { Coupon } from 'src/coupons/Schemas/coupon.schema';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateClientProfileDto } from './dto/update-client-profile.dto';
+import { DeleteMultipleDto } from './dto/delete-miltiple.dto';
+import { Client } from './schemas/client.schema';
 
 
 @Controller('clients')
@@ -21,12 +23,7 @@ export class ClientsController {
 
   @Get()
   async findAll() {
-    const users = await this.clientsService.findAll();
-    if(users.length === 0){
-      throw new HttpException("No Users Found",404);
-    }else{
-      return users;
-    }
+    return  await this.clientsService.findAll();
   }
 
   @Get(':id')
@@ -74,6 +71,17 @@ export class ClientsController {
     return await this.clientsService.findReservedCouponsByClientId(clientId);
   }
 
+
+  @Post('/destroy')
+async deleteMultiple(@Body() deleteMultipleDto: DeleteMultipleDto): Promise<Client[]> {
+  const { ids } = deleteMultipleDto;
+  const deletedClients = await this.clientsService.destroy(ids);
+  if (deletedClients.length === 0) {
+    throw new NotFoundException("Aucun client n'est supprimé");
+  } else {
+    return deletedClients;
+  }
+}
 
 
 

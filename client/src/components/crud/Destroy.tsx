@@ -28,7 +28,7 @@ const Destroy : React.FC<Props>= ({show, handleClose, ids, EndPoint , onDestroyS
         })
       }else{
         handleClose();
-        Swal.fire({icon: 'error', title: 'Aucun item n\'est selectionné', text: 'veuillez selectioner au moins un item'});
+        Swal.fire({icon: 'error', title: 'Oops!', text: 'veuillez selectioner au moins un element'});
       }
     }
 
