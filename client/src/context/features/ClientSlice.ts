@@ -14,6 +14,15 @@ export const createClient = createAsyncThunk('clients/create', async (formData: 
   }
 });
 
+export const updateProfileClient = createAsyncThunk('clients/updateProfile', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
+  try {
+    const response = await axiosAuthMultipart.post(`/clients/updateProfile/${Id}`, formData);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
 // Async thunk to fetch a single client by ID
 export const getClient = createAsyncThunk('clients/fetch', async (id: string) => {
   try {
@@ -107,6 +116,23 @@ const clientSlice = createSlice({
       .addCase(fetchClients.fulfilled, (state, action) => {
         state.isLoading = false;
         state.clients = action.payload;
+      })
+      .addCase(updateProfileClient.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProfileClient.fulfilled, (state) => {
+        state.isLoading = false;
+        Swal.fire('Success!', 'Votre profile a été mise à jour avec succès.', 'success').then(() => {
+          window.location.reload();
+        });
+      })
+      .addCase(updateProfileClient.rejected, (state, action: any) => {
+        state.isLoading = false;
+        if (action.payload && action.payload.message) {
+          Swal.fire({ icon: 'error', title: 'Oops!', text: action.payload.message || '' }); 
+        } else {
+          Swal.fire({ icon: 'error', title: 'Oops!', text: 'Une erreur s\'est produite lors de la mise à jour du profile.' }); 
+        }
       });
   },
 });

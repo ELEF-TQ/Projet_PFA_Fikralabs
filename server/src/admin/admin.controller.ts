@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, HttpException, HttpStatus, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UpdateAdminProfileDto } from './dto/update-admin-profile.dto';
 
 
 @Controller('admins')
@@ -46,6 +48,14 @@ export class AdminController {
             updatedAdmin: adminFound
           };
       }
+  }
+
+  @Post("updateProfile/:id")
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(FileInterceptor('image')) 
+  updateProfile(@Param('id') id: string, @UploadedFile() image:File ,@Body() updateProfileDto: UpdateAdminProfileDto) {
+    const adminDataWithImage = { ...updateProfileDto, image: image };
+    return this.adminService.updateProfileAdmin(id, adminDataWithImage);
   }
 
   @Delete(':id')

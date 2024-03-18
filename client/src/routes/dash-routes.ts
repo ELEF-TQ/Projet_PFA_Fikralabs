@@ -1,12 +1,12 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { IoSettingsOutline } from "react-icons/io5";
 import { TbTransform } from "react-icons/tb";
 import { RiCoupon2Fill } from "react-icons/ri";
 import { BiSolidMessageSquareDots } from "react-icons/bi";
 import { MdHomeRepairService } from "react-icons/md";
 import { GiSandsOfTime } from "react-icons/gi";
+import { CgProfile } from "react-icons/cg";
 
 export const AdminItems = [
     {
@@ -38,7 +38,7 @@ export const AdminItems = [
     {
       name: "Profile",
       href: "/admin/profile",
-      icon: IoSettingsOutline ,
+      icon: CgProfile ,
     },
   ];
 
@@ -63,7 +63,7 @@ export const PompisteItems = [
   {
     name: "Profile",
     href: "/pompiste/profile",
-    icon: IoSettingsOutline ,
+    icon: CgProfile ,
   },
 ];
 
@@ -89,6 +89,11 @@ export const ClientItems = [
     name: "Services",
     href: "/client/services",
     icon:MdHomeRepairService ,
+  },
+  {
+    name: "Profile",
+    href: "/client/profile",
+    icon: CgProfile ,
   }
 ]
 

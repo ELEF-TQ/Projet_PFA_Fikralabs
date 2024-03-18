@@ -17,6 +17,9 @@ export class Admin {
   @Prop()
   phone: string;
 
+  @Prop()
+  image: File;
+
   @Prop({ default: RolesEnum.ADMIN }) 
   role: string;
 }

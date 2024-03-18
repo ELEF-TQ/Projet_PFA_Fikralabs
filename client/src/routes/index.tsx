@@ -18,6 +18,7 @@ import GestionClients from "../pages/Admin/GestClient/Clients";
 import GestionConversions from "../pages/Admin/GestConversion/Conversion";
 import GestionProfile from "../pages/Admin/Profile";
 import GestCoupons from '../pages/Admin/GestCoupon/Coupon';
+import AdminProfile from "../pages/Admin/Profile";
 
 /*___Pompiste_____ */
 import Pompiste from "../pages/Pompiste/index";
@@ -26,7 +27,7 @@ import Converstions from "../pages/Pompiste/mesConvertion";
 import DemandeConvertion from "../pages/Pompiste/DemandeConvertion";
 import Formations from "../pages/Pompiste/Formations";
 import Quiz from "../pages/Pompiste/Quiz";
-import Profile from "../pages/Pompiste/Profile";
+import PompisteProfile from "../pages/Pompiste/Profile";
 
 /*___Clients_____ */
 import Client from '../pages/Client/index';
@@ -34,8 +35,7 @@ import HomeClient from "../pages/Client/Home";
 import Coupons from "../pages/Client/mesCoupons";
 import MesReviews from "../pages/Client/Reviews";
 import MesServices from '../pages/Client/Services';
-
-
+import ClientProfile from "../pages/Client/Profile";
 
 
 
@@ -60,6 +60,7 @@ export const routes = createBrowserRouter([
       { path: "conversions", element: <GestionConversions /> },
       { path: "profile", element: <GestionProfile /> },
       { path: "coupons", element: <GestCoupons /> },
+      { path: "profile", element: <AdminProfile /> },
     ],
   },
 
@@ -73,7 +74,7 @@ export const routes = createBrowserRouter([
       { path: "mesConvertions", element: <Converstions /> },
       { path: "quiz", element: <Quiz /> },
       { path: "formations", element: <Formations /> },
-      { path: "profile", element: <Profile /> },
+      { path: "profile", element: <PompisteProfile /> },
     ],
   },
 
@@ -86,6 +87,7 @@ export const routes = createBrowserRouter([
       { path: "coupons", element: <Coupons /> },
       { path: "evaluations", element: <MesReviews />},
       { path: "services", element: <MesServices />},
+      { path: "profile", element: <ClientProfile /> },
     ],
   },
 
