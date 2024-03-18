@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { retrieveUserSession } from '../../lib/Encryption';
+import { retrieveUserSession, updateUserSession } from '../../lib/Encryption';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
+import "./style.css"
+import defaultIMG from '../../assets/images/defaultUser.png'
 import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../utils/Regex';
 import { updateProfilePompiste } from '../../context/features/PompisteSlice';
 import { AppDispatch } from '../../context/store';
+import { AddAPhotoOutlined } from '@mui/icons-material';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const Profile: React.FC = () => {
   const [showPasswordpart, setShowPasswordpart] = useState(false);
@@ -13,15 +17,17 @@ const Profile: React.FC = () => {
     email: '',
     phone: '',
     oldPassword: '',
-    NewPassword: '',
+    newPassword: '',
     image: null as File | null,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [confirmPassword, setConfirmPassword] = useState('');
   const passwordVerifyRef = React.useRef(null);
   const dispatch = useDispatch<AppDispatch>();
-
   const user = retrieveUserSession();
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     setFormData({
@@ -29,7 +35,7 @@ const Profile: React.FC = () => {
       email: user.email,
       phone: user.phone,
       oldPassword: '',
-      NewPassword: '',
+      newPassword: '',
       image: null,
     });
   }, []);
@@ -76,6 +82,22 @@ const Profile: React.FC = () => {
     }
   };
 
+  const togglePasswordVisibility = (tag: string) => {
+    switch(tag){
+      case 'old':
+        setShowOldPassword((prevShowPassword) => !prevShowPassword);
+        break;
+      case 'new': 
+        setShowNewPassword((prevShowPassword) => !prevShowPassword);
+        break;
+      case 'confirm':
+        setShowConfirmPassword((prevShowPassword) => !prevShowPassword);
+        break;
+      default:
+        break;
+    }
+  };
+
   const getPasswordStrength = (password: any) => {
     if (!password) return 0; 
     if (password.length <= 4) return 1; 
@@ -91,13 +113,16 @@ const Profile: React.FC = () => {
   };
 
   const validatePasswordConfirmation = (value: string) => {
-    return value !== formData.NewPassword ? 'Les mots de passe ne correspondent pas.' : '';
+    return value !== formData.newPassword ? 'Les mots de passe ne correspondent pas.' : '';
   };
 
   const handleSubmit = async () => {
-    const isEmptyField = Object.values(formData).some((value) => value === '');
-    if (isEmptyField) {
-      Swal.fire('Oops!', 'Veuillez remplir tous les champs.', 'error');
+
+    const updatingPassword = formData.oldPassword || formData.newPassword || confirmPassword;
+  
+    // If user is updating password, ensure all three fields are filled
+    if (updatingPassword && (!formData.oldPassword || !formData.newPassword || !confirmPassword)) {
+      Swal.fire('Oops!', 'Please fill in all password fields.', 'error');
       return;
     }
 
@@ -113,7 +138,9 @@ const Profile: React.FC = () => {
       return;
     }
 
-    await dispatch(updateProfilePompiste({ Id: user.id, formData }));
+    await dispatch(updateProfilePompiste({ Id: user._id, formData })).then(() => {
+      updateUserSession("/pompistes", user._id);
+    });
   };
 
   const handlePasswordVerifyChange = (e:any) => {
@@ -127,7 +154,7 @@ const Profile: React.FC = () => {
           <div className="w-full sm:rounded-lg">
             <h2 className="pl-6 text-2xl font-bold sm:text-xl">Public Profile</h2>
             <div className="grid max-w-2xl mx-auto mt-8">
-              <div className="flex flex-col sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-4">
+              <div className=" relative flex flex-col flex justify-center items-center sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-4">
                 <input
                   type="file"
                   id="image"
@@ -137,13 +164,17 @@ const Profile: React.FC = () => {
                   style={{ display: 'none' }}
                 />
                 <label htmlFor="image">
-                  <div className="image-container">
+                  <div className="image-container ring-2 ring-green-300 dark:ring-green-500 relative group">
                     {formData.image ? (
-                      <img src={URL.createObjectURL(formData.image)} alt="profile" className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-green-300 dark:ring-green-500" />
+                      <img src={URL.createObjectURL(formData.image)} alt="profile" className="object-cover w-40 h-40 p-1 rounded-full" />
                     ) : (
-                      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
-                       alt="default" className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-green-300 dark:ring-green-500" />
+                      <img src={user.image?.buffer? `data:image/png;base64,${user.image.buffer}`: defaultIMG}
+                       alt="default" className="object-cover w-40 h-40 p-1 rounded-full" />
                     )}
+                    <div className="overlay opacity-0 group-hover:opacity-100 absolute inset-0 flex flex-col items-center justify-center text-center bg-black bg-opacity-50 text-white transition-opacity">
+                      <AddAPhotoOutlined sx={{ fontSize: 32, mb: 2 }} />
+                      <span className='w-24'>Update profile picture</span>
+                    </div>
                   </div>
                 </label>
               </div>
@@ -151,19 +182,18 @@ const Profile: React.FC = () => {
                 <div className="flex flex-col w-full space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                   <div className="w-full">
                     <label
-                      htmlFor="first_name"
+                      htmlFor="username"
                       className="block mb-2 text-sm font-medium text-green-900"
                     >
                       Username
                     </label>
                     <input
                       type="text"
-                      id="first_name"
-                      className="bg-green-50 border border-green-300 text-green-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                      id="username"
+                      className="bg-green-50 outline-none border border-green-300 text-green-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
                       placeholder="username"
                       value={formData.username}
                       onChange={handleInputChange}
-                      required
                       name="username"
                     />
                     {errors.email && (
@@ -172,16 +202,16 @@ const Profile: React.FC = () => {
                   </div>
                   <div className="w-full">
                     <label
-                      htmlFor="last_name"
+                      htmlFor="phone"
                       className="block mb-2 text-sm font-medium text-green-900"
                     >
                       Telephone
                     </label>
                     <input
-                      type="text"
-                      id="last_name"
-                      className="bg-green-50 border border-green-300 text-green-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
-                      placeholder="Your last name"
+                      type="tel"
+                      id="phone"
+                      className="bg-green-50 outline-none border border-green-300 text-green-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                      placeholder="Telephone"
                       value={formData.phone}
                       onChange={handleInputChange}
                       required
@@ -202,11 +232,10 @@ const Profile: React.FC = () => {
                   <input
                     type="email"
                     id="email"
-                    className="bg-green-50 border border-green-300 text-green-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                    className="bg-green-50 outline-none border border-green-300 text-green-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
                     placeholder="your.email@mail.com"
                     value={formData.email}
                     onChange={handleInputChange}
-                    required
                     name="email"
                   />
                   {errors.email && (
@@ -215,74 +244,91 @@ const Profile: React.FC = () => {
                 </div>
                 {showPasswordpart && (
                   <>
-                    <div className="mb-2 sm:mb-6">
+                    <div className="mb-2 relative sm:mb-6">
                       <label
-                        htmlFor="profession"
+                        htmlFor="oldPassword"
                         className="block mb-2 text-sm font-medium text-green-900"
                       >
                         Old password
                       </label>
                       <input
-                        type="password"
-                        id="profession"
-                        className="mb-2 bg-green-50 border border-green-300 text-green-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
-                        placeholder="your profession"
+                        type={showOldPassword ? 'text' : 'password'}
+                        id="oldPassword"
+                        className="mb-2 outline-none bg-green-50 border border-green-300 text-green-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                        placeholder="your old password..."
                         required
-                        name="password"
+                        name="oldPassword"
                         onChange={handleInputChange}
                       />
+                      <div className="absolute h-24 inset-y-0 right-0 flex items-center pr-2">
+                        <button type="button" onClick={() => togglePasswordVisibility('old')} className="focus:outline-none">
+                          {showOldPassword ? <FiEyeOff /> : <FiEye />}
+                        </button>
+                      </div>
                     </div>
                     <div className="flex flex-col w-full space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 mb-6 sm:mb-6">
-                      <div className="w-full">
+                      <div className="w-full relative">
                         <label
-                          htmlFor="message"
+                          htmlFor="newPassword"
                           className="block mb-2 text-sm font-medium text-green-900"
                         >
                           New Password
                         </label>
                         <input
-                          id="password"
-                          className="mb-2 block p-2.5 w-full text-sm text-green-900 bg-green-50 rounded-lg border border-green-300 focus:ring-green-500 focus:border-green-500 "
-                          placeholder="password..."
-                          defaultValue={""}
+                          type={showNewPassword ? 'text' : 'password'}
+                          id="newPassword" 
+                          className="mb-2 outline-none block p-2.5 w-full text-sm text-green-900 bg-green-50 rounded-lg border border-green-300 focus:ring-green-500 focus:border-green-500 "
+                          placeholder="your new password..."
                           onChange={handleInputChange}
                           name="newPassword"
-                          value={formData.NewPassword}
+                          value={formData.newPassword}
                           minLength={6}
                           onCopy={(e) => {e.preventDefault();}}
                           onCut={(e) => {e.preventDefault();}}
                         />
+                        <div className="absolute h-24 inset-y-0 right-0 flex items-center pr-2">
+                          <button type="button" onClick={() => togglePasswordVisibility('new')} className="focus:outline-none">
+                            {showNewPassword ? <FiEyeOff /> : <FiEye />}
+                          </button>
+                        </div>
                         <div className="password-strength-bar">
-                          <div className={`strength strength-${getPasswordStrength(formData.NewPassword)}`} />
+                          <div className={`strength strength-${getPasswordStrength(formData.newPassword)}`} />
                         </div>
                       </div>
-                      <div className="w-full">
+                      <div className={`w-full relative ${formData.newPassword && passwordVerifyRef.current && formData.newPassword !== passwordVerifyRef.current ? 'has-error' : ''}`}>
                         <label
-                          htmlFor="message"
+                          htmlFor="confirmPassword"
                           className="block mb-2 text-sm font-medium text-green-900"
                         >
                           Confirm Password
                         </label>
                         <input
+                          type={showConfirmPassword ? 'text' : 'password'}
                           id="confirmPassword"
-                          type='password'
-                          className="block p-2.5 w-full text-sm text-green-900 bg-green-50 rounded-lg border border-green-300 focus:ring-green-500 focus:border-green-500 "
+                          className={`block p-2.5 w-full text-sm text-green-900 bg-green-50 rounded-lg border border-green-300 focus:ring-green-500 focus:border-green-500 outline-none 
+                                    ${formData.newPassword && passwordVerifyRef.current && formData.newPassword !== passwordVerifyRef.current ? 'is-invalid' : ''}
+                          `}
                           placeholder="password confirmation..."
                           value={confirmPassword}
                           onBlur={handlePasswordVerifyChange}
                           onChange={handleConfirmPasswordChange}
                           name="confirmPassword"
                         />
+                        <div className="absolute h-24 inset-y-0 right-0 flex items-center pr-2">
+                          <button type="button" onClick={() => togglePasswordVisibility('confirm')} className="focus:outline-none">
+                            {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </>
                 )}
-                <button onClick={() => setShowPasswordpart((prev) => !prev)}>{showPasswordpart? "hide" : "Change password"}</button>
+                <button className="mb-2" onClick={() => setShowPasswordpart((prev) => !prev)}>{showPasswordpart? "hide" : "Change password"}</button>
                 <div className="flex justify-end">
                   <button
                     type="submit"
                     onClick={handleSubmit}
-                    className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                    className="text-white bg-primary-color hover:opacity-90 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
                   >
                     Save
                   </button>

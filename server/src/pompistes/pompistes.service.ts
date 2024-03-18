@@ -69,7 +69,7 @@ export class PompistesService {
     }
 
     // Check if the old password matches
-    if (updateProfileDto.oldPassword && updateProfileDto.NewPassword && !comparePasswords(updateProfileDto.oldPassword, pompiste.password)) {
+    if (updateProfileDto.oldPassword && updateProfileDto.newPassword && !comparePasswords(updateProfileDto.oldPassword, pompiste.password)) {
       throw new HttpException('Old password is incorrect', HttpStatus.BAD_REQUEST);
     }
 
@@ -83,8 +83,8 @@ export class PompistesService {
     if(updateProfileDto.phone){
       pompiste.phone = updateProfileDto.phone
     }
-    if(updateProfileDto.NewPassword){
-      pompiste.password = encodePassword(updateProfileDto.NewPassword)
+    if(updateProfileDto.newPassword){
+      pompiste.password = encodePassword(updateProfileDto.newPassword)
     }
     if(updateProfileDto.image){
       pompiste.image = updateProfileDto.image;

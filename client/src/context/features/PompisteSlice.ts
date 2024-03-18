@@ -116,7 +116,9 @@ const pompistesSlice = createSlice({
     })
     .addCase(updateProfilePompiste.fulfilled, (state) => {
       state.isLoading = false;
-      Swal.fire('Success!', 'Votre profile a été mise à jour avec succès.', 'success');
+      Swal.fire('Success!', 'Votre profile a été mise à jour avec succès.', 'success').then(() => {
+        window.location.reload();
+      });
     })
     .addCase(updateProfilePompiste.rejected, (state, action: any) => {
       state.isLoading = false;

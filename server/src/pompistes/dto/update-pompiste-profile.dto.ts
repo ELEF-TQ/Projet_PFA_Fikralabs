@@ -16,7 +16,7 @@ export class UpdatePompisteProfileDto {
 
   @IsOptional()
   @IsString()
-  readonly NewPassword?: string;
+  readonly newPassword?: string;
 
   @IsOptional()
   @IsString()
