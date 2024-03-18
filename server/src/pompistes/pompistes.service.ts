@@ -28,33 +28,35 @@ export class PompistesService {
     return this.pompisteModel.find().exec();
   }
 
-
-
   async findOne(id: string): Promise<Pompiste> {
     return this.pompisteModel.findById(id).select('-password').exec();
   }
-  
 
   async findOneByEmail(email: string): Promise<Pompiste> {
     return this.pompisteModel.findOne({email: email}).exec();
   }
   
-  async update(id: string, updatePompisteDto: UpdatePompisteDto): Promise<Pompiste> {
-    const isEmailExists = await this.findOneByEmail(updatePompisteDto.email);
-    if(isEmailExists){
-      throw new HttpException("Impossible de mettre à jour l'utilisateur, l'e-mail existe déjà", HttpStatus.BAD_REQUEST);
-    }else{
-      if(updatePompisteDto.password){
-        const encryptedPassword = encodePassword(updatePompisteDto.password);
-        return await this.pompisteModel.findByIdAndUpdate(id, {...updatePompisteDto, password: encryptedPassword}, {new: true}).exec();
-      }else{
-        return this.pompisteModel.findByIdAndUpdate(id, updatePompisteDto, { new: true }).exec();
-      }
+  
+  async update(id: string, updatePompisteDto: UpdatePompisteDto): Promise<Pompiste | null> {
+    const { image, ...dtoWithoutImage } = updatePompisteDto;
+    const updateData: any = { ...dtoWithoutImage };
+    if (image === null || image === undefined ) {
+      updateData.$unset = { image: '' };
+    } else {
+      updateData.image = image; 
+    }
+    try {
+      const updatedPompiste = await this.pompisteModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
+      return updatedPompiste;
+    } catch (error) {
+      console.error('Error updating pompiste:', error);
+      return null;
     }
   }
 
+  
+
   async updateProfilePompiste(id: string, updateProfileDto: UpdatePompisteProfileDto): Promise<Pompiste> {
-    // Retrieve the pompiste from the database
     const pompiste = await this.pompisteModel.findById(id);
     if (!pompiste) {
       throw new HttpException('Pompiste not found', HttpStatus.NOT_FOUND);

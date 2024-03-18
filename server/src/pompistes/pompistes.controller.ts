@@ -45,20 +45,15 @@ export class PompistesController {
   }
 
   
-  @Patch(':id')
+  @Post('updateData/:id')
   @UsePipes(ValidationPipe)
-  async update(@Param('id') id: string, @Body() updatePompisteDto: UpdatePompisteDto) {
-    const pompisteFound = await this.pompistesService.update(id, updatePompisteDto);
-    if(!pompisteFound){
-      throw new NotFoundException("Aucun pompiste avec cet ID");
-    }else{
-      return {
-        message: "pompiste mise à jour avec success",
-        updatedUser: pompisteFound,
-      };
-    }
+  @UseInterceptors(FileInterceptor('image')) 
+  async update(@Param('id') id: string, @UploadedFile() image:File,@Body() updatePompisteDto: UpdatePompisteDto) {
+    const pompisteDataWithImage = { ...updatePompisteDto, image: image };
+    return this.pompistesService.update(id, pompisteDataWithImage);
   }
 
+  
   @Post("updateProfile/:id")
   @UsePipes(ValidationPipe)
   @UseInterceptors(FileInterceptor('image')) 

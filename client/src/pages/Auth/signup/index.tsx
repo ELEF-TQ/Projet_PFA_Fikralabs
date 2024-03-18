@@ -37,9 +37,7 @@ const index :React.FC= () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const passwordVerifyRef = useRef(null);
 
- 
-  
-  
+
   const getPasswordStrength = (password: any) => {
     if (!password) return 0; 
     if (password.length <= 4) return 1; 
@@ -54,7 +52,6 @@ const index :React.FC= () => {
     passwordVerifyRef.current = e.target.value;
   };
 
-
   const handleNextStep = () => {
     setCurrentStep((prevStep) => prevStep + 1);
   };
@@ -64,13 +61,9 @@ const index :React.FC= () => {
   };
 
 
-
-
-  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
     let error = '';
-
     if (name === 'image' && files && files.length > 0) {
         const selectedImage = files[0];
         setFormData(prevFormData => ({
@@ -138,21 +131,18 @@ const index :React.FC= () => {
   };
 
   const handleSubmit = async () => {
-    // Check if any field is empty
-    const isEmptyField = Object.values(formData).some(value => value === '');
+    const isEmptyField = Object.entries(formData).some(([key, value]) => key !== 'image' && value === '');
     if (isEmptyField) {
         Swal.fire('Oops!', 'Veuillez remplir tous les champs.', 'error');
         return;
     }
 
-    // Check for errors in input fields
     const hasErrors = Object.values(errors).some(error => error !== '');
     if (hasErrors) {
         Swal.fire('Oops!', 'Veuillez vérifier le formulaire.', 'error');
         return;
     }
 
-    // Check password confirmation
     const passwordError = validatePasswordConfirmation(confirmPassword);
     if (passwordError) {
         Swal.fire('Oops!', 'Veuillez vérifier le Mot de passe.', 'error');
@@ -161,10 +151,8 @@ const index :React.FC= () => {
 
     try {
         dispatch(handleSignup(formData));
-        // Optionally, you can show a success message here
     } catch (error) {
         console.log('Error submitting form:', error);
-        // Optionally, you can show an error message here
         Swal.fire('Error!', 'Une erreur s\'est produite lors de la soumission du formulaire.', 'error');
     }
 };
@@ -329,12 +317,12 @@ const index :React.FC= () => {
               </div>
 
                 <div className={`Margin__Input__Buttom `}>
-                  <label htmlFor="CNI" className='Input_Label'>Numéro de CNI</label>
+                  <label htmlFor="CIN" className='Input_Label'>Numéro de CNI</label>
                   <input
                     type="text"
                     className={`form-control Input__Style`}
-                    id="CNI"
-                    name="CNI"
+                    id="CIN"
+                    name="CIN"
                     placeholder="Numéro de CNI"
                     value={formData.CIN}
                     onChange={handleInputChange}

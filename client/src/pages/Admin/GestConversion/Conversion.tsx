@@ -8,7 +8,7 @@ import { acceptAllConversion, acceptConversion, getAllConversions } from '../../
 const Pompiste : React.FC = () => {
 
   const handleAcceptConversion = (id:any) => {
-    Swal.fire({title: 'Are you sure?',text: `You are about to perform an action on item ${id}`,icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, proceed!'}).then((result) => {
+    Swal.fire({title: 'Êtes-vous sûr ?',text: `Vous êtes sur le point d'accepter la demande de conversion`,icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Oui, procéder !'}).then((result) => {
         if (result.isConfirmed) {
           dispatch(acceptConversion(id)).then(()=>{
             dispatch(getAllConversions())
@@ -18,7 +18,7 @@ const Pompiste : React.FC = () => {
   };
 
   const handleAcceptConversions = (ids:any) => {
-    Swal.fire({title: 'Are you sure?',text: `You are about to perform an action on item ${ids}`,icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Yes, proceed!'}).then((result) => {
+    Swal.fire({title: 'Êtes-vous sûr ?',text: `Vous êtes sur le point d'accepter la demande de conversion `,icon: 'warning',showCancelButton: true,confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',confirmButtonText: 'Oui, procéder !'}).then((result) => {
         if (result.isConfirmed) {
           dispatch(acceptAllConversion({ids})).then(()=>{
             dispatch(getAllConversions())
@@ -26,6 +26,7 @@ const Pompiste : React.FC = () => {
         }
     });
   };
+
 
   const dispatch = useDispatch<AppDispatch>();
   const {conversions} = useSelector((state :any)=>state.conversions )
@@ -53,6 +54,7 @@ const Pompiste : React.FC = () => {
   useEffect(()=> {
     dispatch(getAllConversions());
   },[])
+  console.log(conversions)
 
     const [pendingConversions, acceptedConversions] = [
       conversions.filter((conversion: { status: string; }) => conversion.status === "PENDING"),
@@ -81,7 +83,7 @@ const Pompiste : React.FC = () => {
             <svg className="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
             </svg>
-            Accepte All
+            Accepter tous
           </button>
         
           </div>
