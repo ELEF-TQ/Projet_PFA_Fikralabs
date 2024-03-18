@@ -1,23 +1,22 @@
-import React, {  useState } from "react";
-import { getPompistes, createPompiste } from "../../../context/features/PompisteSlice";
+import React, { useState } from "react";
+import { createClient, fetchClients } from "../../../context/features/ClientSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import defaultIMG from '../../../assets/images/defaultUser.png';
 import { emailRegex, phoneRegex, usernameRegex } from '../../../utils/Regex';
+import Swal from 'sweetalert2';
 
 interface Props {
   show: boolean;
   handleClose: () => void;
 }
 
-const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
+const AddClient: React.FC<Props> = ({ show, handleClose }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading } = useSelector((state: RootState) => state.pompistes);
-
+  const {isLoading} = useSelector((state:RootState)=>state.clients)
 
   interface FormData {
     username: string;
-    matriculeRH: string;
     email: string;
     phone: string;
     password: string;
@@ -26,7 +25,6 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
   }
   const [formData, setFormData] = useState<FormData>({
     username: '',
-    matriculeRH: '',
     email: '',
     phone: '',
     password: '',
@@ -37,10 +35,18 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
 
   const handleSubmit = () => {
     if (validateFormData()) {
-      dispatch(createPompiste(formData)).then(() => {
-        handleClose();
-        dispatch(getPompistes());
-      });
+      dispatch(createClient(formData))
+        .then(() => {
+          handleClose();
+          dispatch(fetchClients());
+        })
+        .catch(() => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Échec de l\'ajout du client'
+          });
+        });
     }
   };
 
@@ -61,8 +67,8 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
   };
 
   const validateFormData = () => {
-    const { username, matriculeRH, email, phone, password, CIN } = formData;
-    if (!username || !matriculeRH || !email || !phone || !password || !CIN) {
+    const { username, email, phone, password, CIN } = formData;
+    if (!username  || !email || !phone || !password || !CIN) {
       setErrorMessage('Veuillez remplir tous les champs!');
       return false;
     }
@@ -94,7 +100,7 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
         <div className="modal-overlay">
           <div className="modal">
             <div className="modal-header">
-              <h3 className="modal-title">Ajouter un nouveau Pompiste</h3>
+              <h3 className="modal-title">Ajouter un nouveau Client</h3>
             </div>
             <div className="modal-content">
 
@@ -112,8 +118,8 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
                     {formData.image ? (
                       <img src={URL.createObjectURL(formData.image)} alt="profile" className="profile-image" />
                     ) : (
-                        <img src={defaultIMG} alt="default" className="default-image" />
-                      )}
+                      <img src={defaultIMG} alt="default" className="default-image" />
+                    )}
                   </div>
                 </label>
               </div>
@@ -132,24 +138,6 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
                   className="Input__Style w-full"
                   placeholder="nom"
                   value={formData.username}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="matriculeRH"
-                  className="block mb-2 text-sm font-medium Input_Label"
-                >
-                  Matricule
-                </label>
-                <input
-                  type="text"
-                  name="matriculeRH"
-                  id="matriculeRH"
-                  className="Input__Style w-full"
-                  placeholder="#7815"
-                  value={formData.matriculeRH}
                   onChange={handleChange}
                 />
               </div>
@@ -237,7 +225,7 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
                 onClick={handleSubmit}
                 disabled={isAnyFieldEmpty}
               >
-                 {isLoading ? 'En cours...' : 'Ajouter'}
+                {isLoading ? 'En cours...' : 'Ajouter'}
               </button>
               <button
                 className="btn bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded"
@@ -253,4 +241,4 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
   );
 };
 
-export default AddPompiste;
+export default AddClient;

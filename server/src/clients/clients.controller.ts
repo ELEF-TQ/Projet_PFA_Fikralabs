@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, HttpException, HttpStatus } from '@nestjs/common'; // Import ParseIntPipe
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, HttpException, HttpStatus, UseInterceptors, UploadedFile } from '@nestjs/common'; // Import ParseIntPipe
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { Coupon } from 'src/coupons/Schemas/coupon.schema';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 
 @Controller('clients')
@@ -11,8 +12,10 @@ export class ClientsController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  create(@Body() createclientDto: CreateClientDto) {
-    return this.clientsService.create(createclientDto);
+  @UseInterceptors(FileInterceptor('image')) 
+  create(@UploadedFile() image:File,@Body() createclientDto: CreateClientDto) {
+    const clientDataWithImage = { ...createclientDto, image: image };
+    return this.clientsService.create(clientDataWithImage);
   }
 
   @Get()
@@ -32,19 +35,6 @@ export class ClientsController {
 
 
 
-  @Patch(':id')
-  @UsePipes(ValidationPipe)
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateClientDto) {
-    const userFound = await this.clientsService.update(id, updateUserDto);
-    if(!userFound){
-      throw new HttpException("The User with the provided ID doesn't exist", HttpStatus.NOT_FOUND);
-    }else{
-        return {
-          message: "User Updated Successfully",
-          updatedUser: userFound,
-        };
-    }
-  }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
@@ -74,5 +64,21 @@ export class ClientsController {
   @Get(':clientId/coupons')
   async getClientReservedCoupons(@Param('clientId') clientId: string): Promise<Coupon[]> {
     return await this.clientsService.findReservedCouponsByClientId(clientId);
+  }
+
+
+
+
+
+  @Post('updateData/:id')
+  @UsePipes(ValidationPipe) 
+  @UseInterceptors(FileInterceptor('image')) 
+  async update(
+    @Param('id') id: string, 
+    @UploadedFile() image: File, 
+    @Body() updateClientDto: UpdateClientDto, 
+  ) {
+    const pompisteDataWithImage = { ...updateClientDto, image: image };
+    return this.clientsService.update(id, pompisteDataWithImage);
   }
 }

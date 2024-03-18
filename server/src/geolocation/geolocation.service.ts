@@ -13,7 +13,7 @@ export class GeolocationService {
             return distanceA - distanceB;
         });
 
-        return sortedLocations;
+        return sortedLocations.slice(0,50);
     }
 
     getGasStationsByCity(city: string) {

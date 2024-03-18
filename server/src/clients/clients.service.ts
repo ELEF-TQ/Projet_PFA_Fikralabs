@@ -36,17 +36,21 @@ export class ClientsService {
     return this.clientModel.findOne({email: email}).exec();
   }
 
-  async update(id: string, updateclientDto: UpdateClientDto): Promise<Client> {
-    const isEmailExists = await this.findOneByEmail(updateclientDto.email);
-    if(isEmailExists){
-      throw new HttpException("Impossible de mettre à jour l'utilisateur, l'email existe déjà", HttpStatus.BAD_REQUEST);
-    }else{
-      if(updateclientDto.password){
-        const encryptedPassword = encodePassword(updateclientDto.password);
-        return this.clientModel.findByIdAndUpdate(id, {...updateclientDto, password: encryptedPassword}, { new: true }).exec();
-      }else{
-        return this.clientModel.findByIdAndUpdate(id, updateclientDto, { new: true }).exec();
-      }
+  async update(id: string, updateClientDto: UpdateClientDto): Promise<Client | null> {
+    const { image, ...dtoWithoutImage } = updateClientDto;
+    const updateData: any = { ...dtoWithoutImage };
+    if (image === null || image === undefined) {
+      updateData.$unset = { image: '' };
+    } else {
+      updateData.image = image;
+    }
+    try {
+      const updatedClient = await this.clientModel
+        .findByIdAndUpdate(id, updateData, { new: true }) 
+      return updatedClient;
+    } catch (error) {
+      console.error('Error updating Client:', error);
+      return null;
     }
   }
 
