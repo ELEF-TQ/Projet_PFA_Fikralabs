@@ -93,5 +93,12 @@ export class ClientsService {
     }
     return client.coupons;
   }
+
+  async destroy(ids: string[]): Promise<Client[]> {
+    const deletedClients = await this.clientModel.find({ _id: { $in: ids } }).exec();
+    await this.clientModel.deleteMany({ _id: { $in: ids } }).exec();
+    return deletedClients;
+  }
+  
  
 }
