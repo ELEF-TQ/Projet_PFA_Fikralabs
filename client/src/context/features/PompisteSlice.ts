@@ -26,7 +26,7 @@ export const createPompiste = createAsyncThunk('pompistes/create', async (formDa
 // Async thunk to update a pompiste
 export const updatePompiste = createAsyncThunk('pompistes/update', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
   try {
-    const response = await axiosAuthMultipart.patch(`/pompistes/${Id}`, formData);
+    const response = await axiosAuthMultipart.post(`/pompistes/updateData/${Id}`, formData);
     return response.data;
   } catch (error:any) {
     return thunkAPI.rejectWithValue(error.response.data);
@@ -127,7 +127,23 @@ const pompistesSlice = createSlice({
       } else {
         Swal.fire({ icon: 'error', title: 'Oops!', text: 'Une erreur s\'est produite lors de l\'inscription.' }); 
       }
+    })
+    .addCase(updatePompiste.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(updatePompiste.fulfilled, (state) => {
+      state.isLoading = false;
+      Swal.fire('Success!', 'Le pompiste a été mis à jour avec succès.', 'success');
+    })
+    .addCase(updatePompiste.rejected, (state, action:any) => {
+      state.isLoading = false;
+      if (action.payload && action.payload.message) {
+        Swal.fire({ icon: 'error', title: 'Erreur!', text: action.payload.message });
+      } else {
+        Swal.fire({ icon: 'error', title: 'Erreur!', text: 'Une erreur s\'est produite lors de la mise à jour du pompiste.' });
+      }
     });
+    
 
   },
 });

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { SidebarProvider } from "../../providers/SidebarProvider";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../components/shared/Sidebar";
 
 const Index = () => {
   return (

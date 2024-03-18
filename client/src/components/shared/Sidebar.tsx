@@ -1,11 +1,11 @@
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
-import { SidebarContext } from "../providers/SidebarProvider";
-import defaultUser from '../assets/images/defaultUser.png'
+import { SidebarContext } from "../../providers/SidebarProvider";
+import defaultUser from '../../assets/images/defaultUser.png'
 import { Link, useLocation } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
-import { retrieveUserSession } from "../lib/Encryption";
-import { AdminItems, ClientItems, PompisteItems } from "../routes/dash-routes";
+import { retrieveUserSession } from "../../lib/Encryption";
+import { AdminItems, ClientItems, PompisteItems } from "../../routes/dash-routes";
 import Cookies from 'js-cookie';
 import Swal from "sweetalert2";
 interface SidebarItem {

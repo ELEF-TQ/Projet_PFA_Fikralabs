@@ -5,7 +5,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { getAllReviews } from "../../context/features/ReviewSlice";
 import Modal from "react-modal";
-import Spinner from "../../components/Status/Spinner";
+import Spinner from "../../components/status/Spinner";
 import ClientInfosModal from "../../components/modals/ClientInfos";
 import './style.css'
 import { retrieveUserSession } from "../../lib/Encryption";

@@ -1,18 +1,33 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { getPompistes, updatePompiste } from '../../../context/features/PompisteSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
-
+import defaultIMG from '../../../assets/images/defaultUser.png'
+import { RootState } from '../../../context/store';
+import Swal from 'sweetalert2';
+import { emailRegex ,phoneRegex,usernameRegex } from '../../../utils/Regex';
 interface Props {
   show: boolean;
   handleClose: () => void;
   Element: any;
 }
 
+interface FormData {
+  image: any | null;
+  username: string;
+  matriculeRH: string;
+  CIN: string;
+  phone: string;
+  email: string;
+}
+
 const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
 
-  const dispatch = useDispatch<AppDispatch>()
-  const [formData, setFormData] = useState({
+  const dispatch = useDispatch<AppDispatch>();
+  const { isLoading } = useSelector((state: RootState) => state.pompistes);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [formData, setFormData] = useState<FormData>({
+    image: null,
     username: "",
     matriculeRH: "",
     CIN: "",
@@ -21,10 +36,19 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
   });
 
   useEffect(() => {
+    setErrorMessage(null); 
     if (Element && show) {
-      setFormData(Element); 
+      setFormData({
+        username: Element.username,
+        matriculeRH: Element.matriculeRH,
+        CIN: Element.CIN,
+        phone: Element.phone,
+        email: Element.email,
+        image: Element.image
+      });
     } else {
       setFormData({
+        image: null,
         username: "",
         matriculeRH: "",
         CIN: "",
@@ -35,19 +59,51 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
   }, [show, Element]);
 
   const handleSubmit = () => {
-    console.log("Submit", formData);
+    const { username, matriculeRH, CIN, phone, email } = formData;
+
+    if (!username || !matriculeRH || !CIN || !phone || !email) {
+      setErrorMessage('Veuillez remplir tous les champs!');
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setErrorMessage('Veuillez saisir une adresse e-mail valide.');
+      return;
+    }
+
+    if (!phoneRegex.test(phone)) {
+      setErrorMessage('Veuillez saisir un numéro de téléphone valide.');
+      return;
+    }
+
+    if (!usernameRegex.test(username)) {
+      setErrorMessage('Veuillez saisir un nom d\'utilisateur valide.');
+      return;
+    }
+
+    console.log(formData)
     dispatch(updatePompiste({ Id: Element._id, formData })).then(() => {
       handleClose();
-      dispatch(getPompistes);
-    });  
+      setErrorMessage(null)
+      dispatch(getPompistes());
+    });
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    const { name, value, files } = event.target;
+
+    if (name === 'image' && files && files.length > 0) {
+      const selectedImage = files[0];
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        image: selectedImage
+      }));
+    } else {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        [name]: value
+      }));
+    }
   };
 
   return (
@@ -59,6 +115,45 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
               <h3 className="modal-title">Modifier Pompiste</h3>
             </div>
             <div className="modal-content">
+            <div className="flex items-center justify-center Margin__Input__Buttom">
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={handleChange}
+                style={{ display: 'none' }}
+              />
+              <label htmlFor="image">
+                <div className="image-container">
+                  {formData.image ? (
+                    <img
+                      src={
+                        formData.image instanceof File
+                          ? URL.createObjectURL(formData.image)
+                          : `data:image/png;base64,${formData.image.buffer.toString('base64')}`
+                      }
+                      alt="profile"
+                      className="profile-image"
+                    />
+                  ) : (
+                    <img src={defaultIMG} alt="default" className="default-image" />
+                  )}
+                </div>
+              </label>
+            </div>
+            {/* Add button to remove the image */}
+            {formData.image && (
+              <div className="flex justify-center mt-2">
+                <button
+                  className="btn bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded"
+                  onClick={() => setFormData(prevFormData => ({ ...prevFormData, image: null }))}
+                >
+                  Supprimer l'image
+                </button>
+              </div>
+            )}
+
               <div className="mb-4">
                 <label
                   htmlFor="username"
@@ -149,12 +244,21 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
                 />
               </div>
             </div>
+            {
+              errorMessage && (
+                <div className=" mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                  <span className="block sm:inline">{errorMessage}</span>
+                </div>
+              )
+            }
+
+           
             <div className="flex justify-between">
               <button
                 className="btn bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
                 onClick={handleSubmit}
               >
-                Modifier
+                {isLoading ? 'En cours...' : 'Modifier'}
               </button>
               <button
                 className="btn bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded"

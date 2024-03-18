@@ -1,18 +1,30 @@
-import Coupon from '../../components/Coupon';
+import Coupon from '../../components/others/Coupon';
 import { ReactElement, JSXElementConstructor, ReactNode, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../context/store';
 import { fetchAllCoupons } from '../../context/features/CouponSlice';
 import { getClient } from '../../context/features/ClientSlice';
 import { retrieveUserSession } from '../../lib/Encryption';
-import Spinner from '../../components/Status/Spinner';
+import Spinner from '../../components/status/Spinner';
+
+const mapCouponsWithReserved = (couponsList: any[], reservedList: string[] | null) => {
+    if (!reservedList) return []; 
+    return couponsList.map((coupon: any) => {
+        const isReserved = reservedList.includes(coupon._id); 
+        return {
+            ...coupon,
+            reservedHome: isReserved
+        };
+    });
+};
+
 
 const Home = () => {
     const dispatch = useDispatch<AppDispatch>();
     const user = retrieveUserSession();
     const { coupons, isLoading } = useSelector((state:any) => state.coupons);
     const { client } = useSelector((state:any) => state.clients);
-
+    const reservedCoupons = client?.coupons
     useEffect(() => {
         dispatch(getClient(user._id));
         dispatch(fetchAllCoupons());
@@ -23,13 +35,14 @@ const Home = () => {
             <div className='flex flex-col justify-start items-start'>
                 <h3 className="text-center text-xl font-semibold mb-2">{title}</h3>
                 <div className='flex flex-wrap gap-7'>
-                    {coupons.map((coupon, index) => (
-                        <Coupon key={index} coupon={coupon} reserved={false}/>
+                    {mapCouponsWithReserved(coupons, reservedCoupons).map((coupon, index) => (
+                        <Coupon key={index} coupon={coupon} reserved={false} reservedHome={coupon.reservedHome} /> 
                     ))}
                 </div>
             </div>
         );
     };
+    
 
     const currentDate = new Date();
 

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { handleLogin } from '../../../context/features/AuthSlice';
 import { AppDispatch } from '../../../context/store';
 import { Link } from 'react-router-dom';
-import Header from '../../../components/Header';
+import Header from '../../../components/shared/Header';
 
 const Index: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

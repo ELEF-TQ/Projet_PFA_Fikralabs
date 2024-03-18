@@ -4,12 +4,12 @@ import defaultUser from '../../../assets/images/defaultUser.png'
 import AddPompiste from './AddPompiste';
 import ViewPompiste from './ViewPompisteModal';
 import EditPompiste from './EditPompiste';
-import Destroy from '../../../components/Destroy';
-import Delete from '../../../components/Delete';
+import Destroy from '../../../components/crud/Destroy';
+import Delete from '../../../components/crud/Delete';
 import { getPompistes } from '../../../context/features/PompisteSlice';
 import { useDispatch ,useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
-import EvaluationStars from '../../../components/EvaluationStars';
+import EvaluationStars from '../../../components/shared/EvaluationStars';
 const Pompiste : React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
@@ -43,7 +43,7 @@ const Pompiste : React.FC = () => {
     );
   };
 
-  
+
   useEffect(()=> {
     dispatch(getPompistes());
   },[])
@@ -123,7 +123,8 @@ const Pompiste : React.FC = () => {
               </th>
               <th scope="col" className="p-4 ">Pompiste</th>
               <th scope="col" className="p-4 ">Nom</th>
-              <th scope="col" className="p-4 ">Sold</th>
+              <th scope="col" className="p-4 ">Matricule</th>
+              <th scope="col" className="p-4 ">phone</th>
               <th scope="col" className="p-4 ">évaluation</th>
               <th scope="col" className="p-4 ">Actions</th>
             </tr>
@@ -152,20 +153,20 @@ const Pompiste : React.FC = () => {
                 <div className="flex items-center justify-center mr-3">
                <img 
                 src={pompiste?.image?.buffer ? `data:image/png;base64,${pompiste.image.buffer}` : defaultUser}
-                alt="img" width={50} height={50} />
+                alt="img" width={50} height={50}
+                className='rounded-full' />
                 </div>
               </th>
               <td className="px-4 py-3">
                 <span className="bg-primary-100 text-primary-800 text-xs font-medium rounded dark:bg-primary-900 dark:text-primary-300">{pompiste.username}</span>
               </td>
             
-              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pompiste.solde}</td>
+              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pompiste.matriculeRH}</td>
+              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pompiste.phone}</td>
               <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-               
                 <div className="flex items-center justify-center flex-row">
                 <EvaluationStars etoiles={pompiste.etoiles} />
                 </div>
-
               </td>
 
               <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">

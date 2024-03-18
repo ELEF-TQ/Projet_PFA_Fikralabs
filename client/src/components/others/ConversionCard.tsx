@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import pendingImage from '../assets/icons/conversion_pending.png';
-import acceptedImage from '../assets/icons/conversoin_Accepted.png';
-import ConversionInfosModal from './modals/ConversionInfos'; 
+import pendingImage from '../../assets/icons/conversion_pending.png';
+import acceptedImage from '../../assets/icons/conversoin_Accepted.png';
+import ConversionInfosModal from '../modals/ConversionInfos'; 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const pendingColor = 'rgba(255, 180, 0, 1)';

@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import { MuiOtpInput } from 'mui-one-time-password-input';
-import Header from '../../../components/Header';
+import Header from '../../../components/shared/Header';
 import Logo from '../../../assets/icons/LogoBlack.png';
 const Index: React.FC = () => {
 

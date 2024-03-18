@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header';
-import StationCard from '../../components/StationCard';
+import Header from '../../components/shared/Header';
+import StationCard from '../../components/others/StationCard';
 import SearchIcon from '@mui/icons-material/Search';
 import { fetchNearestStations } from '../../context/features/StationSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../context/store';
 import { Station } from '../../types/Station';
 import GetUserGeolocation, { Coordinates } from '../../lib/GetUserGeolocation';
-import Spinner from '../../components/Status/Spinner';
+import Spinner from '../../components/status/Spinner';
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
