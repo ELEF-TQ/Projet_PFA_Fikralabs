@@ -7,7 +7,6 @@ export type ClientDocument = Client & Document;
 @Schema()
 export class Client {
   
- 
   @Prop({required: true})
   username: string;
 

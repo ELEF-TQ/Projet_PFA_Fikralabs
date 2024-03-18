@@ -10,7 +10,7 @@ import { AppDispatch } from '../../context/store';
 import { AddAPhotoOutlined } from '@mui/icons-material';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
-const Profile: React.FC = () => {
+const PompisteProfile: React.FC = () => {
   const [showPasswordpart, setShowPasswordpart] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
@@ -342,4 +342,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default PompisteProfile;

@@ -1,13 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
-import { axiosAuth } from '../../lib/AxiosBase'; 
+import { axiosAuth, axiosAuthMultipart } from '../../lib/AxiosBase'; 
 
 type DeleteParams = {
   EndPoint: string;
   Id?: string;
   ids?: string[];
 };
+
+export const updateProfileAdmin = createAsyncThunk('admins/updateProfile', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
+  try {
+    const response = await axiosAuthMultipart.post(`/admins/updateProfile/${Id}`, formData);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
 
 // deleteItem:
 export const deleteItem = createAsyncThunk(
@@ -62,7 +72,24 @@ const adminSlice = createSlice({
         Swal.fire('Succès', 'Détruit avec succès', 'success') })
       .addCase(destroyItems.rejected, (state) => {
         state.isLoading = false;
-        Swal.fire('Erreur', 'Échec de la destruction', 'error')});
+        Swal.fire('Erreur', 'Échec de la destruction', 'error')})
+      .addCase(updateProfileAdmin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProfileAdmin.fulfilled, (state) => {
+        state.isLoading = false;
+        Swal.fire('Success!', 'Votre profile a été mise à jour avec succès.', 'success').then(() => {
+          window.location.reload();
+        });
+      })
+      .addCase(updateProfileAdmin.rejected, (state, action: any) => {
+        state.isLoading = false;
+        if (action.payload && action.payload.message) {
+          Swal.fire({ icon: 'error', title: 'Oops!', text: action.payload.message || '' }); 
+        } else {
+          Swal.fire({ icon: 'error', title: 'Oops!', text: 'Une erreur s\'est produite lors de la mise à jour du profile.' }); 
+        }
+      });
   },
 });
 

@@ -4,6 +4,7 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { Coupon } from 'src/coupons/Schemas/coupon.schema';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UpdateClientProfileDto } from './dto/update-client-profile.dto';
 
 
 @Controller('clients')
@@ -34,6 +35,13 @@ export class ClientsController {
   }
 
 
+  @Post("updateProfile/:id")
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(FileInterceptor('image')) 
+  async updateProfile(@Param('id') id: string, @UploadedFile() image:File ,@Body() updateProfileDto: UpdateClientProfileDto) {
+    const clientDataWithImage = { ...updateProfileDto, image: image };
+    return await this.clientsService.updateProfileClient(id, clientDataWithImage);
+  }
 
 
   @Delete(':id')

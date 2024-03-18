@@ -4,8 +4,9 @@ import { Model } from 'mongoose';
 import { Client, ClientDocument } from './schemas/client.schema';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
-import { encodePassword } from 'src/auth/utils/bcrypt';
+import { comparePasswords, encodePassword } from 'src/auth/utils/bcrypt';
 import { Coupon } from 'src/coupons/Schemas/coupon.schema';
+import { UpdateClientProfileDto } from './dto/update-client-profile.dto';
 
 @Injectable()
 export class ClientsService {
@@ -83,6 +84,46 @@ export class ClientsService {
       return updatedClient;
     } catch (error) {
       throw new Error('Une erreur est survenue lors de la réservation du coupon');    }
+  }
+
+
+  async updateProfileClient(id: string, updateProfileDto: UpdateClientProfileDto): Promise<Client> {
+    const client = await this.clientModel.findById(id);
+    if (!client) {
+      throw new HttpException('Client not found', HttpStatus.NOT_FOUND);
+    }
+
+    // Check if the email already exists
+    if (updateProfileDto.email) {
+      const existingClient = await this.clientModel.findOne({ email: updateProfileDto.email });
+      if (existingClient && existingClient._id.toString() !== id) {
+        throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
+      }
+    }
+
+    // Check if the old password matches
+    if (updateProfileDto.oldPassword && updateProfileDto.newPassword && !comparePasswords(updateProfileDto.oldPassword, client.password)) {
+      throw new HttpException('Old password is incorrect', HttpStatus.BAD_REQUEST);
+    }
+
+    // Update the fields
+    if (updateProfileDto.username) {
+      client.username = updateProfileDto.username;
+    }
+    if (updateProfileDto.email) {
+      client.email = updateProfileDto.email;
+    }
+    if(updateProfileDto.phone){
+      client.phone = updateProfileDto.phone
+    }
+    if(updateProfileDto.newPassword){
+      client.password = encodePassword(updateProfileDto.newPassword)
+    }
+    if(updateProfileDto.image){
+      client.image = updateProfileDto.image;
+    }
+    
+    return await client.save();
   }
   
 
