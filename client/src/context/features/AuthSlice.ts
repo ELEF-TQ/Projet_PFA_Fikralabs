@@ -50,7 +50,7 @@ const authSlice = createSlice({
       .addCase(handleSignup.fulfilled, (state) => {
         state.isLoading = false;
         Swal.fire('Success!', 'Votre inscription a été soumise avec succès.', 'success').then(() => {
-          window.location.href = '/';
+          window.location.href = '/login';
         });
       })
       .addCase(handleSignup.rejected, (state, action: any) => {
@@ -61,6 +61,10 @@ const authSlice = createSlice({
         } else {
           Swal.fire({ icon: 'error', title: 'Oops!', text: 'Une erreur s\'est produite lors de l\'inscription.' }); 
         }
+      })
+      .addCase(handleLogin.pending, (state) => {
+        state.isLoading = true;
+        state.isAuthenticated = false;
       })
       .addCase(handleLogin.fulfilled, (state, action) => {
         state.isLoading = false;

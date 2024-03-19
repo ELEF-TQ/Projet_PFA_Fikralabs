@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ClientsService } from '../clients/clients.service';
@@ -6,9 +6,11 @@ import { PompistesService } from '../pompistes/pompistes.service';
 import { Review } from './schemas/review.schema';
 import { UpdatePompisteDto } from '../pompistes/dto/update-pompiste.dto';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { UpdateReviewDto } from './dto/update-review.dto';
 
 @Injectable()
 export class ReviewsService {
+
   constructor(
     private readonly clientService: ClientsService,
     private readonly pompisteService: PompistesService,
@@ -39,9 +41,31 @@ export class ReviewsService {
 
 
 
-  async getAll(matriculeRH: string) {
-    const id = await this.pompisteService.getPompisteByMatriculeRH(matriculeRH);
-    const reviews = await this.reviewModel.find({ pompiste: id }).populate(['pompiste', 'client']).exec();
-    return reviews;
+async getAllByPompiste(matriculeRH: string) {
+  const id = await this.pompisteService.getPompisteByMatriculeRH(matriculeRH);
+  const reviews = await this.reviewModel.find({ pompiste: id })
+    .populate({ path: 'pompiste', select: '-image -password ' })
+    .populate({ path: 'client', select: '-image -password -coupons' }) 
+    .exec();
+  return reviews;
+}
+
+async getAllByClient(clientId: string) {
+  const reviews = await this.reviewModel.find({ client: clientId })
+    .populate({ path: 'pompiste', select: '-image -password' }) 
+    .populate({ path: 'client', select: '-image -password -coupons' }) 
+    .exec();
+  return reviews;
+}
+
+
+async update(id: string, updateReviewDto: UpdateReviewDto): Promise<Review> {
+  const { commentaire } = updateReviewDto;
+  const updatedReview = await this.reviewModel.findByIdAndUpdate(id, { commentaire }, { new: true });
+  if (!updatedReview) {
+    throw new NotFoundException('Évaluation introuvable');
   }
+  return updatedReview;
+}
+
 }

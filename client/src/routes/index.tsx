@@ -3,6 +3,7 @@ import ProtectedRoute from "../lib/RoleGuards";
 /*_____Public___*/
 import Home from "../pages/public/Home";
 import AddReview from "../pages/public/AddReview";
+import NotFound from "../pages/Error/NotFound";
 
 /*___Authentication_____ */
 import LoginPage from '../pages/Auth/login/index';
@@ -33,10 +34,9 @@ import PompisteProfile from "../pages/Pompiste/Profile";
 import Client from '../pages/Client/index';
 import HomeClient from "../pages/Client/Home";
 import Coupons from "../pages/Client/mesCoupons";
+import MesReviews from "../pages/Client/Reviews";
+import MesServices from '../pages/Client/Services';
 import ClientProfile from "../pages/Client/Profile";
-
-/*___NotFound_____ */
-import NotFound from "../pages/Error/NotFound";
 
 
 
@@ -87,6 +87,8 @@ export const routes = createBrowserRouter([
     children: [
       { path: "", element: <HomeClient /> }, 
       { path: "coupons", element: <Coupons /> },
+      { path: "evaluations", element: <MesReviews />},
+      { path: "services", element: <MesServices />},
       { path: "profile", element: <ClientProfile /> },
     ],
   },

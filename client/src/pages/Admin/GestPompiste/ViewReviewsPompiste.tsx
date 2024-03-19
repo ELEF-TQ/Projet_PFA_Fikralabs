@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { AppDispatch, RootState } from '../../../context/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllReviews } from '../../../context/features/ReviewSlice';
+import { getAllReviewsByPompiste } from '../../../context/features/ReviewSlice';
 import moment from 'moment';
 import defaultIMG from '../../../assets/images/defaultUser.png';
 import { getPompisteByMatriculeRH } from '../../../context/features/PompisteSlice';
@@ -29,7 +29,7 @@ const ReviewsPompiste = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllReviews(matriculeRH));
+    dispatch(getAllReviewsByPompiste(matriculeRH as string));
     dispatch(getPompisteByMatriculeRH(matriculeRH as string))
   }, [matriculeRH]);
 

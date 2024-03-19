@@ -1,9 +1,11 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { IoSettingsOutline } from "react-icons/io5";
 import { TbTransform } from "react-icons/tb";
 import { RiCoupon2Fill } from "react-icons/ri";
+import { BiSolidMessageSquareDots } from "react-icons/bi";
+import { MdHomeRepairService } from "react-icons/md";
+import { GiSandsOfTime } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
 
 export const AdminItems = [
@@ -49,24 +51,14 @@ export const PompisteItems = [
     icon: AiOutlineHome,
   },
   {
-    name: "Demandes",
+    name: "Conversion ",
     href: "/pompiste/demandeConvertion",
-    icon: FaPeopleGroup ,
+    icon: TbTransform ,
   },
   {
-    name: "Conversion",
+    name: "Demandes",
     href: "/pompiste/mesConvertions",
-    icon: TbTransform,
-  },
-  {
-    name: "Quiz",
-    href: "/pompiste/quiz",
-    icon: IoSettingsOutline ,
-  },
-  {
-    name: "Formations",
-    href: "/pompiste/formations",
-    icon: IoSettingsOutline ,
+    icon: GiSandsOfTime,
   },
   {
     name: "Profile",
@@ -89,9 +81,19 @@ export const ClientItems = [
     icon: RiCoupon2Fill  ,
   },
   {
+    name: "Evaluations",
+    href: "/client/evaluations",
+    icon:BiSolidMessageSquareDots ,
+  },
+  {
+    name: "Services",
+    href: "/client/services",
+    icon:MdHomeRepairService ,
+  },
+  {
     name: "Profile",
     href: "/client/profile",
     icon: CgProfile ,
-  },
+  }
 ]
 

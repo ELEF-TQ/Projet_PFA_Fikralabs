@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Formik, Form } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2'
-import { AppDispatch } from '../../../context/store';
+import { AppDispatch, RootState } from '../../../context/store';
 import { handleSignup } from '../../../context/features/AuthSlice';
 import { Link } from 'react-router-dom';
 import defaultIMG from '../../../assets/images/defaultUser.png'
@@ -13,6 +13,7 @@ import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../../u
 const index :React.FC= () => {
 
     const [errors, setErrors] = useState<Record<string, string>>({});
+
 
   interface FormData {
     username: string;
@@ -402,7 +403,7 @@ export function FormikStepper({
             onClick={handleSubmit}
             disabled={!isValid }
           >
-            {'Ajouter'}
+            {'S’inscrire'}
           </button>
         )}
       </div>
