@@ -18,6 +18,7 @@ import GestionConversions from "../pages/Admin/GestConversion/Conversion";
 import GestionProfile from "../pages/Admin/Profile";
 import GestCoupons from '../pages/Admin/GestCoupon/Coupon';
 import AdminProfile from "../pages/Admin/Profile";
+import ReviewsPompiste from "../pages/Admin/GestPompiste/ViewReviewsPompiste";
 
 /*___Pompiste_____ */
 import Pompiste from "../pages/Pompiste/index";
@@ -61,6 +62,7 @@ export const routes = createBrowserRouter([
       { path: "profile", element: <GestionProfile /> },
       { path: "coupons", element: <GestCoupons /> },
       { path: "profile", element: <AdminProfile /> },
+      { path: "viewReviews/:matriculeRH", element: <ReviewsPompiste /> },
     ],
   },
 
