@@ -52,7 +52,7 @@ async getAllByPompiste(matriculeRH: string) {
 
 async getAllByClient(clientId: string) {
   const reviews = await this.reviewModel.find({ client: clientId })
-    .populate({ path: 'pompiste', select: '-image -password' }) 
+    .populate({ path: 'pompiste', select: '-password' }) 
     .populate({ path: 'client', select: '-image -password -coupons' }) 
     .exec();
   return reviews;

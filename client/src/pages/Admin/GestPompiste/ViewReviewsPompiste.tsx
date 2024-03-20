@@ -133,7 +133,6 @@ const ReviewsPompiste = () => {
                 </div>
                 <Typography variant="body1">
                   {review.commentaire}
-                  {/* Hey guys, I hope this example comment is helping you read this documentation. */}
                 </Typography>
               </div>
             </div>
