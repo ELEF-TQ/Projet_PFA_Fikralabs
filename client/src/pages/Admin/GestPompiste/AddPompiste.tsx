@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import defaultIMG from '../../../assets/images/defaultUser.png';
 import { emailRegex, phoneRegex, usernameRegex } from '../../../utils/Regex';
+import { AddAPhotoOutlined } from "@mui/icons-material";
 
 interface Props {
   show: boolean;
@@ -108,13 +109,17 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
                   style={{ display: 'none' }}
                 />
                 <label htmlFor="image">
-                  <div className="image-container">
+                  <div className="image-container ring-2 ring-green-300 dark:ring-green-500 relative group">
                     {formData.image ? (
-                      <img src={URL.createObjectURL(formData.image)} alt="profile" className="profile-image" />
+                      <img src={URL.createObjectURL(formData.image)} alt="profile" className="object-cover w-30 h-30 p-1 rounded-full" />
                     ) : (
-                        <img src={defaultIMG} alt="default" className="default-image" />
+                        <img src={defaultIMG} alt="default" className="object-cover w-30 h-30 p-1 rounded-full" />
                       )}
                   </div>
+                  <div className="overlay opacity-0 group-hover:opacity-100 absolute inset-0 flex flex-col items-center justify-center text-center bg-black bg-opacity-50 text-white transition-opacity">
+                      <AddAPhotoOutlined sx={{ fontSize: 32, mb: 2 }} />
+                      <span className='w-24'>Update profile picture</span>
+                    </div>
                 </label>
               </div>
 

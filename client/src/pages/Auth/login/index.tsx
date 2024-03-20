@@ -5,6 +5,7 @@ import { handleLogin } from '../../../context/features/AuthSlice';
 import { AppDispatch, RootState } from '../../../context/store';
 import { Link } from 'react-router-dom';
 import Header from '../../../components/shared/Header';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const Index: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -59,8 +60,8 @@ const Index: React.FC = () => {
                 onChange={handleChange}
               />
             </div>
-            <div>
-              <label htmlFor="password" className="block mb-2 text-sm font-medium Input_Label">
+            <div className='relative'>
+              <label htmlFor="password" className="block mb-2 text-sm font-medium Input_Label text-green-900">
                 Mot de passe
               </label>
               <input
@@ -71,11 +72,20 @@ const Index: React.FC = () => {
                 className="Input__Style w-full"
                 onChange={handleChange}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prevShowPassword) => !prevShowPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-2 text-green-900"
+                style={{ top: '50%', transform: 'translateY(-19%)' }}
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
             </div>
+
             <div className="flex justify-end ">
               <Link
                 to="/reset"
-                className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                className=" text-primary-color text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
               >
                 Mot de passe oublié ?
               </Link>
@@ -102,8 +112,7 @@ const Index: React.FC = () => {
 
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
               Vous n’avez pas un compte ?{' '}
-              <Link to="/signup" className=" font-medium text-primary-600 hover:underline dark:text-primary-500 ">
-              
+              <Link to="/signup" className="text-primary-color font-medium text-primary-600 hover:underline dark:text-primary-500 ">
                 S’inscrire
               </Link>
             </p>
@@ -117,3 +126,6 @@ const Index: React.FC = () => {
 };
 
 export default Index;
+
+
+

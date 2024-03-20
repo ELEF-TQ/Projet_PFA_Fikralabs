@@ -9,11 +9,13 @@ import defaultIMG from '../../../assets/images/defaultUser.png'
 import Header from '../../../components/shared/Header';
 import Logo from '../../../assets/icons/LogoBlack.png';
 import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../../utils/Regex';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const index :React.FC= () => {
 
     const [errors, setErrors] = useState<Record<string, string>>({});
 
+    const [showPassword, setShowPassword] = useState(false);
 
   interface FormData {
     username: string;
@@ -250,10 +252,10 @@ const index :React.FC= () => {
               
               <Form className="Sign__form">
 
-              <div className={`Margin__Input__Buttom `}>
+              <div className={`Margin__Input__Buttom relative`}>
                   <label htmlFor="password" className='Input_Label'>Mot de passe</label>
                   <input
-                    type="password"
+                      type={showPassword ? 'text' : 'password'}
                     className={`form-control Input__Style `}
                     id="password"
                     name="password"
@@ -265,6 +267,14 @@ const index :React.FC= () => {
                     onCopy={(e) => {e.preventDefault();}}
                     onCut={(e) => {e.preventDefault();}}
                   />
+                     <button
+                type="button"
+                onClick={() => setShowPassword((prevShowPassword) => !prevShowPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-2 text-green-900"
+                style={{ top: '50%', transform: 'translateY(-39%)' }}
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
                   <div className="password-strength-bar">
                     <div className={`strength strength-${getPasswordStrength(formData.password)}`} />
                   </div>

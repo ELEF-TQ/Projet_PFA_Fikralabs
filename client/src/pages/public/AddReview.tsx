@@ -28,7 +28,7 @@ const Index: React.FC = () => {
   const [ratings, setRatings] = useState<number[]>([0, 0, 0]);
   const [commentaire , setCommentaire] = useState('');
   const [pompisteInfo , setPompisteInfo] = useState<any>(null);
- 
+  const [ isLoading , setIsLoading] = useState(false);
   const handleRatingChange = (index:number, newValue: number | null) => {
     if(newValue !== null) {
       const newRatings = [...ratings];
@@ -53,7 +53,8 @@ const Index: React.FC = () => {
   };
 
   const handleNext = async () => {
-    let newSkipped = skipped;   
+    let newSkipped = skipped;
+  
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
@@ -61,28 +62,35 @@ const Index: React.FC = () => {
   
     switch (activeStep) {
       case 0:
-          if (!phoneRegex.test(phone)) {
-            Swal.fire({icon: 'warning',title: 'Attention',text: 'Veuillez saisir un numéro de téléphone valide !'});    
-            return;
-          }
-          try {
-            await axiosNoAuth.get(`/clients/phone/${phone}`);
-          } catch (error:any) {
-            Swal.fire({icon: 'error',title: 'Erreur',text: error.response.data.message});   
-            return;
-          }
-          localStorage.setItem('phone', phone);
-          break;
-      case 1:
-        try {
-        const res =  await axiosNoAuth.get(`/pompistes/matriculeRH/${matriculeRH}`);
-        setPompisteInfo(res.data)
-        console.log(res)
-        } catch (error:any) {
-          Swal.fire({icon: 'error',title: 'Erreur',text: error.response.data.message});
+        if (!phoneRegex.test(phone)) {
+          Swal.fire({ icon: 'warning', title: 'Attention', text: 'Veuillez saisir un numéro de téléphone valide !' });
           return;
         }
-        localStorage.setItem('matriculeRH', matriculeRH);
+        setIsLoading(true); // Set loading state before making the request
+        try {
+          await axiosNoAuth.get(`/clients/phone/${phone}`);
+          localStorage.setItem('phone', phone);
+        } catch (error:any) {
+          Swal.fire({ icon: 'error', title: 'Erreur', text: error.response.data.message });
+          setIsLoading(false); // Reset loading state if request fails
+          return;
+        }
+        break;
+      case 1:
+        if (!matriculeRH) {
+          Swal.fire({ icon: 'warning', title: 'Attention', text: 'Veuillez saisir un matricule RH valide !' });
+          return;
+        }
+        setIsLoading(true); // Set loading state before making the request
+        try {
+          const res = await axiosNoAuth.get(`/pompistes/matriculeRH/${matriculeRH}`);
+          setPompisteInfo(res.data);
+          localStorage.setItem('matriculeRH', matriculeRH);
+        } catch (error:any) {
+          Swal.fire({ icon: 'error', title: 'Erreur', text: error.response.data.message });
+          setIsLoading(false); // Reset loading state if request fails
+          return;
+        }
         break;
       case 2:
         const formData = {
@@ -91,14 +99,21 @@ const Index: React.FC = () => {
           etoiles: calculateAverage(),
           commentaire: commentaire,
         };
-       dispatch(createReview(formData)).then(()=>{
-        setPhone('');
-        setMatriculeRH('');
-        setRatings([0, 0, 0]);
-        setCommentaire('');
-        localStorage.removeItem('phone');
-        localStorage.removeItem('matriculeRH'); 
-      })
+        setIsLoading(true); // Set loading state before dispatching action
+        dispatch(createReview(formData))
+          .then(() => {
+            // Reset form and local storage after action dispatch
+            setPhone('');
+            setMatriculeRH('');
+            setRatings([0, 0, 0]);
+            setCommentaire('');
+            localStorage.removeItem('phone');
+            localStorage.removeItem('matriculeRH');
+          })
+          .catch(error => {
+            setIsLoading(false); // Reset loading state if action dispatch fails
+            console.error('Error creating review:', error);
+          });
         break;
       case 3:
         console.log("Working on step 4");
@@ -107,11 +122,11 @@ const Index: React.FC = () => {
         console.log("Unknown step");
         break;
     }
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  
+    setIsLoading(false); // Reset loading state after completing the operation
+    setActiveStep(prevActiveStep => prevActiveStep + 1);
     setSkipped(newSkipped);
   };
-  
-  
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -315,7 +330,7 @@ const Index: React.FC = () => {
                             activeStep === 1 && matriculeRH === ''  
                           }
                         >
-                          Next
+                          {isLoading ? 'en cours...' : 'Next'}
                         </Button>
                       )}
                       {activeStep === steps.length - 1 && (

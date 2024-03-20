@@ -154,7 +154,7 @@ const AdminProfile: React.FC = () => {
           <div className="w-full sm:rounded-lg">
             <h2 className="pl-6 text-2xl font-bold sm:text-xl">Public Profile</h2>
             <div className="grid max-w-2xl mx-auto mt-8">
-              <div className=" relative flex flex-col flex justify-center items-center sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-4">
+              <div className=" relative flex flex-col  justify-center items-center sm:flex-row space-y-5 sm:space-y-0 sm:space-x-4">
                 <input
                   type="file"
                   id="image"
