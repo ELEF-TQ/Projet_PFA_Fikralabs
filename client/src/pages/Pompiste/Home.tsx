@@ -72,7 +72,7 @@ const Home = () => {
         <div className="flex items-center justify-center h-full">
           <div className="text-center text-gray-500">
             <p className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
-              Vous a avez aucun evaluations
+              Vous  n'avez aucune evaluation
             </p>
           </div>
         </div>

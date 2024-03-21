@@ -21,22 +21,14 @@ export class ReviewsController {
   @Get("/all-pompiste/:matriculeRH")
   async getAllReviewsByPompiste(@Param("matriculeRH") matriculeRH: string){
     const reviews = await this.reviewService.getAllByPompiste(matriculeRH);
-    if(reviews.length === 0){
-      throw new NotFoundException("Aucune évaluation trouvée");
-    }else{
-      return reviews;
-    }
+    return reviews;
   }
 
   
   @Get("/all-client/:clientId")
   async getAllReviewsByClient(@Param("clientId") clientId: string){
     const reviews = await this.reviewService.getAllByClient(clientId);
-    if(reviews.length === 0){
-      throw new NotFoundException("Aucune évaluation trouvée");
-    }else{
-      return reviews;
-    }
+    return reviews;
   }
 
 
