@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import { axiosAuth } from '../../lib/AxiosBase';
-
 // Async thunk to create a new Permission
 export const createPermission = createAsyncThunk('permissions/create', async (formData, thunkAPI) => {
   try {
