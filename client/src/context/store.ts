@@ -9,6 +9,8 @@ import ClientSlice from './features/ClientSlice'
 import ConversionSlice from './features/ConversionSlice'
 import CouponSlice from './features/CouponSlice'
 import StationSlice from './features/StationSlice'
+import RoleSlice from './features/RoleSlice'
+import PermissionSlice from './features/PermissionSlice'
 
 export const makeStore = () => {
   return configureStore({
@@ -20,7 +22,9 @@ export const makeStore = () => {
         clients :ClientSlice,
         conversions :ConversionSlice,
         coupons : CouponSlice,
-        stations: StationSlice
+        stations: StationSlice,
+        roles:RoleSlice,
+        permissions:PermissionSlice
     },
   })
 }
