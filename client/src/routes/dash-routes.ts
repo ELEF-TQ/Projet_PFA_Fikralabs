@@ -7,7 +7,8 @@ import { BiSolidMessageSquareDots } from "react-icons/bi";
 import { MdHomeRepairService } from "react-icons/md";
 import { GiSandsOfTime } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
-
+import { MdAdminPanelSettings } from "react-icons/md";
+import { RiAdminFill } from "react-icons/ri";
 export const AdminItems = [
     {
       name: "Home",
@@ -34,12 +35,22 @@ export const AdminItems = [
       href: "/admin/clients",
       icon: BsPeople,
     },
- 
+    {
+      name: "roles",
+      href: "/admin/roles",
+      icon: RiAdminFill,
+    },
+    {
+      name: "permissions",
+      href: "/admin/permissions",
+      icon: MdAdminPanelSettings,
+    },
     {
       name: "Profile",
       href: "/admin/profile",
       icon: CgProfile ,
     },
+ 
   ];
 
 

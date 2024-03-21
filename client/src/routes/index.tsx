@@ -13,14 +13,15 @@ import RestPasswordPage from '../pages/Auth/resetPassword/index';
 /*___Admin_____ */
 import Admin from '../pages/Admin/index';
 import Panel from "../pages/Admin/Panel";
-import GestionPompiste from "../pages/Admin/GestPompiste/Pompiste";
-import GestionClients from "../pages/Admin/GestClient/Clients";
-import GestionConversions from "../pages/Admin/GestConversion/Conversion";
+import GestionPompiste from "../pages/Admin/GestPompistes/Pompiste";
+import GestionClients from "../pages/Admin/GestClients/Clients";
+import GestionConversions from "../pages/Admin/GestConversions/Conversion";
 import GestionProfile from "../pages/Admin/Profile";
-import GestCoupons from '../pages/Admin/GestCoupon/Coupon';
+import GestCoupons from '../pages/Admin/GestCoupons/Coupon';
 import AdminProfile from "../pages/Admin/Profile";
-import ReviewsPompiste from "../pages/Admin/GestPompiste/ViewReviewsPompiste";
-
+import ReviewsPompiste from "../pages/Admin/GestPompistes/ViewReviewsPompiste";
+import GestionRoles from '../pages/Admin/GestRoles/role';
+import GestPermissions from '../pages/Admin/GestPermissions/Permission';
 /*___Pompiste_____ */
 import Pompiste from "../pages/Pompiste/index";
 import HomePompiste from "../pages/Pompiste/Home";
@@ -62,6 +63,8 @@ export const routes = createBrowserRouter([
       { path: "profile", element: <GestionProfile /> },
       { path: "coupons", element: <GestCoupons /> },
       { path: "profile", element: <AdminProfile /> },
+      { path: "roles", element: <GestionRoles/> },
+      { path: "permissions" , element: <GestPermissions/>} ,
       { path: "viewReviews/:matriculeRH", element: <ReviewsPompiste /> },
     ],
   },
@@ -90,6 +93,7 @@ export const routes = createBrowserRouter([
       { path: "evaluations", element: <MesReviews />},
       { path: "services", element: <MesServices />},
       { path: "profile", element: <ClientProfile /> },
+      
     ],
   },
 
