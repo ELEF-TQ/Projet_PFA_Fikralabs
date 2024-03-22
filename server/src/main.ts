@@ -8,8 +8,8 @@ import { getConnectionToken } from '@nestjs/mongoose';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const connection = app.get<Connection>(getConnectionToken());
-  await seedPermissions(connection); 
+  // const connection = app.get<Connection>(getConnectionToken());
+  // await seedPermissions(connection); 
 
   
   const config = new DocumentBuilder()

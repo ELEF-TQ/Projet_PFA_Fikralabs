@@ -3,10 +3,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import { axiosAuth } from '../../lib/AxiosBase';
 // Async thunk to create a new Permission
-export const createPermission = createAsyncThunk('permissions/create', async (formData, thunkAPI) => {
+export const createPermission = createAsyncThunk('permissions/create', async (formData:any, thunkAPI) => {
   try {
     const response = await axiosAuth.post('/permissions', formData);
-    return response.data;
+     return response.data;
   } catch (error:any) {
     return thunkAPI.rejectWithValue(error.response.data);
   }

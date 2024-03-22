@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import defaultIMG from '../../../assets/images/defaultUser.png';
+import React, { useEffect, useState } from "react";
+import { Permission } from "../../../types/Permission";
+import { groupPermissionsByType } from "../../../lib/GroupPermissionsByType";
 
 interface Props {
   show: boolean;
@@ -8,11 +8,14 @@ interface Props {
   Element: any;
 }
 
-const ViewPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
-  const navigate = useNavigate();
+const ViewRole: React.FC<Props> = ({ show, handleClose, Element }) => {
+  const [groupedPermissions, setGroupedPermissions] = useState<Record<string, Permission[]>>({});
 
   useEffect(() => {
-    console.log(Element);
+    if (Element && Element.permissions) {
+      const grouped = groupPermissionsByType(Element.permissions);
+      setGroupedPermissions(grouped);
+    }
   }, [Element]);
 
   return (
@@ -24,59 +27,34 @@ const ViewPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
               <h3 className="modal-title text-lg font-semibold">Voir plus</h3>
             </div>
             <div className="modal-content">
-              <div className="photo-wrapper p-2">
-                <img
-                  src={Element.image?.buffer ? `data:image/png;base64,${Element.image.buffer}` : defaultIMG}
-                  alt="default"
-                  className="w-32 h-32 rounded-full mx-auto ring-2 ring-gray-300"
-                />
-              </div>
-              <div className="p-2">
-                <h3 className="text-center my-0 text-xl font-medium leading-8">{Element.username}</h3>
-                <div className="text-center text-gray-600 text-xs font-semibold">
-                  <p className="mb-4">#{Element.matriculeRH}</p>
+              <h4 className="mb-2">Role Name: {Element.name}</h4>
+              <h4 className="mb-2">Permissions:</h4>
+              {Object.entries(groupedPermissions).map(([type, perms]) => (
+                <div key={type} className="mb-4">
+                  <h5 className="text-lg font-semibold mb-2">{type}</h5>
+                  <ul>
+                    {perms.map((perm) => (
+                      <li key={`${type}-${perm._id}`} className="ml-4">
+                        <span className="text-sm">{perm.key}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <table className="text-sm w-full my-3 mx-auto">
-                  <tbody>
-                    <tr>
-                      <td className="px-2 py-2 text-gray-700 font-semibold">CIN</td>
-                      <td className="px-2 py-2">{Element.CIN}</td>
-                      <td className="px-6"></td>
-                      <td className="px-2 py-2 text-gray-700 font-semibold">Phone</td>
-                      <td className="px-2 py-2">{Element.phone}</td>
-                    </tr>
-                    <tr>
-                      <td className="px-2 py-2 text-gray-700 font-semibold">Email</td>
-                      <td className="px-2 py-2">{Element.email}</td>
-                      <td className="px-6"></td>
-                      <td className="px-2 py-2 text-gray-700 font-semibold">Score</td>
-                      <td className="px-2 py-2">{Element.score}</td>
-                    </tr>
-                    <tr>
-                      <td className="px-2 py-2 text-gray-700 font-semibold">Etoiles</td>
-                      <td className="px-2 py-2">{Element.etoiles}</td>
-                      <td className="px-6"></td>
-                      <td className="px-2 py-2 text-gray-700 font-semibold">Solde</td>
-                      <td className="px-2 py-2">{Element.solde}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              ))}
             </div>
-            <div className="flex justify-between p-4">
-              <button
-                className="btn bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-500 hover:border-transparent rounded"
-                onClick={handleClose}
+            <button onClick={handleClose} className="modal-close">
+              <svg
+                className="fill-current text-gray-700"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
               >
-                Fermer
-              </button>
-              <button
-                className="btn bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 border border-green-500 hover:border-transparent rounded"
-                onClick={() => navigate(`/admin/viewReviews/${Element.matriculeRH}`)}
-              >
-                Voir les avis
-              </button>
-            </div>
+                <path
+                  d="M10.606 9l5.353-5.353a1 1 0 10-1.414-1.414L9 7.586 3.647 2.233a1 1 0 00-1.414 1.414L7.586 9l-5.353 5.353a1 1 0 001.414 1.414L9 10.414l5.353 5.353a1 1 0 001.414-1.414L10.414 9z"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       )}
@@ -84,4 +62,4 @@ const ViewPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
   );
 };
 
-export default ViewPompiste;
+export default ViewRole;

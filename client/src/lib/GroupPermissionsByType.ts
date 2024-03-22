@@ -4,7 +4,7 @@ export function groupPermissionsByType(permissions: Permission[]) {
     const groupedPermissions: Record<string, Permission[]> = {};
   
     permissions.forEach(permission => {
-      const type = permission.key.split('_')[1].toLowerCase(); 
+      const type = permission.key ? permission.key.split('_')[1].toLowerCase() : ''; 
       if (!groupedPermissions[type]) {
         groupedPermissions[type] = [];
       }
