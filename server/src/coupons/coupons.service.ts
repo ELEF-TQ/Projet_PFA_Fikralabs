@@ -14,7 +14,7 @@ export class CouponsService {
   constructor(
     @InjectModel(Coupon.name) private couponModel: Model<Coupon> ,
     private readonly clientService: ClientsService,
-    ) {}
+  ) {}
 
   async createCoupon(createCouponDto: CreateCouponDto): Promise<Coupon> {
     let couponCode: string; 

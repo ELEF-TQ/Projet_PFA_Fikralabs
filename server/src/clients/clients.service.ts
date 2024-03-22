@@ -140,6 +140,20 @@ export class ClientsService {
     await this.clientModel.deleteMany({ _id: { $in: ids } }).exec();
     return deletedClients;
   }
+
+  async updatePassword(email: string, newPassword: string) {
+    const updatedUser = await this.clientModel.findOneAndUpdate(
+      { email },
+      { password: newPassword },
+      { new: true }
+    ).select('-password');
+
+    if (!updatedUser) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+
+    return updatedUser;
+  }
   
  
 }

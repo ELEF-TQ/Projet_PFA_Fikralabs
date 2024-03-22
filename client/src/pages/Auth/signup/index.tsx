@@ -255,7 +255,7 @@ const index :React.FC= () => {
               <div className={`Margin__Input__Buttom relative`}>
                   <label htmlFor="password" className='Input_Label'>Mot de passe</label>
                   <input
-                      type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? 'text' : 'password'}
                     className={`form-control Input__Style `}
                     id="password"
                     name="password"

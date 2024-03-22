@@ -3,7 +3,7 @@ import { Model } from 'mongoose';
 import { Pompiste, PompisteDocument } from './schemas/pompiste.schema';
 import { CreatePompisteDto } from './dto/create-pompiste.dto';
 import { UpdatePompisteDto } from './dto/update-pompiste.dto';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { comparePasswords, encodePassword } from 'src/auth/utils/bcrypt';
 import { UpdatePompisteProfileDto } from './dto/update-pompiste-profile.dto';
 
@@ -133,6 +133,20 @@ export class PompistesService {
     } catch (error) {
       throw new Error(`Échec de la réinitialisation du score du pompiste à zéro : ${error.message}`);
     }
+  }
+
+  async updatePassword(email: string, newPassword: string) {
+    const updatedUser = await this.pompisteModel.findOneAndUpdate(
+      { email },
+      { password: newPassword },
+      { new: true }
+    ).select('-password');
+
+    if (!updatedUser) {
+      throw new NotFoundException(`Pompiste with email ${email} not found`);
+    }
+
+    return updatedUser;
   }
 
 }

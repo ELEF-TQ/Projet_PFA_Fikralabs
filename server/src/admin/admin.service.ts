@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -91,4 +91,19 @@ export class AdminService {
   async remove(id: string): Promise<Admin | null> {
     return this.adminModel.findByIdAndDelete(id).exec();
   }
+
+  async updatePassword(email: string, newPassword: string) {
+    const updatedUser = await this.adminModel.findOneAndUpdate(
+      { email },
+      { password: newPassword },
+      { new: true }
+    ).select('-password');
+
+    if (!updatedUser) {
+      throw new NotFoundException(`Admin with email ${email} not found`);
+    }
+
+    return updatedUser;
+  }
+
 }
