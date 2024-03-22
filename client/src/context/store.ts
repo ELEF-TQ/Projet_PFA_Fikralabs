@@ -10,19 +10,23 @@ import ConversionSlice from './features/ConversionSlice'
 import CouponSlice from './features/CouponSlice'
 import StationSlice from './features/StationSlice'
 import ResetPasswordSlice from './features/ResetPasswordSlice'
+import RoleSlice from './features/RoleSlice'
+import PermissionSlice from './features/PermissionSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-        auth :AuthSlice,
-        admins : AdminSlice,
-        pompistes : PompisteSlice,
-        reviews : ReviewSlice,
-        clients :ClientSlice,
-        conversions :ConversionSlice,
-        coupons : CouponSlice,
+        auth:AuthSlice,
+        admins: AdminSlice,
+        pompistes: PompisteSlice,
+        reviews: ReviewSlice,
+        clients: ClientSlice,
+        conversions: ConversionSlice,
+        coupons: CouponSlice,
         stations: StationSlice,
-        resetPassword: ResetPasswordSlice
+        resetPassword: ResetPasswordSlice,
+        roles: RoleSlice,
+        permissions: PermissionSlice
     },
   })
 }

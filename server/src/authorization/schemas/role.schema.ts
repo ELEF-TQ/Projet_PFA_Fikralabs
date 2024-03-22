@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { Permission } from './permission.schema';
 
 export type RoleDocument = Role & Document;
@@ -9,7 +9,7 @@ export class Role {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ type: [{ type: String, ref: 'Permission' }] })
+  @Prop({ type: [{ type:  mongoose.Schema.Types.ObjectId, ref: 'Permission' }] })
   permissions: Permission[];
 }
 

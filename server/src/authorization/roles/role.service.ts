@@ -15,7 +15,7 @@ export class RoleService {
   }
 
   async findAll(): Promise<Role[]> {
-    return this.roleModel.find().exec();
+    return this.roleModel.find().populate('permissions').exec();
   }
 
   async findOne(id: string): Promise<Role> {
