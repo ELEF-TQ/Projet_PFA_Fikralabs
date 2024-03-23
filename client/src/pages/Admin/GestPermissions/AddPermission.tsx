@@ -24,7 +24,7 @@ const AddPermission: React.FC<Props> = ({ show, handleClose, moduleType, current
 
   const initializeFormData = (): FormData => {
     const permsMap = currentPerms.reduce((acc, perm) => {
-      const keyParts = perm.key.split('_');
+      const keyParts = perm.permission.split('_');
       if (keyParts.length === 2 && keyParts[1].toUpperCase() === moduleType.toUpperCase()) {
         const action = keyParts[0].toLowerCase();
         acc[action] = true;
@@ -79,7 +79,7 @@ const AddPermission: React.FC<Props> = ({ show, handleClose, moduleType, current
                     id={action.toLowerCase()}
                     name={action.toLowerCase()}
                     checked={formData[action.toLowerCase() as keyof FormData]}
-                    disabled={currentPerms.some(perm => perm.key === `${action.toUpperCase()}_${moduleType.toUpperCase()}`)}
+                    disabled={currentPerms.some(perm => perm.permission === `${action.toUpperCase()}_${moduleType.toUpperCase()}`)}
                     onChange={handleCheckboxChange}
                   />
                   <label htmlFor={action.toLowerCase()}>{action} {moduleType}</label>

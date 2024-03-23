@@ -116,10 +116,7 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
                         <img src={defaultIMG} alt="default" className="object-cover w-30 h-30 p-1 rounded-full" />
                       )}
                   </div>
-                  <div className="overlay opacity-0 group-hover:opacity-100 absolute inset-0 flex flex-col items-center justify-center text-center bg-black bg-opacity-50 text-white transition-opacity">
-                      <AddAPhotoOutlined sx={{ fontSize: 32, mb: 2 }} />
-                      <span className='w-24'>Update profile picture</span>
-                    </div>
+                
                 </label>
               </div>
 

@@ -9,7 +9,7 @@ async function seedPermissions(connection: Connection) {
   for (const key in PERMISSIONS) {
     if (PERMISSIONS.hasOwnProperty(key)) {
       const permission = {
-        key: key,
+        permission: key,
       };
       await PermissionModel.create(permission);
     }

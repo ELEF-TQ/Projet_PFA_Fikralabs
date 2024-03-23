@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import defaultIMG from '../../../assets/images/defaultUser.png'
 import { RootState } from '../../../context/store';
-import Swal from 'sweetalert2';
 import { emailRegex ,phoneRegex,usernameRegex } from '../../../utils/Regex';
 interface Props {
   show: boolean;

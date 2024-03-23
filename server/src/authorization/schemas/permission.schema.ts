@@ -8,7 +8,7 @@ export type PermissionDocument = Permission & Document;
 export class Permission {
     
   @Prop({ required: true })
-  key: string;
+  permission: string;
 
 
 }
