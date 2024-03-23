@@ -28,7 +28,7 @@ export class ResetPasswordService {
     const {email} = forgotPasswordDto;
     const verifiedEmail = await this.EmailVerification(email);
     if(!verifiedEmail){
-      throw new BadRequestException("Email invalid");
+      return null;
     }
     const role = verifiedEmail.role;
     let validationCode: string;
@@ -51,7 +51,7 @@ export class ResetPasswordService {
     const { code, password } = resetPasswordDto;
     const resetPasswordEntry = await this.resetPasswordModel.findOne({ code });
     if (!resetPasswordEntry) {
-      throw new BadRequestException('Invalid or expired verification code.');
+      return null;
     }
     const hashedPassword = encodePassword(password);
     let updatedUser: any;
@@ -101,13 +101,13 @@ export class ResetPasswordService {
       port: 587,
       secure: false,
       auth: {
-        user: 'root@gmail.com', // Adresse e-mail depuis laquelle vous souhaitez envoyer l'e-mail
-        pass: 'password', // Mot de passe de l'adresse e-mail
+        user: 'asmbn333@gmail.com', // Adresse e-mail depuis laquelle vous souhaitez envoyer l'e-mail
+        pass: 'huvi xekf evaq dvxi', // Mot de passe de l'adresse e-mail
       },
     });
 
     let mailOptions = {
-      from: 'root@gmail.com',
+      from: 'asmbn333@gmail.com',
       to: email,
       subject: 'Code de vérification',
       text: `Votre code de vérification est : ${code}`,

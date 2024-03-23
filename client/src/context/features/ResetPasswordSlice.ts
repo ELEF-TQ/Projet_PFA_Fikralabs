@@ -2,22 +2,22 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosAuth } from '../../lib/AxiosBase';
 import Swal from 'sweetalert2';
 
-export const resetPassword = createAsyncThunk('resetPassword/reset', async (formData: any, { rejectWithValue }) => {
+export const resetPassword = createAsyncThunk('resetPassword/reset', async (formData: any, thunkAPI) => {
     try {
       const response = await axiosAuth.post('/reset-password', formData);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
 
-export const forgotPassword = createAsyncThunk('resetPassword/forgot', async (formData: any, { rejectWithValue }) => {
+export const forgotPassword = createAsyncThunk('resetPassword/forgot', async (formData: any, thunkAPI) => {
     try {
       const response = await axiosAuth.post('/reset-password/email', formData);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );

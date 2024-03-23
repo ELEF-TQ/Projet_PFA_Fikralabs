@@ -31,8 +31,8 @@ const Index: React.FC = () => {
   const [validationCodeError, setValidationCodeError] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const passwordVerifyRef = useRef(null);
-  const result = useSelector((state: RootState) => state.resetPassword.result)
-  const isLoading = useSelector((state: RootState) => state.resetPassword.isLoading)
+  const result = useSelector((state: RootState) => state.resetPassword.result);
+  const isLoading = useSelector((state: RootState) => state.resetPassword.isLoading);
 
   const getPasswordStrength = (password: any) => {
     if (!password) return 0; // Handle empty password case
