@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { axiosAuth } from '../../lib/AxiosBase';
 
 // Async thunk to create a new Role
-export const createRole = createAsyncThunk('roles/create', async (formData, thunkAPI) => {
+export const createRole = createAsyncThunk('roles/create', async (formData:any, thunkAPI) => {
   try {
     const response = await axiosAuth.post('/roles', formData);
     return response.data;
@@ -51,7 +51,7 @@ const rolesSlice = createSlice({
       })
       .addCase(createRole.fulfilled, (state, action:any) => {
         state.isLoading = false;
-        Swal.fire({ icon: 'success', title: 'Role créé !', text: action.payload });
+        Swal.fire({ icon: 'success', title: 'Role créé !', text: 'Le rôle a été créé avec succès.' });
       })
       .addCase(createRole.rejected, (state, action:any) => {
         state.isLoading = false;

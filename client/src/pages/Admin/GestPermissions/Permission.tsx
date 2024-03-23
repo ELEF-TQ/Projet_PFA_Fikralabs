@@ -23,7 +23,6 @@ const GestPermissions = () => {
         dispatch(fetchPermissions());
     }, [dispatch]);
 
-    console.log(permissions)
     useEffect(() => {
         if (permissions) {
             const grouped = groupPermissionsByType(permissions);

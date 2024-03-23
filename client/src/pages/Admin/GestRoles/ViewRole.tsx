@@ -39,13 +39,13 @@ const ViewRole: React.FC<Props> = ({ show, handleClose, Element }) => {
                 </svg>
               </button>
             </div>
-            <div className="modal-content p-4">
+            <div className="modal-content p-4 flex flex-wrap justify-around items-center">
               {Object.entries(groupedPermissions).map(([type, perms]) => (
-                <div key={type} className="mb-4">
+                <div key={type} className="mb-4 p-2">
                   <h5 className="text-base font-semibold mb-2">{type} :</h5>
                   <ul>
                     {perms.map((perm) => (
-                      <li key={`${type}-${perm._id}`} className="ml-2 mb-1">
+                      <li key={`${type}-${perm._id}`}>
                         <span className="text-sm">{perm.permission}</span>
                       </li>
                     ))}

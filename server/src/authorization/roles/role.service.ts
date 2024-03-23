@@ -1,5 +1,5 @@
 // authorization/roles/role.service.ts
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Role, RoleDocument } from '../schemas/role.schema';
@@ -10,6 +10,11 @@ export class RoleService {
   constructor(@InjectModel(Role.name) private roleModel: Model<RoleDocument>) {}
 
   async create(createRoleDto: CreateRoleDto): Promise<Role> {
+    const { name } = createRoleDto;
+    const existingRole = await this.roleModel.findOne({ name }).exec();
+    if (existingRole) {
+      throw new BadRequestException('Un rôle avec le même nom existe déjà');
+    }
     const createdRole = new this.roleModel(createRoleDto);
     return createdRole.save();
   }

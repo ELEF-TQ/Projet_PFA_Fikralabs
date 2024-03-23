@@ -13,6 +13,7 @@ const Role: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { roles, isLoading } = useSelector((state: any) => state.roles);
 
+
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -40,9 +41,10 @@ const Role: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchRoles());
+
   }, []);
 
-  console.log(roles)
+
 
   return (
     <div>
