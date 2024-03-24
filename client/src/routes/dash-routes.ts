@@ -9,6 +9,7 @@ import { GiSandsOfTime } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
+import { RiAdminLine } from "react-icons/ri";
 export const AdminItems = [
     {
       name: "Home",
@@ -34,6 +35,10 @@ export const AdminItems = [
       name: "Clients",
       href: "/admin/clients",
       icon: BsPeople,
+    },{
+      name: "admins",
+      href: "/admin/admins",
+      icon: RiAdminLine,
     },
     {
       name: "roles",

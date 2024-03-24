@@ -18,7 +18,6 @@ export const updateProfileAdmin = createAsyncThunk('admins/updateProfile', async
   }
 });
 
-
 // deleteItem:
 export const deleteItem = createAsyncThunk(
   'delete/deleteItems',
@@ -45,7 +44,31 @@ export const destroyItems = createAsyncThunk('destroy/deleteItems',
 );
 
 
+// Async thunk to fetch all admins
+export const fetchAdmins = createAsyncThunk('admins/fetch', async (_, thunkAPI) => {
+  try {
+    const response = await axiosAuth.get('/admins');
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
+// Async thunk to fetch all admins
+export const getAdmin = createAsyncThunk('admins/get', async (Id, thunkAPI) => {
+  try {
+    const response = await axiosAuth.get(`/admins/${Id}`);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
+
+
 const initialState = {
+  admins :[],
+  admin : null,
   isLoading: false,
 };
 
@@ -89,6 +112,30 @@ const adminSlice = createSlice({
         } else {
           Swal.fire({ icon: 'error', title: 'Oops!', text: 'Une erreur s\'est produite lors de la mise à jour du profile.' }); 
         }
+      })
+
+
+      .addCase(fetchAdmins.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchAdmins.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.admins = action.payload;
+      })
+      .addCase(fetchAdmins.rejected, (state) => {
+        state.isLoading = false;
+        // Handle rejection if necessary
+      })
+      .addCase(getAdmin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.admin = action.payload;
+      })
+      .addCase(getAdmin.rejected, (state) => {
+        state.isLoading = false;
+        // Handle rejection if necessary
       });
   },
 });

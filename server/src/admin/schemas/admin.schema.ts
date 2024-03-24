@@ -1,4 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
+import { Role } from 'src/authorization/schemas/role.schema';
 import { RolesEnum } from 'src/enums/roles.enum';
 
 
@@ -22,6 +24,9 @@ export class Admin {
 
   @Prop({ default: RolesEnum.ADMIN }) 
   role: string;
+
+  @Prop({type: [{ type:  mongoose.Schema.Types.ObjectId, ref: 'role' }] })
+  adminRole : Role
 }
 
 export const AdminSchema = SchemaFactory.createForClass(Admin);

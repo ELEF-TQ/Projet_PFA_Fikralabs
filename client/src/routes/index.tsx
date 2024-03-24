@@ -22,6 +22,7 @@ import AdminProfile from "../pages/Admin/Profile";
 import ReviewsPompiste from "../pages/Admin/GestPompistes/ViewReviewsPompiste";
 import GestionRoles from '../pages/Admin/GestRoles/role';
 import GestPermissions from '../pages/Admin/GestPermissions/Permission';
+import GestAdmins from '../pages/Admin/GestAdmins/Admins';
 /*___Pompiste_____ */
 import Pompiste from "../pages/Pompiste/index";
 import HomePompiste from "../pages/Pompiste/Home";
@@ -65,6 +66,7 @@ export const routes = createBrowserRouter([
       { path: "profile", element: <AdminProfile /> },
       { path: "roles", element: <GestionRoles/> },
       { path: "permissions" , element: <GestPermissions/>} ,
+      {path: "admins" , element: <GestAdmins/>},
       { path: "viewReviews/:matriculeRH", element: <ReviewsPompiste /> },
     ],
   },
