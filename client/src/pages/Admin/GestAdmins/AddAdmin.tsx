@@ -1,58 +1,68 @@
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { getPompistes, createPompiste } from "../../../context/features/PompisteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import defaultIMG from '../../../assets/images/defaultUser.png';
 import { emailRegex, phoneRegex, usernameRegex } from '../../../utils/Regex';
-import { AddAPhotoOutlined } from "@mui/icons-material";
+import { createAdmin, fetchAdmins } from "../../../context/features/AdminSlice";
+import { fetchRoles } from "../../../context/features/RoleSlice";
+import { Role } from "../../../types/Role";
 
 interface Props {
   show: boolean;
   handleClose: () => void;
 }
 
-const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
+const AddAdmin: React.FC<Props> = ({ show, handleClose }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoading } = useSelector((state: RootState) => state.pompistes);
+  const { roles }: { roles: Role[] } = useSelector((state: RootState) => state.roles);
 
 
+  useEffect(()=> {
+    dispatch(fetchRoles())
+  },[])
   interface FormData {
     username: string;
-    matriculeRH: string;
     email: string;
     phone: string;
     password: string;
     CIN: string;
+    adminRole: string ;
     image: File | null;
+   
   }
   const [formData, setFormData] = useState<FormData>({
     username: '',
-    matriculeRH: '',
     email: '',
     phone: '',
     password: '',
     CIN: '',
+    adminRole: '',
     image: null,
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = () => {
     if (validateFormData()) {
-      dispatch(createPompiste(formData)).then(() => {
+      dispatch(createAdmin(formData)).then(() => {
         handleClose();
-        dispatch(getPompistes());
+        dispatch(fetchAdmins());
       });
     }
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, files } = e.target;
-    if (name === 'image' && files && files.length > 0) {
-      const selectedImage = files[0];
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        image: selectedImage
-      }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+  
+    if (e.target.nodeName === 'INPUT' && e.target.type === 'file') {
+      const files = (e.target as HTMLInputElement).files;
+      if (name === 'image' && files && files.length > 0) {
+        const selectedImage = files[0];
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          image: selectedImage
+        }));
+      }
     } else {
       setFormData(prevFormData => ({
         ...prevFormData,
@@ -60,10 +70,13 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
       }));
     }
   };
+  
+  
+  
 
   const validateFormData = () => {
-    const { username, matriculeRH, email, phone, password, CIN } = formData;
-    if (!username || !matriculeRH || !email || !phone || !password || !CIN) {
+    const { username, email, phone, password, CIN ,adminRole} = formData;
+    if (!username || !adminRole || !email || !phone || !password || !CIN) {
       setErrorMessage('Veuillez remplir tous les champs!');
       return false;
     }
@@ -138,23 +151,7 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
                 />
               </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="matriculeRH"
-                  className="block mb-2 text-sm font-medium Input_Label"
-                >
-                  Matricule
-                </label>
-                <input
-                  type="text"
-                  name="matriculeRH"
-                  id="matriculeRH"
-                  className="Input__Style w-full"
-                  placeholder="#7815"
-                  value={formData.matriculeRH}
-                  onChange={handleChange}
-                />
-              </div>
+            
 
               <div className="mb-4">
                 <label
@@ -211,6 +208,30 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
               </div>
 
               <div className="mb-4">
+                <label htmlFor="adminRole" className="block mb-2 text-sm font-medium Input_Label">
+                    Rôle
+                </label>
+                <select
+                    name="adminRole"
+                    id="adminRole"
+                    className="Input__Style w-full"
+                    value={formData.adminRole}
+                    onChange={handleChange}
+                >
+                    <option value="">Sélectionner un rôle</option>
+                    {roles.map(role => (
+                    <option key={role._id} value={role._id}>
+                        {role.name}
+                    </option>
+                    ))}
+                </select>
+                </div>
+
+
+ 
+
+
+              <div className="mb-4">
                 <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium Input_Label"
@@ -255,4 +276,4 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
   );
 };
 
-export default AddPompiste;
+export default AddAdmin;

@@ -64,6 +64,16 @@ export const getAdmin = createAsyncThunk('admins/get', async (Id, thunkAPI) => {
   }
 });
 
+// Async thunk to create a new pompiste
+export const createAdmin = createAsyncThunk('admins/create', async (formData :any, thunkAPI) => {
+  try {
+    const response = await axiosAuthMultipart.post('/admins', formData);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
 
 
 const initialState = {

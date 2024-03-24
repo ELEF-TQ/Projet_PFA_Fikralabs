@@ -112,7 +112,7 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
         <div className="modal-overlay">
           <div className="modal">
             <div className="modal-header">
-              <h3 className="modal-title">Modifier Pompiste</h3>
+              <h3 className="modal-title">Modifier ADMIN</h3>
             </div>
             <div className="modal-content">
             <div className="flex items-center justify-center Margin__Input__Buttom">

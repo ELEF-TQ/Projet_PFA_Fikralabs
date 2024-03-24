@@ -4,15 +4,12 @@ import { AppDispatch, RootState } from '../../../context/store';
 import { fetchRoles, updateRole } from '../../../context/features/RoleSlice';
 import { Permission } from '../../../types/Permission';
 import { groupPermissionsByType } from '../../../lib/GroupPermissionsByType';
+import { Role } from '../../../types/Role';
 
 interface Props {
   show: boolean;
   handleClose: () => void;
-  Element: {
-    _id: string;
-    name: string;
-    permissions: Permission[];
-  };
+  Element: Role;
 }
 
 const EditRole: React.FC<Props> = ({ show, handleClose, Element }) => {
