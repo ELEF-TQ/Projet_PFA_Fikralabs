@@ -8,6 +8,7 @@ import { fetchRoles } from '../../../context/features/RoleSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import Spinner from '../../../components/status/Spinner';
+import { Permission } from '../../../types/Permission';
 
 const Role: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,7 +21,17 @@ const Role: React.FC = () => {
   const [isDestroyModalOpen, setIsDestroyModalOpen] = useState(false);
   const [isshowDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const [Element , setElement] = useState(null);
+  const [Element, setElement] = useState<{
+    _id: string;
+    name: string;
+    permissions: Permission[];
+  }>({
+    _id: '',
+    name: '',
+    permissions: [],
+  });
+  
+
   const [selectedId, setSelectedId] = useState(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
@@ -41,9 +52,9 @@ const Role: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchRoles());
-
   }, []);
-
+ 
+  
 
 
   return (
@@ -104,7 +115,7 @@ const Role: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {roles?.map((role: any) => (
+                  {roles && Array.isArray(roles) && roles.map((role) => (
                       <tr
                         key={role._id}
                         className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -127,7 +138,7 @@ const Role: React.FC = () => {
                           <div className="flex items-center justify-center space-x-4">
                             <button
                               onClick={() => {
-                                setSelectedId(role._id);
+                                setElement(role);
                                 setIsEditModalOpen(true);
                               }}
                               type="button"
@@ -184,7 +195,7 @@ const Role: React.FC = () => {
         show={isshowDeleteModalOpen}
         handleClose={() => setIsDeleteModalOpen(false)}
         Id={selectedId}
-        EndPoint="/pompistes"
+        EndPoint="/roles"
         onDeletionSuccess={fetchRoles}
       />
       <EditRole show={isEditModalOpen} handleClose={() => setIsEditModalOpen(false)} Element={Element} />

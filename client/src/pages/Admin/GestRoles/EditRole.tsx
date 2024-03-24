@@ -1,266 +1,126 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { getPompistes, updatePompiste } from '../../../context/features/PompisteSlice';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../context/store';
-import defaultIMG from '../../../assets/images/defaultUser.png'
-import { RootState } from '../../../context/store';
-import { emailRegex ,phoneRegex,usernameRegex } from '../../../utils/Regex';
+import { AppDispatch, RootState } from '../../../context/store';
+import { fetchRoles, updateRole } from '../../../context/features/RoleSlice';
+import { Permission } from '../../../types/Permission';
+import { groupPermissionsByType } from '../../../lib/GroupPermissionsByType';
+
 interface Props {
   show: boolean;
   handleClose: () => void;
-  Element: any;
+  Element: {
+    _id: string;
+    name: string;
+    permissions: Permission[];
+  };
 }
 
-interface FormData {
-  image: any | null;
-  username: string;
-  matriculeRH: string;
-  CIN: string;
-  phone: string;
-  email: string;
-}
-
-const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
-
+const EditRole: React.FC<Props> = ({ show, handleClose, Element }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading } = useSelector((state: RootState) => state.pompistes);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [formData, setFormData] = useState<FormData>({
-    image: null,
-    username: "",
-    matriculeRH: "",
-    CIN: "",
-    phone: "",
-    email: ""
+  const { permissions } = useSelector((state:RootState) => state.permissions);
+  const [groupedPermissions, setGroupedPermissions] = useState<Record<string, Permission[]>>({});
+
+  const { isLoading } = useSelector((state: RootState) => state.roles);
+  const [formData, setFormData] = useState({
+    name: '',
+    permissions: [] as string[],
   });
 
   useEffect(() => {
-    setErrorMessage(null); 
-    if (Element && show) {
+    if (show && Element) {
       setFormData({
-        username: Element.username,
-        matriculeRH: Element.matriculeRH,
-        CIN: Element.CIN,
-        phone: Element.phone,
-        email: Element.email,
-        image: Element.image
-      });
-    } else {
-      setFormData({
-        image: null,
-        username: "",
-        matriculeRH: "",
-        CIN: "",
-        phone: "",
-        email: ""
+        name: Element.name || '',
+        permissions: Element.permissions.map((perm: Permission) => perm._id) || [],
       });
     }
   }, [show, Element]);
 
-  const handleSubmit = () => {
-    const { username, matriculeRH, CIN, phone, email } = formData;
-
-    if (!username || !matriculeRH || !CIN || !phone || !email) {
-      setErrorMessage('Veuillez remplir tous les champs!');
-      return;
+  useEffect(() => {
+    if (permissions) {
+      const grouped = groupPermissionsByType(permissions);
+      setGroupedPermissions(grouped);
     }
+  }, [show, permissions]);
 
-    if (!emailRegex.test(email)) {
-      setErrorMessage('Veuillez saisir une adresse e-mail valide.');
-      return;
-    }
-
-    if (!phoneRegex.test(phone)) {
-      setErrorMessage('Veuillez saisir un numéro de téléphone valide.');
-      return;
-    }
-
-    if (!usernameRegex.test(username)) {
-      setErrorMessage('Veuillez saisir un nom d\'utilisateur valide.');
-      return;
-    }
-
-    console.log(formData)
-    dispatch(updatePompiste({ Id: Element._id, formData })).then(() => {
-      handleClose();
-      setErrorMessage(null)
-      dispatch(getPompistes());
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
     });
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value, files } = event.target;
+  const handleTypeSelect = (perms: Permission[]) => {
+    const selectedPermissionIds = perms.map((perm) => perm._id);
+  
+    const updatedPermissions = formData.permissions.includes(selectedPermissionIds[0])
+      ? formData.permissions.filter((perm: string) => !selectedPermissionIds.includes(perm))
+      : [...formData.permissions, ...selectedPermissionIds];
+  
+    setFormData({
+      ...formData,
+      permissions: updatedPermissions,
+    });
+  };
 
-    if (name === 'image' && files && files.length > 0) {
-      const selectedImage = files[0];
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        image: selectedImage
-      }));
-    } else {
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        [name]: value
-      }));
-    }
+  const handleSubmit = () => {
+    console.log(formData)
+    dispatch(updateRole({ Id: Element._id, formData })).then(() => {
+      dispatch(fetchRoles());
+      handleClose();
+    });
   };
 
   return (
     <>
       {show && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="modal-header">
-              <h3 className="modal-title">Modifier Pompiste</h3>
+        <div className="modal-overlay fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <div className="modal bg-white w-96 p-6 rounded-lg">
+            <div className="modal-header mb-4">
+              <h3 className="modal-title text-lg font-semibold">Modifier un rôle</h3>
             </div>
             <div className="modal-content">
-            <div className="flex items-center justify-center Margin__Input__Buttom">
-              <input
-                type="file"
-                id="image"
-                name="image"
-                accept="image/*"
-                onChange={handleChange}
-                style={{ display: 'none' }}
-              />
-              <label htmlFor="image">
-                <div className="image-container">
-                  {formData.image ? (
-                    <img
-                      src={
-                        formData.image instanceof File
-                          ? URL.createObjectURL(formData.image)
-                          : `data:image/png;base64,${formData.image.buffer.toString('base64')}`
-                      }
-                      alt="profile"
-                      className="profile-image"
+              <div className="mb-4">
+                <label htmlFor="roleName" className="block text-sm font-medium text-gray-700 mb-1">
+                  Nom du rôle
+                </label>
+                <input
+                  type="text"
+                  id="roleName"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200 Input__Style"
+                  placeholder="Entrez le nom du rôle"
+                />
+              </div>
+              {Object.entries(groupedPermissions).map(([type, perms]) => (
+                <div key={type} className="mb-2">
+                  <label htmlFor={type} className="flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id={type}
+                      checked={perms.some((perm) => formData.permissions.includes(perm._id))}
+                      onChange={() => handleTypeSelect(perms)}
+                      className="mr-2"
                     />
-                  ) : (
-                    <img src={defaultIMG} alt="default" className="default-image" />
-                  )}
+                    <span className="text-sm">G-{type.toUpperCase()}</span>
+                  </label>
                 </div>
-              </label>
+              ))}
             </div>
-            {/* Add button to remove the image */}
-            {formData.image && (
-              <div className="flex justify-center mt-2">
-                <button
-                  className="btn bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded"
-                  onClick={() => setFormData(prevFormData => ({ ...prevFormData, image: null }))}
-                >
-                  Supprimer l'image
-                </button>
-              </div>
-            )}
-
-              <div className="mb-4">
-                <label
-                  htmlFor="username"
-                  className="block mb-2 text-sm font-medium Input_Label"
-                >
-                  Nom
-                </label>
-                <input
-                  type="text"
-                  name="username"
-                  id="username"
-                  className="Input__Style w-full"
-                  placeholder="Nom"
-                  value={formData.username}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="matriculeRH"
-                  className="block mb-2 text-sm font-medium Input_Label"
-                >
-                  Matricule
-                </label>
-                <input
-                  type="text"
-                  name="matriculeRH"
-                  id="matriculeRH"
-                  className="Input__Style w-full"
-                  placeholder="Matricule"
-                  value={formData.matriculeRH}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="CIN"
-                  className="block mb-2 text-sm font-medium Input_Label"
-                >
-                  CIN
-                </label>
-                <input
-                  type="text"
-                  name="CIN"
-                  id="CIN"
-                  className="Input__Style w-full"
-                  placeholder="CIN"
-                  value={formData.CIN}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="phone"
-                  className="block mb-2 text-sm font-medium Input_Label"
-                >
-                  Téléphone
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  className="Input__Style w-full"
-                  placeholder="Téléphone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium Input_Label"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="Input__Style w-full"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            {
-              errorMessage && (
-                <div className=" mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                  <span className="block sm:inline">{errorMessage}</span>
-                </div>
-              )
-            }
-
-           
-            <div className="flex justify-between">
+            <div className="flex justify-end mt-6">
               <button
-                className="btn bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+                className={`btn bg-primary-color text-white font-semibold py-2 px-4 rounded ${
+                  isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
                 onClick={handleSubmit}
+                disabled={isLoading}
               >
                 {isLoading ? 'En cours...' : 'Modifier'}
               </button>
               <button
-                className="btn bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded"
+                className="btn bg-red-500 text-white font-semibold py-2 px-4 ml-2 rounded"
                 onClick={handleClose}
               >
                 Annuler
@@ -273,4 +133,4 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
   );
 };
 
-export default EditPompiste;
+export default EditRole;

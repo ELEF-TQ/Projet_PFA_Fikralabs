@@ -1,5 +1,5 @@
 // authorization/roles/role.controller.ts
-import { Controller, Get, Post, Body, Put, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete, Param, Patch } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto, UpdateRoleDto } from './role.dto';
 
@@ -22,7 +22,7 @@ export class RoleController {
     return this.roleService.findOne(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
     return this.roleService.update(id, updateRoleDto);
   }

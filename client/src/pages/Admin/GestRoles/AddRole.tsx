@@ -35,12 +35,10 @@ const AddRole: React.FC<Props> = ({ show, handleClose }) => {
     );
 
     if (isSelected) {
-      // Remove permissions associated with the type being unchecked
       setSelectedPermissions((prevPermissions) =>
         prevPermissions.filter((permId) => !perms.some((perm) => perm._id === permId))
       );
     } else {
-      // Add permissions associated with the type being checked
       const newPermissions = perms.map((perm) => perm._id);
       setSelectedPermissions((prevPermissions) => [
         ...prevPermissions.filter((permId) => !perms.some((perm) => perm._id === permId)),
@@ -54,23 +52,25 @@ const AddRole: React.FC<Props> = ({ show, handleClose }) => {
       name: roleName,
       permissions: selectedPermissions,
     };
-    dispatch(createRole(formData)).then(()=>{
+    dispatch(createRole(formData)).then(() => {
       handleClose();
-      dispatch(fetchRoles())
+      dispatch(fetchRoles());
+      setRoleName('');
+      setSelectedPermissions([]);
     })
   };
 
   return (
     <>
       {show && (
-        <div className="modal-overlay fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center">
+        <div className="modal-overlay fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-gray-700 bg-opacity-50">
           <div className="modal bg-white w-96 p-6 rounded-lg">
             <div className="modal-header mb-4">
-              <h3 className="modal-title text-lg font-semibold">Ajouter un nouveau Role</h3>
+              <h3 className="modal-title text-lg font-semibold">Ajouter un nouveau Rôle</h3>
             </div>
             <div className="modal-content">
               <div className="mb-4">
-                <label htmlFor="roleName" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="roleName" className="block text-sm font-medium text-gray-700 mb-1">
                   Nom du rôle
                 </label>
                 <input
@@ -78,11 +78,12 @@ const AddRole: React.FC<Props> = ({ show, handleClose }) => {
                   id="roleName"
                   value={roleName}
                   onChange={(e) => setRoleName(e.target.value)}
-                  className=" mt-1 p-2    Input__Style"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200 Input__Style"
+                  placeholder="Entrez le nom du rôle"
                 />
               </div>
               {Object.entries(groupedPermissions).map(([type, perms]) => (
-                <div key={type} className="mb-2 w-fit">
+                <div key={type} className="mb-2">
                   <label htmlFor={type} className="flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -95,18 +96,16 @@ const AddRole: React.FC<Props> = ({ show, handleClose }) => {
                 </div>
               ))}
             </div>
-            <div className="flex justify-between mt-6">
+            <div className="flex justify-end mt-6">
               <button
-                className={`btn bg-green-500 text-white font-semibold py-2 px-4 rounded ${
-                  isLoading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={`btn bg-primary-color text-white font-semibold py-2 px-4 rounded ${isLoading || !roleName ? "opacity-50 cursor-not-allowed" : ""}`}
                 onClick={handleSubmit}
                 disabled={isLoading || !roleName}
               >
                 {isLoading ? "En cours..." : "Ajouter"}
               </button>
               <button
-                className="btn bg-red-500 text-white font-semibold py-2 px-4 rounded"
+                className="btn bg-red-500 text-white font-semibold py-2 px-4 ml-2 rounded"
                 onClick={handleClose}
               >
                 Annuler

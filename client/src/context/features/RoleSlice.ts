@@ -14,7 +14,7 @@ export const createRole = createAsyncThunk('roles/create', async (formData:any, 
 });
 
 // Async thunk to update a Role
-export const updateRole = createAsyncThunk('roles/update', async ({ Id, formData }: { Id: string, formData: string }, thunkAPI) => {
+export const updateRole = createAsyncThunk('roles/update', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
   try {
     const response = await axiosAuth.patch(`/roles/${Id}`, formData);
     return response.data;
@@ -49,13 +49,13 @@ const rolesSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(createRole.fulfilled, (state, action:any) => {
+      .addCase(createRole.fulfilled, (state) => {
         state.isLoading = false;
         Swal.fire({ icon: 'success', title: 'Role créé !', text: 'Le rôle a été créé avec succès.' });
       })
       .addCase(createRole.rejected, (state, action:any) => {
         state.isLoading = false;
-        Swal.fire({ icon: 'error', title: 'Échec de la création de le Role', text: action.payload });
+        Swal.fire({ icon: 'error', title: 'Échec de la création de le Role', text: action.payload.message });
       })
       .addCase(fetchRoles.pending, (state) => {
         state.isLoading = true;
@@ -76,11 +76,11 @@ const rolesSlice = createSlice({
       .addCase(updateRole.fulfilled, (state, action) => {
         state.isLoading = false;
         state.roles = action.payload;
-        Swal.fire({ icon: 'success', title: 'Success', text: action.payload });
+        Swal.fire({ icon: 'success', title: 'Success', text: action.payload.message });
       })
       .addCase(updateRole.rejected, (state, action:any) => {
         state.isLoading = false;
-        Swal.fire({ icon: 'error', title: 'Error', text: action.payload });
+        Swal.fire({ icon: 'error', title: 'Error', text: action.payload.message });
       });
   },
 });
