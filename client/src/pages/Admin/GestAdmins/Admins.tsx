@@ -7,7 +7,6 @@ import Delete from '../../../components/crud/Delete';
 import { getPompistes } from '../../../context/features/PompisteSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
-import EvaluationStars from '../../../components/shared/EvaluationStars';
 import Spinner from '../../../components/status/Spinner';
 import { fetchAdmins } from '../../../context/features/AdminSlice';
 

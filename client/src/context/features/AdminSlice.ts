@@ -64,7 +64,7 @@ export const getAdmin = createAsyncThunk('admins/get', async (Id, thunkAPI) => {
   }
 });
 
-// Async thunk to create a new pompiste
+// Async thunk to create a new admin
 export const createAdmin = createAsyncThunk('admins/create', async (formData :any, thunkAPI) => {
   try {
     const response = await axiosAuthMultipart.post('/admins', formData);
@@ -74,6 +74,15 @@ export const createAdmin = createAsyncThunk('admins/create', async (formData :an
   }
 });
 
+// Async thunk to update a admin
+export const updateAdmin = createAsyncThunk('admins/update', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
+  try {
+    const response = await axiosAuthMultipart.post(`/admins/updateData/${Id}`, formData);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
 
 
 const initialState = {
@@ -145,7 +154,26 @@ const adminSlice = createSlice({
       })
       .addCase(getAdmin.rejected, (state) => {
         state.isLoading = false;
-        // Handle rejection if necessary
+      })
+      .addCase(updateAdmin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateAdmin.fulfilled, (state) => {
+        state.isLoading = false;
+        Swal.fire('Succès !', 'Admin mis à jour avec succès.', 'success').then(() => {
+        });
+      })
+      .addCase(updateAdmin.rejected, (state, action: any) => {
+        state.isLoading = false;
+        if (action.payload && action.payload.message) {
+          Swal.fire({ icon: 'error', title: 'Oups !', text: action.payload.message || '' });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oups !',
+            text: 'Une erreur s\'est produite lors de la mise à jour de l\'admin.',
+          });
+        }
       });
   },
 });

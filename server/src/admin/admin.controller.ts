@@ -12,8 +12,11 @@ export class AdminController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  create(@Body() createAdminDto: CreateAdminDto) {
-    return this.adminService.create(createAdminDto);
+  @UseInterceptors(FileInterceptor('image')) 
+  create(@UploadedFile() image:File ,@Body() createAdminDto: CreateAdminDto) {
+    const adminDataWithImage = { ...createAdminDto, image: image };
+    console.log(adminDataWithImage);
+    return this.adminService.create(adminDataWithImage);
   }
 
   @Get()
@@ -35,20 +38,17 @@ export class AdminController {
           return adminFound;
       }
   }
-
-  @Patch(':id')
+  @Post('updateData/:id')
   @UsePipes(ValidationPipe)
-  async update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
-      const adminFound = await this.adminService.update(id, updateAdminDto);
-      if(!adminFound){
-        throw new HttpException("L'administrateur avec l'identifiant fourni n'existe pas", HttpStatus.NOT_FOUND);
-      }else{
-          return {
-            message: "Administrateur mis à jour avec succès",
-            updatedAdmin: adminFound
-          };
-      }
+  @UseInterceptors(FileInterceptor('image')) 
+  async update(@Param('id') id: string, @UploadedFile() image:File, @Body() updateAdminDto: UpdateAdminDto) {
+    const adminDataWithImage = { ...updateAdminDto, image: image };
+    return this.adminService.update(id, adminDataWithImage);
   }
+
+  
+ 
+  
 
   @Post("updateProfile/:id")
   @UsePipes(ValidationPipe)

@@ -1,11 +1,12 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { getPompistes, updatePompiste } from '../../../context/features/PompisteSlice';
+import React, {  useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import defaultIMG from '../../../assets/images/defaultUser.png'
 import { RootState } from '../../../context/store';
-import Swal from 'sweetalert2';
 import { emailRegex ,phoneRegex,usernameRegex } from '../../../utils/Regex';
+import { Role } from '../../../types/Role';
+import { fetchRoles } from '../../../context/features/RoleSlice';
+import { fetchAdmins, updateAdmin } from '../../../context/features/AdminSlice';
 interface Props {
   show: boolean;
   handleClose: () => void;
@@ -15,53 +16,57 @@ interface Props {
 interface FormData {
   image: any | null;
   username: string;
-  matriculeRH: string;
   CIN: string;
   phone: string;
   email: string;
+  adminRole: string;
 }
 
-const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
+const EditAdmin: React.FC<Props> = ({ show, handleClose, Element }) => {
 
   const dispatch = useDispatch<AppDispatch>();
+  const { roles }: { roles: Role[] } = useSelector((state: RootState) => state.roles);
+
   const { isLoading } = useSelector((state: RootState) => state.pompistes);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     image: null,
     username: "",
-    matriculeRH: "",
     CIN: "",
     phone: "",
-    email: ""
+    email: "",
+    adminRole: ""
   });
 
   useEffect(() => {
     setErrorMessage(null); 
     if (Element && show) {
+    dispatch(fetchRoles())
       setFormData({
         username: Element.username,
-        matriculeRH: Element.matriculeRH,
         CIN: Element.CIN,
         phone: Element.phone,
         email: Element.email,
-        image: Element.image
+        image: Element.image,
+        adminRole : Element.adminRole._id
       });
     } else {
       setFormData({
         image: null,
         username: "",
-        matriculeRH: "",
         CIN: "",
         phone: "",
-        email: ""
+        email: "",
+        adminRole: "",
       });
     }
   }, [show, Element]);
 
+  console.log(Element)
   const handleSubmit = () => {
-    const { username, matriculeRH, CIN, phone, email } = formData;
+    const { username, adminRole, CIN, phone, email } = formData;
 
-    if (!username || !matriculeRH || !CIN || !phone || !email) {
+    if (!username || !adminRole || !CIN || !phone || !email) {
       setErrorMessage('Veuillez remplir tous les champs!');
       return;
     }
@@ -82,30 +87,37 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
     }
 
     console.log(formData)
-    dispatch(updatePompiste({ Id: Element._id, formData })).then(() => {
+    dispatch(updateAdmin({ Id: Element._id, formData })).then(() => {
       handleClose();
       setErrorMessage(null)
-      dispatch(getPompistes());
+      dispatch(fetchAdmins());
     });
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value, files } = event.target;
-
-    if (name === 'image' && files && files.length > 0) {
-      const selectedImage = files[0];
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        image: selectedImage
-      }));
-    } else {
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        [name]: value
-      }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+  
+    // Check if the target is an input of type file
+    if (e.target.nodeName === 'INPUT' && (e.target as HTMLInputElement).type === 'file') {
+      const files = (e.target as HTMLInputElement).files;
+      if (name === 'image' && files && files.length > 0) {
+        const selectedImage = files[0];
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          image: selectedImage
+        }));
+        return; // Exit early after handling file input
+      }
     }
+  
+    // For other input types or select elements, update form data as usual
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: value
+    }));
   };
-
+  
+  
   return (
     <>
       {show && (
@@ -172,23 +184,26 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
                 />
               </div>
 
+             
               <div className="mb-4">
-                <label
-                  htmlFor="matriculeRH"
-                  className="block mb-2 text-sm font-medium Input_Label"
-                >
-                  Matricule
+                <label htmlFor="adminRole" className="block mb-2 text-sm font-medium Input_Label">
+                    Rôle
                 </label>
-                <input
-                  type="text"
-                  name="matriculeRH"
-                  id="matriculeRH"
-                  className="Input__Style w-full"
-                  placeholder="Matricule"
-                  value={formData.matriculeRH}
-                  onChange={handleChange}
-                />
-              </div>
+                <select
+                    name="adminRole"
+                    id="adminRole"
+                    className="Input__Style w-full"
+                    value={formData.adminRole}
+                    onChange={handleChange}
+                >
+                    <option value="">Sélectionner un rôle</option>
+                    {roles.map(role => (
+                    <option key={role._id} value={role._id}>
+                        {role.name}
+                    </option>
+                    ))}
+                </select>
+                </div>
 
               <div className="mb-4">
                 <label
@@ -274,4 +289,4 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
   );
 };
 
-export default EditPompiste;
+export default EditAdmin;

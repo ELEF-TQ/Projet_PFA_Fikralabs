@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { Role } from "src/authorization/schemas/role.schema";
 
 export class CreateAdminDto {
     @IsNotEmpty()
@@ -15,5 +16,17 @@ export class CreateAdminDto {
 
     @IsNotEmpty()
     @IsString()
-    readonly phone: number;
+    readonly phone: string;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly adminRole: string;
+
+    
+    @IsOptional()
+    readonly image?: File;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly CIN: string;
 }

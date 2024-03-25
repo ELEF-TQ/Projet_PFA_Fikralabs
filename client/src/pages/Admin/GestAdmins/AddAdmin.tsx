@@ -1,5 +1,4 @@
 import React, {  useEffect, useState } from "react";
-import { getPompistes, createPompiste } from "../../../context/features/PompisteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import defaultIMG from '../../../assets/images/defaultUser.png';
@@ -53,7 +52,6 @@ const AddAdmin: React.FC<Props> = ({ show, handleClose }) => {
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-  
     if (e.target.nodeName === 'INPUT' && e.target.type === 'file') {
       const files = (e.target as HTMLInputElement).files;
       if (name === 'image' && files && files.length > 0) {

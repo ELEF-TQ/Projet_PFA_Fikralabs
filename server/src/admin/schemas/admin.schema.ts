@@ -29,8 +29,10 @@ export class Admin {
   @Prop({ default: RolesEnum.ADMIN }) 
   role: string;
 
-  @Prop({type: [{ type:  mongoose.Schema.Types.ObjectId, ref: 'role' }] })
-  adminRole : Role
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Role' })
+  adminRole: mongoose.Types.ObjectId;
+  
+
 }
 
 export const AdminSchema = SchemaFactory.createForClass(Admin);
