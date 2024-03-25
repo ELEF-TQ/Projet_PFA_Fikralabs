@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import defaultIMG from '../../../assets/images/defaultUser.png';
 
@@ -11,9 +11,7 @@ interface Props {
 const ViewPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(Element);
-  }, [Element]);
+ 
 
   return (
     <>

@@ -60,19 +60,21 @@ export class AdminService {
   async update(id: string, updateAdminDto: UpdateAdminDto): Promise<Admin | null> {
     const { image, ...dtoWithoutImage } = updateAdminDto;
     const updateData: any = { ...dtoWithoutImage };
-    if (image === null || image === undefined ) {
+    console.log(image);
+    if (image === null || image === undefined) {
       updateData.$unset = { image: '' };
     } else {
-      updateData.image = image; 
+      updateData.image = image;
     }
     try {
-      const updatedPompiste = await this.adminModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
-      return updatedPompiste;
+      const updatedAdmin = await this.adminModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
+      return updatedAdmin;
     } catch (error) {
       console.error('Error updating admin:', error);
       return null;
     }
   }
+  
 
 
   async updateProfileAdmin(id: string, updateProfileDto: UpdateAdminProfileDto): Promise<Admin> {

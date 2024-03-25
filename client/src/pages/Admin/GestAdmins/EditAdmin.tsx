@@ -62,7 +62,7 @@ const EditAdmin: React.FC<Props> = ({ show, handleClose, Element }) => {
     }
   }, [show, Element]);
 
-  console.log(Element)
+ 
   const handleSubmit = () => {
     const { username, adminRole, CIN, phone, email } = formData;
 
@@ -86,10 +86,11 @@ const EditAdmin: React.FC<Props> = ({ show, handleClose, Element }) => {
       return;
     }
 
-    console.log(formData)
+
     dispatch(updateAdmin({ Id: Element._id, formData })).then(() => {
       handleClose();
       setErrorMessage(null)
+
       dispatch(fetchAdmins());
     });
   };
@@ -115,7 +116,16 @@ const EditAdmin: React.FC<Props> = ({ show, handleClose, Element }) => {
       ...prevFormData,
       [name]: value
     }));
+  
+    // If the input is not the image input and formData already contains an image, keep it in the state
+    if (name !== 'image' && formData.image) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        image: formData.image
+      }));
+    }
   };
+  
   
   
   return (

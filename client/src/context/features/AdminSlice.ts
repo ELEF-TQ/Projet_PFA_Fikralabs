@@ -77,6 +77,7 @@ export const createAdmin = createAsyncThunk('admins/create', async (formData :an
 // Async thunk to update a admin
 export const updateAdmin = createAsyncThunk('admins/update', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
   try {
+    console.log(formData)
     const response = await axiosAuthMultipart.post(`/admins/updateData/${Id}`, formData);
     return response.data;
   } catch (error:any) {

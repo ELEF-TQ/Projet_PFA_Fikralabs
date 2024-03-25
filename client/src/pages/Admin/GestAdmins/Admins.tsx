@@ -46,7 +46,7 @@ const Admins: React.FC = () => {
   return (
     <div>
       <h1 className="mb-4 font-semibold leading-none tracking-tight text-gray-900 lg:text-6xl dark:text-black">
-        Gestion des Pompistes
+        Gestion des Admin
       </h1>
 
       {isLoading ? (
@@ -124,7 +124,7 @@ const Admins: React.FC = () => {
                     <th scope="col" className="p-4 ">Nom</th>
                     <th scope="col" className="p-4 ">Email</th>
                     <th scope="col" className="p-4 ">phone</th>
-                    <th scope="col" className="p-4 ">évaluation</th>
+                    <th scope="col" className="p-4 ">role</th>
                     <th scope="col" className="p-4 ">Actions</th>
                   </tr>
                 </thead>
@@ -159,7 +159,7 @@ const Admins: React.FC = () => {
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.username}</td>
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.email}</td>
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.phone}</td>
-                    <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.role}</td>
+                    <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.adminRole.name}</td>
 
                
         
