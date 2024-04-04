@@ -86,18 +86,6 @@ const serviceSlice = createSlice({
         state.isLoading = false;
         Swal.fire({ icon: 'success', title: 'Success', text: 'Client created successfully' });
       })
-      .addCase(updateService.rejected, (state) => {
-        state.isLoading = false;
-        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to update client' });
-      })
-      .addCase(updateService.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(updateService.fulfilled, (state) => {
-        state.isLoading = false;
-        Swal.fire({ icon: 'success', title: 'Success', text: 'Client updated successfully' });
-      })
       .addCase(fetchServices.rejected, (state) => {
         state.isLoading = false;
         Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to fetch clients' });
