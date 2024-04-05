@@ -312,7 +312,8 @@ img {
 }
 
 .sidebar__link {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   font-size: 1rem;
   text-decoration: none;
   color: #000;

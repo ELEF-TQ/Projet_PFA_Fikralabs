@@ -37,8 +37,8 @@ import Client from '../pages/Client/index';
 import HomeClient from "../pages/Client/Home";
 import Coupons from "../pages/Client/mesCoupons";
 import MesReviews from "../pages/Client/Reviews";
-import MesServices from '../pages/Client/Services';
 import ClientProfile from "../pages/Client/Profile";
+import ReserveServices from "../pages/Client/Services";
 
 
 
@@ -93,7 +93,7 @@ export const routes = createBrowserRouter([
       { path: "", element: <HomeClient /> }, 
       { path: "coupons", element: <Coupons /> },
       { path: "evaluations", element: <MesReviews />},
-      { path: "services", element: <MesServices />},
+      { path: "services", element: <ReserveServices />},
       { path: "profile", element: <ClientProfile /> },
       
     ],
