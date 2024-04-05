@@ -12,6 +12,7 @@ import StationSlice from './features/StationSlice'
 import ResetPasswordSlice from './features/ResetPasswordSlice'
 import RoleSlice from './features/RoleSlice'
 import PermissionSlice from './features/PermissionSlice'
+import ServiceSlice from './features/ServiceSlice'
 
 export const makeStore = () => {
   return configureStore({
@@ -24,6 +25,7 @@ export const makeStore = () => {
         conversions: ConversionSlice,
         coupons: CouponSlice,
         stations: StationSlice,
+        services:ServiceSlice,
         resetPassword: ResetPasswordSlice,
         roles: RoleSlice,
         permissions: PermissionSlice
