@@ -116,9 +116,8 @@ const Index: React.FC = () => {
           Swal.fire('Oops!', 'Veuillez vérifier le formulaire.', 'error');
           return;
       }
-      dispatch(forgotPassword({email: formData.email})).then(() => {
-          handleNextStep();
-      });
+      dispatch(forgotPassword({email: formData.email}));
+      handleNextStep();
     } else if (currentStep === 2) {
       const isEmptyField = Object.entries(formData).some(([key, value]) => key && value === '');
       if (isEmptyField) {

@@ -267,7 +267,7 @@ img {
 .layout__main-content {
   flex-grow: 1;
   padding: 2rem;
-  overflow-y: auto !important;;
+  overflow-y: auto !important;
 }
 
 .sidebar__wrapper {
@@ -281,6 +281,8 @@ img {
   background-color: var(--secondary-color);
   padding: 1rem;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  /* overflow-y: auto !important; */
+  /* overflow-x: hidden; */
   overflow: hidden;
 }
 

@@ -15,5 +15,6 @@ import { ClientsModule } from 'src/clients/clients.module';
     ClientsModule],
   controllers: [CouponsController],
   providers: [CouponsService],
+  exports:[CouponsService]
 })
 export class CouponsModule {}

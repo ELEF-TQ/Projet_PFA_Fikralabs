@@ -1,0 +1,11 @@
+Sprint 1: Sprint de Preparation (Analyse de CD, Conception, Project setup):		
+	--- Diag de cas d'utilisation et class Global
+	
+
+
+
+Sprint 2: Auth, Authorization, ResetPassword, Gestion des Acteurs
+	--- Diag de cas d'utilisation et class Partielle
+	--- Diag de cas d'utilisation et class Global
+Sprint 3: Reviews, Conversions
+sprint 4: Coupons, Services
