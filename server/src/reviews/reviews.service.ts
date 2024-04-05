@@ -14,8 +14,7 @@ export class ReviewsService {
   constructor(
     private readonly clientService: ClientsService,
     private readonly pompisteService: PompistesService,
-    @InjectModel(Review.name)
-    private readonly reviewModel: Model<Review>,
+    @InjectModel(Review.name) private readonly reviewModel: Model<Review>,
   ) {}
 
   async createReview(createReviewDto: CreateReviewDto): Promise<void> {

@@ -11,10 +11,10 @@ export class ReviewsController {
   @UsePipes(ValidationPipe)
   async createReview(@Body() createReviewDto: CreateReviewDto) {
     try {
-        await this.reviewService.createReview(createReviewDto);
-        return { message: 'Évaluation créée avec succès' }; 
+      await this.reviewService.createReview(createReviewDto);
+      return { message: 'Évaluation créée avec succès' }; 
     } catch (error) {
-        throw new HttpException({ message: `Échec de la création de l\'évaluation : ${error.message}` }, HttpStatus.BAD_REQUEST);
+      throw new HttpException({ message: `Échec de la création de l\'évaluation : ${error.message}` }, HttpStatus.BAD_REQUEST);
     }
 }
 
