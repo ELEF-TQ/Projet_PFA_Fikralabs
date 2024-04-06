@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UsePipes, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('services')
 export class ServicesController {
@@ -9,9 +10,12 @@ export class ServicesController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  async create(@Body() createServiceDto: CreateServiceDto) {
-    return await this.servicesService.create(createServiceDto);
+  @UseInterceptors(FileInterceptor('image')) 
+  async create(@UploadedFile() image:File,@Body() createServiceDto: CreateServiceDto) {
+    const serviceDataWithImage = { ...createServiceDto, image: image };
+    return await this.servicesService.create(serviceDataWithImage);
   }
+
 
   @Get()
   async findAll() {
