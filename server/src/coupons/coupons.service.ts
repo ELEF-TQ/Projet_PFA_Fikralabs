@@ -47,6 +47,10 @@ export class CouponsService {
     }
   }
 
+  async findByCode(CouponCode: string){
+    return await this.couponModel.findOne({code: CouponCode}).exec();;
+  }
+
   async getCouponById(id: string): Promise<Coupon> {
     return await this.couponModel.findById(id).exec();
   }
