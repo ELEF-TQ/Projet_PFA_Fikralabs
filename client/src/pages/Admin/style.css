@@ -18,3 +18,12 @@
     font-size: 16px;
   }
   
+  .Service__image__Container {
+    position: relative;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    width: 27rem;
+    height: 15rem;
+  }

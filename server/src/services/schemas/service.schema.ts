@@ -13,6 +13,9 @@ export class Service extends Document {
   @Prop()
   description: string;
 
+  @Prop()
+  image:File;
+
 }
 
 export const ServiceSchema = SchemaFactory.createForClass(Service);
