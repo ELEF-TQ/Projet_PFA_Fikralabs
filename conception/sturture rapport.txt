@@ -1,0 +1,37 @@
+Dedicace
+Remerciements
+Resume
+Table des metieres
+List des figure
+List des tables 
+Introduction
+
+Chapitre 1 : Context general du projet
+1 - presenation de l'entreprise
+ - definition / fiche technique /  service de l'entreprise
+2 - Presentation de projet
+ - Context de projet / description de projet / Conduite du projet
+
+Chapitre 2 : Sprint de preparaton
+ 1 -   analyse des besoin
+ - identification des acteurs / les besoin fonctionnels / besoin non fonctionnels
+ 2 - Backlog Produit
+ - Diagrame global / - Planification
+
+Chapitre 3 : Etude technique
+  1 - Choix des outils
+  - Conception / devloppement / depoloiment
+ 2 - technologie et framwork
+  - Netsjs / Reactjs / MongoDB
+
+Chapitre 4 : Sprint 1 - Authentification et Authorisation
+ -  Backlog / Regle de metier / Conception / Realisation
+
+Chapitre 5 : Sprint 2 - Reviews et Conversion
+ -  Backlog / Regle de metier / Conception / Realisation
+
+Chapitre 6 : Sprint 3 - Service et Coupon
+
+Annexex
+Conclusion et Perspective
+Bibliographe et webographie

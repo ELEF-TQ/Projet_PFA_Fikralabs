@@ -175,7 +175,27 @@ const adminSlice = createSlice({
             text: 'Une erreur s\'est produite lors de la mise à jour de l\'admin.',
           });
         }
-      });
+      })
+      .addCase(createAdmin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createAdmin.fulfilled, (state) => {
+        state.isLoading = false;
+        Swal.fire('Succès !', 'Admin cree avec succès.', 'success').then(() => {
+        });
+      })
+      .addCase(createAdmin.rejected, (state, action: any) => {
+        state.isLoading = false;
+        if (action.payload && action.payload.message) {
+          Swal.fire({ icon: 'error', title: 'Oups !', text: action.payload.message || '' });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oups !',
+            text: 'Une erreur s\'est produite lors de la mise à jour de l\'admin.',
+          });
+        }
+      })
   },
 });
 

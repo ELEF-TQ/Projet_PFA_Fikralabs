@@ -11,6 +11,7 @@ import { MdAdminPanelSettings } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
 import { RiAdminLine } from "react-icons/ri";
 
+//populate and use rols here
 export const AdminItems = [
     {
       name: "Home",
