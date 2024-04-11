@@ -37,6 +37,11 @@ export class AuthService {
       }
     }
 }
+
+
+
+
+
   async register(userDetails: CreateClientDto){
     const IsExists = await IsEmailAlreadyExists(userDetails, this.clientsService, this.adminService);
     if(IsExists){

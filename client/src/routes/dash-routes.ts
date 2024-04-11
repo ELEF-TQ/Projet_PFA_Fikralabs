@@ -10,6 +10,10 @@ import { CgProfile } from "react-icons/cg";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
 import { RiAdminLine } from "react-icons/ri";
+import { retrieveUserSession } from "../lib/Encryption";
+import { hasPermission } from "../utils/hasPermission";
+
+const user = retrieveUserSession() ;
 
 //populate and use rols here
 export const AdminItems = [
@@ -19,7 +23,7 @@ export const AdminItems = [
       icon: AiOutlineHome,
     },
     {
-      name: "Conversion",
+      name: "Conversions",
       href: "/admin/conversions",
       icon: TbTransform,
     },
@@ -64,7 +68,14 @@ export const AdminItems = [
       icon: CgProfile ,
     },
  
-  ];
+  ].filter(item => {
+    if (item.name === "Home" || item.name === "Profile") {
+      return true;
+    }
+    const hasPermissionForItem = hasPermission(user, item.name.toUpperCase());
+    return hasPermissionForItem;
+  });
+
 
 
 

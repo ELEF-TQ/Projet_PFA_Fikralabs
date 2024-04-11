@@ -35,8 +35,7 @@ export class RoleService {
   }
 
   async findOne(id: string): Promise<Role> {
-    return this.roleModel.findById(id).exec();
-  }
+    return this.roleModel.findById(id).populate('permissions').exec();  }
 
  
   async remove(id: string): Promise<Role> {

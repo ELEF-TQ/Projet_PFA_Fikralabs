@@ -84,13 +84,11 @@ const reviewsSlice = createSlice({
       })
       .addCase(getAllReviewsByPompiste.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         state.reviews = action.payload;
       })
-      .addCase(getAllReviewsByPompiste.rejected, (state, action) => {
+      .addCase(getAllReviewsByPompiste.rejected, (state) => {
         state.isLoading = false;
         state.reviews = [];
-        console.log(action.payload);
       })
       .addCase(getAllReviewsByClient.pending, (state) => {
         state.isLoading = true;
@@ -98,7 +96,6 @@ const reviewsSlice = createSlice({
       })
       .addCase(getAllReviewsByClient.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         state.reviews = action.payload;
       })
       .addCase(getAllReviewsByClient.rejected, (state, action) => {

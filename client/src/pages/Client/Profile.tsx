@@ -30,7 +30,6 @@ const ClientProfile: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
-    console.log(user)
     setFormData({
       username: user.username,
       email: user.email,

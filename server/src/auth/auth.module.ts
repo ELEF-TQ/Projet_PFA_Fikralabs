@@ -9,12 +9,14 @@ import { AuthController } from './auth.controller';
 import { AdminModule } from 'src/admin/admin.module';
 import 'dotenv/config'; 
 import { PompistesModule } from 'src/pompistes/pompistes.module';
+import { AuthorizationModule } from 'src/authorization/authorization.module';
 
 @Module({
   imports: [
     ClientsModule, 
     AdminModule,
     PompistesModule,
+    AuthorizationModule,
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET, 
