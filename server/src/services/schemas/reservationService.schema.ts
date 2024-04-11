@@ -19,16 +19,19 @@ export class ReservationService extends Document {
   dateReservation: Date;
 
   @Prop()
-  heureReservation: Date;
+  heureReservation: string;
 
   @Prop()
   ville: string;
 
-  @Prop({ required: true , default:0 })
-  adresse: number;
+  @Prop()
+  adresse: string;
 
   @Prop()
   couponCode: string;
+
+  @Prop()
+  priceAfterDiscount: number;
 
 }
 
