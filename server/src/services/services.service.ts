@@ -26,12 +26,8 @@ export class ServicesService {
   }
 
   async findAll() {
-    const allServices = await this.serviceModel.find().exec();
-    if(allServices.length === 0){
-      return allServices;
-    }else{
-      throw new NotFoundException("No Services Found");
-    }
+    return await this.serviceModel.find().exec();
+
   }
 
   async findOne(id: string) {

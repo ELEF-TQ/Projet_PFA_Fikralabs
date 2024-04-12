@@ -6,10 +6,13 @@ export class CreateServiceDto {
     readonly nom: string;
 
     @IsNotEmpty()
-    @IsNumber()
-    readonly prix: number;
+    prix: number;
 
     @IsNotEmpty()
     @IsString()
     readonly description: string;
+
+    readonly image :File;
+
+
 }

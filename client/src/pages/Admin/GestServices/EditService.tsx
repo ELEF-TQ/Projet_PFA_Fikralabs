@@ -2,7 +2,7 @@ import React, {  useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../context/store';
 import { fetchServices, updateService } from '../../../context/features/ServiceSlice';
-import { Service } from '../../../types/Service';
+// import { Service } from '../../../types/Service';
 import defaultIMG from '../../../assets/images/defaultUser.png';
 
 interface Props {
@@ -15,7 +15,7 @@ const EditService: React.FC<Props> = ({ show, handleClose, Element }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoading } = useSelector((state: RootState) => state.services);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [formData, setFormData] = useState<Service>({ ...Element });
+  const [formData, setFormData] = useState({ ...Element });
 
   useEffect(() => {
     setFormData({ ...Element });
@@ -33,12 +33,12 @@ const EditService: React.FC<Props> = ({ show, handleClose, Element }) => {
     const { name, value, files } = e.target;
     if (name === 'image' && files && files.length > 0) {
       const selectedImage = files[0];
-      setFormData(prevFormData => ({
+      setFormData((prevFormData: any) => ({
         ...prevFormData,
         image: selectedImage
       }));
     } else {
-      setFormData(prevFormData => ({
+      setFormData((prevFormData: any) => ({
         ...prevFormData,
         [name]: value
       }));

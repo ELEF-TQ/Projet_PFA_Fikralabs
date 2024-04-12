@@ -1,11 +1,9 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
-import defaultIMG from '../../../assets/images/defaultUser.png';
-import { createPompiste } from "../../../context/features/PompisteSlice";
-import { Service } from '../../../types/Service'; 
 import { createService, fetchServices } from "../../../context/features/ServiceSlice";
-import illus from '../../../assets/images/illustration.png'
+import vivo from '../../../assets/images/vivo.jpg'
+
 interface Props {
   show: boolean;
   handleClose: () => void;
@@ -13,52 +11,55 @@ interface Props {
 
 const AddService: React.FC<Props> = ({ show, handleClose }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading } = useSelector((state: RootState) => state.pompistes);
+  const { isLoading } = useSelector((state: RootState) => state.services);
 
-  const [formData, setFormData] = useState<Service>({
-    _id: '', 
+  const [formData, setFormData] = useState({
     nom: '',
     prix: 0,
     description: '',
-    image: defaultIMG ,
-    });
+    image: null,
+  });
 
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isAnyFieldEmpty, setIsAnyFieldEmpty] = useState(true);
 
   const handleSubmit = () => {
-    if (validateFormData()) {
-      dispatch(createService(formData)).then(() => {
-        handleClose();
-        dispatch(fetchServices());
-      });
-    }
+    dispatch(createService(formData)).then(() => {
+      handleClose();
+      dispatch(fetchServices());
+    });
   };
 
- 
-  
-
-  const handleChange = (e :any) => {
+  const handleChange = (e: any) => {
     const { name, value, files } = e.target;
-      if (e.target.type === 'file' && files && files.length > 0) {
-      const selectedImage = files[0];
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        image: selectedImage
-      }));
+    if (name !== 'image') {
+      if (name === 'prix') {
+        const prix = parseFloat(value);
+        if (!isNaN(prix)) {
+          setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: prix
+          }));
+        }
+      } else {
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          [name]: value
+        }));
+      }
     } else {
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        [name]: value
-      }));
+      if (files && files.length > 0) {
+        const selectedImage = files[0];
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          image: selectedImage
+        }));
+      }
     }
-  };
-  
 
-  const validateFormData = () => {
-    return true
+    // Check if any field is empty
+    const isEmpty = Object.values(formData).some(value => value === '' || value === null);
+    setIsAnyFieldEmpty(isEmpty);
   };
-
-  const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
 
   return (
     <>
@@ -82,12 +83,13 @@ const AddService: React.FC<Props> = ({ show, handleClose }) => {
                   <div className="Service__image__Container ring-2 ring-green-300 dark:ring-green-500 relative group">
                     {formData.image ? (
                       <img
-                        src={illus}
+                        src={URL.createObjectURL(formData.image)}
                         alt="profile"
                         className="object-cover p-1 "
-                      />                    ) : (
-                        <img src={defaultIMG} alt="default" className="object-cover w-30 h-30 p-1 rounded-full" />
-                      )}
+                      />
+                    ) : (
+                      <img src={vivo} alt="default" className="object-cover w-30 h-30 p-1" />
+                    )}
                   </div>
                 </label>
               </div>
@@ -107,9 +109,10 @@ const AddService: React.FC<Props> = ({ show, handleClose }) => {
                   placeholder="Nom"
                   value={formData.nom}
                   onChange={handleChange}
+                  required
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label
                   htmlFor="prix"
@@ -125,6 +128,7 @@ const AddService: React.FC<Props> = ({ show, handleClose }) => {
                   placeholder="Prix"
                   value={formData.prix}
                   onChange={handleChange}
+                  required
                 />
               </div>
 
@@ -142,14 +146,11 @@ const AddService: React.FC<Props> = ({ show, handleClose }) => {
                   placeholder="Description"
                   value={formData.description}
                   onChange={handleChange}
+                  required
                 />
               </div>
             </div>
-            {errorMessage && (
-              <div className="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                <span className="block sm:inline">{errorMessage}</span>
-              </div>
-            )}
+
             <div className="flex justify-between">
               <button
                 className={`btn bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded ${isAnyFieldEmpty ? 'opacity-50 cursor-not-allowed' : ''}`}

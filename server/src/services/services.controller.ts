@@ -28,7 +28,7 @@ export class ServicesController {
     return await this.servicesService.findOne(id);
   }
 
-  @Patch(':id')
+  @Post(':id')
   @UsePipes(ValidationPipe)
   async update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
     return await this.servicesService.update(id, updateServiceDto);
