@@ -14,6 +14,16 @@ export const createService = createAsyncThunk('services/create', async (formData
   }
 });
 
+// Async thunk to reserve a service
+export const reserverService = createAsyncThunk('services/reserverService', async (formData: any, thunkAPI) => {
+  try {
+    console.log(formData);
+    const response = await axiosAuth.post('/services/reservation', formData);
+    return response.data;
+  } catch (error:any) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
 
 // Async thunk to update a service
 export const updateService = createAsyncThunk('services/update', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
@@ -48,6 +58,7 @@ export const fetchServices = createAsyncThunk('services/fetchAll', async () => {
 
 const initialState = {
   service: null,
+  reservation: null,
   services: [],
   isLoading: false,
   error: null,
@@ -84,11 +95,11 @@ const serviceSlice = createSlice({
       })
       .addCase(createService.fulfilled, (state) => {
         state.isLoading = false;
-        Swal.fire({ icon: 'success', title: 'Success', text: 'Client created successfully' });
+        Swal.fire({ icon: 'success', title: 'Success', text: 'Service created successfully' });
       })
       .addCase(fetchServices.rejected, (state) => {
         state.isLoading = false;
-        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to fetch clients' });
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to fetch Services' });
       })
       .addCase(fetchServices.pending, (state) => {
         state.isLoading = true;
@@ -114,6 +125,23 @@ const serviceSlice = createSlice({
         } else {
           Swal.fire({ icon: 'error', title: 'Oops!', text: 'Une erreur s\'est produite lors de la mise à jour du service.' }); 
         }
+      })
+      .addCase(reserverService.rejected, (state, action: any) => {
+        state.isLoading = false;
+        if (action.payload && action.payload.message) {
+          Swal.fire({ icon: 'error', title: 'Error', text: action.payload.message });
+        } else {
+          Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to reserve service' });
+        }
+      })
+      .addCase(reserverService.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(reserverService.fulfilled, (state) => {
+        state.isLoading = false;
+        Swal.fire({ icon: 'success', title: 'Success', text: 'Service reserved successfully' });
+        // You may update the state here if needed
       });
   },
 });

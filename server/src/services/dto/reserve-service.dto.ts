@@ -14,7 +14,7 @@ export class ReserveServiceDto {
     dateReservation: Date;
   
     @IsNotEmpty()
-    heureReservation: Date;
+    heureReservation: string;
   
     @IsNotEmpty()
     @IsString()

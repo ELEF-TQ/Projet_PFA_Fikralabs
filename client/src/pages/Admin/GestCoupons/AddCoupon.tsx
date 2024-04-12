@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { addDays } from "date-fns";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../context/store";
 import { createCoupon, fetchAllCoupons } from "../../../context/features/CouponSlice";
 
