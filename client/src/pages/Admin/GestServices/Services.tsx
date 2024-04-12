@@ -7,10 +7,9 @@ import { AppDispatch } from '../../../context/store';
 import Spinner from '../../../components/status/Spinner';
 import EditService from './EditService';
 import AddService from './AddService';
-import services from '../../../utils/services';
 const Service: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const {  loading } = useSelector((state: any) => state.services); // Assuming you have services slice in redux store
+  const {  isLoading ,services } = useSelector((state: any) => state.services); // Assuming you have services slice in redux store
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -47,7 +46,7 @@ const Service: React.FC = () => {
         Gestion des Services
       </h1>
 
-      {loading ? (
+      {isLoading ? (
        <Spinner/>
       ) : (
         <section className="  p-3 sm:p-5 antialiased">

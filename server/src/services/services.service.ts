@@ -26,12 +26,7 @@ export class ServicesService {
   }
 
   async findAll() {
-    const allServices = await this.serviceModel.find().exec();
-    if(allServices.length !== 0){
-      return allServices;
-    }else{
-      throw new NotFoundException("No Services Found");
-    }
+    return await this.serviceModel.find().exec();
   }
 
   async findOne(id: string) {
@@ -43,14 +38,20 @@ export class ServicesService {
     }
   }
 
-  async update(id: string, updateServiceDto: UpdateServiceDto) {
-   const updatedService = await this.serviceModel.findByIdAndUpdate(id, updateServiceDto, { new: true }).exec();
-   if(updatedService){
-    return updatedService;
-   }else{
-    throw new HttpException("No service to update with the provided id", HttpStatus.BAD_REQUEST);
-   }
+ async update(id: string, updateServiceDto: UpdateServiceDto) {
+ // console.log(updateServiceDto);
+  try {
+    const updatedService = await this.serviceModel.findByIdAndUpdate(id, updateServiceDto, { new: true }).exec();
+    if (updatedService) {
+      return updatedService;
+    } else {
+      throw new HttpException('No service found with the provided ID', HttpStatus.NOT_FOUND);
+    }
+  } catch (error) {
+    console.error('Error updating service:', error);
+    throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
   }
+}
 
   async remove(id: string) {
     const deletedService = await this.serviceModel.findByIdAndDelete(id).exec();

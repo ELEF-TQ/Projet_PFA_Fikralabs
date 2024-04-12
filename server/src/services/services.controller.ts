@@ -28,12 +28,12 @@ export class ServicesController {
     return await this.servicesService.findOne(id);
   }
 
-  @Patch(':id')
+  @Post(':id')
   @UsePipes(ValidationPipe)
-  @UseInterceptors(FileInterceptor('image'))
-  async update(@UploadedFile() image:File, @Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
-    const updateServiceDtoWithImage = { ...updateServiceDto, image: image }
-    return await this.servicesService.update(id, updateServiceDtoWithImage);
+  @UseInterceptors(FileInterceptor('image')) 
+  async update(@Param('id') id: string, @UploadedFile() image: File, @Body() updateServiceDto: UpdateServiceDto) {
+    const serviceDataWithImage = { ...updateServiceDto, image: image };
+    return await this.servicesService.update(id, serviceDataWithImage);
   }
 
   @Delete(':id')
