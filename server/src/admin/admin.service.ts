@@ -54,9 +54,16 @@ export class AdminService {
   
 
   async findOneByEmail(email: string): Promise<Admin> {
-    return this.adminModel.findOne({email: email}).exec();
+    return this.adminModel.findOne({ email }).populate({ 
+      path: 'adminRole',
+      populate: {
+        path: 'permissions'
+      }
+    }).exec();
   }
 
+
+  
   async update(id: string, updateAdminDto: UpdateAdminDto): Promise<Admin | null> {
     const { image, ...dtoWithoutImage } = updateAdminDto;
     const updateData: any = { ...dtoWithoutImage };

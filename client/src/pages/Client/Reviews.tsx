@@ -16,7 +16,6 @@ const Reviews = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedReview, setSelectedReview] = useState<any>(null);
 
-  console.log(reviews)
   useEffect(() => {
     const user = retrieveUserSession();
     dispatch(getAllReviewsByClient(user._id));
