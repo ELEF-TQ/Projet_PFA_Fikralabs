@@ -99,12 +99,8 @@ const serviceSlice = createSlice({
       })
       .addCase(fetchServices.rejected, (state) => {
         state.isLoading = false;
-<<<<<<< HEAD
-        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to fetch services' });
-=======
-        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to fetch Services' });
->>>>>>> 0c21adb32e1b01437ed33dde3d341b300248448a
-      })
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to fetch services' })
+        })
       .addCase(fetchServices.pending, (state) => {
         state.isLoading = true;
         state.error = null;

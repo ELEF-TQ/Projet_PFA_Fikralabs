@@ -1,18 +1,7 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
-
+import { IsOptional } from 'class-validator';
 export class CreateServiceDto {
-    @IsNotEmpty()
-    @IsString()
-    readonly nom: string;
-
-    @IsNotEmpty()
+    nom: string;
     prix: number;
-
-    @IsNotEmpty()
-    @IsString()
-    readonly description: string;
-
-    readonly image :File;
-
-
+    description: string;
+    image :File;
 }

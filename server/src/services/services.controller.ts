@@ -30,8 +30,10 @@ export class ServicesController {
 
   @Post(':id')
   @UsePipes(ValidationPipe)
-  async update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
-    return await this.servicesService.update(id, updateServiceDto);
+  @UseInterceptors(FileInterceptor('image')) 
+  async update(@Param('id') id: string, @UploadedFile() image: File, @Body() updateServiceDto: UpdateServiceDto) {
+    const serviceDataWithImage = { ...updateServiceDto, image: image };
+    return await this.servicesService.update(id, serviceDataWithImage);
   }
 
   @Delete(':id')
