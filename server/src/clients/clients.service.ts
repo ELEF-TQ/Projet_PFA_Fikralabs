@@ -103,6 +103,26 @@ export class ClientsService {
     }
   }  
 
+  async isCouponInClientCoupons(clientId: string, coupon: Coupon): Promise<boolean> {
+    try {
+      // Recherche du client par ID
+      const client = await this.clientModel.findById(clientId).exec();
+  
+      if (!client) {
+        // Si le client n'est pas trouvé, retourne false
+        return false;
+      }
+  
+      // Vérifie si le coupon est présent dans la liste des coupons du client
+      const isCouponPresent = client.coupons.some(c => c.equals(coupon._id));
+  
+      return isCouponPresent;
+    } catch (error) {
+      // Gestion des erreurs
+      throw new Error('Une erreur est survenue lors de la vérification de la présence du coupon dans la liste du client');
+    }
+  }  
+
   async updateProfileClient(id: string, updateProfileDto: UpdateClientProfileDto): Promise<Client> {
     const client = await this.clientModel.findById(id);
     if (!client) {

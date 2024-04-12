@@ -18,6 +18,8 @@ const Coupons = () => {
   }, []);
 
   return (
+    <>
+    <h1 className="text-4xl font-bold mb-8">Mes Coupons</h1>
     <div className="flex flex-wrap justify-center gap-5">
     {isLoading ? (
         <Spinner />
@@ -31,8 +33,7 @@ const Coupons = () => {
         )
     )}
     </div>
-
-
+    </>
   );
 };
 

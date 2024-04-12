@@ -5,6 +5,7 @@ import { UpdateServiceDto } from './dto/update-service.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ReserveServiceDto } from './dto/reserve-service.dto';
 
+
 @Controller('services')
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
@@ -14,11 +15,10 @@ export class ServicesController {
   @Post()
   @UsePipes(ValidationPipe)
   @UseInterceptors(FileInterceptor('image')) 
-  async create(@UploadedFile() image:File,@Body() createServiceDto: CreateServiceDto) {
+  async create(@UploadedFile() image:File, @Body() createServiceDto: CreateServiceDto) {
     const serviceDataWithImage = { ...createServiceDto, image: image };
     return await this.servicesService.create(serviceDataWithImage);
   }
-
 
   @Get()
   async findAll() {
@@ -56,10 +56,13 @@ export class ServicesController {
   }
 
 
+  @Get("/clientReservations/:clientId")
+  async fetchClientReservations(@Param("clientId") clientId: string){
+    return await this.servicesService.fetchReservationsByClientId(clientId);
+  }
 
- 
-
-
-
-
+  @Delete("/deleteReservation/:reservationId")
+  async deleteReservation(@Param("reservationId") reservationId: string){
+    return await this.servicesService.deleteReservationById(reservationId);
+  }
 }

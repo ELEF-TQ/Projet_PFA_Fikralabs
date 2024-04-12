@@ -115,10 +115,10 @@ export class ServicesService {
         throw new HttpException("Le coupon a expiré", HttpStatus.BAD_REQUEST);
       }
       
-      // const isCouponPresent = client.coupons.some(c => c.code === couponCode);
-      // if (!isCouponPresent) {
-      //   throw new HttpException("Le coupon n'est pas associé à ce client", HttpStatus.BAD_REQUEST);
-      // }
+      const isCouponPresent = this.clientService.isCouponInClientCoupons(clientId, coupon)
+      if (!isCouponPresent) {
+        throw new HttpException("Le coupon n'est pas associé à ce client", HttpStatus.BAD_REQUEST);
+      }
 
       
       priceAfterDiscount = service.prix * (1 - coupon.reduction/100);
@@ -150,9 +150,6 @@ export class ServicesService {
     return await reservation.save();
   }
 
-
-
-
     // Handle Reservations :
     async findAllReservations() {
       return await this.reservationServiceModel.find()
@@ -161,5 +158,18 @@ export class ServicesService {
       .exec();
     }
 
+
+  async fetchReservationsByClientId(clientId: string){
+    return  await this.reservationServiceModel.find({ client: clientId }).populate('service').exec();
+  }
+
+  async deleteReservationById(reservationId: string) {
+    const deletedReservation = await this.reservationServiceModel.findByIdAndDelete(reservationId).exec();
+    if (deletedReservation) {
+      return deletedReservation;
+    }else{
+      throw new Error('La réservation avec l\'ID fourni n\'a pas été trouvée.');
+    }
+  }
 
 }

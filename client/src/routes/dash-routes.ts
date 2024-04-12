@@ -10,13 +10,11 @@ import { CgProfile } from "react-icons/cg";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
 import { RiAdminLine } from "react-icons/ri";
+import { SlCalender } from "react-icons/sl";
 import { retrieveUserSession } from "../lib/Encryption";
 import { hasPermission } from "../utils/hasPermission";
-import { MdDateRange } from "react-icons/md";
 
 const user = retrieveUserSession() ;
-
-//populate and use rols here
 export const AdminItems = [
     {
       name: "Home",
@@ -51,7 +49,7 @@ export const AdminItems = [
     {
       name: "reservations",
       href: "/admin/reservations",
-      icon: MdDateRange,
+      icon: SlCalender,
 
     },
     {
@@ -131,6 +129,11 @@ export const ClientItems = [
     name: "Services",
     href: "/client/services",
     icon:MdHomeRepairService ,
+  },
+  {
+    name: "Mes Reservations",
+    href: "/client/mesReservations",
+    icon:SlCalender ,
   },
   {
     name: "Profile",
