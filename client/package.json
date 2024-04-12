@@ -36,6 +36,7 @@
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.2",
     "react-spinners": "^0.13.8",
+    "react-time-picker": "^6.6.0",
     "styled-components": "^6.1.8",
     "sweetalert2": "^11.10.5",
     "tw-elements": "^1.1.0"

@@ -87,6 +87,22 @@ export class ClientsService {
   }
 
 
+  async removeClientCoupon(clientId: string, couponId: string): Promise<Client | null> {
+    try {
+      // Recherche du client par ID et mise à jour
+      const updatedClient = await this.clientModel.findByIdAndUpdate(
+        clientId,
+        { $pull: { coupons: couponId } }, // Utilisation de $pull pour supprimer le coupon de la liste
+        { new: true } // Renvoie le client mis à jour
+      ).exec();
+  
+      return updatedClient;
+    } catch (error) {
+      // Gestion des erreurs
+      throw new Error('Une erreur est survenue lors de la suppression du coupon du client');
+    }
+  }  
+
   async updateProfileClient(id: string, updateProfileDto: UpdateClientProfileDto): Promise<Client> {
     const client = await this.clientModel.findById(id);
     if (!client) {

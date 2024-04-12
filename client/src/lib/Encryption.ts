@@ -50,6 +50,7 @@ export const updateUserSession = async (endpoint: string, id: string): Promise<a
     const userData = response.data;
     const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(userData), secretKey).toString();
     localStorage.setItem('user', encryptedUser);
+    console.log(userData)
     return userData;
   } catch (error) {
     console.error('Error updating user session:', error);

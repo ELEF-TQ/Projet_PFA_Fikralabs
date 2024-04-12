@@ -139,11 +139,11 @@ const Coupon : React.FC = () => {
                       <th scope="col" className="p-4">
                         <div className="flex items-center">
                         <input
-                                type="checkbox"
-                                id="selectAll"
-                                checked={selectAllChecked}
-                                onChange={handleSelectAllChange}
-                              />
+                          type="checkbox"
+                          id="selectAll"
+                          checked={selectAllChecked}
+                          onChange={handleSelectAllChange}
+                        />
                         
                           <label htmlFor="checkbox-all" className="sr-only">checkbox</label>
                         </div>

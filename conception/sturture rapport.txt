@@ -1,37 +1,46 @@
-Dedicace
-Remerciements
-Resume
-Table des metieres
-List des figure
-List des tables 
-Introduction
+1. **Dédicace**
+2. **Remerciements**
+3. **Résumé**
+4. **Table des matières**
+5. **Liste des figures**
+6. **Liste des tables**
+7. **Introduction**
+    - Contextualisation du projet et justification de l'utilisation de la méthodologie Agile Scrum.
 
-Chapitre 1 : Context general du projet
-1 - presenation de l'entreprise
- - definition / fiche technique /  service de l'entreprise
-2 - Presentation de projet
- - Context de projet / description de projet / Conduite du projet
+8. **Chapitre 1 : Contexte général du projet**
+    1. Présentation de l'entreprise
+        - Définition, fiche technique, et services de l'entreprise.
+    2. Présentation du projet
+        - Contexte du projet, description et conduite du projet.
 
-Chapitre 2 : Sprint de preparaton
- 1 -   analyse des besoin
- - identification des acteurs / les besoin fonctionnels / besoin non fonctionnels
- 2 - Backlog Produit
- - Diagrame global / - Planification
+9. **Chapitre 2 : Sprint de préparation**
+    - Introduction à Agile Scrum et son application dans la préparation du projet.
+    1. Analyse des besoins
+        - Identification des acteurs, besoins fonctionnels et non fonctionnels.
+    2. Backlog Produit
+        - Diagramme global, planification.
 
-Chapitre 3 : Etude technique
-  1 - Choix des outils
-  - Conception / devloppement / depoloiment
- 2 - technologie et framwork
-  - Netsjs / Reactjs / MongoDB
+10. **Chapitre 3 : Étude technique**
+    - Approche technique adoptée et comment elle s'aligne avec Agile Scrum.
+    1. Choix des outils
+        - Conception, développement, déploiement.
+    2. Technologie et frameworks
+        - Utilisation de Netsjs, Reactjs, MongoDB.
 
-Chapitre 4 : Sprint 1 - Authentification et Authorisation
- -  Backlog / Regle de metier / Conception / Realisation
+11. **Chapitres 4 à 6 : Implémentation des Sprints 1 à 3**
+    - Détails de chaque sprint et comment Agile Scrum a été mis en œuvre.
+    1. Sprint 1 - Authentification et Autorisation
+        - Backlog, règles métier, conception, réalisation.
+    2. Sprint 2 - Reviews et Conversion
+        - Backlog, règles métier, conception, réalisation.
+    3. Sprint 3 - Service et Coupon
+        - Backlog, règles métier, conception, réalisation.
 
-Chapitre 5 : Sprint 2 - Reviews et Conversion
- -  Backlog / Regle de metier / Conception / Realisation
+12. **Conclusion et Perspectives**
+    - Évaluation de l'efficacité de l'application d'Agile Scrum dans le projet.
+    - Réflexions sur les améliorations possibles et les leçons apprises.
 
-Chapitre 6 : Sprint 3 - Service et Coupon
+13. **Annexes**
+14. **Bibliographie et webographie**
 
-Annexex
-Conclusion et Perspective
-Bibliographe et webographie
+Cette structure permet une intégration fluide de la méthodologie Agile Scrum tout au long de votre rapport, en mettant en évidence son application dans chaque aspect de votre projet. Si vous avez besoin de plus d'informations sur la manière de développer chaque section en utilisant LaTeX, n'hésitez pas à demander !

@@ -27,7 +27,6 @@ export class ServicesService {
 
   async findAll() {
     return await this.serviceModel.find().exec();
-
   }
 
   async findOne(id: string) {
@@ -69,6 +68,38 @@ export class ServicesService {
       throw new HttpException("No service or client found with the provided ids", HttpStatus.BAD_REQUEST);
     }
 
+    // Convertir heureReservation en millisecondes
+      // const heureReservationInMilliseconds = new Date(heureReservation).getTime();
+    // Calculate the nearby time range
+      // const nearbyTimeRangeStart = new Date(heureReservationInMilliseconds - 30 * 60000);
+      // const nearbyTimeRangeEnd = new Date(heureReservationInMilliseconds + 30 * 60000);
+
+    // Vérifier si une réservation existe déjà pour le même service à la même date et à la même heure
+    const existingReservation = await this.reservationServiceModel.findOne({
+      service: serviceId,
+      dateReservation,
+      heureReservation,
+      ville,
+      adresse
+    });
+
+    if (existingReservation) {
+      throw new HttpException("Une réservation pour ce service existe déjà à la date, l'heure et le lieu spécifiés", HttpStatus.BAD_REQUEST);
+    }
+
+    // Vérifier si une réservation existe déjà pour le même service à la même date et à une heure proche
+      // const nearbyReservation = await this.reservationServiceModel.findOne({
+      //   service: serviceId,
+      //   dateReservation,
+      //   ville,
+      //   adresse
+      // });
+      // const nearByheureReservation = new Date(nearbyReservation?.heureReservation)
+
+      // if (nearbyTimeRangeStart <= nearByheureReservation && nearByheureReservation <= nearbyTimeRangeEnd) {
+      //   throw new HttpException("Une réservation pour ce service existe déjà à une heure proche", HttpStatus.BAD_REQUEST);
+      // }
+
     if(couponCode){
       const coupon = await this.couponService.findByCode(couponCode);
       if(!coupon){
@@ -77,19 +108,20 @@ export class ServicesService {
       if(coupon.dateExpiration < new Date()){
         throw new HttpException("Le coupon a expiré", HttpStatus.BAD_REQUEST);
       }
-      const isCouponPresent = client.coupons.some(c => c.code === couponCode);
-      if (!isCouponPresent) {
-        throw new HttpException("Le coupon n'est pas associé à ce client", HttpStatus.BAD_REQUEST);
-      }
+      
+      // const isCouponPresent = client.coupons.some(c => c.code === couponCode);
+      // if (!isCouponPresent) {
+      //   throw new HttpException("Le coupon n'est pas associé à ce client", HttpStatus.BAD_REQUEST);
+      // }
 
+      
       priceAfterDiscount = service.prix * (1 - coupon.reduction/100);
-      client.coupons = client.coupons.filter(coupon => coupon.code !== couponCode);
-      const updatedClient = await this.clientService.update(clientId, client);
+      const updatedClient = await this.clientService.removeClientCoupon(clientId, coupon._id);
       if(!updatedClient){
         throw new HttpException("Error updating Client", HttpStatus.BAD_REQUEST);
       }
     }
-
+    
     while(!isUniqueCode){
       reservationServiceCode = generateReservationServiceCode();
       const isReservationServiceExist = await this.reservationServiceModel.findOne({ code: couponCode }).exec();
