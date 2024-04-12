@@ -11,14 +11,15 @@ import GetUserGeolocation, { Coordinates } from "../../lib/GetUserGeolocation";
 import { fetchNearestStations } from "../../context/features/StationSlice";
 import { FiCalendar } from "react-icons/fi";
 import { reserverService } from "../../context/features/ServiceSlice";
+import { Service } from "../../types/Service";
 
 interface Props {
   show: boolean;
-  Element: any;
-  handleClose: () => void;
+  handleClose: () => void
+  Service: Service;
 }
 
-const Reservation: React.FC<Props> = ({ show, Element, handleClose }) => {
+const Reservation: React.FC<Props> = ({ show, handleClose, Service }) => {
     const dispatch = useDispatch<AppDispatch>();
     const reservedCoupons = useSelector((state: RootState) => state.coupons.reservedCoupons);
     const [userCoordinates, setUserCoordinates] = useState<Coordinates | null>(null);
@@ -27,7 +28,7 @@ const Reservation: React.FC<Props> = ({ show, Element, handleClose }) => {
 
   const initialFormData = {
     clientId: user?._id,
-    serviceId: Element?._id,
+    serviceId: Service?._id,
     dateReservation: null as Date | null,
     heureReservation: "",
     ville: "",
@@ -109,7 +110,7 @@ const Reservation: React.FC<Props> = ({ show, Element, handleClose }) => {
         <div className="modal-overlay">
           <div className="modal">
             <div className="modal-header">
-              <h3 className="modal-title">Reserver le service "{Element.nom}"</h3>
+              <h3 className="modal-title">Reserver le service "{Service.nom}"</h3>
             </div>
             <div className="modal-content">
 

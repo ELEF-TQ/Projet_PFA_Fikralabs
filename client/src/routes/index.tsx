@@ -40,7 +40,7 @@ import Coupons from "../pages/Client/mesCoupons";
 import MesReviews from "../pages/Client/Reviews";
 import ClientProfile from "../pages/Client/Profile";
 import ReserveServices from "../pages/Client/Services";
-
+import MesReservations from "../pages/Client/mesReservations";
 
 
 export const routes = createBrowserRouter([
@@ -97,7 +97,7 @@ export const routes = createBrowserRouter([
       { path: "evaluations", element: <MesReviews />},
       { path: "services", element: <ReserveServices />},
       { path: "profile", element: <ClientProfile /> },
-      
+      { path: "mesReservations", element: <MesReservations />}
     ],
   },
 

@@ -25,6 +25,26 @@ export const reserverService = createAsyncThunk('services/reserverService', asyn
   }
 });
 
+// Async thunk to fetch all services
+export const fetchClientReservations = createAsyncThunk('services/fetchClientReservations', async (clientId: string) => {
+  try {
+    const response = await axiosAuth.get(`/services/clientReservations/${clientId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch services');
+  }
+});
+
+// Async thunk to delete a reservation by id
+export const deleteReservationById = createAsyncThunk('services/deleteReservationById', async (reservationId: string) => {
+  try {
+    const response = await axiosAuth.delete(`/services/deleteReservation/${reservationId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch services');
+  }
+});
+
 // Async thunk to update a service
 export const updateService = createAsyncThunk('services/update', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
   try {
@@ -58,7 +78,7 @@ export const fetchServices = createAsyncThunk('services/fetchAll', async () => {
 
 const initialState = {
   service: null,
-  reservation: null,
+  reservations: [],
   services: [],
   isLoading: false,
   error: null,
@@ -141,7 +161,31 @@ const serviceSlice = createSlice({
       .addCase(reserverService.fulfilled, (state) => {
         state.isLoading = false;
         Swal.fire({ icon: 'success', title: 'Success', text: 'Service reserved successfully' });
-        // You may update the state here if needed
+        // You may update the state here if needed or updateUserSession()
+      })
+      .addCase(fetchClientReservations.rejected, (state) => {
+        state.isLoading = false;
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to fetch Reservations' });
+      })
+      .addCase(fetchClientReservations.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchClientReservations.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.reservations = action.payload;
+      })
+      .addCase(deleteReservationById.rejected, (state, action: any) => {
+        state.isLoading = false;
+        Swal.fire({ icon: 'error', title: 'Error', text: action.payload.message });
+      })
+      .addCase(deleteReservationById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteReservationById.fulfilled, (state) => {
+        state.isLoading = false;
+        Swal.fire({ icon: 'success', title: 'Success', text: 'Reservation canceled successfully' });
       });
   },
 });

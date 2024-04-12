@@ -73,15 +73,15 @@ export class ClientsController {
 
 
   @Post('/destroy')
-async deleteMultiple(@Body() deleteMultipleDto: DeleteMultipleDto): Promise<Client[]> {
-  const { ids } = deleteMultipleDto;
-  const deletedClients = await this.clientsService.destroy(ids);
-  if (deletedClients.length === 0) {
-    throw new NotFoundException("Aucun client n'est supprimé");
-  } else {
-    return deletedClients;
+  async deleteMultiple(@Body() deleteMultipleDto: DeleteMultipleDto): Promise<Client[]> {
+    const { ids } = deleteMultipleDto;
+    const deletedClients = await this.clientsService.destroy(ids);
+    if (deletedClients.length === 0) {
+      throw new NotFoundException("Aucun client n'est supprimé");
+    } else {
+      return deletedClients;
+    }
   }
-}
 
 
 

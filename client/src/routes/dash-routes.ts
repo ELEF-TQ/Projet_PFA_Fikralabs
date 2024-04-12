@@ -10,6 +10,7 @@ import { CgProfile } from "react-icons/cg";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
 import { RiAdminLine } from "react-icons/ri";
+import { SlCalender } from "react-icons/sl";
 import { retrieveUserSession } from "../lib/Encryption";
 import { hasPermission } from "../utils/hasPermission";
 
@@ -68,7 +69,8 @@ export const AdminItems = [
       icon: CgProfile ,
     },
  
-  ].filter(item => {
+  ]
+  .filter(item => {
     if (item.name === "Home" || item.name === "Profile") {
       return true;
     }
@@ -124,6 +126,11 @@ export const ClientItems = [
     name: "Services",
     href: "/client/services",
     icon:MdHomeRepairService ,
+  },
+  {
+    name: "Mes Reservations",
+    href: "/client/mesReservations",
+    icon:SlCalender ,
   },
   {
     name: "Profile",
