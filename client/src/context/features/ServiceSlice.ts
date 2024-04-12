@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosAuth, axiosAuthMultipart } from '../../lib/AxiosBase'; 
 import Swal from 'sweetalert2';
+import { FaBullseye } from 'react-icons/fa';
 
 // Async thunk to create a new service
 export const createService = createAsyncThunk('services/create', async (formData: any, thunkAPI) => {
@@ -56,9 +57,20 @@ export const fetchServices = createAsyncThunk('services/fetchAll', async () => {
   }
 });
 
+// Async thunk to fetch all reservations
+export const fetchReservations = createAsyncThunk('reservation/fetchAll', async () => {
+  try {
+    const response = await axiosAuth.get('/services/reserved');
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch services');
+  }
+});
+
 const initialState = {
   service: null,
   reservation: null,
+  reservations:null,
   services: [],
   isLoading: false,
   error: null,
@@ -142,7 +154,18 @@ const serviceSlice = createSlice({
         state.isLoading = false;
         Swal.fire({ icon: 'success', title: 'Success', text: 'Service reserved successfully' });
         // You may update the state here if needed
-      });
+      })
+
+      .addCase(fetchReservations.pending , (state)=> {
+        state.isLoading = true;
+      })
+      .addCase(fetchReservations.fulfilled , (state , action:any)=> {
+        state.isLoading = false;
+        state.reservations = action.payload ;
+      })
+      .addCase(fetchReservations.rejected , (state)=> {
+        state.isLoading = false;
+      })
   },
 });
 

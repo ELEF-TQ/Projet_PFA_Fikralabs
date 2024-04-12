@@ -21,6 +21,7 @@ import GestCoupons from '../pages/Admin/GestCoupons/Coupon';
 import AdminProfile from "../pages/Admin/Profile";
 import ReviewsPompiste from "../pages/Admin/GestPompistes/ViewReviewsPompiste";
 import GestionRoles from '../pages/Admin/GestRoles/role';
+import GestReservations from '../pages/Admin/GestReservations/Reservations';
 import GestPermissions from '../pages/Admin/GestPermissions/Permission';
 import GestAdmins from '../pages/Admin/GestAdmins/Admins';
 import GestServices from '../pages/Admin/GestServices/Services';
@@ -66,6 +67,7 @@ export const routes = createBrowserRouter([
       { path: "coupons", element: <GestCoupons /> },
       { path: "profile", element: <AdminProfile /> },
       { path: "services", element: <GestServices /> },
+      { path: "reservations", element: <GestReservations /> },
       { path: "roles", element: <GestionRoles/> },
       { path: "permissions" , element: <GestPermissions/>} ,
       {path: "admins" , element: <GestAdmins/>},

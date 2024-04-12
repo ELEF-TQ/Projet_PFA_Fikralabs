@@ -12,6 +12,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { RiAdminLine } from "react-icons/ri";
 import { retrieveUserSession } from "../lib/Encryption";
 import { hasPermission } from "../utils/hasPermission";
+import { MdDateRange } from "react-icons/md";
 
 const user = retrieveUserSession() ;
 
@@ -48,6 +49,12 @@ export const AdminItems = [
       icon: MdHomeRepairService,
     },
     {
+      name: "reservations",
+      href: "/admin/reservations",
+      icon: MdDateRange,
+
+    },
+    {
       name: "admins",
       href: "/admin/admins",
       icon: RiAdminLine,
@@ -69,7 +76,7 @@ export const AdminItems = [
     },
  
   ].filter(item => {
-    if (item.name === "Home" || item.name === "Profile") {
+    if (item.name === "Home" || item.name === "Profile" || item.name === "reservations") {
       return true;
     }
     const hasPermissionForItem = hasPermission(user, item.name.toUpperCase());

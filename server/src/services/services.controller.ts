@@ -9,6 +9,8 @@ import { ReserveServiceDto } from './dto/reserve-service.dto';
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 
+
+  
   @Post()
   @UsePipes(ValidationPipe)
   @UseInterceptors(FileInterceptor('image')) 
@@ -22,6 +24,13 @@ export class ServicesController {
   async findAll() {
     return await this.servicesService.findAll();
   }
+
+  @Get('/reservations')
+  async findAllReservations() {
+    return await this.servicesService.findAllReservations();
+  }
+
+  
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
@@ -45,4 +54,12 @@ export class ServicesController {
   async reserverService(@Body() reserveServiceDto: ReserveServiceDto){
     return await this.servicesService.reserverService(reserveServiceDto);
   }
+
+
+
+ 
+
+
+
+
 }

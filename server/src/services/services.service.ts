@@ -150,4 +150,16 @@ export class ServicesService {
     return await reservation.save();
   }
 
+
+
+
+    // Handle Reservations :
+    async findAllReservations() {
+      return await this.reservationServiceModel.find()
+      .populate('client')
+      .populate('service')
+      .exec();
+    }
+
+
 }

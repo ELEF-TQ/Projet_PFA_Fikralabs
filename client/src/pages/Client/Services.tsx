@@ -20,7 +20,7 @@ const Services = () => {
 
   return (
     <>
-      <h1 className="text-4xl font-bold">Demande de conversion</h1>
+      <h1 className="text-4xl font-bold">Reservation d'une service :</h1>
       <div className='flex justify-center items-center min-h-screen mt-4'>
         {isLoading ? (
           <Spinner />
