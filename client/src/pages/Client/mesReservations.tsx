@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../context/store';
 import { deleteReservationById, fetchClientReservations } from '../../context/features/ServiceSlice';
@@ -17,6 +17,8 @@ const MesReservations = () => {
       dispatch(fetchClientReservations(user._id));
     }
   }, [dispatch, user?._id]);
+
+  const getTimePeriod = (timeString: string) => (parseInt(timeString.split(':')[0], 10) >= 12 ? ' PM' : ' AM');
 
   const handleCancelReservation = (reservationId: string) => {
     // Show confirmation dialog
@@ -52,7 +54,7 @@ const MesReservations = () => {
                 <h2 className="text-xl font-semibold text-gray-800">{reservation.service.nom}</h2>
                 <p className="text-gray-600 mt-2"><span className="font-bold">Code Reservation:</span> #{reservation.code}</p>
                 <p className="text-gray-600"><span className="font-bold">Date:</span> {reservation.dateReservation}</p>
-                <p className="text-gray-600"><span className="font-bold">Heure:</span> {reservation.heureReservation}</p>
+                <p className="text-gray-600"><span className="font-bold">Heure:</span> {reservation.heureReservation}{getTimePeriod(reservation.heureReservation)}</p>
                 <p className="text-gray-600"><span className="font-bold">Ville:</span> {reservation.ville}</p>
                 <p className="text-gray-600"><span className="font-bold">Adresse:</span> {reservation.adresse}</p>
                 {(reservation.couponCode && reservation.priceAfterDiscount) && (

@@ -14,6 +14,7 @@ import { GeolocationModule } from './geolocation/geolocation.module';
 import { AuthorizationModule } from './authorization/authorization.module';
 import { ResetPasswordModule } from './reset-password/reset-password.module';
 import { ServicesModule } from './services/services.module';
+import { StatisticsModule } from './statistics/statistics.module';
 
 
 
@@ -27,7 +28,7 @@ import { ServicesModule } from './services/services.module';
     dest:'/uploads'
   }),
     MongooseModule.forRoot(`${process.env.DB_TYPE}://${process.env.HOST_NAME}/${process.env.DB_NAME}`),
-     AuthModule, ClientsModule, PompistesModule, AdminModule, ReviewsModule, ConversionsModule, CouponsModule, GeolocationModule, AuthorizationModule, ResetPasswordModule, ServicesModule],
+     AuthModule, ClientsModule, PompistesModule, AdminModule, ReviewsModule, ConversionsModule, CouponsModule, GeolocationModule, AuthorizationModule, ResetPasswordModule, ServicesModule, StatisticsModule],
 })
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) {

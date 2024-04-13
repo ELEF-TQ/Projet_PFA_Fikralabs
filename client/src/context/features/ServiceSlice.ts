@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosAuth, axiosAuthMultipart } from '../../lib/AxiosBase'; 
 import Swal from 'sweetalert2';
-import { FaBullseye } from 'react-icons/fa';
 
 // Async thunk to create a new service
 export const createService = createAsyncThunk('services/create', async (formData: any, thunkAPI) => {

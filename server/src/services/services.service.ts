@@ -166,4 +166,20 @@ export class ServicesService {
     }
   }
 
+  async countServices(): Promise<number> {
+    try {
+      return await this.serviceModel.countDocuments().exec();
+    } catch (error) {
+      throw new Error(`Erreur lors du comptage des services: ${error}`);
+    }
+  }
+
+  async countReservationServices(): Promise<number> {
+    try {
+      return await this.reservationServiceModel.countDocuments().exec();
+    } catch (error) {
+      throw new Error(`Erreur lors du comptage des services de réservation: ${error}`);
+    }
+  }
+
 }

@@ -191,5 +191,12 @@ export class ClientsService {
     return updatedUser;
   }
   
+  async countClients(): Promise<number> {
+    try {
+      return await this.clientModel.countDocuments().exec();
+    } catch (error) {
+      throw new Error(`Erreur lors du comptage des clients: ${error}`);
+    }
+  }
  
 }

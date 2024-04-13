@@ -32,7 +32,7 @@ export class AdminService {
         });
         return createdAdmin.save();
     }
-}
+  }
 
  
 
@@ -139,6 +139,14 @@ export class AdminService {
     }
 
     return updatedUser;
+  }
+
+  async countAdmins(): Promise<number> {
+    try {
+      return await this.adminModel.countDocuments().exec();
+    } catch (error) {
+      throw new Error(`Erreur lors du comptage des admins: ${error}`);
+    }
   }
 
 }

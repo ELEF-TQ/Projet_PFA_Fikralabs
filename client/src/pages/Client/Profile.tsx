@@ -149,10 +149,10 @@ const ClientProfile: React.FC = () => {
 
   return (
     <div className="container my-8">
+      <h1 className="text-4xl font-bold mb-8">Votre Profile</h1>
       <main className="w-full min-h-screen">
         <div className="p-2 md:p-4">
           <div className="w-full sm:rounded-lg">
-            <h2 className="pl-6 text-2xl font-bold sm:text-xl">Public Profile</h2>
             <div className="grid max-w-2xl mx-auto mt-8">
               <div className=" relative flex flex-col flex justify-center items-center sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-4">
                 <input

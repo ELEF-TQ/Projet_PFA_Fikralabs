@@ -149,4 +149,12 @@ export class PompistesService {
     return updatedUser;
   }
 
+  async countPompistes(): Promise<number> {
+    try {
+      return await this.pompisteModel.countDocuments().exec();
+    } catch (error) {
+      throw new Error(`Erreur lors du comptage des pompistes: ${error}`);
+    }
+  }
+
 }

@@ -15,5 +15,6 @@ import { PompistesModule } from 'src/pompistes/pompistes.module';
   PompistesModule],
   controllers: [ConversionsController],
   providers: [ConversionsService],
+  exports: [ConversionsService]
 })
 export class ConversionsModule {}

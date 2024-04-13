@@ -73,6 +73,14 @@ export class ConversionsService {
     ).exec();
     return updatedConversions;
   }
+
+  async countConversions(): Promise<number> {
+    try {
+      return await this.conversionModel.countDocuments().exec();
+    } catch (error) {
+      throw new Error(`Erreur lors du comptage des conversions: ${error}`);
+    }
+  }
 }
 
 

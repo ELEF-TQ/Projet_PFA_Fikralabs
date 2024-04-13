@@ -107,6 +107,12 @@ export class CouponsService {
     return coupon;
   }
 
-  
+  async countCoupons(): Promise<number> {
+    try {
+      return await this.couponModel.countDocuments().exec();
+    } catch (error) {
+      throw new Error(`Erreur lors du comptage des coupons: ${error}`);
+    }
+  }
 
 }

@@ -13,7 +13,15 @@ const Services = () => {
   const services = useSelector((state: RootState) => state.services.services);
   const isLoading = useSelector((state: RootState) => state.services.isLoading);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [Element , setElement] = useState<any>(null);
+  const [Element , setElement] = useState<Service>(
+    {
+      _id: "",
+      nom: "",
+      prix: 0,
+      description: "",
+      image: ""
+    }
+  );
 
 
   useEffect(() => {

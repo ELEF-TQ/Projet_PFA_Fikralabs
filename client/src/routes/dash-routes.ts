@@ -42,28 +42,28 @@ export const AdminItems = [
       icon: BsPeople,
     },
     {
-      name: "services",
+      name: "Services",
       href: "/admin/services",
       icon: MdHomeRepairService,
     },
     {
-      name: "reservations",
+      name: "Reservations",
       href: "/admin/reservations",
       icon: SlCalender,
 
     },
     {
-      name: "admins",
+      name: "Admins",
       href: "/admin/admins",
       icon: RiAdminLine,
     },
     {
-      name: "roles",
+      name: "Roles",
       href: "/admin/roles",
       icon: RiAdminFill,
     },
     {
-      name: "permissions",
+      name: "Permissions",
       href: "/admin/permissions",
       icon: MdAdminPanelSettings,
     },
@@ -73,13 +73,14 @@ export const AdminItems = [
       icon: CgProfile ,
     },
  
-  ].filter(item => {
-    if (item.name === "Home" || item.name === "Profile" || item.name === "reservations") {
-      return true;
-    }
-    const hasPermissionForItem = hasPermission(user, item.name.toUpperCase());
-    return hasPermissionForItem;
-  });
+  ]
+  // .filter(item => {
+  //   if (item.name === "Home" || item.name === "Profile" || item.name === "reservations") {
+  //     return true;
+  //   }
+  //   const hasPermissionForItem = hasPermission(user, item.name.toUpperCase());
+  //   return hasPermissionForItem;
+  // });
 
 
 

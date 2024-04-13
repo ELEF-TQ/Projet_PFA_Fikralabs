@@ -16,7 +16,7 @@ import { Service } from "../../types/Service";
 interface Props {
   show: boolean;
   handleClose: () => void
-  Service: any;
+  Service: Service;
 }
 
 const Reservation: React.FC<Props> = ({ show, handleClose, Service }) => {

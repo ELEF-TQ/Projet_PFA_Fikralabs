@@ -25,7 +25,16 @@ const Coupons = () => {
         <Spinner />
     ) : (
         reservedCoupons.length > 0 ? (
-            reservedCoupons.map((coupon: any, index: number) => (
+            reservedCoupons.filter((coupon: any) => {
+              const expirationDate = new Date(coupon.dateExpiration);
+              const currentDate = new Date();
+              if (expirationDate > currentDate) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+            .map((coupon: any, index: number) => (
                 <Coupon key={index} coupon={coupon} reserved={true} reservedHome={false} />
             ))
         ) : (
