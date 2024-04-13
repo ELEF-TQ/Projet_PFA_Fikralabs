@@ -37,7 +37,7 @@ export class ServicesController {
     return await this.servicesService.findOne(id);
   }
 
-  @Post(':id')
+  @Post('update/:id')
   @UsePipes(ValidationPipe)
   @UseInterceptors(FileInterceptor('image')) 
   async update(@Param('id') id: string, @UploadedFile() image: File, @Body() updateServiceDto: UpdateServiceDto) {

@@ -16,7 +16,7 @@ import { Service } from "../../types/Service";
 interface Props {
   show: boolean;
   handleClose: () => void
-  Service: Service;
+  Service: any;
 }
 
 const Reservation: React.FC<Props> = ({ show, handleClose, Service }) => {
@@ -40,7 +40,7 @@ const Reservation: React.FC<Props> = ({ show, handleClose, Service }) => {
 
   useEffect(() => {
     console.log(user);
-    if (Element && show) {
+    if (Service && show) {
       dispatch(fetchReservedCoupons(user._id));
       console.log(reservedCoupons)
       GetUserGeolocation()
@@ -54,7 +54,7 @@ const Reservation: React.FC<Props> = ({ show, handleClose, Service }) => {
     }else{
       setFormData(initialFormData);
     }
-  }, [show, Element]);
+  }, [show, Service]);
 
   useEffect(() => {
     if (userCoordinates) {

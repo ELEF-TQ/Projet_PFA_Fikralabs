@@ -49,7 +49,7 @@ export const deleteReservationById = createAsyncThunk('services/deleteReservatio
 // Async thunk to update a service
 export const updateService = createAsyncThunk('services/update', async ({ Id, formData }: { Id: string, formData: any }, thunkAPI) => {
   try {
-    const response = await axiosAuthMultipart.post(`/services/${Id}`, formData);
+    const response = await axiosAuthMultipart.post(`/services/update/${Id}`, formData);
     return response.data;
   } catch (error:any) {
     return thunkAPI.rejectWithValue(error.response.data);

@@ -47,18 +47,18 @@ const MesReservations = () => {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {reservations.map((reservation: any) => (
             <div key={reservation._id} className="bg-white overflow-hidden shadow-lg rounded-lg flex flex-col">
-              <img src={reservation.service.image ? `data:image/png;base64,${reservation.service.image.buffer}` : DefaultService} alt={reservation.nom} className="w-full h-56 object-cover" />
+              <img src={reservation.service.image ? `data:image/png;base64,${reservation.service.image.buffer}` : DefaultService} alt={reservation.nom} className="w-full h-56 object-cover" draggable="false" />
               <div className="px-4 py-4 flex-grow">
                 <h2 className="text-xl font-semibold text-gray-800">{reservation.service.nom}</h2>
-                <p className="text-gray-600 mt-2">{reservation.code}</p>
-                <p className="text-gray-600">Date: {reservation.dateReservation}</p>
-                <p className="text-gray-600">Heure: {reservation.heureReservation}</p>
-                <p className="text-gray-600">Ville: {reservation.ville}</p>
-                <p className="text-gray-600">Adresse: {reservation.adresse}</p>
+                <p className="text-gray-600 mt-2"><span className="font-bold">Code Reservation:</span> #{reservation.code}</p>
+                <p className="text-gray-600"><span className="font-bold">Date:</span> {reservation.dateReservation}</p>
+                <p className="text-gray-600"><span className="font-bold">Heure:</span> {reservation.heureReservation}</p>
+                <p className="text-gray-600"><span className="font-bold">Ville:</span> {reservation.ville}</p>
+                <p className="text-gray-600"><span className="font-bold">Adresse:</span> {reservation.adresse}</p>
                 {(reservation.couponCode && reservation.priceAfterDiscount) && (
                   <>
-                    <p className="text-gray-600">Coupon: {reservation.couponCode}</p>
-                    <p className="text-gray-600">Prix Aprés Réduction: {reservation.priceAfterDiscount}</p>
+                    <p className="text-gray-600"><span className="font-bold">Coupon:</span> #{reservation.couponCode}</p>
+                    <p className="text-gray-600"><span className="font-bold">Prix Aprés Réduction:</span> {reservation.priceAfterDiscount} DHS</p>
                   </>
                 )}
               </div>

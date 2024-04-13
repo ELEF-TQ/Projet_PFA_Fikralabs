@@ -13,15 +13,7 @@ const Services = () => {
   const services = useSelector((state: RootState) => state.services.services);
   const isLoading = useSelector((state: RootState) => state.services.isLoading);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [Element , setElement] = useState<Service>(
-    {
-      _id: "",
-      nom: "",
-      prix: 0,
-      description: "",
-      image: ""
-    }
-  );
+  const [Element , setElement] = useState<any>(null);
 
 
   useEffect(() => {
@@ -45,6 +37,7 @@ const Services = () => {
                     src={service.image ? `data:image/png;base64,${service.image.buffer}` : DefaultService}
                     alt={service.nom}
                     className="w-full h-auto" // Set image to fit container width and maintain aspect ratio
+                    draggable="false"
                   />
                 </div>
                   <div className="p-5">

@@ -40,16 +40,11 @@ export class ServicesService {
 
  async update(id: string, updateServiceDto: UpdateServiceDto) {
  // console.log(updateServiceDto);
-  try {
-    const updatedService = await this.serviceModel.findByIdAndUpdate(id, updateServiceDto, { new: true }).exec();
-    if (updatedService) {
-      return updatedService;
-    } else {
-      throw new HttpException('No service found with the provided ID', HttpStatus.NOT_FOUND);
-    }
-  } catch (error) {
-    console.error('Error updating service:', error);
-    throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+  const updatedService = await this.serviceModel.findByIdAndUpdate(id, updateServiceDto, { new: true }).exec();
+  if (updatedService) {
+    return updatedService;
+  } else {
+    throw new HttpException('No service found with the provided ID', HttpStatus.NOT_FOUND);
   }
 }
 
@@ -150,17 +145,16 @@ export class ServicesService {
     return await reservation.save();
   }
 
-    // Handle Reservations :
-    async findAllReservations() {
-      return await this.reservationServiceModel.find()
-      .populate('client')
-      .populate('service')
-      .exec();
-    }
-
+  // Handle Reservations :
+  async findAllReservations() {
+    return await this.reservationServiceModel.find()
+    .populate('client')
+    .populate('service')
+    .exec();
+  }
 
   async fetchReservationsByClientId(clientId: string){
-    return  await this.reservationServiceModel.find({ client: clientId }).populate('service').exec();
+    return await this.reservationServiceModel.find({ client: clientId }).populate('service').exec();
   }
 
   async deleteReservationById(reservationId: string) {
