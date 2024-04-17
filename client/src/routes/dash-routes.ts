@@ -1,10 +1,9 @@
 import { AiOutlineHome } from "react-icons/ai";
-import { BsPeople } from "react-icons/bs";
+import { BsPeople, BsTicketPerforated } from "react-icons/bs";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { TbTransform } from "react-icons/tb";
+import { TbMessageStar, TbTransform } from "react-icons/tb";
 import { RiCoupon2Fill } from "react-icons/ri";
-import { BiSolidMessageSquareDots } from "react-icons/bi";
-import { MdHomeRepairService } from "react-icons/md";
+import { MdHomeRepairService, MdOutlineAdminPanelSettings, MdOutlineHomeRepairService } from "react-icons/md";
 import { GiSandsOfTime } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
 import { MdAdminPanelSettings } from "react-icons/md";
@@ -12,7 +11,6 @@ import { RiAdminFill } from "react-icons/ri";
 import { RiAdminLine } from "react-icons/ri";
 import { SlCalender } from "react-icons/sl";
 import { retrieveUserSession } from "../lib/Encryption";
-import { hasPermission } from "../utils/hasPermission";
 
 const user = retrieveUserSession() ;
 export const AdminItems = [
@@ -34,7 +32,7 @@ export const AdminItems = [
     {
       name: "Coupons",
       href: "/admin/coupons",
-      icon: RiCoupon2Fill  ,
+      icon: BsTicketPerforated,
     },
     {
       name: "Clients",
@@ -44,7 +42,7 @@ export const AdminItems = [
     {
       name: "Services",
       href: "/admin/services",
-      icon: MdHomeRepairService,
+      icon: MdOutlineHomeRepairService,
     },
     {
       name: "Reservations",
@@ -65,7 +63,7 @@ export const AdminItems = [
     {
       name: "Permissions",
       href: "/admin/permissions",
-      icon: MdAdminPanelSettings,
+      icon: MdOutlineAdminPanelSettings,
     },
     {
       name: "Profile",
@@ -119,22 +117,22 @@ export const ClientItems = [
   {
     name: "Mes Coupons",
     href: "/client/coupons",
-    icon: RiCoupon2Fill  ,
+    icon: BsTicketPerforated  ,
   },
   {
     name: "Evaluations",
     href: "/client/evaluations",
-    icon:BiSolidMessageSquareDots ,
+    icon: TbMessageStar ,
   },
   {
     name: "Services",
     href: "/client/services",
-    icon:MdHomeRepairService ,
+    icon: MdOutlineHomeRepairService ,
   },
   {
     name: "Mes Reservations",
     href: "/client/mesReservations",
-    icon:SlCalender ,
+    icon: SlCalender ,
   },
   {
     name: "Profile",
