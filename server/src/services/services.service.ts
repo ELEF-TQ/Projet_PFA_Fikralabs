@@ -107,6 +107,7 @@ export class ServicesService {
         throw new HttpException("No coupon found with the provided id", HttpStatus.BAD_REQUEST);
       }
       if(coupon.dateExpiration < new Date()){
+        await this.clientService.removeClientCoupon(clientId, coupon._id);
         throw new HttpException("Le coupon a expiré", HttpStatus.BAD_REQUEST);
       }
       

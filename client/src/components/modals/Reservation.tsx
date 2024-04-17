@@ -102,7 +102,8 @@ const Reservation: React.FC<Props> = ({ show, handleClose, Service }) => {
     });
   };
 
-  const isAnyFieldEmpty = Object.entries(formData).some(([key, value]) => key !== 'couponCode' && value === '');
+  // const isAnyFieldEmpty = Object.entries(formData).some(([key, value]) => key !== 'couponCode' && value === '');
+  const isAnyFieldEmpty = false;
 
   return (
     <>

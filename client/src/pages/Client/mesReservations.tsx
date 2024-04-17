@@ -43,119 +43,74 @@ const MesReservations = () => {
     });
   };
 
-  // const handleGenerateDocument = (reservation: any) => {
-  //   // Create a new PDF document
-  //   const doc = new jsPDF();
-    
-  //   // Add reservation information to the PDF
-  //   doc.text(`Nom du service: ${reservation.service.nom}`, 10, 10);
-  //   doc.text(`Code Reservation: ${reservation.code}`, 10, 20);
-  //   doc.text(`Date: ${reservation.dateReservation}`, 10, 30);
-  //   doc.text(`Heure: ${reservation.heureReservation}${getTimePeriod(reservation.heureReservation)}`, 10, 40);
-  //   doc.text(`Ville: ${reservation.ville}`, 10, 50);
-  //   doc.text(`Adresse: ${reservation.adresse}`, 10, 60);
-  //   if (reservation.couponCode && reservation.priceAfterDiscount) {
-  //     doc.text(`Coupon: ${reservation.couponCode}`, 10, 70);
-  //     doc.text(`Prix Aprés Réduction: ${reservation.priceAfterDiscount} DHS`, 10, 80);
-  //   }
+  const handleGenerateDocument = (reservation: any) => {
+    // Create a new PDF document
+    const doc = new jsPDF({
+      orientation: 'l', // landscape orientation
+      unit: 'mm',
+      format: 'a4', // A4 format
+    });
 
-  //   // Save the PDF as a blob
-  //   doc.save('reservation.pdf');
-  // };
+    // Add logo
+    const logo = new Image();
+    logo.src = LogoBlack;
+    doc.addImage(logo, 'PNG', 10, 10, 50, 20);
 
-// const handleGenerateDocument = (reservation: any) => {
-//   // Create a new PDF document
-//   const doc = new jsPDF();
+    // Add attention message
+    doc.setFont('normal')
+    doc.setFontSize(12);
+    doc.setTextColor("red")
+    doc.text('Important : Ce document est requis lors de votre rendez-vous pour bénéficier du service réservé. Assurez-vous de le présenter au responsable de la station-service\npour validation.', 10, 45);
 
-//   // Add logo
-//   const logo = new Image();
-//   logo.src = LogoBlack;
-//   doc.addImage(logo, 'PNG', 10, 10, 50, 20);
+    const avatar = new Image();
+    avatar.src = `data:image/png;base64,${user.image.buffer}`;
+    doc.addImage(avatar, 'PNG', 100, 60, 30, 30);
 
-//   // Add paragraph
-//   const paragraph = `
-//     Ce document est obligatoire lors du rendez-vous pour bénéficier du service
-//     réservé.Veuillez le présenter au responsable de la station-service
-//     pour vérification.
-//   `;
-//   doc.text(paragraph, 10, 40);
+    // client infos
+    doc.setFont('normal')
+    doc.setFontSize(12);
+    doc.setTextColor("black")
+    doc.text(`Nom:`,150, 60);
+    doc.text(`CIN:`,150, 70);
+    doc.text(`Email:`,150, 80);
+    doc.text(`Télephone:`,150, 90);
 
-//   const reservationInfo = `
-//   Nom du service: ${reservation.service.nom}
-//   Code Reservation: ${reservation.code}
-//   Date: ${reservation.dateReservation}
-//   Heure: ${reservation.heureReservation}${getTimePeriod(reservation.heureReservation)}
-//   Ville: ${reservation.ville}
-//   Adresse: ${reservation.adresse}
-//   ${(reservation.couponCode && reservation.priceAfterDiscount) ? `
-//     Coupon: ${reservation.couponCode}
-//     Prix Aprés Réduction: ${reservation.priceAfterDiscount} DHS
-//   ` : ''}
-// `;
+    // client Data
+    doc.text(user.username,180, 60);
+    doc.text(user.CIN,180, 70);
+    doc.text(user.email,180, 80);
+    doc.text(user.phone,180, 90);
 
-// // Split the reservation info into an array of lines
-// const reservationInfoLines = reservationInfo.split('\n');
+    // Add reservation information
+    doc.setFont('normal')
+    doc.setFontSize(14);
+    doc.setTextColor("black")
+    doc.text('Nom du service', 30, 110);
+    doc.text('Code Reservation', 30, 120);
+    doc.text('Date', 30, 130);
+    doc.text('Heure', 30, 140);
+    doc.text('Ville', 30, 150);
+    doc.text('Adresse', 30, 160);
+    if (reservation.couponCode && reservation.priceAfterDiscount) {
+      doc.text('Coupon', 30, 170);
+      doc.text('Prix Aprés Réduction', 30, 180);
+    }
 
-// // Add reservation information as a table
-// const startX = 10;
-// const startY = 70;
-// const lineHeight = 10;
-// reservationInfoLines.forEach((line, index) => {
-//   doc.text(line, startX, startY + index * lineHeight);
-// });
-//   // Styling
-//   doc.setFontSize(14);
-//   doc.setTextColor(30, 30, 30);
+    // Add reservation data
+    doc.text(reservation.service.nom, 140, 110);
+    doc.text(`#${reservation.code}`, 140, 120);
+    doc.text(reservation.dateReservation, 140, 130);
+    doc.text(`${reservation.heureReservation} ${getTimePeriod(reservation.heureReservation)}`, 140, 140);
+    doc.text(reservation.ville, 140, 150);
+    doc.text(reservation.adresse, 140, 160);
+    if (reservation.couponCode && reservation.priceAfterDiscount) {
+      doc.text(`#${reservation.couponCode}`, 140, 170);
+      doc.text(`${reservation.priceAfterDiscount} DHS`, 140, 180);
+    }
 
-//   // Save the PDF as a blob
-//   doc.save('reservation.pdf');
-// };
-
-const handleGenerateDocument = (reservation: any) => {
-  // Create a new PDF document
-  const doc = new jsPDF({
-    orientation: 'l', // landscape orientation
-    unit: 'mm',
-    format: 'a4', // A4 format
-  });
-
-  // Add logo
-  const logo = new Image();
-  logo.src = LogoBlack;
-  doc.addImage(logo, 'PNG', 10, 10, 50, 20);
-
-  // Add attention message
-  doc.setFontSize(12);
-  doc.text('Attention: Ce document est obligatoire lors du rendez-vous pour bénéficier du service réservé. Veuillez le présenter au responsable de la station-service\n pour vérification.', 10, 40);
-
-  // Add reservation information
-  doc.setFontSize(14);
-  doc.text('Nom du service', 10, 70);
-  doc.text('Code Reservation', 10, 80);
-  doc.text('Date', 10, 90);
-  doc.text('Heure', 10, 100);
-  doc.text('Ville', 10, 110);
-  doc.text('Adresse', 10, 120);
-  if (reservation.couponCode && reservation.priceAfterDiscount) {
-    doc.text('Coupon', 10, 130);
-    doc.text('Prix Aprés Réduction', 10, 140);
-  }
-
-  // Add reservation data
-  doc.text(reservation.service.nom, 110, 70);
-  doc.text(reservation.code, 110, 80);
-  doc.text(reservation.dateReservation, 110, 90);
-  doc.text(`${reservation.heureReservation} ${getTimePeriod(reservation.heureReservation)}`, 110, 100);
-  doc.text(reservation.ville, 110, 110);
-  doc.text(reservation.adresse, 110, 120);
-  if (reservation.couponCode && reservation.priceAfterDiscount) {
-    doc.text(reservation.couponCode, 110, 130);
-    doc.text(`${reservation.priceAfterDiscount} DHS`, 110, 140);
-  }
-
-  // Save the PDF as a blob
-  doc.save('reservation.pdf');
-};
+    // Save the PDF as a blob
+    doc.save('reservation.pdf');
+  };
 
 
 
