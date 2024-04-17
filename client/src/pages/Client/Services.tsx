@@ -7,6 +7,8 @@ import Spinner from '../../components/status/Spinner';
 import Reservation from '../../components/modals/Reservation';
 import { Service } from '../../types/Service';
 import DefaultService from "../../assets/images/DefaultService.png"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Services = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,6 +33,7 @@ const Services = () => {
   return (
     <>
       <h1 className="text-4xl font-bold mb-8">Nos Services</h1>
+      <ToastContainer />
       <p className='my-8 text-gray-700'>Nous offrons le meilleur des produits et services Shell et Engen. Cela inclut les carburants, les lubrifiants et une offre croissante de vente au détail de produits non combustibles pour les automobilistes, ainsi que des solutions de carburant, hybrides et solaires sur mesure pour les clients commerciaux.</p>
       <div className='flex justify-center items-center min-h-screen mt-4'>
         {isLoading ? (

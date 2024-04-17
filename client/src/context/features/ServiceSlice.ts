@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosAuth, axiosAuthMultipart } from '../../lib/AxiosBase'; 
 import Swal from 'sweetalert2';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 // Async thunk to create a new service
 export const createService = createAsyncThunk('services/create', async (formData: any, thunkAPI) => {
@@ -171,7 +173,11 @@ const serviceSlice = createSlice({
       })
       .addCase(reserverService.fulfilled, (state) => {
         state.isLoading = false;
-        Swal.fire({ icon: 'success', title: 'Success', text: 'Service reserved successfully' });
+        Swal.fire({ icon: 'success', title: 'Success', text: 'Service reserved successfully' }).then(() => {
+          toast.info('Veuillez consulter votre espace "Mes Reservations" pour plus d\'informations', {
+            autoClose: 3000, // fermer automatiquement après 3 secondes
+          });
+        });
       })
       .addCase(fetchReservations.pending , (state)=> {
         state.isLoading = true;

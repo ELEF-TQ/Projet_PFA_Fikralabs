@@ -4,8 +4,11 @@ import { AppDispatch, RootState } from '../../context/store';
 import { deleteReservationById, fetchClientReservations } from '../../context/features/ServiceSlice';
 import { retrieveUserSession } from '../../lib/Encryption';
 import DefaultService from "../../assets/images/DefaultService.png"
-import { FaTimes } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import jsPDF from 'jspdf';
+import { RxCross2 } from 'react-icons/rx';
+import { IoDownloadOutline } from 'react-icons/io5';
+import LogoBlack from "../../assets/icons/LogoBlack.png"
 
 const MesReservations = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,6 +43,122 @@ const MesReservations = () => {
     });
   };
 
+  // const handleGenerateDocument = (reservation: any) => {
+  //   // Create a new PDF document
+  //   const doc = new jsPDF();
+    
+  //   // Add reservation information to the PDF
+  //   doc.text(`Nom du service: ${reservation.service.nom}`, 10, 10);
+  //   doc.text(`Code Reservation: ${reservation.code}`, 10, 20);
+  //   doc.text(`Date: ${reservation.dateReservation}`, 10, 30);
+  //   doc.text(`Heure: ${reservation.heureReservation}${getTimePeriod(reservation.heureReservation)}`, 10, 40);
+  //   doc.text(`Ville: ${reservation.ville}`, 10, 50);
+  //   doc.text(`Adresse: ${reservation.adresse}`, 10, 60);
+  //   if (reservation.couponCode && reservation.priceAfterDiscount) {
+  //     doc.text(`Coupon: ${reservation.couponCode}`, 10, 70);
+  //     doc.text(`Prix Aprés Réduction: ${reservation.priceAfterDiscount} DHS`, 10, 80);
+  //   }
+
+  //   // Save the PDF as a blob
+  //   doc.save('reservation.pdf');
+  // };
+
+// const handleGenerateDocument = (reservation: any) => {
+//   // Create a new PDF document
+//   const doc = new jsPDF();
+
+//   // Add logo
+//   const logo = new Image();
+//   logo.src = LogoBlack;
+//   doc.addImage(logo, 'PNG', 10, 10, 50, 20);
+
+//   // Add paragraph
+//   const paragraph = `
+//     Ce document est obligatoire lors du rendez-vous pour bénéficier du service
+//     réservé.Veuillez le présenter au responsable de la station-service
+//     pour vérification.
+//   `;
+//   doc.text(paragraph, 10, 40);
+
+//   const reservationInfo = `
+//   Nom du service: ${reservation.service.nom}
+//   Code Reservation: ${reservation.code}
+//   Date: ${reservation.dateReservation}
+//   Heure: ${reservation.heureReservation}${getTimePeriod(reservation.heureReservation)}
+//   Ville: ${reservation.ville}
+//   Adresse: ${reservation.adresse}
+//   ${(reservation.couponCode && reservation.priceAfterDiscount) ? `
+//     Coupon: ${reservation.couponCode}
+//     Prix Aprés Réduction: ${reservation.priceAfterDiscount} DHS
+//   ` : ''}
+// `;
+
+// // Split the reservation info into an array of lines
+// const reservationInfoLines = reservationInfo.split('\n');
+
+// // Add reservation information as a table
+// const startX = 10;
+// const startY = 70;
+// const lineHeight = 10;
+// reservationInfoLines.forEach((line, index) => {
+//   doc.text(line, startX, startY + index * lineHeight);
+// });
+//   // Styling
+//   doc.setFontSize(14);
+//   doc.setTextColor(30, 30, 30);
+
+//   // Save the PDF as a blob
+//   doc.save('reservation.pdf');
+// };
+
+const handleGenerateDocument = (reservation: any) => {
+  // Create a new PDF document
+  const doc = new jsPDF({
+    orientation: 'l', // landscape orientation
+    unit: 'mm',
+    format: 'a4', // A4 format
+  });
+
+  // Add logo
+  const logo = new Image();
+  logo.src = LogoBlack;
+  doc.addImage(logo, 'PNG', 10, 10, 50, 20);
+
+  // Add attention message
+  doc.setFontSize(12);
+  doc.text('Attention: Ce document est obligatoire lors du rendez-vous pour bénéficier du service réservé. Veuillez le présenter au responsable de la station-service\n pour vérification.', 10, 40);
+
+  // Add reservation information
+  doc.setFontSize(14);
+  doc.text('Nom du service', 10, 70);
+  doc.text('Code Reservation', 10, 80);
+  doc.text('Date', 10, 90);
+  doc.text('Heure', 10, 100);
+  doc.text('Ville', 10, 110);
+  doc.text('Adresse', 10, 120);
+  if (reservation.couponCode && reservation.priceAfterDiscount) {
+    doc.text('Coupon', 10, 130);
+    doc.text('Prix Aprés Réduction', 10, 140);
+  }
+
+  // Add reservation data
+  doc.text(reservation.service.nom, 110, 70);
+  doc.text(reservation.code, 110, 80);
+  doc.text(reservation.dateReservation, 110, 90);
+  doc.text(`${reservation.heureReservation} ${getTimePeriod(reservation.heureReservation)}`, 110, 100);
+  doc.text(reservation.ville, 110, 110);
+  doc.text(reservation.adresse, 110, 120);
+  if (reservation.couponCode && reservation.priceAfterDiscount) {
+    doc.text(reservation.couponCode, 110, 130);
+    doc.text(`${reservation.priceAfterDiscount} DHS`, 110, 140);
+  }
+
+  // Save the PDF as a blob
+  doc.save('reservation.pdf');
+};
+
+
+
   return (
     <>
       <h1 className="text-4xl font-bold mb-8">Mes Réservations</h1>
@@ -64,9 +183,14 @@ const MesReservations = () => {
                   </>
                 )}
               </div>
-              <button onClick={() => handleCancelReservation(reservation._id)} className="flex items-center justify-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
-                <FaTimes className="mr-2" /> Annuler Reservation
-              </button>
+              <div className="flex justify-between mt-4">
+                <button onClick={() => handleCancelReservation(reservation._id)} className=" text-sm w-1/2 flex items-center justify-center px-4 py-2 bg-red-600 text-white hover:bg-red-700">
+                  <RxCross2 className="w-5 h-5 mr-2" /> Annuler
+                </button>
+                <button onClick={() => handleGenerateDocument(reservation)} className=" text-sm w-1/2 flex items-center justify-center px-4 py-2 bg-blue-600 text-white hover:bg-blue-700">
+                  <IoDownloadOutline className="w-5 h-5 mr-2" /> Télécharger
+                </button>
+              </div>
             </div>
           ))}
         </div>
