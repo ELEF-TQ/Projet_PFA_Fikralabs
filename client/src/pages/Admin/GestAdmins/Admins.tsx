@@ -159,7 +159,7 @@ const Admins: React.FC = () => {
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.username}</td>
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.email}</td>
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.phone}</td>
-                    <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin.adminRole.name}</td>
+                    <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{admin?.adminRole?.name}</td>
 
                
         
