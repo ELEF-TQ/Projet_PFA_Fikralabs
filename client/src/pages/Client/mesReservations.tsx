@@ -19,7 +19,7 @@ const MesReservations = () => {
     if (user?._id) {
       dispatch(fetchClientReservations(user._id));
     }
-  }, [dispatch, user?._id]);
+  }, []);
 
   const getTimePeriod = (timeString: string) => (parseInt(timeString.split(':')[0], 10) >= 12 ? ' PM' : ' AM');
 

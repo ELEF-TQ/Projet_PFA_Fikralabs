@@ -231,7 +231,7 @@ const Reservation: React.FC<Props> = ({ show, handleClose, Service }) => {
                 onClick={handleSubmit}
                 disabled={isAnyFieldEmpty}
               >
-                Ajouter
+                Réserver
               </button>
             </div>
           </div>

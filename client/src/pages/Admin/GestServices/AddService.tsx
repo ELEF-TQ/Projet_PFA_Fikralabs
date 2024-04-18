@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import { createService, fetchServices } from "../../../context/features/ServiceSlice";
-import vivo from '../../../assets/images/vivo.jpg'
+import vivo from '../../../assets/images/services/Plein .jpg';
 
 interface Props {
   show: boolean;
@@ -20,12 +20,17 @@ const AddService: React.FC<Props> = ({ show, handleClose }) => {
     image: null,
   });
 
-  const [isAnyFieldEmpty, setIsAnyFieldEmpty] = useState(true);
-
   const handleSubmit = () => {
     dispatch(createService(formData)).then(() => {
+      setFormData({
+        nom: '',
+        prix: 0,
+        description: '',
+        image: null,
+      });
       handleClose();
       dispatch(fetchServices());
+
     });
   };
 
@@ -55,14 +60,11 @@ const AddService: React.FC<Props> = ({ show, handleClose }) => {
         }));
       }
     }
-
-    // Check if any field is empty
-    const isEmpty = Object.values(formData).some(value => value === '' || value === null);
-    setIsAnyFieldEmpty(isEmpty);
   };
+ 
 
   return (
-    <>
+    <div>
       {show && (
         <div className="modal-overlay">
           <div className="modal">
@@ -153,9 +155,8 @@ const AddService: React.FC<Props> = ({ show, handleClose }) => {
 
             <div className="flex justify-between">
               <button
-                className={`btn bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded ${isAnyFieldEmpty ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className="btn bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded "
                 onClick={handleSubmit}
-                disabled={isAnyFieldEmpty}
               >
                  {isLoading ? 'En cours...' : 'Ajouter'}
               </button>
@@ -169,8 +170,9 @@ const AddService: React.FC<Props> = ({ show, handleClose }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
-};
+}
+
 
 export default AddService;

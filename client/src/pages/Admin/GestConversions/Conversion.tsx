@@ -69,10 +69,8 @@ const Pompiste: React.FC = () => {
 
   return (
     <div>
-      <h1 className="mb-4 font-semibold leading-none tracking-tight text-gray-900 lg:text-6xl dark:text-black">
-        Gestion des demandes
-      </h1>
 
+<h1 className="text-4xl font-bold mb-8">Gestion des demandes de conversion</h1>
       <section className="p-3 sm:p-5 antialiased">
         <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
           <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">

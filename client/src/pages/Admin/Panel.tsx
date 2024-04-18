@@ -13,10 +13,7 @@ const Panel: React.FC = () => {
 
   return (
     <div>
-      <h1 className="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black">
-        Panel
-      </h1>
-
+      <h1 className="text-4xl font-bold mb-8">Panel</h1>
       <div className="flex gap-2 items-center justify-around flex-wrap">
         {cards.map((card, index) => (
           <div key={index} className="w-64">

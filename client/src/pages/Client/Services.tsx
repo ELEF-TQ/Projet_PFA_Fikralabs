@@ -34,8 +34,8 @@ const Services = () => {
     <>
       <h1 className="text-4xl font-bold mb-8">Nos Services</h1>
       <ToastContainer />
-      <p className='my-8 text-gray-700'>Nous offrons le meilleur des produits et services Shell et Engen. Cela inclut les carburants, les lubrifiants et une offre croissante de vente au détail de produits non combustibles pour les automobilistes, ainsi que des solutions de carburant, hybrides et solaires sur mesure pour les clients commerciaux.</p>
-      <div className='flex justify-center items-center min-h-screen mt-4'>
+      <p className=' text-gray-700'>Nous offrons le meilleur des produits et services Shell et Engen. Cela inclut les carburants, les lubrifiants et une offre croissante de vente au détail de produits non combustibles pour les automobilistes, ainsi que des solutions de carburant, hybrides et solaires sur mesure pour les clients commerciaux.</p>
+      <div className='flex justify-center items-center min-h-screen'>
         {isLoading ? (
           <Spinner />
         ) : (
@@ -43,7 +43,7 @@ const Services = () => {
             {services.map((service: Service) => (
               <Grid item key={service._id} xs={12} sm={6} md={4} lg={4}>
                 <div className="bg-white border border-gray-200 rounded-lg shadow h-full">
-                <div className="w-full h-56 overflow-hidden"> {/* Set width and height of the container */}
+                <div className="w-full h-56 overflow-hidden"> 
                   <img
                     src={service.image ? `data:image/png;base64,${service.image.buffer}` : DefaultService}
                     alt={service.nom}

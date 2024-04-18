@@ -261,6 +261,7 @@ img {
     flex-grow: 1;
     padding-top: 2rem;
     overflow-y: auto; 
+    padding-right: 2rem;
   }
   
   .sidebar__wrapper {
@@ -321,7 +322,7 @@ img {
   padding: 0.8rem 1rem;
   display: flex;
   background-color: rgba(232, 232, 232, 1);
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
   border-radius: 0.8rem;
   text-decoration: none;
 }
