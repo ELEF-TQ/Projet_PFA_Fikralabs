@@ -46,7 +46,7 @@ export const getAllConversions = createAsyncThunk('conversions/getAll', async (_
 // Async thunk to get a specific conversion
 export const getConversions = createAsyncThunk('conversions/get', async (pompisteId: string, thunkAPI) => {
   try {
-    const response = await axiosAuth.get(`/conversions/${pompisteId}`);
+    const response = await axiosAuth.get(`/conversions/ByPompiste/${pompisteId}`);
     return response.data;
   } catch (error:any) {
     return thunkAPI.rejectWithValue(error.response.data);

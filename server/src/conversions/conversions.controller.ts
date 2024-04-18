@@ -41,6 +41,13 @@ export class ConversionsController {
   }
 
   @Get(':id')
+  findById(@Param('id') id: string) {
+    return this.conversionsService.findOne(id);
+   }
+
+ 
+
+  @Get('/ByPompiste/:id')
   findAllByPompiste(@Param('id') pompisteId:string){
     return this.conversionsService.findAllByPompiste(pompisteId);
   }

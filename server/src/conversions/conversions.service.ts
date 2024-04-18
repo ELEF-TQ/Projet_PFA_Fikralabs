@@ -6,6 +6,7 @@ import { PompistesService } from 'src/pompistes/pompistes.service';
 import { calculeMontant } from './utils/calculeMontant';
 import { ConversionStatus } from './enums/conversionStatus';
 import { generateRandomNumber } from './utils/generateRandomNumber';
+import { Pompiste } from 'src/pompistes/schemas/pompiste.schema';
 
 
 @Injectable()
@@ -14,6 +15,7 @@ export class ConversionsService {
   
   constructor(
     @InjectModel(Conversion.name) private readonly conversionModel: Model<Conversion>,
+    @InjectModel(Pompiste.name) private readonly pompisteModel: Model<Pompiste>,
     private readonly pompisteService: PompistesService
   ){}
 
@@ -62,8 +64,20 @@ export class ConversionsService {
     return this.conversionModel.find().populate('pompiste', 'username').exec();
   }
 
+  async findOne(id: string) {
+    return this.conversionModel.findById(id);
+  }
+ 
+
   async acceptOne(id: string) {
-    return this.conversionModel.findByIdAndUpdate(id, { status: ConversionStatus.ACCEPTED }, { new: true });
+    const conversion = await this.conversionModel.findById(id);
+    const pompisteId = conversion.pompiste;
+    const pompiste = await this.pompisteModel.findById(pompisteId);
+    conversion.status = ConversionStatus.ACCEPTED;
+    pompiste.solde += conversion.montant;
+    await conversion.save();
+    await pompiste.save();
+    return conversion;
   }
 
   async acceptAll(ids: string[]) {
