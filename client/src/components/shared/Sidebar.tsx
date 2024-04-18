@@ -52,18 +52,6 @@ const Sidebar = () => {
         {isCollapsed ? <MdKeyboardArrowRight /> : <MdKeyboardArrowLeft />}
       </button>
       <aside className="sidebar" data-collapse={isCollapsed}>
-      <div className="sidebar__top">
-      <img
-        width={80}
-        height={80}
-        className="sidebar__logo"
-        src={userData?.image?.buffer ? `data:image/png;base64,${userData.image.buffer}` : defaultUser}
-        alt="logo"
-    />
-        <p className="sidebar__logo-name">{userData?.username}</p>
-      </div>
-
-
         <ul className="sidebar__list">
           {sidebarItems.map(({ name, href, icon: Icon }) => (
             <li className="sidebar__item" key={name}>
