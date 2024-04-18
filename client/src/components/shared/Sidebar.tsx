@@ -46,7 +46,12 @@ const Sidebar = () => {
     });
   };
 
+  // background-color: var(--secondary-color);
   return (
+    <div className="bg-grayDash-color">
+
+    
+   
     <div className="sidebar__wrapper">
       <button className="Navbar__Navigation" onClick={toggleSidebarcollapse}>
         {isCollapsed ? <MdKeyboardArrowRight /> : <MdKeyboardArrowLeft />}
@@ -77,6 +82,7 @@ const Sidebar = () => {
           </button>
         </span>
       </aside>
+    </div>
     </div>
   );
 };

@@ -22,7 +22,9 @@
 .bg-primary-color{
   background-color: var(--primary-color);
 }
-
+.bg-grayDash-color{
+  background-color: var(--secondary-color);
+}
 .text-primary-color{
   color: var(--primary-color);
 }
@@ -40,16 +42,6 @@
 }
 
 
-/* Resetting default browser styles */
-/* * {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    box-sizing: border-box;
-} */
 
 /* Global styles */
 body {
@@ -57,9 +49,12 @@ body {
   font-size: 16px;
   line-height: 1.6;
   color: var(text-color );
-  scrollbar-width :0;
+  scrollbar-width :none;
   scroll-behavior: smooth;
+  overflow-y: auto;
 }
+
+
 
 /* Links */
 a {
@@ -255,35 +250,39 @@ img {
   }
 
   /*!!_________Dahboard_________*/
+  .layout {
+    display: flex;
+    min-height: calc(100vh - 80px); 
+    gap: 2rem;
+
+  }
   
-.layout {
-  display: flex;
-  height: 100vh;
-  position: relative;
-  gap: 2rem;
-}
+  .layout__main-content {
+    flex-grow: 1;
+    padding-top: 2rem;
+    overflow-y: auto; 
+  }
+  
+  .sidebar__wrapper {
+    position: relative;
+    display: flex; 
+    flex-direction: column;
+    min-height: 0; 
+  }
+  
+  .sidebar {
+    width: 17rem;
+    height: 100%;
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    box-sizing: border-box;
+  }
+  
+  
+  
 
-.layout__main-content {
-  flex-grow: 1;
-  padding: 2rem;
-  overflow-y: auto !important;
-}
 
-.sidebar__wrapper {
-  position: relative;
-  z-index: 99;
-}
-
-.sidebar {
-  width: 17rem;
-  height: 100%;
-  background-color: var(--secondary-color);
-  padding: 1rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  /* overflow-y: auto !important; */
-  /* overflow-x: hidden; */
-  overflow: hidden;
-}
 
 .sidebar__top {
   width: max-content;
@@ -322,7 +321,7 @@ img {
   padding: 0.8rem 1rem;
   display: flex;
   background-color: rgba(232, 232, 232, 1);
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   border-radius: 0.8rem;
   text-decoration: none;
 }
