@@ -69,7 +69,6 @@ async update(id: string, updateReviewDto: UpdateReviewDto): Promise<Review> {
 
 async countReviews(): Promise<number> {
   try {
-    // Utilisez la méthode countDocuments() pour compter le nombre de documents dans la collection
     const count = await this.reviewModel.countDocuments().exec();
     return count;
   } catch (error) {
