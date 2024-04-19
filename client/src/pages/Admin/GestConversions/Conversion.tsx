@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { acceptAllConversion, acceptConversion, getAllConversions } from '../../../context/features/ConversionSlice';
 import { AppDispatch } from '../../../context/store';
+import { acceptAllConversion, acceptConversion, getAllConversions } from '../../../context/features/conversionSlice';
 
 const Pompiste: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
