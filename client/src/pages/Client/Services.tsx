@@ -47,7 +47,7 @@ const Services = () => {
                   <img
                     src={service.image ? `data:image/png;base64,${service.image.buffer}` : DefaultService}
                     alt={service.nom}
-                    className="w-full h-auto" // Set image to fit container width and maintain aspect ratio
+                    className="w-full h-auto" 
                     draggable="false"
                   />
                 </div>

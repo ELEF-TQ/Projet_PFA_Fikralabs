@@ -86,6 +86,8 @@ const Reservations: React.FC = () => {
                         </th>
                         <th scope="col" className="p-4">Code</th>
                         <th scope="col" className="p-4">Date</th>
+                        <th scope="col" className="p-4">Heure</th>
+                        <th scope="col" className="p-4">Adresse</th>
                         <th scope="col" className="p-4">Client</th>
                         <th scope="col" className="p-4">Service</th>
                         <th scope="col" className="p-4 ">status</th>
@@ -111,7 +113,9 @@ const Reservations: React.FC = () => {
                             </div>
                           </td>
                           <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{reservation.code}</td>
-                          <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{reservation.dateReservation}</td>
+                          <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {new Date(reservation.dateReservation).toLocaleDateString()}</td>
+                          <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{reservation.heureReservation}</td>
+                          <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{reservation.adresse}</td>
                           <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{reservation.client?.username}</td>
                           <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{reservation.service?.nom}</td>
                           <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">   <StatusLabel  {...getReservationStatus(reservation.dateReservation)} /></td>
@@ -143,15 +147,15 @@ const Reservations: React.FC = () => {
         show={isDestroyModalOpen}
         handleClose={() => setIsDestroyModalOpen(false)}
         ids={selectedIds}
-        EndPoint="/services/destroy"
-        onDestroySuccess={fetchServices}
+        EndPoint="/services/deleteReservation/destroy"
+        onDestroySuccess={fetchReservations}
       />
       <Delete
         show={isDeleteModalOpen}
         handleClose={() => setIsDeleteModalOpen(false)}
         Id={selectedId}
-        EndPoint="/services"
-        onDeletionSuccess={fetchServices}
+        EndPoint="/services/deleteReservation"
+        onDeletionSuccess={fetchReservations}
       />
     </div>
   );

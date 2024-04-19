@@ -81,7 +81,7 @@ export const fetchServices = createAsyncThunk('services/fetchAll', async () => {
 // Async thunk to fetch all reservations
 export const fetchReservations = createAsyncThunk('reservation/fetchAll', async () => {
   try {
-    const response = await axiosAuth.get('/services/reserved');
+    const response = await axiosAuth.get('/services/reservations');
     return response.data;
   } catch (error) {
     throw new Error('Failed to fetch services');
