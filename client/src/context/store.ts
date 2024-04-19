@@ -6,13 +6,13 @@ import AdminSlice from './features/AdminSlice'
 import PompisteSlice from './features/PompisteSlice'
 import ReviewSlice from './features/ReviewSlice'
 import ClientSlice from './features/ClientSlice'
-import ConversionSlice from './features/ConversionSlice'
 import CouponSlice from './features/CouponSlice'
 import StationSlice from './features/StationSlice'
 import ResetPasswordSlice from './features/ResetPasswordSlice'
 import RoleSlice from './features/RoleSlice'
 import PermissionSlice from './features/PermissionSlice'
 import ServiceSlice from './features/ServiceSlice'
+import ConversionSlice from './features/conversionSlice'
 
 export const makeStore = () => {
   return configureStore({
