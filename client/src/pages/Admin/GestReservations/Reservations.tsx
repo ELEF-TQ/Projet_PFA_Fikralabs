@@ -51,10 +51,8 @@ const Reservations: React.FC = () => {
 
   return (
     <div>
-      <h1 className="mb-4 font-semibold leading-none tracking-tight text-gray-900 lg:text-6xl dark:text-black">
-        Gestion des Réservations :
-      </h1>
 
+<h1 className="text-4xl font-bold mb-8">Gestion des Réservations</h1>
       {isLoading ? (
         <Spinner />
       ) : (
