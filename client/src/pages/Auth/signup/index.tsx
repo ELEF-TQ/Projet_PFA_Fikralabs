@@ -13,9 +13,9 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const index :React.FC= () => {
 
-    const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   interface FormData {
     username: string;

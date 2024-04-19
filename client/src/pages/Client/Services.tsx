@@ -34,7 +34,7 @@ const Services = () => {
     <>
       <h1 className="text-4xl font-bold mb-8">Nos Services</h1>
       <ToastContainer />
-      <p className=' text-gray-700'>Nous offrons le meilleur des produits et services Shell et Engen. Cela inclut les carburants, les lubrifiants et une offre croissante de vente au détail de produits non combustibles pour les automobilistes, ainsi que des solutions de carburant, hybrides et solaires sur mesure pour les clients commerciaux.</p>
+      <p className='mb-8 text-gray-700'>Nous offrons le meilleur des produits et services Shell et Engen. Cela inclut les carburants, les lubrifiants et une offre croissante de vente au détail de produits non combustibles pour les automobilistes, ainsi que des solutions de carburant, hybrides et solaires sur mesure pour les clients commerciaux.</p>
       <div className='flex justify-center items-center min-h-screen'>
         {isLoading ? (
           <Spinner />

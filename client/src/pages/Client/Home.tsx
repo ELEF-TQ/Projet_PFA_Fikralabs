@@ -59,7 +59,23 @@ const Home = () => {
 
     return (
         <div className="flex flex-col">
-            <h2 className="text-center text-2xl font-semibold mb-4">Solde actuel : {client?.score || 0}</h2>
+            <h1 className="text-4xl font-bold mb-8">Points et Coupons</h1>
+            <p className='mb-4 text-gray-700'>
+                Consultez votre solde de points pour suivre le nombre total de points accumulés lors de vos achats et promotions.
+            </p>
+            <div className="mb-4 flex justify-center items-center mt-3.5">
+                <div className="text-black px-8 py-6 rounded-3xl border-primary-color-2 text-center bg-white">
+                    {client && (
+                    <div className="w-full max-w-md mx-auto">
+                        <span className="text-lg font-semibold">Solde actuel (Global)</span>
+                        <span className="my-3 block text-primary-color text-3xl">{client?.score || 0} pts</span>
+                    </div>
+                    )}
+                </div>
+            </div>
+            <p className='mb-4 text-gray-700'>
+            Découvrez une variété de coupons classés en trois catégories : Standard, Premium et Ultime, pour bénéficier de réductions et d'offres spéciales.
+            </p>
             {isLoading ? ( 
                 <Spinner />
             ) : (

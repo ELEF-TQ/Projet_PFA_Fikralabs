@@ -43,9 +43,11 @@ const Reviews = () => {
 
   return (
     <div className="container mx-auto my-8">
-      <h1 className="text-3xl font-bold mb-4">Évaluations</h1>
+      <h1 className="text-4xl font-bold mb-4">Évaluations</h1>
+      <p className='mb-8 text-gray-700'>
+        Consultez vos évaluations et commentaires : Retracez vos expériences passées avec nos pompistes et partagez vos impressions.
+      </p>
       {reviews.isLoading && <Spinner />}
-
       {!reviews.isLoading && noReviews && (
         <div className="flex items-center justify-center h-full">
           <div className="text-center text-gray-500">

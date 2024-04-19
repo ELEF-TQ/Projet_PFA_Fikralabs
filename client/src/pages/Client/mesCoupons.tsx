@@ -19,7 +19,10 @@ const Coupons = () => {
 
   return (
     <>
-    <h1 className="text-4xl font-bold mb-8">Mes Coupons</h1>
+    <h1 className="text-4xl font-bold mb-4">Mes Coupons</h1>
+    <p className='mb-8 text-gray-700'>
+      Découvrez vos coupons réservés : Parcourez la liste complète des coupons que vous avez déjà réservés. Profitez de ces offres exclusives lors de votre prochaine visite dans nos stations-service. Gérez facilement vos réservations et ne manquez jamais une opportunité d'économiser sur vos achats.
+    </p>
     <div className="flex flex-wrap justify-center gap-5">
     {isLoading ? (
         <Spinner />
