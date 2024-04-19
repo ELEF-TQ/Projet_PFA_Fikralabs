@@ -205,7 +205,7 @@ const Index: React.FC = () => {
                 src={pompisteInfo?.image?.buffer ? `data:image/png;base64,${pompisteInfo.image.buffer}` : defaultIMG}
                 alt="image" draggable='false' />
                   <span>{pompisteInfo?.username}</span>
-                </div>
+              </div>
 
               <div className='flex flex-col items-center'>
                 <span>Comment évaluez-vous l'accueil du pompiste ?</span>  
@@ -286,7 +286,7 @@ const Index: React.FC = () => {
    
 
       <div className=" md:px-60 p-10 ">
-        <div className="space-y-4 md:space-y-6   sm:w-full  relative ">
+        <div className="space-y-4 md:space-y-6 sm:w-full relative ">
           <img src={Logo} alt="Logo" draggable='false'/>
           <p className="Paragraphe_Text">
             évaluer votre expérience et gagner des points passionnants en suivant ces étapes simples
