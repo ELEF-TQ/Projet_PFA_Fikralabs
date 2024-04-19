@@ -2,12 +2,13 @@ import { Link, useLocation } from 'react-router-dom';
 import LogoWhite from '../../assets/icons/LogoWhite.png';
 import { useEffect, useState } from 'react';
 import {  retrieveUserSession } from '../../lib/Encryption';
-import defaultUser from '../../assets/images/defaultUser.png'
+import defaultUser from '../../assets/images/defaultUser.png';
+
 const Header = () => {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
-
   const user = retrieveUserSession();
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 700);
@@ -43,24 +44,6 @@ const Header = () => {
             Accueil
           </Link>
           <Link
-            to={'/login'}
-            className={`btn font-semibold text-white ${
-              isLinkActive('/login') ? 'active' : ''
-            }`}
-            style={isLinkActive('/login') ? activeLinkStyle : {}}
-          >
-            Connexion
-          </Link>
-          <Link
-            to={'/signup'}
-            className={`btn font-semibold text-white ${
-              isLinkActive('/signup') ? 'active' : ''
-            }`}
-            style={isLinkActive('/signup') ? activeLinkStyle : {}}
-          >
-            Inscription
-          </Link>
-          <Link
             to={'/evaluation'}
             className={`btn font-semibold text-white ${
               isLinkActive('/evaluation') ? 'active' : ''
@@ -69,22 +52,58 @@ const Header = () => {
           >
             Évaluation
           </Link>
-          { user && 
-            <Link to={user.role === 'ADMIN' ? '/admin' : user.role === 'POMPISTE' ? '/pompiste' : '/client'}>
+          {!user && (
+            <>
+              <Link
+                to={'/login'}
+                className={`btn font-semibold text-white ${
+                  isLinkActive('/login') ? 'active' : ''
+                }`}
+                style={isLinkActive('/login') ? activeLinkStyle : {}}
+              >
+                Connexion
+              </Link>
+              <Link
+                to={'/signup'}
+                className={`btn font-semibold text-white ${
+                  isLinkActive('/signup') ? 'active' : ''
+                }`}
+                style={isLinkActive('/signup') ? activeLinkStyle : {}}
+              >
+                Inscription
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <Link
+              to={
+                user.role === 'ADMIN'
+                  ? '/admin'
+                  : user.role === 'POMPISTE'
+                  ? '/pompiste'
+                  : '/client'
+              }
+            >
               <img
                 width={80}
                 height={80}
                 className="sidebar__logo"
-                src={user?.image?.buffer ? `data:image/png;base64,${user.image.buffer}` : defaultUser}
+                src={
+                  user?.image?.buffer
+                    ? `data:image/png;base64,${user.image.buffer}`
+                    : defaultUser
+                }
                 alt="logo"
               />
             </Link>
-          } 
+          )}
         </div>
       </div>
     </div>
   );
 };
+
 
 const headerContainerStyle = {
   backgroundColor: 'var(--primary-color)',
