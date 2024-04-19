@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from '../../context/store';
 import { Station } from '../../types/Station';
 import GetUserGeolocation, { Coordinates } from '../../lib/GetUserGeolocation';
 import Spinner from '../../components/status/Spinner';
+import Logo from '../../assets/icons/LogoBlack.png'
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -47,6 +48,20 @@ const Home: React.FC = () => {
     <>
       <Header />
       <div className="container mx-auto px-6 my-5">
+        <div className='space-y-4 md:space-y-6 sm:w-full mb-4 relative'>
+          <img src={Logo} alt="Logo" draggable='false' className='mt-8'/>
+          <p className="Paragraphe_Text">
+            Explorez nos stations-service
+          </p>
+          <p className='mb-4 text-gray-700'>
+            Découvrez facilement l'emplacement de nos stations-service. Trouvez celle qui est la plus proche de vous ou celle qui correspond le mieux à vos besoins en utilisant les filtres disponibles. Obtenez des indications détaillées pour vous y rendre et profitez de nos services où que vous soyez.
+          </p>
+        </div>
+
+      {/* <h1 className="text-4xl font-bold mb-4">Explorez nos stations-service</h1>
+      <p className='mb-4 text-gray-700'>
+        Découvrez facilement l'emplacement de nos stations-service. Trouvez celle qui est la plus proche de vous ou celle qui correspond le mieux à vos besoins en utilisant les filtres disponibles. Obtenez des indications détaillées pour vous y rendre et profitez de nos services où que vous soyez.
+      </p> */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <div className="relative flex items-center w-full md:w-auto mb-4 md:mb-0">
             <input

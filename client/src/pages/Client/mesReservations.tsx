@@ -116,7 +116,10 @@ const MesReservations = () => {
 
   return (
     <>
-      <h1 className="text-4xl font-bold mb-8">Mes Réservations</h1>
+      <h1 className="text-4xl font-bold mb-4">Mes Réservations</h1>
+      <p className='mb-8 text-gray-700'>
+        Consultez vos réservations passées : Accédez à une liste complète de toutes vos réservations de services effectuées auprès de nous.
+      </p>
       {reservations.length === 0 ? (
         <p className="text-gray-900 text-center">Aucune réservation trouvée</p>
       ) : (

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { retrieveUserSession, updateUserSession } from '../../lib/Encryption';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import "./style.css"
 import defaultIMG from '../../assets/images/defaultUser.png'
 import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../utils/Regex';
 import { AppDispatch } from '../../context/store';
@@ -149,11 +148,11 @@ const ClientProfile: React.FC = () => {
 
   return (
     <div className="container my-8">
-      <h1 className="text-4xl font-bold mb-8">Votre Profile</h1>
+      <h1 className="text-4xl font-bold mb-4">Votre Profile</h1>
       <main className="w-full min-h-screen">
         <div className="p-2 md:p-4">
           <div className="w-full sm:rounded-lg">
-            <div className="grid max-w-2xl mx-auto mt-8">
+            <div className="grid max-w-2xl mx-auto">
               <div className=" relative flex flex-col flex justify-center items-center sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-4">
                 <input
                   type="file"
