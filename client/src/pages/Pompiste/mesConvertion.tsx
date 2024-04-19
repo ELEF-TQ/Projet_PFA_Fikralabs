@@ -3,7 +3,7 @@ import ConversionCard from "../../components/others/ConversionCard";
 import { useDispatch, useSelector } from "react-redux";
 import { retrieveUserSession } from "../../lib/Encryption";
 import { AppDispatch, RootState } from "../../context/store";
-import { getConversions } from "../../context/features/conversionSlice";
+import { getConversions } from "../../context/features/ConversionSlice";
 
 const Conversion = () => {
   const dispatch = useDispatch<AppDispatch>();
