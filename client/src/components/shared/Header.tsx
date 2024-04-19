@@ -1,11 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import LogoWhite from '../../assets/icons/LogoWhite.png';
 import { useEffect, useState } from 'react';
-
+import {  retrieveUserSession } from '../../lib/Encryption';
+import defaultUser from '../../assets/images/defaultUser.png'
 const Header = () => {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
 
+  const user = retrieveUserSession();
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 700);
@@ -30,7 +32,7 @@ const Header = () => {
             <img src={LogoWhite} alt="Logo" draggable="false"/>
           </div>
         </Link>
-        <div className="flex md:space-x-10 space-x-6 items-center">
+        <div className="flex md:space-x-10 space-x-6 items-center wrap">
           <Link
             to={'/'}
             className={`btn font-semibold text-white ${
@@ -67,6 +69,17 @@ const Header = () => {
           >
             Évaluation
           </Link>
+          { user && 
+            <Link to={user.role === 'ADMIN' ? '/admin' : user.role === 'POMPISTE' ? '/pompiste' : '/client'}>
+              <img
+                width={80}
+                height={80}
+                className="sidebar__logo"
+                src={user?.image?.buffer ? `data:image/png;base64,${user.image.buffer}` : defaultUser}
+                alt="logo"
+              />
+            </Link>
+          } 
         </div>
       </div>
     </div>

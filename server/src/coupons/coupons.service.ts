@@ -7,12 +7,14 @@ import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
 import { generateCouponCode } from './utils/generateCouponCode';
 import { ReserveCouponDto } from './dto/reserve-coupon.dto';
+import { Client } from 'src/clients/schemas/client.schema';
 
 @Injectable()
 export class CouponsService {
   
   constructor(
     @InjectModel(Coupon.name) private couponModel: Model<Coupon> ,
+    @InjectModel(Client.name) private clientModel: Model<Client> ,
     private readonly clientService: ClientsService,
   ) {}
 
@@ -84,9 +86,8 @@ export class CouponsService {
   }
 
   async reserveCouponById(reserveCouponDto: ReserveCouponDto): Promise<Coupon> {
-    const client = await this.clientService.findOne(reserveCouponDto.clientId);
+     const client = await this.clientService.findOne(reserveCouponDto.clientId);
     const coupon = await this.couponModel.findById(reserveCouponDto.couponId);
-
     if (!coupon ) {
       throw new NotFoundException('coupon  non trouvé');
     }
@@ -100,10 +101,12 @@ export class CouponsService {
     }
 
     coupon.nbrDisponible -= 1;
+    client.score -= coupon.score ;
 
     await coupon.save();
+  
+    await this.clientModel.findOneAndUpdate({ clientId: reserveCouponDto.clientId }, { score: client.score }); 
     await this.clientService.updateClientCoupons(client, coupon);
-
     return coupon;
   }
 

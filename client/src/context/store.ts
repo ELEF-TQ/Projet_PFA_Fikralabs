@@ -12,7 +12,7 @@ import ResetPasswordSlice from './features/ResetPasswordSlice'
 import RoleSlice from './features/RoleSlice'
 import PermissionSlice from './features/PermissionSlice'
 import ServiceSlice from './features/ServiceSlice'
-import ConversionSlice from './features/conversionSlice'
+import ConversionSlice from './features/ConversionSlice'
 
 export const makeStore = () => {
   return configureStore({
