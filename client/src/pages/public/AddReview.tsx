@@ -172,7 +172,7 @@ const Index: React.FC = () => {
                 pour accéder à la page d'évaluation.
               </p>
               <div className='flex flex-col items-center '>
-              <img src={QR} alt="scanner le code QR" className='w-24 m-10' />
+              <img src={QR} alt="scanner le code QR" className='w-24 m-10' draggable='false'/>
 
              
               <div>
@@ -203,7 +203,7 @@ const Index: React.FC = () => {
                 <div className='flex flex-col items-center'>
                 <img className='Pompiste_Avatar'
                 src={pompisteInfo?.image?.buffer ? `data:image/png;base64,${pompisteInfo.image.buffer}` : defaultIMG}
-                alt="image" />
+                alt="image" draggable='false' />
                   <span>{pompisteInfo?.username}</span>
                 </div>
 
@@ -287,7 +287,7 @@ const Index: React.FC = () => {
 
       <div className=" md:px-60 p-10 ">
         <div className="space-y-4 md:space-y-6   sm:w-full  relative ">
-          <img src={Logo} alt="Logo" />
+          <img src={Logo} alt="Logo" draggable='false'/>
           <p className="Paragraphe_Text">
             évaluer votre expérience et gagner des points passionnants en suivant ces étapes simples
           </p>

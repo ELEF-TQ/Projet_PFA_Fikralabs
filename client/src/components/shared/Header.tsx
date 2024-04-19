@@ -27,7 +27,7 @@ const Header = () => {
       <div style={mergedStyle}>
         <Link to={'/'}>
           <div className="logo hidden md:block">
-            <img src={LogoWhite} alt="Logo" />
+            <img src={LogoWhite} alt="Logo" draggable="false"/>
           </div>
         </Link>
         <div className="flex md:space-x-10 space-x-6 items-center">
@@ -87,7 +87,7 @@ const headerContainerStyleMobile = {
 };
 
 const activeLinkStyle = {
-  color: 'black',
+  color: 'darkgreen',
 };
 
 export default Header;

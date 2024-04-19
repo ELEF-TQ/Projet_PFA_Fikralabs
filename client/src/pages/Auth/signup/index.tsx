@@ -169,7 +169,7 @@ const index :React.FC= () => {
         
         <div className="md:px-60 p-14">
         <div className="space-y-4 sm:w-full ">
-          <img src={Logo} alt="Logo" />
+          <img src={Logo} alt="Logo" draggable='false' />
          </div>
          <div className='mt-5'>
          <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">S'inscrire</h1>
@@ -180,7 +180,7 @@ const index :React.FC= () => {
             <p className="text-center">
               Avez-vous déjà un Compte?
              
-              <Link to="/">- Connectez-vous ici</Link>
+              <Link to="/login" className='text-primary-color'>- Connectez-vous ici</Link>
             </p>
             <h1 className="text-center  mx-auto mb-5 Sign__Title">Créer votre compte </h1>
 

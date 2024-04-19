@@ -41,7 +41,7 @@ const Index: React.FC = () => {
     
       <div className="md:px-60 p-14">
         <div className="space-y-4 sm:w-full ">
-          <img src={Logo} alt="Logo" />
+          <img src={Logo} alt="Logo" draggable='false' />
           <div>
             <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">Se connecter</h1>
           </div>
