@@ -7,6 +7,7 @@ import { Model, Types } from 'mongoose';
 import { comparePasswords, encodePassword } from 'src/auth/utils/bcrypt';
 import { UpdateAdminProfileDto } from './dto/update-admin-profile.dto';
 import { Role } from 'src/authorization/schemas/role.schema';
+import { Console } from 'console';
 
 @Injectable()
 export class AdminService {
@@ -49,7 +50,13 @@ export class AdminService {
   }
 
   async findOne(id: string): Promise<Admin | null> {
-    return this.adminModel.findById(id).select('-password').exec();
+    return this.adminModel.findById(id).select('-password').populate({ 
+      path: 'adminRole',
+      populate: {
+        path: 'permissions', 
+        model: 'Permission' 
+      }
+    }).exec();
   }
   
 
@@ -57,7 +64,8 @@ export class AdminService {
     return this.adminModel.findOne({ email }).populate({ 
       path: 'adminRole',
       populate: {
-        path: 'permissions'
+        path: 'permissions', 
+        model: 'Permission' 
       }
     }).exec();
   }
@@ -74,7 +82,13 @@ export class AdminService {
       updateData.image = image;
     }
     try {
-      const updatedAdmin = await this.adminModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
+      const updatedAdmin = await this.adminModel.findByIdAndUpdate(id, updateData, { new: true }).populate({ 
+        path: 'adminRole',
+        populate: {
+          path: 'permissions', 
+          model: 'Permission' 
+        }
+      }).exec();
       return updatedAdmin;
     } catch (error) {
       console.error('Error updating admin:', error);
@@ -84,21 +98,18 @@ export class AdminService {
   
 
 
+  
   async updateProfileAdmin(id: string, updateProfileDto: UpdateAdminProfileDto): Promise<Admin> {
     const admin = await this.adminModel.findById(id);
     if (!admin) {
       throw new HttpException('Admin not found', HttpStatus.NOT_FOUND);
     }
-
-    // Check if the email already exists
     if (updateProfileDto.email) {
       const existingAdmin = await this.adminModel.findOne({ email: updateProfileDto.email });
       if (existingAdmin && existingAdmin._id.toString() !== id) {
         throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
       }
     }
-
-    // Check if the old password matches
     if (updateProfileDto.oldPassword && updateProfileDto.newPassword && !comparePasswords(updateProfileDto.oldPassword, admin.password)) {
       throw new HttpException('Old password is incorrect', HttpStatus.BAD_REQUEST);
     }
@@ -118,10 +129,10 @@ export class AdminService {
     }
     if(updateProfileDto.image){
       admin.image = updateProfileDto.image;
-    }
-    
+    }  
     return await admin.save();
   }
+  
 
   async remove(id: string): Promise<Admin | null> {
     return this.adminModel.findByIdAndDelete(id).exec();
