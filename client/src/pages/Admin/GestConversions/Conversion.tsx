@@ -75,7 +75,7 @@ const Pompiste: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 py-1">
               <div className="flex-1 flex items-center justify-evenly space-x-2">
                 <h5 className="m-0">
-                  <span className="text-white">Les demandes en attente : </span>
+                  <span className="dark:text-white text-black">Les demandes en attente : </span>
                   <span className="dark:text-white"> {pendingConversions.length}</span>
                 </h5>
 
@@ -200,7 +200,7 @@ const Pompiste: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-2">
               <div className="flex-1 flex items-center space-x-2 ">
                 <h5 className="m-0 ">
-                  <span className="text-white">Les demandes Acceptées:</span>
+                  <span className="dark:text-white text-black">Les demandes Acceptées:</span>
                   <span className="dark:text-white">{acceptedConversions.length}</span>
                 </h5>
               </div>

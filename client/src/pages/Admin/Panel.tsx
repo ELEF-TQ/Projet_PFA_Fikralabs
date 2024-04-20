@@ -17,16 +17,17 @@ const Panel: React.FC = () => {
       <div className="flex gap-2 items-center justify-around flex-wrap">
         {cards.map((card, index) => (
           <div key={index} className="w-64">
-            <div className={`${card.color} p-4 rounded-md flex`}>
-              <div className="flex items-center justify-center h-32 p-10 rounded-xl">
-                <h1 className="font-bold text-6xl">{index + 1}</h1>
+            <div className={`${card.color} p-4 rounded-md flex items-center justify-between shadow-2xl relative`}>
+              <div className="flex items-center justify-center h-24 w-24 rounded-full bg-white shadow-2xl">
+                <h1 className="font-bold text-4xl text-gray-700">{index + 1}</h1>
               </div>
               <div className="p-4">
-                <p className="text-xl font-semibold">{card.type}</p>
-                <div className="flex items-center justify-center mt-4">
+                <p className="text-lg font-semibold">{card.type}</p>
+                <div className="flex items-center justify-center mt-2">
                   {card.icon}
                 </div>
               </div>
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary-color"></div>
             </div>
           </div>
         ))}

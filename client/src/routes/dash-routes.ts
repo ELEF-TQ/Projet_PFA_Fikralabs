@@ -2,15 +2,14 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BsPeople, BsTicketPerforated } from "react-icons/bs";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { TbMessageStar, TbTransform } from "react-icons/tb";
-import { RiCoupon2Fill } from "react-icons/ri";
-import { MdHomeRepairService, MdOutlineAdminPanelSettings, MdOutlineHomeRepairService } from "react-icons/md";
+import {  MdOutlineAdminPanelSettings, MdOutlineHomeRepairService } from "react-icons/md";
 import { GiSandsOfTime } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
-import { MdAdminPanelSettings } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
 import { RiAdminLine } from "react-icons/ri";
 import { SlCalender } from "react-icons/sl";
 import { retrieveUserSession } from "../lib/Encryption";
+import { hasPermission } from "../utils/hasPermission";
 
 const user = retrieveUserSession() ;
 export const AdminItems = [
@@ -72,13 +71,13 @@ export const AdminItems = [
     },
  
   ]
-  // .filter(item => {
-  //   if (item.name === "Home" || item.name === "Profile" || item.name === "reservations") {
-  //     return true;
-  //   }
-  //   const hasPermissionForItem = hasPermission(user, item.name.toUpperCase());
-  //   return hasPermissionForItem;
-  // });
+  .filter(item => {
+    if (item.name === "Home" || item.name === "Profile" || item.name === "reservations") {
+      return true;
+    }
+    const hasPermissionForItem = hasPermission(user, item.name.toUpperCase());
+    return hasPermissionForItem;
+  });
 
 
 

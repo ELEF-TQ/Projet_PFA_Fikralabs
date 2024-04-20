@@ -456,7 +456,7 @@ img {
 
 /*_______Sweete alert______*/
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color) !important;
   width: fit-content;
 }
 

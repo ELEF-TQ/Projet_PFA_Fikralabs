@@ -64,12 +64,12 @@ const Role: React.FC = () => {
         <Spinner />
       ) : (
         <section className="  p-3 sm:p-5 antialiased">
-          <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
-            <div className="bg-black dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                <div className="flex-1 flex items-center space-x-2">
-                  <h5>
-                    <span className="text-white">Tous les rôles : </span>
+        <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
+          <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+              <div className="flex-1 flex items-center space-x-2">
+                <h5>
+                    <span className="dark:text-white">Tous les rôles : </span>
                     <span className="dark:text-white"> {roles.length}</span>
                   </h5>
                   

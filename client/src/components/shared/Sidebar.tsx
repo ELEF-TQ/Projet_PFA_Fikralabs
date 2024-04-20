@@ -2,11 +2,8 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { SidebarContext } from "../../providers/SidebarProvider";
 import { Link, useLocation } from "react-router-dom";
-import { CiLogout } from "react-icons/ci";
 import { retrieveUserSession } from "../../lib/Encryption";
 import { AdminItems, ClientItems, PompisteItems } from "../../routes/dash-routes";
-import Cookies from 'js-cookie';
-import Swal from "sweetalert2";
 interface SidebarItem {
   name: string;
   href: string;
@@ -30,20 +27,7 @@ const Sidebar = () => {
 
   const { isCollapsed, toggleSidebarcollapse } = useContext(SidebarContext);
 
-  const handleLogout = () => {
-    Swal.fire({title: 'Êtes-vous sûr de vouloir vous déconnecter ?',text: "Vous serez redirigé vers la page de connexion.",icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Oui, me déconnecter'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.removeItem('user');
-        Cookies.remove('token');
-        window.location.href = '/login';
-      }
-    });
-  };
+ 
 
   return (
     <div className="bg-grayDash-color">
@@ -73,12 +57,12 @@ const Sidebar = () => {
           ))}
         </ul>
 
-        <span className="sidebar__item">
+        {/* <span className="sidebar__item">
           <button className="sidebar__link" onClick={handleLogout}>
             <span className="sidebar__icon"><CiLogout /></span>
             <span className="sidebar__name">Logout</span>
           </button>
-        </span>
+        </span> */}
       </aside>
     </div>
     </div>
