@@ -43,7 +43,7 @@ const ConversionCard: React.FC<Props> = ({ conversion }) => {
   };
 
   return (
-    <div className="flex justify-between items-center bg-gray-100 rounded-lg p-2 mb-2 w-4/5">
+    <div className="flex justify-between items-center bg-gray-100 rounded-lg p-2 mb-2 w-100">
       <div className="flex items-center">
         <img src={image} alt={conversion.status} className="w-10 h-10 mr-4" />
         <div className="flex flex-col">

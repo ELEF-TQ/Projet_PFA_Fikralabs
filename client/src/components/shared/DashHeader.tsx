@@ -26,7 +26,7 @@ const DashHeader = () => {
     <div className="">
       <div style={mergedStyle}>
         <Link to={'/'}>
-          <div className="logo hidden md:block">
+          <div className="logo ">
             <img src={LogoWhite} alt="Logo" />
           </div>
         </Link>
@@ -58,7 +58,7 @@ const headerContainerStyle = {
 };
 
 const headerContainerStyleMobile = {
-  justifyContent: 'center', 
+  justifyContent: 'space-between', 
 };
 
 

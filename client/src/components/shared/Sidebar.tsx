@@ -1,7 +1,6 @@
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { SidebarContext } from "../../providers/SidebarProvider";
-import defaultUser from '../../assets/images/defaultUser.png'
 import { Link, useLocation } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { retrieveUserSession } from "../../lib/Encryption";
@@ -46,11 +45,10 @@ const Sidebar = () => {
     });
   };
 
-  // background-color: var(--secondary-color);
   return (
     <div className="bg-grayDash-color">
 
-    
+  
    
     <div className="sidebar__wrapper">
       <button className="Navbar__Navigation" onClick={toggleSidebarcollapse}>

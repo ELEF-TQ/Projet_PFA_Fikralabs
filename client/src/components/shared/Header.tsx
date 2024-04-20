@@ -43,15 +43,21 @@ const Header = () => {
           >
             Accueil
           </Link>
-          <Link
-            to={'/evaluation'}
-            className={`btn font-semibold text-white ${
-              isLinkActive('/evaluation') ? 'active' : ''
-            }`}
-            style={isLinkActive('/evaluation') ? activeLinkStyle : {}}
-          >
-            Évaluation
-          </Link>
+          {user && (user.role === "ADMIN" || user.role === "POMPISTE") ? (
+            <></> 
+          ) : (
+            <Link
+              to={'/evaluation'}
+              className={`btn font-semibold text-white ${
+                isLinkActive('/evaluation') ? 'active' : ''
+              }`}
+              style={isLinkActive('/evaluation') ? activeLinkStyle : {}}
+            >
+              Évaluation
+            </Link>
+          )}
+
+         
           {!user && (
             <>
               <Link
