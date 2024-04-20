@@ -21,7 +21,7 @@ const DashHeader = () => {
   }, []);
 
   const handleLogout = () => {
-    setShowDropdown(false); // Close dropdown when logout button is clicked
+    setShowDropdown(false); 
     Swal.fire({
       title: 'Êtes-vous sûr de vouloir vous déconnecter ?',
       text: "Vous serez redirigé vers la page de connexion.",
@@ -51,25 +51,26 @@ const DashHeader = () => {
             <img src={LogoWhite} alt="Logo" />
           </div>
         </Link>
-        <div className="flex md:space-x-10 space-x-6 items-center relative">
+        <div 
+          className="flex md:space-x-10 space-x-6 items-center relative"
+        
+        >
           <p className="sidebar__logo-name">{user?.username}</p>
           <div className="relative">
-            <div
-              className="cursor-pointer"
-              onMouseEnter={() => setShowDropdown(true)}
-              onMouseLeave={() => setShowDropdown(false)}
-            >
+            <div>
               <img
                 width={80}
                 height={80}
-                className="sidebar__logo"
+                className="sidebar__logo cursor-pointer"
                 src={user?.image?.buffer ? `data:image/png;base64,${user?.image.buffer}` : defaultUser}
                 alt="logo"
+                
+                onMouseEnter={() => setShowDropdown(true)}
+                onMouseLeave={() => setShowDropdown(false)}
               />
-              <div
-                className={`absolute top-0 left-auto right-0 mt-12 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-2 w-32 transition-opacity ${
-                  showDropdown ? 'opacity-100' : 'opacity-0'
-                }`}
+              <div className={`absolute top-0 left-auto right-0 mt-12 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-2 w-32 transition-opacity z-50 ${showDropdown ? 'visible' : 'invisible'}`}
+                onMouseEnter={() => setShowDropdown(true)}
+                onMouseLeave={() => setShowDropdown(false)}
               >
                 <Link to={`/`} onClick={() => setShowDropdown(false)}>
                   <button className="block px-4 py-2 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full mb-2 border-b border-gray-200">
