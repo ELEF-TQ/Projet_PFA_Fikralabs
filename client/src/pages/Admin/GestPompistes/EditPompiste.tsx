@@ -79,8 +79,7 @@ const EditPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
       setErrorMessage('Veuillez saisir un nom d\'utilisateur valide.');
       return;
     }
-
-    console.log(formData)
+console.log(formData)
     dispatch(updatePompiste({ Id: Element._id, formData })).then(() => {
       handleClose();
       setErrorMessage(null)

@@ -25,7 +25,7 @@ const Client : React.FC = () => {
   const [selectedIds , setSelectedIds] = useState<string[]>([]);;
   const [selectAllChecked, setSelectAllChecked] = useState(false);
  
-  console.log(clients)
+ 
 
   // Checkbox handling
   const handleSelectAllChange = (e: { target: { checked: any; }; }) => {
