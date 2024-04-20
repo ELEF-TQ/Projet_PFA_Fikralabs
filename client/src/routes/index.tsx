@@ -20,6 +20,7 @@ import GestionProfile from "../pages/Admin/Profile";
 import GestCoupons from '../pages/Admin/GestCoupons/Coupon';
 import AdminProfile from "../pages/Admin/Profile";
 import ReviewsPompiste from "../pages/Admin/GestPompistes/ViewReviewsPompiste";
+import ReviewsClient from "../pages/Admin/GestClients/ViewReviewsClient";
 import GestionRoles from '../pages/Admin/GestRoles/role';
 import GestReservations from '../pages/Admin/GestReservations/Reservations';
 import GestPermissions from '../pages/Admin/GestPermissions/Permission';
@@ -71,7 +72,8 @@ export const routes = createBrowserRouter([
       { path: "roles", element: <GestionRoles/> },
       { path: "permissions" , element: <GestPermissions/>} ,
       {path: "admins" , element: <GestAdmins/>},
-      { path: "viewReviews/:matriculeRH", element: <ReviewsPompiste /> },
+      { path: "viewReviewsPompiste/:matriculeRH", element: <ReviewsPompiste /> },
+      { path: "viewReviewsClient/:id", element: <ReviewsClient/> },
     ],
   },
 
