@@ -7,7 +7,7 @@ import Delete from '../../../components/crud/Delete';
 import { fetchRoles } from '../../../context/features/RoleSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
-import Spinner from '../../../components/Status/Spinner';
+import Spinner from '../../../components/status/Spinner';
 import { Permission } from '../../../types/Permission';
 
 const Role: React.FC = () => {

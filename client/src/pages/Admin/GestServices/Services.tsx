@@ -4,7 +4,7 @@ import Delete from '../../../components/crud/Delete';
 import { fetchServices } from '../../../context/features/ServiceSlice'; // Assuming you have ServiceSlice with getServices action
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
-import Spinner from '../../../components/Status/Spinner';
+import Spinner from '../../../components/status/Spinner';
 import EditService from './EditService';
 import AddService from './AddService';
 const Service: React.FC = () => {

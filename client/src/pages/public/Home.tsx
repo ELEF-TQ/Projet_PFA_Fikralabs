@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from '../../context/store';
 import { Station } from '../../types/Station';
 import GetUserGeolocation, { Coordinates } from '../../lib/GetUserGeolocation';
 import Logo from '../../assets/icons/LogoBlack.png'
-import Spinner from '../../components/Status/Spinner';
+import Spinner from '../../components/status/Spinner';
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

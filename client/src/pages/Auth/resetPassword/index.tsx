@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { emailRegex, passwordRegex, valdationCodeRegex } from '../../../utils/Regex';
 import { forgotPassword, resetPassword } from '../../../context/features/ResetPasswordSlice';
-import Spinner from '../../../components/Status/Spinner';
+import Spinner from '../../../components/status/Spinner';
 
 interface FormData {
   email: string;

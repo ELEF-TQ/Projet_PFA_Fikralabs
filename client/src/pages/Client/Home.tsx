@@ -5,7 +5,7 @@ import { AppDispatch } from '../../context/store';
 import { fetchAllCoupons } from '../../context/features/CouponSlice';
 import { getClient } from '../../context/features/ClientSlice';
 import { retrieveUserSession } from '../../lib/Encryption';
-import Spinner from '../../components/Status/Spinner';
+import Spinner from '../../components/status/Spinner';
 
 const mapCouponsWithReserved = (couponsList: any[], reservedList: string[] | null) => {
     if (!reservedList) return []; 

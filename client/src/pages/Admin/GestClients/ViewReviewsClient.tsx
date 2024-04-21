@@ -9,7 +9,7 @@ import { getAllReviewsByClient } from '../../../context/features/ReviewSlice';
 import moment from 'moment';
 import defaultIMG from '../../../assets/images/defaultUser.png';
 import { getClient } from '../../../context/features/ClientSlice';
-import Spinner from '../../../components/Status/Spinner';
+import Spinner from '../../../components/status/Spinner';
 
 const ReviewsClient = () => {
   const dispatch = useDispatch<AppDispatch>();

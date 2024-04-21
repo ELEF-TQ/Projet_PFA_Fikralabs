@@ -8,7 +8,7 @@ import Delete from '../../../components/crud/Delete';
 import { useDispatch ,useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../context/store';
 import { fetchClients } from '../../../context/features/ClientSlice';
-import Spinner from '../../../components/Status/Spinner';
+import Spinner from '../../../components/status/Spinner';
 const Client : React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();

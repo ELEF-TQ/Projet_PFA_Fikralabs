@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchServices } from '../../context/features/ServiceSlice';
 import { AppDispatch, RootState } from '../../context/store';
 import { Grid } from '@mui/material';
-import Spinner from '../../components/Status/Spinner';
+import Spinner from '../../components/status/Spinner';
 import Reservation from '../../components/modals/Reservation';
 import { Service } from '../../types/Service';
 import DefaultService from "../../assets/images/DefaultService.png"

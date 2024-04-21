@@ -7,7 +7,7 @@ import Delete from '../../../components/crud/Delete';
 import { getPompistes } from '../../../context/features/PompisteSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
-import Spinner from '../../../components/Status/Spinner';
+import Spinner from '../../../components/status/Spinner';
 import { fetchAdmins } from '../../../context/features/AdminSlice';
 
 const Admins: React.FC = () => {

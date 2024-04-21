@@ -7,8 +7,8 @@ import Delete from '../../../components/crud/Delete';
 import AddCoupon from './AddCoupon';
 import EditCoupon from './EditCoupon';
 import ViewCoupon from './ViewCoupon';
-import Spinner from '../../../components/Status/Spinner';
-import StatusLabel, { StatusLabelProps } from '../../../components/Status/StatusLablel';
+import Spinner from '../../../components/status/Spinner';
+import StatusLabel, { StatusLabelProps } from '../../../components/status/StatusLablel';
 
 const Coupon : React.FC = () => {
 
