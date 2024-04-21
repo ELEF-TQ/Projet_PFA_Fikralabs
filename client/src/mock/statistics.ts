@@ -14,5 +14,5 @@ export const chartData = {
     ]
   };
   
-  export const reviewsData = [10, 25, 30, 45, 60, 55];
+  export const reviewsData = [10, 25, 50, 45, 60, 55];
   
