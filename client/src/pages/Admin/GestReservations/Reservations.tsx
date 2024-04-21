@@ -4,8 +4,8 @@ import Delete from '../../../components/crud/Delete';
 import { fetchReservations, fetchServices } from '../../../context/features/ServiceSlice'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
-import Spinner from '../../../components/status/Spinner';
-import StatusLabel, { StatusLabelProps } from '../../../components/status/StatusLablel';
+import Spinner from '../../../components/Status/Spinner';
+import StatusLabel, { StatusLabelProps } from '../../../components/Status/StatusLablel';
 
 const Reservations: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -9,7 +9,7 @@ import { getPompistes } from '../../../context/features/PompisteSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import EvaluationStars from '../../../components/shared/EvaluationStars';
-import Spinner from '../../../components/status/Spinner';
+import Spinner from '../../../components/Status/Spinner';
 
 const Pompiste: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

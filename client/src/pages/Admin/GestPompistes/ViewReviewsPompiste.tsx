@@ -9,7 +9,7 @@ import { getAllReviewsByPompiste } from '../../../context/features/ReviewSlice';
 import moment from 'moment';
 import defaultIMG from '../../../assets/images/defaultUser.png';
 import { getPompisteByMatriculeRH } from '../../../context/features/PompisteSlice';
-import Spinner from '../../../components/status/Spinner';
+import Spinner from '../../../components/Status/Spinner';
 
 const ReviewsPompiste = () => {
   const dispatch = useDispatch<AppDispatch>();

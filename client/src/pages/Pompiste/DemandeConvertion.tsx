@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { getPompisteByMatriculeRH } from "../../context/features/PompisteSlice";
 import {  EastRounded } from "@mui/icons-material";
 import Swal from "sweetalert2";
-import Spinner from "../../components/status/Spinner";
+import Spinner from "../../components/Status/Spinner";
 import { retrieveUserSession } from "../../lib/Encryption";
 import { createConversion } from "../../context/features/ConversionSlice";
 const DemandeConvertion = () => {

@@ -5,7 +5,7 @@ import { AppDispatch } from '../../context/store';
 import { fetchAllCoupons } from '../../context/features/CouponSlice';
 import { getClient } from '../../context/features/ClientSlice';
 import { retrieveUserSession } from '../../lib/Encryption';
-import Spinner from '../../components/status/Spinner';
+import Spinner from '../../components/Status/Spinner';
 
 const mapCouponsWithReserved = (couponsList: any[], reservedList: string[] | null) => {
     if (!reservedList) return []; 
@@ -74,7 +74,7 @@ const Home = () => {
                 </div>
             </div>
             <p className='mb-4 text-gray-700'>
-            Découvrez une variété de coupons classés en trois catégories : Standard, Premium et Ultime, pour bénéficier de réductions et d'offres spéciales.
+                Découvrez une variété de coupons classés en trois catégories : Standard, Premium et Ultime, pour bénéficier de réductions et d'offres spéciales.
             </p>
             {isLoading ? ( 
                 <Spinner />

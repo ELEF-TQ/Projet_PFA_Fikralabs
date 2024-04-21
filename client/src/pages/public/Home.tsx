@@ -7,8 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../context/store';
 import { Station } from '../../types/Station';
 import GetUserGeolocation, { Coordinates } from '../../lib/GetUserGeolocation';
-import Spinner from '../../components/status/Spinner';
 import Logo from '../../assets/icons/LogoBlack.png'
+import Spinner from '../../components/Status/Spinner';
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
