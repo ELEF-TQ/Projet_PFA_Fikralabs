@@ -70,7 +70,7 @@ const ViewPompiste: React.FC<Props> = ({ show, handleClose, Element }) => {
               </button>
               <button
                 className="btn bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 border border-green-500 hover:border-transparent rounded"
-                onClick={() => navigate(`/admin/viewReviews/${Element.matriculeRH}`)}
+                onClick={() => navigate(`/admin/viewReviewsPompiste/${Element.matriculeRH}`)}
               >
                 Voir les avis
               </button>

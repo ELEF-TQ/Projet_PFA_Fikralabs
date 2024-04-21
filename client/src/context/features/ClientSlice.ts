@@ -26,6 +26,7 @@ export const updateProfileClient = createAsyncThunk('clients/updateProfile', asy
 // Async thunk to fetch a single client by ID
 export const getClient = createAsyncThunk('clients/fetch', async (id: string) => {
   try {
+    console.log(id)
     const response = await axiosAuth.get(`/clients/${id}`);
     return response.data;
   } catch (error) {

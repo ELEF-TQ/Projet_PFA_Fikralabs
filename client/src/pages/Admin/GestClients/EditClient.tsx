@@ -34,8 +34,8 @@ const EditClient: React.FC<Props> = ({ show, handleClose, Element }) => {
 
   useEffect(() => {
     setErrorMessage(null); 
-    console.log(Element?.CIN)
     if (Element && show) {
+      
       setFormData({
         username: Element.username,
         CIN: Element.CIN,
@@ -52,8 +52,8 @@ const EditClient: React.FC<Props> = ({ show, handleClose, Element }) => {
         email: ""
       });
     }
-  }, []);
-
+  }, [show, Element]);
+  
   const handleSubmit = () => {
     const { username, CIN, phone, email } = formData;
 
