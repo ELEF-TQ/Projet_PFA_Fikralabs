@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllReviewsByClient } from '../../../context/features/ReviewSlice';
 import moment from 'moment';
 import defaultIMG from '../../../assets/images/defaultUser.png';
-import Spinner from '../../../components/status/Spinner';
 import { getClient } from '../../../context/features/ClientSlice';
+import Spinner from '../../../components/Status/Spinner';
 
 const ReviewsClient = () => {
   const dispatch = useDispatch<AppDispatch>();
