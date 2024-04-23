@@ -1,5 +1,5 @@
 import { Navigate, RouteProps as BaseRouteProps } from "react-router-dom";
-import { retrieveUserSession } from "../lib/Encryption";
+import { retrieveUserSession } from "../utils/Encryption";
 import React from "react";
 
 

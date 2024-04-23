@@ -5,7 +5,7 @@ import StarIcon from "@mui/icons-material/Star";
 import defaultIMG from '../../assets/images/defaultUser.png'
 import { getAllReviewsByClient } from "../../context/features/ReviewSlice";
 import Spinner from "../../components/status/Spinner";
-import { retrieveUserSession } from "../../lib/Encryption";
+import { retrieveUserSession } from "../../utils/Encryption";
 import moment from "moment";
 import EditReview from "./EditReview";
 import { Avatar, Typography } from "@mui/material";

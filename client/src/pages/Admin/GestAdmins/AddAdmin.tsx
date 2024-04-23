@@ -2,7 +2,7 @@ import React, {  useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import defaultIMG from '../../../assets/images/defaultUser.png';
-import { emailRegex, phoneRegex, usernameRegex } from '../../../utils/Regex';
+import { emailRegex, phoneRegex, usernameRegex } from '../../../lib/Regex';
 import { createAdmin, fetchAdmins } from "../../../context/features/AdminSlice";
 import { fetchRoles } from "../../../context/features/RoleSlice";
 import { Role } from "../../../types/Role";

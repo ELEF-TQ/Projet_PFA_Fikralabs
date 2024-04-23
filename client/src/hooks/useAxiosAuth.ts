@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { axiosAuth, axiosAuthMultipart } from "../lib/AxiosBase";
-import { retrieveToken } from "../lib/Encryption";
+import { retrieveToken } from "../utils/Encryption";
 
 export const useAxiosAuth = () => {
     useEffect(() => {

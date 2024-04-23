@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 import Cookies from 'js-cookie';
-import { axiosNoAuth } from './AxiosBase';
+import { axiosNoAuth } from '../lib/AxiosBase';
 
 const secretKey = '#Elef';
 

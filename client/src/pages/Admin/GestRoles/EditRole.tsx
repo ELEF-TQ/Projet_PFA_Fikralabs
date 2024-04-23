@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../context/store';
 import { fetchRoles, updateRole } from '../../../context/features/RoleSlice';
 import { Permission } from '../../../types/Permission';
-import { groupPermissionsByType } from '../../../lib/GroupPermissionsByType';
+import { groupPermissionsByType } from '../../../utils/GroupPermissionsByType';
 import { Role } from '../../../types/Role';
 
 interface Props {

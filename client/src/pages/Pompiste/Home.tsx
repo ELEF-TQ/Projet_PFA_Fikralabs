@@ -8,7 +8,7 @@ import Modal from "react-modal";
 import Spinner from "../../components/status/Spinner";
 import ClientInfosModal from "../../components/modals/ClientInfos";
 import './style.css'
-import { retrieveUserSession } from "../../lib/Encryption";
+import { retrieveUserSession } from "../../utils/Encryption";
 import moment from 'moment';
 
 Modal.setAppElement("#root");

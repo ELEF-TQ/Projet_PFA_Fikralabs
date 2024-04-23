@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import { fetchPermissions } from "../../../context/features/PermissionSlice";
-import { groupPermissionsByType } from "../../../lib/GroupPermissionsByType";
+import { groupPermissionsByType } from "../../../utils/GroupPermissionsByType";
 import { Permission } from "../../../types/Permission";
 import { createRole, fetchRoles } from "../../../context/features/RoleSlice";
 

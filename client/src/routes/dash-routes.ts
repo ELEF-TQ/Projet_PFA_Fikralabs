@@ -8,7 +8,7 @@ import { CgProfile } from "react-icons/cg";
 import { RiAdminFill } from "react-icons/ri";
 import { RiAdminLine } from "react-icons/ri";
 import { SlCalender } from "react-icons/sl";
-import { retrieveUserSession } from "../lib/Encryption";
+import { retrieveUserSession } from "../utils/Encryption";
 import { hasPermission } from "../utils/hasPermission";
 
 const user = retrieveUserSession() ;

@@ -4,7 +4,7 @@ import CouponInfo from '../modals/CouponInfo';
 import Swal from 'sweetalert2';
 import { AppDispatch } from '../../context/store';
 import { fetchAllCoupons, reserveCoupon } from '../../context/features/CouponSlice';
-import { retrieveUserSession, updateUserSession } from '../../lib/Encryption';
+import { retrieveUserSession, updateUserSession } from '../../utils/Encryption';
 import { getClient } from '../../context/features/ClientSlice';
 
 interface CouponProps {

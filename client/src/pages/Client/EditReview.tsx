@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../context/store";
 import { getAllReviewsByClient, updateReview } from "../../context/features/ReviewSlice";
-import {  retrieveUserSession } from "../../lib/Encryption";
+import {  retrieveUserSession } from "../../utils/Encryption";
 
 interface Props {
   show: boolean;

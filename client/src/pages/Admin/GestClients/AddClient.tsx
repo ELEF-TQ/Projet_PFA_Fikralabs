@@ -3,7 +3,7 @@ import { createClient, fetchClients } from "../../../context/features/ClientSlic
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import defaultIMG from '../../../assets/images/defaultUser.png';
-import { emailRegex, phoneRegex, usernameRegex } from '../../../utils/Regex';
+import { emailRegex, phoneRegex, usernameRegex } from '../../../lib/Regex';
 import Swal from 'sweetalert2';
 
 interface Props {

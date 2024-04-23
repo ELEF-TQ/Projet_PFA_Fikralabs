@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import LogoWhite from '../../assets/icons/LogoWhite.png';
 import { useEffect, useState } from 'react';
-import { retrieveUserSession } from '../../lib/Encryption';
+import { retrieveUserSession } from '../../utils/Encryption';
 import defaultUser from '../../assets/images/defaultUser.png';
 import Swal from 'sweetalert2';
 import Cookies from 'js-cookie';

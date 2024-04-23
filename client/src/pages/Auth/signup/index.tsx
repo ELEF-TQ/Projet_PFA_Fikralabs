@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import defaultIMG from '../../../assets/images/defaultUser.png'
 import Header from '../../../components/shared/Header';
 import Logo from '../../../assets/icons/LogoBlack.png';
-import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../../utils/Regex';
+import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../../lib/Regex';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
 const index :React.FC= () => {

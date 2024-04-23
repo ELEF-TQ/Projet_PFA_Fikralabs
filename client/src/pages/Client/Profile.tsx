@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { retrieveUserSession, updateUserSession } from '../../lib/Encryption';
+import { retrieveUserSession, updateUserSession } from '../../utils/Encryption';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import defaultIMG from '../../assets/images/defaultUser.png'
-import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../utils/Regex';
+import { emailRegex, passwordRegex, phoneRegex, usernameRegex } from '../../lib/Regex';
 import { AppDispatch } from '../../context/store';
 import { AddAPhotoOutlined } from '@mui/icons-material';
 import { FiEye, FiEyeOff } from 'react-icons/fi';

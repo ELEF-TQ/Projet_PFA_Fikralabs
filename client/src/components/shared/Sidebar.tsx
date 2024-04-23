@@ -2,7 +2,7 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { SidebarContext } from "../../providers/SidebarProvider";
 import { Link, useLocation } from "react-router-dom";
-import { retrieveUserSession } from "../../lib/Encryption";
+import { retrieveUserSession } from "../../utils/Encryption";
 import { AdminItems, ClientItems, PompisteItems } from "../../routes/dash-routes";
 interface SidebarItem {
   name: string;

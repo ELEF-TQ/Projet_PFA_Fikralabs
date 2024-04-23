@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import { fetchPermissions } from "../../../context/features/PermissionSlice";
-import { groupPermissionsByType } from "../../../lib/GroupPermissionsByType";
+import { groupPermissionsByType } from "../../../utils/GroupPermissionsByType";
 import { Permission } from "../../../types/Permission";
 import AddPermission from "./AddPermission";
 import Delete from "../../../components/crud/Delete";

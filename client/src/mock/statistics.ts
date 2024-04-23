@@ -1,4 +1,3 @@
-
 export const chartData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
@@ -11,8 +10,7 @@ export const chartData = {
         hoverBorderColor: "rgba(255, 99, 132, 1)",
         data: [65, 59, 80, 81, 56, 55, 40]
       }
-    ]
-  };
+  ]
+};
   
-  export const reviewsData = [10, 25, 50, 45, 60, 55];
-  
+export const reviewsData = [10, 25, 50, 45, 60, 55];

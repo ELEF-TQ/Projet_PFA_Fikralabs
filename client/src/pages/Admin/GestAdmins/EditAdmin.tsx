@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import defaultIMG from '../../../assets/images/defaultUser.png'
 import { RootState } from '../../../context/store';
-import { emailRegex ,phoneRegex,usernameRegex } from '../../../utils/Regex';
+import { emailRegex ,phoneRegex,usernameRegex } from '../../../lib/Regex';
 import { Role } from '../../../types/Role';
 import { fetchRoles } from '../../../context/features/RoleSlice';
 import { fetchAdmins, updateAdmin } from '../../../context/features/AdminSlice';

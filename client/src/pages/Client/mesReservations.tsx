@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../context/store';
 import { deleteReservationById, fetchClientReservations } from '../../context/features/ServiceSlice';
-import { retrieveUserSession } from '../../lib/Encryption';
+import { retrieveUserSession } from '../../utils/Encryption';
 import DefaultService from "../../assets/images/DefaultService.png"
 import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';

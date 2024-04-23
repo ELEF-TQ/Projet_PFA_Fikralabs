@@ -7,7 +7,7 @@ import Header from '../../../components/shared/Header';
 import Logo from '../../../assets/icons/LogoBlack.png';
 import Swal from 'sweetalert2';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { emailRegex, passwordRegex, valdationCodeRegex } from '../../../utils/Regex';
+import { emailRegex, passwordRegex, valdationCodeRegex } from '../../../lib/Regex';
 import { forgotPassword, resetPassword } from '../../../context/features/ResetPasswordSlice';
 import Spinner from '../../../components/status/Spinner';
 

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Coupon from "../../components/others/Coupon";
 import { useDispatch, useSelector } from "react-redux";
-import { retrieveUserSession } from "../../lib/Encryption";
+import { retrieveUserSession } from "../../utils/Encryption";
 import { AppDispatch } from "../../context/store";
 import { fetchReservedCoupons } from "../../context/features/CouponSlice";
 import Spinner from "../../components/status/Spinner";

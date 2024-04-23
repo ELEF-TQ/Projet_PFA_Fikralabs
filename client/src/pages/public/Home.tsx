@@ -6,7 +6,7 @@ import { fetchNearestStations } from '../../context/features/StationSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../context/store';
 import { Station } from '../../types/Station';
-import GetUserGeolocation, { Coordinates } from '../../lib/GetUserGeolocation';
+import GetUserGeolocation, { Coordinates } from '../../utils/GetUserGeolocation';
 import Logo from '../../assets/icons/LogoBlack.png'
 import Spinner from '../../components/status/Spinner';
 

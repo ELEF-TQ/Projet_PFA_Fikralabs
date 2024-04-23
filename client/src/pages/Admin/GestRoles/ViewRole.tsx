@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Permission } from "../../../types/Permission";
-import { groupPermissionsByType } from "../../../lib/GroupPermissionsByType";
+import { groupPermissionsByType } from "../../../utils/GroupPermissionsByType";
 
 interface Props {
   show: boolean;

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosNoAuth, axiosNoAuthMultipart } from '../../lib/AxiosBase';
 import Swal from 'sweetalert2';
-import { storeUserSession } from '../../lib/Encryption';
+import { storeUserSession } from '../../utils/Encryption';
 
 // Async thunk to handle login
 export const handleLogin = createAsyncThunk('auth/login', async (formData: any, thunkAPI) => {

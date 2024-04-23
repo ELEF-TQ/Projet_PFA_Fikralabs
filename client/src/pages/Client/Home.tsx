@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../context/store';
 import { fetchAllCoupons } from '../../context/features/CouponSlice';
 import { getClient } from '../../context/features/ClientSlice';
-import { retrieveUserSession } from '../../lib/Encryption';
+import { retrieveUserSession } from '../../utils/Encryption';
 import Spinner from '../../components/status/Spinner';
 
 const mapCouponsWithReserved = (couponsList: any[], reservedList: string[] | null) => {
