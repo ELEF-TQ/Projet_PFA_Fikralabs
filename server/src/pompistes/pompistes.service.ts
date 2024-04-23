@@ -6,6 +6,7 @@ import { UpdatePompisteDto } from './dto/update-pompiste.dto';
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { comparePasswords, encodePassword } from 'src/auth/utils/bcrypt';
 import { UpdatePompisteProfileDto } from './dto/update-pompiste-profile.dto';
+import * as qrcode from 'qrcode';
 
 @Injectable()
 export class PompistesService {
@@ -15,15 +16,16 @@ export class PompistesService {
 
   async create(createPompisteDto: CreatePompisteDto): Promise<Pompiste> {
     const isEmailExists = await this.findOneByEmail(createPompisteDto.email);
-    if(isEmailExists){
+    if (isEmailExists) {
       throw new HttpException("L'email existe déjà", HttpStatus.BAD_REQUEST);
-    }else{
+    } else {
       const encryptedPassword = encodePassword(createPompisteDto.password);
-      const createdPompiste = new this.pompisteModel({...createPompisteDto, password: encryptedPassword});
+      const qrCodeData = JSON.stringify({ matriculeRH: createPompisteDto.matriculeRH });     
+      const QrCode = await qrcode.toDataURL(qrCodeData); 
+      const createdPompiste = new this.pompisteModel({ ...createPompisteDto, password: encryptedPassword, QrCode: QrCode });
       return createdPompiste.save();
     }
   }
-
   async findAll(): Promise<Pompiste[]> {
     return this.pompisteModel.find().exec();
   }

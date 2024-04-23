@@ -4,7 +4,7 @@ import { axiosAuth, axiosAuthMultipart } from '../../lib/AxiosBase';
 import Swal from 'sweetalert2';
 
 // Async thunk to fetch all pompistes
-export const getPompistes = createAsyncThunk('pompistes/fetchAll', async (_, thunkAPI) => {
+export const fetchPompistes = createAsyncThunk('pompistes/fetchAll', async (_, thunkAPI) => {
   try {
     const response = await axiosAuth.get('/pompistes');
     return response.data;
@@ -67,15 +67,15 @@ const pompistesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(getPompistes.pending, (state) => {
+    .addCase(fetchPompistes.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     })
-    .addCase(getPompistes.fulfilled, (state, action) => {
+    .addCase(fetchPompistes.fulfilled, (state, action) => {
       state.isLoading = false;
       state.pompistes = action.payload;
     })
-    .addCase(getPompistes.rejected, (state) => {
+    .addCase(fetchPompistes.rejected, (state) => {
       state.isLoading = false;
     })
     .addCase(getPompisteByMatriculeRH.pending, (state) => {

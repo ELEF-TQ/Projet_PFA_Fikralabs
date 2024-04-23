@@ -40,6 +40,9 @@ export class Pompiste {
   @Prop({default: RolesEnum.POMPISTE})
   role:string;
 
+  @Prop() 
+  QrCode: string;
+
 }
 
 export const PompisteSchema = SchemaFactory.createForClass(Pompiste);

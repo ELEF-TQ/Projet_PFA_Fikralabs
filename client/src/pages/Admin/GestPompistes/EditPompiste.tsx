@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { getPompistes, updatePompiste } from '../../../context/features/PompisteSlice';
+import { fetchPompistes, updatePompiste } from '../../../context/features/PompisteSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import defaultIMG from '../../../assets/images/defaultUser.png'
@@ -83,7 +83,7 @@ console.log(formData)
     dispatch(updatePompiste({ Id: Element._id, formData })).then(() => {
       handleClose();
       setErrorMessage(null)
-      dispatch(getPompistes());
+      dispatch(fetchPompistes());
     });
   };
 
