@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import defaultIMG from '../../../assets/images/defaultUser.png';
 import { emailRegex, phoneRegex, usernameRegex } from '../../../lib/Regex';
-import { AddAPhotoOutlined } from "@mui/icons-material";
 
 interface Props {
   show: boolean;

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import Spinner from '../../../components/status/Spinner';
 import { fetchAdmins } from '../../../context/features/AdminSlice';
+import ViewPompiste from '../GestPompistes/ViewPompisteModal';
 
 const Admins: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -216,7 +217,7 @@ const Admins: React.FC = () => {
         onDeletionSuccess={fetchAdmins}
       />
       <EditPompiste show={isEditModalOpen} handleClose={() => setIsEditModalOpen(false)} Element={Element} />
-      {/* <ViewPompiste show={isViewModalOpen} handleClose={() => setIsViewModalOpen(false)} Element={Element} /> */}
+      <ViewPompiste show={isViewModalOpen} handleClose={() => setIsViewModalOpen(false)} Element={Element} />
       <AddPompiste show={isAddModalOpen} handleClose={() => setIsAddModalOpen(false)} />
     </div>
   );
