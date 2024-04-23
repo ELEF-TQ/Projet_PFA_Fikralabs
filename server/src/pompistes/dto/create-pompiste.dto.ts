@@ -7,6 +7,9 @@ export class CreatePompisteDto {
   readonly CIN:string;
   readonly password: string;
   readonly phone?: string;
+  
+
+
 
   @IsOptional()
   readonly image?: File;

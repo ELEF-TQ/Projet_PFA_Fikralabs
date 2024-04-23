@@ -1,10 +1,9 @@
 import React, {  useState } from "react";
-import { getPompistes, createPompiste } from "../../../context/features/PompisteSlice";
+import { fetchPompistes, createPompiste } from "../../../context/features/PompisteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../context/store";
 import defaultIMG from '../../../assets/images/defaultUser.png';
 import { emailRegex, phoneRegex, usernameRegex } from '../../../lib/Regex';
-import { AddAPhotoOutlined } from "@mui/icons-material";
 
 interface Props {
   show: boolean;
@@ -40,7 +39,7 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
     if (validateFormData()) {
       dispatch(createPompiste(formData)).then(() => {
         handleClose();
-        dispatch(getPompistes());
+        dispatch(fetchPompistes());
       });
     }
   };
@@ -109,14 +108,13 @@ const AddPompiste: React.FC<Props> = ({ show, handleClose }) => {
                   style={{ display: 'none' }}
                 />
                 <label htmlFor="image">
-                  <div className="image-container ring-2 ring-green-300 dark:ring-green-500 relative group">
+                <div className="image-container">
                     {formData.image ? (
-                      <img src={URL.createObjectURL(formData.image)} alt="profile" className="object-cover w-30 h-30 p-1 rounded-full" />
+                      <img src={URL.createObjectURL(formData.image)} alt="profile" className="profile-image" />
                     ) : (
-                        <img src={defaultIMG} alt="default" className="object-cover w-30 h-30 p-1 rounded-full" />
-                      )}
+                      <img src={defaultIMG} alt="default" className="default-image" />
+                    )}
                   </div>
-                
                 </label>
               </div>
 

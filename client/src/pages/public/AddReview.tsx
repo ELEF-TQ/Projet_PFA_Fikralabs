@@ -16,9 +16,36 @@ import { createReview } from '../../context/features/ReviewSlice';
 import { axiosNoAuth } from '../../lib/AxiosBase';
 import Header from '../../components/shared/Header';
 import Swal from 'sweetalert2';
+import QRScannerModal from '../../components/modals/QRScannerModal';
+
 const steps = ['', '', '', ''];
 
+
 const Index: React.FC = () => {
+
+  const [showScanner, setShowScanner] = useState<boolean>(false);
+
+  
+
+  const handleCloseScanner = () => {
+    setShowScanner(false);
+  };
+
+  const handleScan = (data: string | null) => {
+    if (data) {
+      handleCloseScanner();
+      setMatriculeRH(data); 
+    }
+  };
+  
+  const openScanner = () => {
+    setShowScanner(true); 
+  };
+
+  
+
+
+  
   const phoneRegex = /^(0|\+212)([67])(\d{8}|\d{1}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2})$/;
   const dispatch = useDispatch<AppDispatch>()
   const [activeStep, setActiveStep] = React.useState(0);
@@ -66,13 +93,13 @@ const Index: React.FC = () => {
           Swal.fire({ icon: 'warning', title: 'Attention', text: 'Veuillez saisir un numéro de téléphone valide !' });
           return;
         }
-        setIsLoading(true); // Set loading state before making the request
+        setIsLoading(true); 
         try {
           await axiosNoAuth.get(`/clients/phone/${phone}`);
           localStorage.setItem('phone', phone);
         } catch (error:any) {
           Swal.fire({ icon: 'error', title: 'Erreur', text: error.response.data.message });
-          setIsLoading(false); // Reset loading state if request fails
+          setIsLoading(false);
           return;
         }
         break;
@@ -81,14 +108,14 @@ const Index: React.FC = () => {
           Swal.fire({ icon: 'warning', title: 'Attention', text: 'Veuillez saisir un matricule RH valide !' });
           return;
         }
-        setIsLoading(true); // Set loading state before making the request
+        setIsLoading(true);
         try {
           const res = await axiosNoAuth.get(`/pompistes/matriculeRH/${matriculeRH}`);
           setPompisteInfo(res.data);
           localStorage.setItem('matriculeRH', matriculeRH);
         } catch (error:any) {
           Swal.fire({ icon: 'error', title: 'Erreur', text: error.response.data.message });
-          setIsLoading(false); // Reset loading state if request fails
+          setIsLoading(false);
           return;
         }
         break;
@@ -99,10 +126,9 @@ const Index: React.FC = () => {
           etoiles: calculateAverage(),
           commentaire: commentaire,
         };
-        setIsLoading(true); // Set loading state before dispatching action
+        setIsLoading(true);
         dispatch(createReview(formData))
           .then(() => {
-            // Reset form and local storage after action dispatch
             setPhone('');
             setMatriculeRH('');
             setRatings([0, 0, 0]);
@@ -110,8 +136,8 @@ const Index: React.FC = () => {
             localStorage.removeItem('phone');
             localStorage.removeItem('matriculeRH');
           })
-          .catch(error => {
-            setIsLoading(false); // Reset loading state if action dispatch fails
+          .catch((error: any) => {
+            setIsLoading(false);
             console.error('Error creating review:', error);
           });
         break;
@@ -123,7 +149,7 @@ const Index: React.FC = () => {
         break;
     }
   
-    setIsLoading(false); // Reset loading state after completing the operation
+    setIsLoading(false); 
     setActiveStep(prevActiveStep => prevActiveStep + 1);
     setSkipped(newSkipped);
   };
@@ -161,6 +187,7 @@ const Index: React.FC = () => {
           </div>
         );
       case 1:
+      
         return (
           <div className='mt-5'>
               <h6 className="Title_Text">Scanner le Code QR sur le Badge du Pompiste</h6>
@@ -172,9 +199,9 @@ const Index: React.FC = () => {
                 pour accéder à la page d'évaluation.
               </p>
               <div className='flex flex-col items-center '>
-              <img src={QR} alt="scanner le code QR" className='w-24 m-10' draggable='false'/>
 
-             
+              <img src={QR} alt="scanner le code QR" className='w-24 m-10 cursor-pointer' draggable='false' onClick={openScanner} />
+              <QRScannerModal open={showScanner} onClose={handleCloseScanner} onScan={handleScan} />
               <div>
               <label htmlFor="phone" className="block mb-2 text-sm font-medium Input_Label">
               Saisir manuellement le code
@@ -188,7 +215,6 @@ const Index: React.FC = () => {
                 value={matriculeRH}
                 onChange={(event)=>setMatriculeRH(event.target.value)}
               />
-
               </div>
               </div>
              
@@ -232,9 +258,6 @@ const Index: React.FC = () => {
                   onChange={(_event, newValue) => handleRatingChange(2, newValue)}
                 />
               </div>
-
-
-             
               <div>
                 <label htmlFor="commentaire" className='block mb-2 text-sm font-medium Input_Label'> Ajouter un Commentaire</label>
                 <textarea 
@@ -251,7 +274,6 @@ const Index: React.FC = () => {
         return ( 
           <div className='mt-5'>
              <h6 className="Title_Text">Félicitations</h6>
-
              <div className='flex flex-col items-center gap-10 mt-10'>
               <p>
                 Nous avons ajouté 200 points à votre compte Shell Fidélité 
@@ -347,6 +369,10 @@ const Index: React.FC = () => {
 
         </div>
       </div>
+
+     
+
+
      </div>
   );
 };
