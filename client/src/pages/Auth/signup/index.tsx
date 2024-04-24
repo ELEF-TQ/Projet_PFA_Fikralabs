@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Formik, Form } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
-import { AppDispatch, RootState } from '../../../context/store';
+import { AppDispatch } from '../../../context/store';
 import { handleSignup } from '../../../context/features/AuthSlice';
 import { Link } from 'react-router-dom';
 import defaultIMG from '../../../assets/images/defaultUser.png'
