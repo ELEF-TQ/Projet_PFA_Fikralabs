@@ -1,0 +1,40 @@
+version: '3'
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./server:/app/server
+    env_file:
+      - ./server/.env
+    depends_on:
+      - database
+    networks:
+      - mynetwork
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - '5173:5173'
+    volumes:
+      - ./client:/app/client
+    networks:
+      - mynetwork
+  database:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - mynetwork
+
+volumes:
+  mongo_data:
+
+networks:
+  mynetwork:
