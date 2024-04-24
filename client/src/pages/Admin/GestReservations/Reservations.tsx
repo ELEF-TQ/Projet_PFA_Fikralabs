@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Destroy from '../../../components/crud/Destroy';
 import Delete from '../../../components/crud/Delete';
-import { fetchReservations, fetchServices } from '../../../context/features/ServiceSlice'; 
+import { fetchReservations } from '../../../context/features/ServiceSlice'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../context/store';
 import Spinner from '../../../components/status/Spinner';
