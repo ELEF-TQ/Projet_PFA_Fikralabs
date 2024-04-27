@@ -8,6 +8,7 @@ on:
 
 # Set environment variables
 env:
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
   DB_TYPE: ${{ secrets.DB_TYPE }}
   HOST_NAME: ${{ secrets.HOST_NAME }}
@@ -36,6 +37,7 @@ jobs:
         working-directory: ./server
         run: |
           yarn install
+          export MONGODB_URI: $MONGODB_URI
           export JWT_SECRET: $JWT_SECRET
           export DB_TYPE: $DB_TYPE
           export HOST_NAME: $HOST_NAME
