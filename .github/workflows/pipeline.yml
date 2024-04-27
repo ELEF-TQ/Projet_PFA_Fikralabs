@@ -47,17 +47,17 @@ jobs:
       # Build a Docker image for the client application
       - name: Build Client Docker Image
         working-directory: ./client
-        # Build image with tag oussamasfiri/vivo_energy:client
+        # Build image with tag eleftq/vivo_energy:client
         run: |
-          docker build -t oussamasfiri/vivo_energy:client-${{github.run_number}} .
+          docker build -t eleftq/vivo_energy:client-${{github.run_number}} .
 
       # Build a Docker image for the server application
       - name: Build Server Docker Image
         working-directory:
           ./server
-          # Build image with tag oussamasfiri/vivo_energy:server
+          # Build image with tag eleftq/vivo_energy:server
         run: |
-          docker build -t oussamasfiri/vivo_energy:server-${{github.run_number}} .
+          docker build -t eleftq/vivo_energy:server-${{github.run_number}} .
 
       # Login to Docker Hub using credentials from repository secrets
       - name: Login to Docker Hub
@@ -69,5 +69,5 @@ jobs:
       # Push the Docker images to Docker Hub
       - name: Push Docker Images to Docker Hub
         run: |
-          docker push oussamasfiri/vivo_energy:client-${{github.run_number}}
-          docker push oussamasfiri/vivo_energy:server-${{github.run_number}}
+          docker push eleftq/vivo_energy:client-${{github.run_number}}
+          docker push eleftq/vivo_energy:server-${{github.run_number}}
