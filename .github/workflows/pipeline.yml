@@ -4,7 +4,7 @@ name: Build and Deploy
 # Run the workflow when code is pushed to the main branch
 on:
   push:
-    branches: [ "main", "CI/CD-workflow" ]
+    branches: [ "CI/CD-workflow" ]
 
 # Set environment variables
 env:
