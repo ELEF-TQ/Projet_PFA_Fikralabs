@@ -32,6 +32,10 @@ export class ReviewsController {
   }
 
 
+  @Post('alert/:id')
+  async updateReviewAlertStatus(@Param('id') id: string) {
+   return this.reviewService.updateAlertStatus(id);
+  }
 
   @Patch(":id") 
   async update(@Param("id") id: string, @Body() updateReviewDto: UpdateReviewDto) {
