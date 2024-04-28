@@ -5,11 +5,13 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { AppDispatch, RootState } from '../../../context/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllReviewsByClient } from '../../../context/features/ReviewSlice';
+import { getAllReviewsByClient, updateReviewAlertStatus } from '../../../context/features/ReviewSlice';
 import moment from 'moment';
 import defaultIMG from '../../../assets/images/defaultUser.png';
 import { getClient } from '../../../context/features/ClientSlice';
 import Spinner from '../../../components/status/Spinner';
+import alertEmpty from '../../../assets/icons/alert-empty.png';
+import alertFull from '../../../assets/icons/alert-full.png';
 
 const ReviewsClient = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,6 +20,11 @@ const ReviewsClient = () => {
   const {id} = useParams();
   const noReviews = reviews.reviews.length === 0;
 
+  const handleAlertClick = (reviewId: string) => {
+    dispatch(updateReviewAlertStatus( reviewId )).then(()=> {
+      dispatch(getAllReviewsByClient(id as string));
+    })
+  };
 
   const calculateDuration = (reviewDate: Date) => {
     const now = moment();
@@ -97,9 +104,9 @@ const ReviewsClient = () => {
         .map((review: any) => (
           <div
             key={review._id}
-            className="flex flex-col sm:flex-row border-b-2 border-green-500 p-4 mb-4 items-center justify-between rounded-lg shadow-md bg-white cursor-pointer hover:bg-slate-100 transition duration-300 ease-in-out"
+            className="flex flex-col  sm:flex-row border-b-2 border-green-500 p-4 mb-4 items-center justify-between rounded-lg shadow-md bg-white  hover:bg-slate-100 transition duration-300 ease-in-out"
           >
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
+            <div style={{ display: 'flex' , alignItems: 'center', marginBottom: '16px' ,width:'100%'}}>
               <Avatar
                 src={review.client.image?.buffer ? `data:image/png;base64,${review.client.image?.buffer}` : defaultIMG}
                 alt="Avatar"
@@ -122,7 +129,11 @@ const ReviewsClient = () => {
                 <Typography variant="body1">
                   {review.commentaire}
                 </Typography>
+             
               </div>
+              <button onClick={() => handleAlertClick(review._id)} className='cursor-pointer'>
+                <img src={review.alerted ? alertFull : alertEmpty} alt="alert" />
+              </button>
             </div>
           </div>
           ))

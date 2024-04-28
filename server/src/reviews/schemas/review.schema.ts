@@ -20,6 +20,10 @@ export class Review extends Document {
 
   @Prop()
   dateReview: Date;
+
+  @Prop({ default: false })
+  alerted: boolean;
+
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);

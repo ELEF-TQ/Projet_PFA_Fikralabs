@@ -69,14 +69,14 @@ const Reviews = () => {
       >
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
           <Avatar
-            src={review.pompiste.image?.buffer ? `data:image/png;base64,${review.pompiste.image?.buffer}` : defaultIMG}
+            src={review?.pompiste?.image?.buffer ? `data:image/png;base64,${review.pompiste.image?.buffer}` : defaultIMG}
             alt="Avatar"
             sx={{ marginRight: '16px' }}
             className="w-32 h-32 rounded-full mx-auto ring-2 ring-green-500"
           />
           <div style={{ flex: 1 }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-              {review.pompiste.username}
+              {review?.pompiste?.username}
             </Typography>
             <div style={{ display: 'flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.54)' }}>
               <Typography variant="body2" sx={{ marginRight: '8px' }}>
