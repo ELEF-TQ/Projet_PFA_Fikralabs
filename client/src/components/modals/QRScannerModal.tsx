@@ -20,8 +20,8 @@ const QRScannerModal: React.FC<QRScannerModalProps> = ({ open, onClose, onScan }
       onClose();
       Swal.fire({
         icon: 'success',
-        title: 'QR Code Scanned!',
-        text: `Scanned Data: ${data}`,
+        title: 'QR Code Scanner!',
+        text: `Code de Pompiste: ${data}`,
       });
     }
   }, 1000); 
@@ -38,9 +38,10 @@ const QRScannerModal: React.FC<QRScannerModalProps> = ({ open, onClose, onScan }
       onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className="modal-QR"
     >
-      <div className='modal-container'>
-        <div className='modal-content'>
+      <div className='modal-container-QR'>
+        <div className='modal-content-QR'>
           <Scanner
             onResult={handleScanResult}
             onError={(error: { message: any }) => console.log(error?.message)}

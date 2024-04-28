@@ -21,6 +21,8 @@ const Service: React.FC = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  
 
   // Checkbox handling
   const handleSelectAllChange = (e: { target: { checked: any } }) => {
@@ -36,6 +38,11 @@ const Service: React.FC = () => {
     );
   };
 
+  // Fonction de filtrage des clients en fonction de la valeur de recherche
+  const filteredServices = services.filter((service: any) =>
+    service.nom.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   useEffect(() => {
     dispatch(fetchServices());
   }, []);
@@ -48,7 +55,7 @@ const Service: React.FC = () => {
       ) : (
         <section className="  p-3 sm:p-5 antialiased">
         <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
-          <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+          <div className="bg-white dark:bg-gray-800 relative shadow-lg sm:rounded-lg overflow-hidden">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
               <div className="flex-1 flex items-center space-x-2">
                 <h5>
@@ -69,7 +76,7 @@ const Service: React.FC = () => {
                         <path fillRule="evenodd" clipRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                       </svg>
                     </div>
-                    <input type="text" id="simple-search" placeholder="Search" required className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" />
+                    <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} type="text" id="simple-search" placeholder="Search" required className="outline-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" />
                   </div>
                 </form>
               </div>
@@ -121,7 +128,7 @@ const Service: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                {services?.map((service :any ) => (
+                {filteredServices?.map((service :any ) => (
                   <tr key={service._id} className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <td className="p-4 w-4">
                       <div className="flex items-center">
@@ -144,10 +151,10 @@ const Service: React.FC = () => {
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{service.nom}</td>
                    
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {service.prix}
+                    {service.prix} Dhs
                     </td>
                   
-                    <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{service.description}</td>
+                    <td className="px-4 py-3 font-medium text-gray-900 whitespace-normal break-words dark:text-white">{service.description}</td>
                   
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       <div className="flex items-center justify-center space-x-4">
