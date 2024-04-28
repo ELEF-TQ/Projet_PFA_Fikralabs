@@ -10,6 +10,20 @@ interface ReviewData {
   commentaire: string;
 }
 
+
+// Async thunk update alert
+export const updateReviewAlertStatus = createAsyncThunk(
+  'reviews/alert',
+  async ( reviewId: string, thunkAPI) => {
+    try {
+      const response = await axiosAuth.post(`/reviews/alert/${reviewId}`);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 // Async thunk to create a new review
 export const createReview = createAsyncThunk('reviews/create', async (formData: ReviewData, thunkAPI) => {
   try {

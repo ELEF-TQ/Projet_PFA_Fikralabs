@@ -28,7 +28,7 @@ const Reservation: React.FC<Props> = ({ show, handleClose, Service }) => {
 
   const initialFormData = {
     clientId: user?._id,
-    serviceId: Service?._id,
+    serviceId: "",
     dateReservation: null as Date | null,
     heureReservation: "",
     ville: "",
@@ -40,7 +40,10 @@ const Reservation: React.FC<Props> = ({ show, handleClose, Service }) => {
 
   useEffect(() => {
     console.log(user);
+    console.log("first-------", Service)
     if (Service && show) {
+      console.log("second-------", Service)
+      setFormData({ ...formData, serviceId: Service?._id });
       dispatch(fetchReservedCoupons(user._id));
       console.log(reservedCoupons)
       GetUserGeolocation()
