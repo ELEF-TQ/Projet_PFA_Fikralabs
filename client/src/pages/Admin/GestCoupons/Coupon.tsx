@@ -26,6 +26,7 @@ const Coupon : React.FC = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [selectedIds , setSelectedIds] = useState<string[]>([]);;
   const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
  
   const getCouponStatus = (expirationDate: string): StatusLabelProps => {
     const currentDate = new Date();
@@ -67,6 +68,10 @@ const Coupon : React.FC = () => {
     return `${day}-${month}-${year}`;
   }
 
+  // Fonction de filtrage des clients en fonction de la valeur de recherche
+  const filteredCoupons = coupons.filter((coupon: any) =>
+    coupon.code.toLowerCase().includes(searchValue.toLowerCase())
+  );
   
   useEffect(()=> {
     dispatch(fetchAllCoupons());
@@ -101,7 +106,7 @@ const Coupon : React.FC = () => {
                           <path fillRule="evenodd" clipRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                         </svg>
                       </div>
-                      <input type="text" id="simple-search" placeholder="Search" required className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" />
+                      <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} type="text" id="simple-search" placeholder="Search" required className="outline-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" />
                     </div>
                   </form>
                 </div>
@@ -156,7 +161,7 @@ const Coupon : React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                  {coupons?.map((coupon :any ) => (
+                  {filteredCoupons?.map((coupon :any ) => (
                     <tr key={coupon._id} className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                       <td className="p-4 w-4">
                         <div className="flex items-center">
