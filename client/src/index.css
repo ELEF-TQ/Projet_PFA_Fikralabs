@@ -392,10 +392,13 @@ img {
   border-radius: 8px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  width: fit-content;
-  width:  500px;
+  max-width: 90%; /* Example max-width, adjust as needed */
+  width: 500px; /* Fallback width for older browsers */
+  max-height: 90vh; /* Example max-height, adjust as needed */
+  overflow-y: auto; /* Enable vertical scroll when content exceeds height */
   animation: slideIn 0.3s forwards;
 }
+
 
 .modal__delete {
   animation: slideIn 0.3s forwards;
