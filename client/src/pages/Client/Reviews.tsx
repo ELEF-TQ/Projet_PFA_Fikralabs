@@ -65,8 +65,7 @@ const Reviews = () => {
     .map((review: any) => (
       <div
         key={review._id}
-        className="flex flex-col sm:flex-row border-b-2 border-green-500 p-4 mb-4 items-center justify-between rounded-lg shadow-md bg-white cursor-pointer hover:bg-slate-100 transition duration-300 ease-in-out"
-      >
+        className={`flex flex-col sm:flex-row border-b-2 ${review.alerted ? 'border-red-500' : 'border-green-500'} p-4 mb-4 items-center justify-between rounded-lg shadow-md bg-white cursor-pointer hover:bg-slate-100 transition duration-300 ease-in-out`}      >
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
           <Avatar
             src={review?.pompiste?.image?.buffer ? `data:image/png;base64,${review.pompiste.image?.buffer}` : defaultIMG}
@@ -94,8 +93,8 @@ const Reviews = () => {
         </div>
         <button
           onClick={() => handleEditClick(review)}
-          className="Confirm__Button  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
+          className={` ${review.alerted ? 'bg-red-500 hover:bg-red-600 border border-red-500' : 'bg-green-500 hover:bg-green-600 border border-green-500'} text-white font-semibold py-2 px-4 rounded`}
+          >
           Edit
         </button>
       </div>

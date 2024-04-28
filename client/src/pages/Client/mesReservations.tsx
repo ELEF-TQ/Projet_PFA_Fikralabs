@@ -24,7 +24,6 @@ const MesReservations = () => {
   const getTimePeriod = (timeString: string) => (parseInt(timeString.split(':')[0], 10) >= 12 ? ' PM' : ' AM');
 
   const handleCancelReservation = (reservationId: string) => {
-    // Show confirmation dialog
     Swal.fire({
       title: 'Êtes-vous sûr?',
       text: 'Voulez-vous vraiment annuler cette réservation?',
