@@ -10,6 +10,7 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 
 @Injectable()
 export class ReviewsService {
+ 
 
   constructor(
     private readonly clientService: ClientsService,
@@ -76,4 +77,13 @@ async countReviews(): Promise<number> {
   }
 }
 
+  async updateAlertStatus(id: string) {
+    const review = await this.reviewModel.findById(id);
+    if (!review) {
+      throw new NotFoundException(`Review with ID ${id} not found`);
+    }
+    review.alerted = !review.alerted; 
+    await review.save();
+  return review;
+}
 }

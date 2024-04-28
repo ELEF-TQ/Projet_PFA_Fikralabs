@@ -142,7 +142,7 @@ const Index: React.FC = () => {
           });
         break;
       case 3:
-        console.log("Working on step 4");
+        window.location.href = '/login';
         break;
       default:
         console.log("Unknown step");
