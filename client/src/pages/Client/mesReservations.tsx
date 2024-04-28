@@ -9,6 +9,7 @@ import jsPDF from 'jspdf';
 import { RxCross2 } from 'react-icons/rx';
 import { IoDownloadOutline } from 'react-icons/io5';
 import LogoBlack from "../../assets/icons/LogoBlack.png"
+import { InfoOutlined } from '@mui/icons-material';
 
 const MesReservations = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -120,11 +121,16 @@ const MesReservations = () => {
         Consultez vos réservations passées : Accédez à une liste complète de toutes vos réservations de services effectuées auprès de nous.
       </p>
       {reservations.length === 0 ? (
-        <p className="text-gray-900 text-center">Aucune réservation trouvée</p>
+        <div className="flex justify-center items-center">
+          <div className="bg-yellow-100 text-yellow-800 p-6 rounded border border-yellow-400 max-w-2xl text-xl flex items-center">
+          <InfoOutlined className="mr-2" />
+            Aucun service pour le moment
+          </div>
+        </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {reservations.map((reservation: any) => (
-            <div key={reservation._id} className="bg-white overflow-hidden shadow-lg rounded-lg flex flex-col">
+            <div key={reservation._id} className="bg-white overflow-hidden shadow-lg rounded-lg mb-2 flex flex-col">
               <img src={reservation.service.image ? `data:image/png;base64,${reservation.service.image.buffer}` : DefaultService} alt={reservation.nom} className="w-full h-56 object-cover" draggable="false" />
               <div className="px-4 py-4 flex-grow">
                 <h2 className="text-xl font-semibold text-gray-800">{reservation.service.nom}</h2>

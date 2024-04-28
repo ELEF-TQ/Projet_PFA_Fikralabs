@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { AppDispatch } from '../../../context/store';
 import { acceptAllConversion, acceptConversion, getAllConversions } from '../../../context/features/ConversionSlice';
+import { InfoOutlined, TaskAltOutlined } from '@mui/icons-material';
 
 const Pompiste: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -68,25 +69,36 @@ const Pompiste: React.FC = () => {
 
   return (
     <div>
-<h1 className="text-4xl font-bold mb-8">Gestion des demandes de conversion</h1>
+      <h1 className="text-4xl font-bold mb-8">Gestion des demandes de conversion</h1>
       <section className="p-3 sm:p-5 antialiased">
-        <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
+        <p className="mb-6 Paragraphe_Text">
+          Demandes en attente
+        </p>
+
+
+        {pendingConversions.length === 0 ? (
+          <div className="flex justify-center items-center">
+            <div className="bg-yellow-100 text-yellow-800 p-6 rounded border border-yellow-400 max-w-2xl text-xl flex items-center">
+              <InfoOutlined className="mr-2" />
+                Aucune demandes en attente pour le moment
+            </div>
+          </div>
+        ):(
+          <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
           <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 py-1">
               <div className="flex-1 flex items-center justify-evenly space-x-2">
                 <h5 className="m-0">
-                  <span className="dark:text-white text-black">Les demandes en attente : </span>
+                  <span className="dark:text-white text-black">Demandes en attente : </span>
                   <span className="dark:text-white"> {pendingConversions.length}</span>
                 </h5>
 
                 <button
                   type="button"
                   onClick={() => handleAcceptConversions(selectedIds)}
-                  className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none bg-blue-500"
+                  className="flex items-center justify-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none bg-green-700"
                 >
-                  <svg className="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                  </svg>
+                  <TaskAltOutlined className='mr-2' style={{ fontSize: '20px' }}/>
                   Accepter tous
                 </button>
               </div>
@@ -189,18 +201,31 @@ const Pompiste: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+        )
+      }
 
-      <span className="block w-full h-px bg-black"></span>
+      </section>
 
       {/*___ Demande Accepted____ */}
       <section className="p-3 sm:p-5 antialiased">
-        <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
+        <p className="mb-6 Paragraphe_Text">
+          Demandes Acceptées
+        </p>
+
+        {acceptedConversions.length === 0 ? (
+          <div className="flex justify-center items-center">
+            <div className="bg-yellow-100 text-yellow-800 p-6 rounded border border-yellow-400 max-w-2xl text-xl flex items-center">
+              <InfoOutlined className="mr-2" />
+              Aucune demandes acceptée pour le moment
+            </div>
+          </div>
+        ):(
+          <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
           <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-2">
               <div className="flex-1 flex items-center space-x-2 ">
                 <h5 className="m-0 ">
-                  <span className="dark:text-white text-black">Les demandes Acceptées:</span>
+                  <span className="dark:text-white text-black">Demandes Acceptées: </span>
                   <span className="dark:text-white">{acceptedConversions.length}</span>
                 </h5>
               </div>
@@ -242,18 +267,7 @@ const Pompiste: React.FC = () => {
                       </td>
                       <td className="px-4 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <div className="flex items-center justify-center space-x-4">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-4 h-4 -ml-0.5 text-green-500"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M12 2c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10zM12 4c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm1 5.414 4.293 4.293a1 1 0 11-1.414 1.414l-3.5-3.5a1 1 0 00-1.413 0l-1.5 1.5a1 1 0 11-1.414-1.414l2-2a1 1 0 011.414 0l3.5 3.5a1 1 0 101.414-1.414L13 9.414z"
-                            />
-                          </svg>
+                          <TaskAltOutlined className='mr-2' style={{ fontSize: '20px', color: "green"}}/>
                         </div>
                       </td>
                     </tr>
@@ -263,6 +277,8 @@ const Pompiste: React.FC = () => {
             </div>
           </div>
         </div>
+        )
+      }
       </section>
     </div>
   );

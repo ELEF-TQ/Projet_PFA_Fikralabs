@@ -52,7 +52,7 @@ const Coupon: React.FC<CouponProps> = ({ coupon, reserved ,reservedHome }) => {
 
     const getCouponColor = (reduction: number): string => {
         if (reduction >= 50) {
-            return 'bg-red-600';
+            return 'bg-red-500';
         } else if (reduction >= 20) {
             return 'bg-yellow-500';
         } else {
