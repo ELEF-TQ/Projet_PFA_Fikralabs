@@ -149,7 +149,7 @@ const Role: React.FC = () => {
                             <button
                               onClick={() => {setElement(role);setIsViewModalOpen(true) }}
                               type="button"
-                              className="py-2 px-2 flex items-center text-sm font-medium text-center text-green-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-green-700 dark:bg-gray-800 dark:text-green-400 dark:border-green-600 dark:hover:text-white dark:hover:bg-green-700"
+                              className="flex items-center text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-900"
                             >
                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4  -ml-0.5">
                             <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />

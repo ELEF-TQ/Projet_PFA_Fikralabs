@@ -9,6 +9,7 @@ import { retrieveUserSession } from "../../utils/Encryption";
 import moment from "moment";
 import EditReview from "./EditReview";
 import { Avatar, Typography } from "@mui/material";
+import { InfoOutlined } from "@mui/icons-material";
 
 const Reviews = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -49,11 +50,10 @@ const Reviews = () => {
       </p>
       {reviews.isLoading && <Spinner />}
       {!reviews.isLoading && noReviews && (
-        <div className="flex items-center justify-center h-full">
-          <div className="text-center text-gray-500">
-            <p className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
-              Vous n'avez aucun évaluations
-            </p>
+          <div className="flex justify-center items-center">
+          <div className="bg-yellow-100 text-yellow-800 p-6 rounded border border-yellow-400 max-w-2xl text-xl flex items-center">
+          <InfoOutlined className="mr-2" />
+            Aucune évaluation pour le moment
           </div>
         </div>
       )}

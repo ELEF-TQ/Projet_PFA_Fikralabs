@@ -6,6 +6,7 @@ import { fetchAllCoupons } from '../../context/features/CouponSlice';
 import { getClient } from '../../context/features/ClientSlice';
 import { retrieveUserSession } from '../../utils/Encryption';
 import Spinner from '../../components/status/Spinner';
+import { InfoOutlined } from '@mui/icons-material';
 
 const mapCouponsWithReserved = (couponsList: any[], reservedList: string[] | null) => {
     if (!reservedList) return []; 
@@ -73,7 +74,7 @@ const Home = () => {
                     )}
                 </div>
             </div>
-            <p className='mb-4 text-gray-700'>
+            <p className='mb-6 text-gray-700'>
                 Découvrez une variété de coupons classés en trois catégories : Standard, Premium et Ultime, pour bénéficier de réductions et d'offres spéciales.
             </p>
             {isLoading ? ( 
@@ -81,7 +82,12 @@ const Home = () => {
             ) : (
                 <div className='flex flex-col gap-10'>
                     {couponsStandard.length === 0 && couponsPremium.length === 0 && couponsUltime.length === 0 ? (
-                        <div className="text-center text-gray-600 mt-4">Aucun coupon disponible</div>
+                        <div className="flex justify-center items-center">
+                            <div className="bg-yellow-100 text-yellow-800 p-6 rounded border border-yellow-400 max-w-2xl text-xl flex items-center">
+                            <InfoOutlined className="mr-2" />
+                            Aucun coupon pour le moment
+                            </div>
+                        </div>
                     ) : (
                         <>
                             {couponsStandard.length > 0 && getCouponElements(couponsStandard, 'Coupons Standard :')}

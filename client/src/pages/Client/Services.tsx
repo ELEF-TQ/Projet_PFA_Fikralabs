@@ -9,6 +9,7 @@ import { Service } from '../../types/Service';
 import DefaultService from "../../assets/images/DefaultService.png"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { InfoOutlined } from '@mui/icons-material';
 
 const Services = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -39,7 +40,15 @@ const Services = () => {
         {isLoading ? (
           <Spinner />
         ) : (
-          <Grid container spacing={3}>
+          services.length === 0 ? (
+            <div className="flex justify-center items-center">
+              <div className="bg-yellow-100 text-yellow-800 p-6 rounded border border-yellow-400 max-w-2xl text-xl flex items-center">
+              <InfoOutlined className="mr-2" />
+                Aucun service pour le moment
+              </div>
+            </div>
+          ) : (
+            <Grid container spacing={3}>
             {services.map((service: Service) => (
               <Grid item key={service._id} xs={12} sm={6} md={4} lg={4}>
                 <div className="bg-white border border-gray-200 rounded-lg shadow h-full">
@@ -72,6 +81,7 @@ const Services = () => {
               </Grid>
             ))}
           </Grid>
+          )
         )}
         <Reservation show={isAddModalOpen} handleClose={() => setIsAddModalOpen(false)} Service= {Element} />
       </div>
