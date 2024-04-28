@@ -157,9 +157,7 @@ const Service: React.FC = () => {
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-normal break-words dark:text-white">{service.description}</td>
                   
                     <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      <div className="flex items-center justify-center space-x-4">
-        
-                        
+                      <div className="flex items-center justify-center space-x-4">                        
         
                         <button  onClick={() =>{setElement(service) , setIsEditModalOpen(true)}} type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" className="flex items-center text-yellow-700 hover:text-white border border-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:border-yellow-500 dark:text-yellow-500 dark:hover:text-white dark:hover:bg-yellow-600 dark:focus:ring-yellow-900">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4  -ml-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

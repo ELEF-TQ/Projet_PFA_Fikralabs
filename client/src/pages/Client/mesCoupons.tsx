@@ -5,6 +5,7 @@ import { retrieveUserSession } from "../../utils/Encryption";
 import { AppDispatch } from "../../context/store";
 import { fetchReservedCoupons } from "../../context/features/CouponSlice";
 import Spinner from "../../components/status/Spinner";
+import { InfoOutlined } from "@mui/icons-material";
 
 const Coupons = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,7 +28,7 @@ const Coupons = () => {
     {isLoading ? (
         <Spinner />
     ) : (
-        reservedCoupons.length > 0 ? (
+        reservedCoupons.length !== 0 ? (
             reservedCoupons.filter((coupon: any) => {
               const expirationDate = new Date(coupon.dateExpiration);
               const currentDate = new Date();
@@ -41,7 +42,12 @@ const Coupons = () => {
                 <Coupon key={index} coupon={coupon} reserved={true} reservedHome={false} />
             ))
         ) : (
-            <p>Aucun coupon réservé pour le moment.</p>
+          <div className="flex justify-center items-center">
+            <div className="bg-yellow-100 text-yellow-800 p-6 rounded border border-yellow-400 max-w-2xl text-xl flex items-center">
+            <InfoOutlined className="mr-2" />
+              Aucun coupon réservé pour le moment
+            </div>
+          </div>
         )
     )}
     </div>
