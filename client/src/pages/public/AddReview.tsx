@@ -223,7 +223,7 @@ const Index: React.FC = () => {
           <div className='mt-5'>
               <h6 className="Title_Text">Évaluer le Service du Pompiste</h6>
 
-              <div className='flex flex-col items-center gap-4'>
+              <div className='flex flex-col items-center gap-4c'>
                 <div className='flex flex-col items-center'>
                 <img className='Pompiste_Avatar'
                 src={pompisteInfo?.image?.buffer ? `data:image/png;base64,${pompisteInfo.image.buffer}` : defaultIMG}
