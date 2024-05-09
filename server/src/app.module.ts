@@ -27,7 +27,7 @@ import { StatisticsModule } from './statistics/statistics.module';
   MulterModule.register({
     dest:'/uploads'
   }),
-    MongooseModule.forRoot(`${process.env.DB_TYPE}://${process.env.HOST_NAME}/${process.env.DB_NAME}`),
+    MongooseModule.forRoot(`${process.env.DB_TYPE}://${process.env.DOCKER_DB_HOST_NAME}/${process.env.DB_NAME}`),
      AuthModule, ClientsModule, PompistesModule, AdminModule, ReviewsModule, ConversionsModule, CouponsModule, GeolocationModule, AuthorizationModule, ResetPasswordModule, ServicesModule, StatisticsModule],
 })
 export class AppModule implements NestModule{

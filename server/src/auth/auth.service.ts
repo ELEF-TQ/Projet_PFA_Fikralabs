@@ -1,6 +1,5 @@
 import { PompistesService } from 'src/pompistes/pompistes.service';
 import { JwtService } from '@nestjs/jwt';
-import { ClientsService } from '../clients/clients.service';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AuthPayloadDto } from './dto/auth.dto';
 import { AdminService } from 'src/admin/admin.service';
@@ -10,6 +9,7 @@ import { Admin } from 'src/admin/schemas/admin.schema';
 import { comparePasswords } from './utils/bcrypt';
 import { IsEmailAlreadyExists } from './utils/IsEmailAlreadyExist';
 import { Pompiste } from 'src/pompistes/schemas/pompiste.schema';
+import { ClientsService } from 'src/clients/clients.service';
 
 @Injectable()
 export class AuthService {
