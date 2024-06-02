@@ -38,13 +38,14 @@ const Reservations: React.FC = () => {
   const getReservationStatus = (dateReservation: string): StatusLabelProps => {
     const currentDate = new Date();
     const expiration = new Date(dateReservation);
-    const oneDay = 24 * 60 * 60 * 1000; 
+    const oneHour = 60 * 60 * 1000; // 1 heure en millisecondes
+  
     if (expiration < currentDate) {
       return { text: 'Expiré', variant: 'danger' };
-    } else if (expiration.getTime() - currentDate.getTime() <= oneDay) {
+    } else if (expiration.getTime() - currentDate.getTime() <= oneHour) {
       return { text: 'Bientôt fini', variant: 'warning' };
     } else {
-      return { text: 'Actif', variant: 'success' };
+      return { text: 'Valide', variant: 'success' };
     }
   };
   
