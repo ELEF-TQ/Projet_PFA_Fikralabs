@@ -275,7 +275,7 @@ const Index: React.FC = () => {
              <div className='flex flex-col items-center gap-10 mt-10'>
               <p>
                 Nous avons ajouté 200 points à votre compte Shell Fidélité 
-                associé au numéro de téléphone +212600000000. 
+                associé au numéro de téléphone +212615316644. 
                 Votre engagement et vos évaluations contribuent à rendre 
                 notre service encore meilleur.
               </p>

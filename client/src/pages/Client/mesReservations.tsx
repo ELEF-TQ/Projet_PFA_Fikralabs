@@ -124,7 +124,7 @@ const MesReservations = () => {
         <div className="flex justify-center items-center">
           <div className="bg-yellow-100 text-yellow-800 p-6 rounded border border-yellow-400 max-w-2xl text-xl flex items-center">
           <InfoOutlined className="mr-2" />
-            Aucun service pour le moment
+            Aucun réservation pour le moment
           </div>
         </div>
       ) : (
