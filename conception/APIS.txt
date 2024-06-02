@@ -1,6 +1,0 @@
-get nearest :
-https://shellretaillocator.geoapp.me/api/v2/locations/nearest_to?lat=30.417130&lng=-9.599250&limit=50&locale=fr_MA&format=json&driving_distances=true
-
-
-Lien to google maps:
-https://www.google.com/maps/dir/?api=1&amp;destination=30.417130%2C-9.599250&amp;hl=fr-MA&amp;travelmode=driving
