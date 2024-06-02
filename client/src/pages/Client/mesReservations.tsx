@@ -105,7 +105,7 @@ const MesReservations = () => {
     doc.text(reservation.adresse, 140, 160);
     if (reservation.couponCode && reservation.priceAfterDiscount) {
       doc.text(`#${reservation.couponCode}`, 140, 170);
-      doc.text(`${reservation.priceAfterDiscount} DHS`, 140, 180);
+      doc.text(`${reservation.priceAfterDiscount.toFixed(2)} DHS`, 140, 180);
     }
 
     // Save the PDF as a blob
@@ -142,7 +142,7 @@ const MesReservations = () => {
                 {(reservation.couponCode && reservation.priceAfterDiscount) && (
                   <>
                     <p className="text-gray-600"><span className="font-bold">Coupon:</span> #{reservation.couponCode}</p>
-                    <p className="text-gray-600"><span className="font-bold">Prix Aprés Réduction:</span> {reservation.priceAfterDiscount} DHS</p>
+                    <p className="text-gray-600"><span className="font-bold">Prix Aprés Réduction:</span> {reservation.priceAfterDiscount.toFixed(2)} DHS</p>
                   </>
                 )}
               </div>
