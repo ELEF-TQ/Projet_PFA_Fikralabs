@@ -45,6 +45,22 @@ export const ROLE_PERMISSIONS = {
     DELETE_ROLE: 'delete_role',
     UPDATE_ROLE: 'update_role',
   } as const;
+
+    
+export const PERMISSION_PERMISSIONS = {
+  VIEW_ROLE: 'view_permission',
+  ADD_ROLE: 'add_permission',
+  DELETE_ROLE: 'delete_permission',
+  UPDATE_ROLE: 'update_permission',
+} as const;
+
+export const RESERVATION_PERMISSIONS = {
+  VIEW_ROLE: 'view_reservatoin',
+  ADD_ROLE: 'add_reservatoin',
+  DELETE_ROLE: 'delete_reservatoin',
+  UPDATE_ROLE: 'update_reservatoin',
+} as const;
+
   
 export const CONVERSION_PERMISSIONS = {
     VIEW_CONVERSION: 'view_conversion',
@@ -60,6 +76,8 @@ export const PERMISSIONS = {
     ...COUPON_PERMISSIONS,
     ...REVIEW_PERMISSIONS,
     ...CONVERSION_PERMISSIONS,
+    ...PERMISSION_PERMISSIONS,
+    ... RESERVATION_PERMISSIONS,
 } as const;
 
 export type PermissionKey = keyof typeof PERMISSIONS;

@@ -43,8 +43,6 @@ const Index: React.FC = () => {
   };
 
   
-
-
   
   const phoneRegex = /^(0|\+212)([67])(\d{8}|\d{1}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2}[\s-]\d{2})$/;
   const dispatch = useDispatch<AppDispatch>()
@@ -225,16 +223,16 @@ const Index: React.FC = () => {
           <div className='mt-5'>
               <h6 className="Title_Text">Évaluer le Service du Pompiste</h6>
 
-              <div className='flex flex-col items-center gap-2'>
+              <div className='flex flex-col items-center gap-4c'>
                 <div className='flex flex-col items-center'>
                 <img className='Pompiste_Avatar'
                 src={pompisteInfo?.image?.buffer ? `data:image/png;base64,${pompisteInfo.image.buffer}` : defaultIMG}
                 alt="image" draggable='false' />
-                  <span>{pompisteInfo?.username}</span>
+                  <span className='font-bold'>{pompisteInfo?.username}</span>
               </div>
 
               <div className='flex flex-col items-center'>
-                <span>Comment évaluez-vous l'accueil du pompiste ?</span>  
+                <span className='font-bold'>Comment évaluez-vous l'accueil du pompiste ?</span>  
                 <Rating
                     name="accueil"
                     value={Number(ratings[0])}
@@ -243,7 +241,7 @@ const Index: React.FC = () => {
               </div>
 
               <div className='flex flex-col items-center'>
-                <span>Le pompiste était-il amical et souriant ?</span> 
+                <span className='font-bold'>Le pompiste était-il amical et souriant ?</span> 
                 <Rating
                   name="amical"
                   value={Number(ratings[1])}
@@ -251,7 +249,7 @@ const Index: React.FC = () => {
                 />
               </div>
               <div className='flex flex-col items-center'>
-               <span>Le pompiste a-t-il été efficace dans l'exécution de ses tâches ?</span>
+               <span className='font-bold'>Le pompiste a-t-il été efficace dans l'exécution de ses tâches ?</span>
                 <Rating
                   name="efficacite"
                   value={Number(ratings[2])}
@@ -277,7 +275,7 @@ const Index: React.FC = () => {
              <div className='flex flex-col items-center gap-10 mt-10'>
               <p>
                 Nous avons ajouté 200 points à votre compte Shell Fidélité 
-                associé au numéro de téléphone +212600000000. 
+                associé au numéro de téléphone +212615316644. 
                 Votre engagement et vos évaluations contribuent à rendre 
                 notre service encore meilleur.
               </p>
