@@ -23,21 +23,13 @@ export const AdminItems = [
       href: "/admin/conversions",
       icon: TbTransform,
     },
-    {
-      name: "Pompistes",
-      href: "/admin/pompistes",
-      icon: FaPeopleGroup ,
-    },
+  
     {
       name: "Coupons",
       href: "/admin/coupons",
       icon: BsTicketPerforated,
     },
-    {
-      name: "Clients",
-      href: "/admin/clients",
-      icon: BsPeople,
-    },
+   
     {
       name: "Services",
       href: "/admin/services",
@@ -48,6 +40,16 @@ export const AdminItems = [
       href: "/admin/reservations",
       icon: SlCalender,
 
+    },
+    {
+      name: "Pompistes",
+      href: "/admin/pompistes",
+      icon: FaPeopleGroup ,
+    },
+    {
+      name: "Clients",
+      href: "/admin/clients",
+      icon: BsPeople,
     },
     {
       name: "Admins",

@@ -42,6 +42,20 @@ const Reservations: React.FC = () => {
     dispatch(fetchReservations());
   }, []);
 
+  // const sortedAndFilteredReservations = useMemo(() => 
+  //   reservations
+  //     .filter((reservation: { code: string; }) => 
+  //       reservation.code.toLowerCase().includes(searchValue.toLowerCase())
+  //     )
+  //     .sort((a, b) => {
+  //       const dateTimeA = new Date(`${a.dateReservation}T${a.heureReservation}`);
+  //       const dateTimeB = new Date(`${b.dateReservation}T${b.heureReservation}`);
+  //       return dateTimeA - dateTimeB;
+  //     }),
+  //   [reservations, searchValue]
+  // );
+  
+
 
   const getReservationStatus = (dateReservation: string): StatusLabelProps => {
     const currentDate = new Date();
