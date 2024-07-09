@@ -1,0 +1,73 @@
+# The name of the workflow.
+name: Build and Deploy
+
+# Run the workflow when code is pushed to the main branch
+on:
+  push:
+    branches: [ "CI/CD-workflow" ]
+
+# Set environment variables
+env:
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  DB_TYPE: ${{ secrets.DB_TYPE }}
+  HOST_NAME: ${{ secrets.HOST_NAME }}
+  DOCKER_DB_HOST_NAME: ${{ secrets.DOCKER_DB_HOST_NAME }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+
+
+# This is the workflow that is being run.
+jobs:
+  build-and-deploy:
+    # This is telling GitHub to run the workflow on the latest version of Ubuntu.
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code from the GitHub repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Install dependencies and run tests for the client application
+      - name: Install and Test Client
+        working-directory: ./client
+        run: |
+          yarn install
+
+      # Install dependencies, export environment variables to be used by application and run tests for the server application
+      - name: Install and Test Server
+        working-directory: ./server
+        run: |
+          yarn install
+          export MONGODB_URI=$MONGODB_URI
+          export JWT_SECRET=$JWT_SECRET
+          export DB_TYPE=$DB_TYPE
+          export HOST_NAME=$HOST_NAME
+          export DOCKER_DB_HOST_NAME=$DOCKER_DB_HOST_NAME
+          export DB_NAME=$DB_NAME
+
+      # Build a Docker image for the client application
+      - name: Build Client Docker Image
+        working-directory: ./client
+        # Build image with tag oussamasfiri/vivo_energy:client
+        run: |
+          docker build -t oussamasfiri/vivo_energy:client-${{github.run_number}} .
+
+      # Build a Docker image for the server application
+      - name: Build Server Docker Image
+        working-directory:
+          ./server
+          # Build image with tag oussamasfiri/vivo_energy:server
+        run: |
+          docker build -t oussamasfiri/vivo_energy:server-${{github.run_number}} .
+
+      # Login to Docker Hub using credentials from repository secrets
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Push the Docker images to Docker Hub
+      - name: Push Docker Images to Docker Hub
+        run: |
+          docker push oussamasfiri/vivo_energy:client-${{github.run_number}}
+          docker push oussamasfiri/vivo_energy:server-${{github.run_number}}

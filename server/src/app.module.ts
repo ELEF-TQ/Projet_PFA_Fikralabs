@@ -16,9 +16,6 @@ import { ResetPasswordModule } from './reset-password/reset-password.module';
 import { ServicesModule } from './services/services.module';
 import { StatisticsModule } from './statistics/statistics.module';
 
-
-
-
 @Module({
   imports: [ConfigModule.forRoot({
     envFilePath: ".env",
@@ -29,8 +26,9 @@ import { StatisticsModule } from './statistics/statistics.module';
   }),
     MongooseModule.forRoot(`${process.env.DB_TYPE}://${process.env.DOCKER_DB_HOST_NAME}/${process.env.DB_NAME}`),
      AuthModule, ClientsModule, PompistesModule, AdminModule, ReviewsModule, ConversionsModule, CouponsModule, GeolocationModule, AuthorizationModule, ResetPasswordModule, ServicesModule, StatisticsModule],
+
 })
-export class AppModule implements NestModule{
+export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(IdValidationMiddleware).forRoutes(
       {
@@ -61,5 +59,5 @@ export class AppModule implements NestModule{
         method: RequestMethod.POST
       }
     )
-}
+  }
 }
