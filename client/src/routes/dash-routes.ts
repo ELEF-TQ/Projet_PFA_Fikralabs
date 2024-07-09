@@ -23,21 +23,13 @@ export const AdminItems = [
       href: "/admin/conversions",
       icon: TbTransform,
     },
-    {
-      name: "Pompistes",
-      href: "/admin/pompistes",
-      icon: FaPeopleGroup ,
-    },
+  
     {
       name: "Coupons",
       href: "/admin/coupons",
       icon: BsTicketPerforated,
     },
-    {
-      name: "Clients",
-      href: "/admin/clients",
-      icon: BsPeople,
-    },
+   
     {
       name: "Services",
       href: "/admin/services",
@@ -48,6 +40,16 @@ export const AdminItems = [
       href: "/admin/reservations",
       icon: SlCalender,
 
+    },
+    {
+      name: "Pompistes",
+      href: "/admin/pompistes",
+      icon: FaPeopleGroup ,
+    },
+    {
+      name: "Clients",
+      href: "/admin/clients",
+      icon: BsPeople,
     },
     {
       name: "Admins",
@@ -72,10 +74,11 @@ export const AdminItems = [
  
   ]
   .filter(item => {
-    if (item.name === "Home" || item.name === "Profile" || item.name === "reservations" || item.name === "Permissions" || item.name === "Reservations") {
+    if (item.name === "Home" || item.name === "Profile" ) {
       return true;
     }
     const hasPermissionForItem = hasPermission(user, item.name.toUpperCase());
+    
     return hasPermissionForItem;
   });
 

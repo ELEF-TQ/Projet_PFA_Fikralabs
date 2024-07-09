@@ -41,3 +41,12 @@
   height: 200px; /* Example height, adjust as needed */
 }
 
+.css-1c99szj-MuiRating-icon {
+  color: var(--primary-color) !important;
+  box-shadow: black;
+
+}
+.css-7qmtgc-MuiRating-icon ,.css-1qqgbpl-MuiRating-roo{
+  color: var(--primary-color) !important;
+
+}

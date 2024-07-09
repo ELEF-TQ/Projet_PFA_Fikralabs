@@ -26,7 +26,7 @@ export class ReviewsService {
     const review = new this.reviewModel({ client, pompiste, etoiles, commentaire, dateReview: new Date() });
     await review.save();
 
-    const clientScore = 300;
+    const clientScore = 200;
     const clientUpdatePromise = this.clientService.updateClientScore(client, clientScore);
 
     let pompisteScore = [0, 100, 200, 300][etoiles - 2] || 0;

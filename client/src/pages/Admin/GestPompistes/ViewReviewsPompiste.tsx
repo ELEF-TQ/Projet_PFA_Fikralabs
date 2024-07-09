@@ -47,7 +47,7 @@ const ReviewsPompiste = () => {
             <div className="modal-content border my-10 border-gray-300 rounded-lg p-4 flex flex-col sm:flex-row justify-center items-center">
               <div className="photo-wrapper mr-16 p-2">
                 <img
-                  src={pompiste?.image?.buffer ? `data:image/png;base64,${pompiste?.image.buffer}` : defaultIMG}
+                  src={pompiste?.image?.buffer ? `data:image/png;base64,${pompiste?.image?.buffer}` : defaultIMG}
                   alt="default"
                   className="w-32 h-32 rounded-full mx-auto ring-2 ring-gray-300"
                 />
@@ -113,14 +113,14 @@ const ReviewsPompiste = () => {
           >
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
               <Avatar
-                src={review.client.image?.buffer ? `data:image/png;base64,${review.client.image?.buffer}` : defaultIMG}
+                src={review?.client?.image?.buffer ? `data:image/png;base64,${review?.client?.image?.buffer}` : defaultIMG}
                 alt="Avatar"
                 sx={{ marginRight: '16px' }}
                 className="w-32 h-32 rounded-full mx-auto ring-2 ring-green-500"
               />
               <div style={{ flex: 1 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                  {review.client.username}
+                  {review.client?.username}
                 </Typography>
                 <div style={{ display: 'flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.54)' }}>
                   <Typography variant="body2" sx={{ marginRight: '8px' }}>
