@@ -6,26 +6,54 @@ on:
   pull_request:
     branches: [ci/cd]
 
-jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
+env:
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  DB_TYPE: ${{ secrets.DB_TYPE }}
+  HOST_NAME: ${{ secrets.HOST_NAME }}
+  DOCKER_DB_HOST_NAME: ${{ secrets.DOCKER_DB_HOST_NAME }}
+  DB_NAME: ${{ secrets.DB_NAME }}
 
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Log in to Docker Hub
+      - name: Install and Test Client
+        working-directory: ./client
+        run: |
+          yarn install
+
+      - name: Install and Test Server
+        working-directory: ./server
+        run: |
+          yarn install
+          export MONGODB_URI=$MONGODB_URI
+          export JWT_SECRET=$JWT_SECRET
+          export DB_TYPE=$DB_TYPE
+          export HOST_NAME=$HOST_NAME
+          export DOCKER_DB_HOST_NAME=$DOCKER_DB_HOST_NAME
+          export DB_NAME=$DB_NAME
+
+      - name: Build Client Docker Image
+        working-directory: ./client
+        run: |
+          docker build -t eleftq/pfa_fikralabs-client:${{ github.run_number }} .
+
+      - name: Build Server Docker Image
+        working-directory: ./server
+        run: |
+          docker build -t eleftq/pfa_fikralabs-server:${{ github.run_number }} .
+
+      - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push client Docker image
+      - name: Push Docker Images to Docker Hub
         run: |
-          docker build -t eleftq/pfa_fikralabs-client:latest -f client/Dockerfile .
-          docker push eleftq/pfa_fikralabs-client:latest
-
-      - name: Build and push server Docker image
-        run: |
-          docker build -t eleftq/pfa_fikralabs-server:latest -f server/Dockerfile .
-          docker push eleftq/pfa_fikralabs-server:latest
+          docker push eleftq/pfa_fikralabs-client:${{ github.run_number }}
+          docker push eleftq/pfa_fikralabs-server:${{ github.run_number }}
