@@ -1,0 +1,31 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ci/cd]
+  pull_request:
+    branches: [ci/cd]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push client Docker image
+        run: |
+          docker build -t eleftq/pfa_fikralabs-client:latest -f client/Dockerfile .
+          docker push eleftq/pfa_fikralabs-client:latest
+
+      - name: Build and push server Docker image
+        run: |
+          docker build -t eleftq/pfa_fikralabs-server:latest -f server/Dockerfile .
+          docker push eleftq/pfa_fikralabs-server:latest

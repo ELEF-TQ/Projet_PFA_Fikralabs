@@ -1,18 +1,23 @@
-# Use node.js base image
-FROM node:latest as build
+# Use an official Node.js runtime as a parent image
+FROM node:14
 
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and yarn.lock and install dependencies
+# Copy package.json and yarn.lock
 COPY package.json yarn.lock ./
+
+# Install dependencies
 RUN yarn install
 
-# Copy the rest of the source code
+# Copy the rest of the application code
 COPY . .
 
-# Expose the port on which the React app will run
+# Build the app
+RUN yarn build
+
+# Expose the port the app runs on
 EXPOSE 3001
 
-# Start Nest.js development server
-CMD ["yarn", "start:dev"]
+# Run the application
+CMD ["node", "dist/main"]
