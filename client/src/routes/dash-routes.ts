@@ -74,7 +74,7 @@ export const AdminItems = [
  
   ]
   .filter(item => {
-    if (item.name === "Home" || item.name === "Profile" ) {
+    if (item.name === "Home" || item.name === "Profile" || item.name === "Reservations") {
       return true;
     }
     const hasPermissionForItem = hasPermission(user, item.name.toUpperCase());

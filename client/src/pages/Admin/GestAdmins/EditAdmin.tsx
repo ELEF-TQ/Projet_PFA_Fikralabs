@@ -48,7 +48,7 @@ const EditAdmin: React.FC<Props> = ({ show, handleClose, Element }) => {
         phone: Element.phone,
         email: Element.email,
         image: Element.image,
-        adminRole : Element.adminRole._id
+        adminRole : Element?.adminRole?._id
       });
     } else {
       setFormData({
@@ -203,7 +203,7 @@ const EditAdmin: React.FC<Props> = ({ show, handleClose, Element }) => {
                     name="adminRole"
                     id="adminRole"
                     className="Input__Style w-full"
-                    value={formData.adminRole}
+                    value={formData?.adminRole}
                     onChange={handleChange}
                 >
                     <option value="">Sélectionner un rôle</option>
