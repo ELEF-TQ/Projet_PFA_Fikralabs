@@ -1,0 +1,6 @@
+projectKey=PFA_Backend
+serverUrl=http://localhost:9000
+serverVersion=9.9.7.96285
+dashboardUrl=http://localhost:9000/dashboard?id=PFA_Backend
+ceTaskId=AZK4aRnYMdS4OnuSUcS7
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AZK4aRnYMdS4OnuSUcS7
