@@ -1,11 +1,9 @@
 name: Build and Deploy
-
 on:
   push:
     branches: [ci/cd]
   pull_request:
     branches: [ci/cd]
-
 env:
   MONGODB_URI: ${{ secrets.MONGODB_URI }}
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -13,19 +11,16 @@ env:
   HOST_NAME: ${{ secrets.HOST_NAME }}
   DOCKER_DB_HOST_NAME: ${{ secrets.DOCKER_DB_HOST_NAME }}
   DB_NAME: ${{ secrets.DB_NAME }}
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-
       - name: Install and Test Client
         working-directory: ./client
         run: |
           yarn install
-
       - name: Install and Test Server
         working-directory: ./server
         run: |
@@ -36,23 +31,19 @@ jobs:
           export HOST_NAME=$HOST_NAME
           export DOCKER_DB_HOST_NAME=$DOCKER_DB_HOST_NAME
           export DB_NAME=$DB_NAME
-
       - name: Build Client Docker Image
         working-directory: ./client
         run: |
           docker build --no-cache -t eleftq/pfa_fikralabs-client:${{ github.run_number }} .
-
       - name: Build Server Docker Image
         working-directory: ./server
         run: |
           docker build --no-cache -t eleftq/pfa_fikralabs-server:${{ github.run_number }} .
-
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Push Docker Images to Docker Hub
         run: |
           docker push eleftq/pfa_fikralabs-client:${{ github.run_number }}
